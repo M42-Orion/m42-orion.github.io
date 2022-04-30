@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>python之类型提示 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,Python 3.6+ 版本加入了对”类型提示”的支持。通过声明变量的类型，编辑器和一些工具能给你提供更好的支持。
+示例当我们在使用python写一段代码的时候，如果遇到下面这种情况：
+12def ,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/m42-orion/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="python之类型提示 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,Python 3.6+ 版本加入了对”类型提示”的支持。通过声明变量的类型，编辑器和一些工具能给你提供更好的支持。
+示例当我们在使用python写一段代码的时候，如果遇到下面这种情况：
+12def ,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="python之类型提示 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,Python 3.6+ 版本加入了对”类型提示”的支持。通过声明变量的类型，编辑器和一些工具能给你提供更好的支持。
+示例当我们在使用python写一段代码的时候，如果遇到下面这种情况：
+12def ,"/>
+    
+<link rel="stylesheet" href="/m42-orion/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://liu__tao.gitee.io/m42-orion"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">python之类型提示</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">python之类型提示</h1>
+        <div class="stuff">
+            <span>四月 30, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/m42-orion/tags/%E6%9D%82%E8%B0%88/" rel="tag">杂谈</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>Python 3.6+ 版本加入了对”类型提示”的支持。通过声明变量的类型，编辑器和一些工具能给你提供更好的支持。</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>当我们在使用python写一段代码的时候，如果遇到下面这种情况：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">funcname</span>(<span class="params">param1,param2</span>):</span><br><span class="line">    <span class="built_in">print</span>(param1.split(<span class="string">&#x27;&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>如果我们想要对函数传递的某些参数进行一些操作的话，在使用一些内置方法的时候，我们通常会依赖python的联想功能，但是在这种情况下，一切都不管用，因为编辑器根本不知道参数是什么类型，所以更不知道可以做什么操作。就像下面这样:</p>
+<p><img src="https://liu__tao.gitee.io/drawing-bed/blog_img/python%E4%B9%8B%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/1.png" alt="失败情况"></p>
+<p>但是，我们加上类型提示之后，一切都会变得不一样。而所谓的类型提示就是告诉编辑器，这到底是一个什么类型的参数，如下：</p>
+<p><img src="https://liu__tao.gitee.io/drawing-bed/blog_img/python%E4%B9%8B%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/2.png" alt="失败情况"></p>
+<p>这样我们就能够正确的去实现编辑器的联想功能了。但是….类型提示仅限于此吗？并非如此，类型提示可以帮助我们规范参数类型，自动过滤某些非法参数，防止SQL注入等安全问题。</p>
+<h2 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h2><h3 id="普通类型"><a href="#普通类型" class="headerlink" title="普通类型"></a>普通类型</h3><p>普通类型即我们常见的类型，如：int、float、bool、bytes这些类型使用方式如上，在函数参数处声明使用。</p>
+<h3 id="嵌套类型"><a href="#嵌套类型" class="headerlink" title="嵌套类型"></a>嵌套类型</h3><p>嵌套类型指该类型内部可以包含其他类型，如常见的 dict、list、set 和 tuple等，这些类型的内部可以拥有其他类型，甚至于这些类型可以相互嵌套，如列表于字典的混合嵌套就是非常常见的情况。</p>
+<blockquote>
+<p>由于嵌套类型在python语言中不能够直接被识别，因此需要导入一个特定的库才可以，即:<code>tying</code></p>
+</blockquote>
+<p>嵌套类型的使用方式如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">funcname</span>(<span class="params">param: <span class="type">List</span>[<span class="built_in">str</span>]</span>):</span><br><span class="line">    <span class="built_in">print</span>(param.append(<span class="string">&#x27;&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>其他嵌套类型以此类推。</p>
+<h3 id="以类作为类型提示"><a href="#以类作为类型提示" class="headerlink" title="以类作为类型提示"></a>以类作为类型提示</h3><p>通过上面的案例，我们已将能够实现较多的数据类型提示功能了，但是当遇到一些复杂情况的时候，比如需要复杂的数据校验，或者涉及到需要多层嵌套的情况下，以前的简单数据类型已经完全不能够满足需求了，这个时候就需要类的出现了。</p>
+<p>对于使用类来作为类型提示，需要引入一个特别的库即：<code>Pydantic</code>。这个库提供了丰富的类型提示的相关帮助，能够帮助开发者实现数据校验、数据限制、嵌套类型识别、密码安全验证、数据库操作模型等等。由于这是一个庞大的知识，我一时半会也阐述不完整，因此我附上两份文档：</p>
+<p><a target="_blank" rel="noopener" href="https://pydantic-docs.helpmanual.io/">https://pydantic-docs.helpmanual.io/</a>   </p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/swinfans/article/details/89629641">https://blog.csdn.net/swinfans/article/details/89629641</a></p>
+<p>同时附上几个从互联网上找到的几个案例：</p>
+<p>配合函数使用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel, Field</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Item</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    name: <span class="built_in">str</span></span><br><span class="line">    description: <span class="built_in">str</span> = Field(<span class="literal">None</span>, title=<span class="string">&quot;The description of the item&quot;</span>, max_length=<span class="number">300</span>)</span><br><span class="line">    price: <span class="built_in">float</span> = Field(..., gt=<span class="number">0</span>, description=<span class="string">&quot;The price must be greater than zero&quot;</span>)</span><br><span class="line">    tax: <span class="built_in">float</span> = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">update_item</span>(<span class="params">item_id: <span class="built_in">int</span>, item: Item = Body(<span class="params">..., embed=<span class="literal">True</span></span>)</span>):</span><br><span class="line">    results = &#123;<span class="string">&quot;item_id&quot;</span>: item_id, <span class="string">&quot;item&quot;</span>: item&#125;</span><br><span class="line">    <span class="keyword">return</span> results</span><br></pre></td></tr></table></figure>
+
+<p>嵌套类型：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> enum <span class="keyword">import</span> Enum</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span>, <span class="type">Union</span></span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> date</span><br><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Gender</span>(<span class="built_in">str</span>, Enum):</span><br><span class="line">    man = <span class="string">&quot;man&quot;</span></span><br><span class="line">    women = <span class="string">&quot;women&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    name : <span class="built_in">str</span></span><br><span class="line">    gender : Gender</span><br><span class="line">        </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Department</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    name : <span class="built_in">str</span></span><br><span class="line">    lead : Person</span><br><span class="line">    cast : <span class="type">List</span>[Person]</span><br><span class="line">        </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Group</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    owner: Person</span><br><span class="line">    member_list: <span class="type">List</span>[Person] = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Company</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    name: <span class="built_in">str</span></span><br><span class="line">    owner: <span class="type">Union</span>[Person, Group]</span><br><span class="line">    regtime: date</span><br><span class="line">    department_list: <span class="type">List</span>[Department] = []</span><br></pre></td></tr></table></figure>
+
+<p>数据校验：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel, ValidationError, validator</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DemoModel</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    friends: <span class="type">List</span>[<span class="built_in">int</span>] = []</span><br><span class="line">    books: <span class="type">List</span>[<span class="built_in">int</span>] = []</span><br><span class="line"></span><br><span class="line">    <span class="comment"># &#x27;*&#x27; 在这里是匹配任意字段，包含friends，books</span></span><br><span class="line"><span class="meta">    @validator(<span class="params"><span class="string">&#x27;*&#x27;</span>, pre=<span class="literal">True</span></span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">split_str</span>(<span class="params">cls, v</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;如果传参是字符串，根据逗号切割成list&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(v, <span class="built_in">str</span>):</span><br><span class="line">            <span class="keyword">return</span> v.split(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> v</span><br><span class="line"></span><br><span class="line"><span class="meta">    @validator(<span class="params"><span class="string">&#x27;books&#x27;</span></span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">books_greater_then_5</span>(<span class="params">cls, v</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;判断books数量少于5&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(v) &gt; <span class="number">5</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&#x27;books greater than 5&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> v</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a1 = &#123;</span><br><span class="line">    <span class="string">&quot;friends&quot;</span>: [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],</span><br><span class="line">    <span class="string">&quot;books&quot;</span>: <span class="string">&quot;3,4,5&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">d = DemoModel(**a1)</span><br><span class="line"><span class="built_in">print</span>(d)  <span class="comment"># friends=[2, 3, 4] books=[3, 4, 5]</span></span><br><span class="line"><span class="built_in">print</span>(d.<span class="built_in">dict</span>())  <span class="comment"># &#123;&#x27;friends&#x27;: [2, 3, 4], &#x27;books&#x27;: [3, 4, 5]&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>python提供的类型提示方法能够帮助使用者快速高效的去验证数据参数的合规性与安全性，保障数据传输在高效的同时兼顾安全性能，相比于其他的手动验证方式，这样的方式明显高效更多。也能使得文档具有更强的可读性，帮助开发者理解代码逻辑含义，提高编程效率。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/409941358.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A"><span class="toc-number">2.</span> <span class="toc-text">更多</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.1.</span> <span class="toc-text">普通类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.2.</span> <span class="toc-text">嵌套类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A5%E7%B1%BB%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA"><span class="toc-number">2.3.</span> <span class="toc-text">以类作为类型提示</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/m42-orion/js/plugin.js"></script>
+<script src="/m42-orion/js/typed.js"></script>
+<script src="/m42-orion/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/m42-orion/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/m42-orion/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/m42-orion/photoswipe/photoswipe.min.js"></script>
+<script src="/m42-orion/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>
