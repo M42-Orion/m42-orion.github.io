@@ -324,4 +324,44 @@
         <tag>杂谈</tag>
       </tags>
   </entry>
+  <entry>
+    <title>（fastapi一）安装与简单使用</title>
+    <url>/m42-orion/2022/05/01/%EF%BC%88fastapi%E4%B8%80%EF%BC%89%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>由于自己已经使用过很久的fastapi了，但是到现在为止依然不能够非常熟练，多数时候依然会自己造轮子，走不少弯路，因此打算开始对fastapi进行系列总结。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>由于fastapi的启动需要<code>uvicorn</code>的配合，因此官方提供两种安装方式，第一种是全部安装，即：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install fastapi[all]</span><br></pre></td></tr></table></figure>
+
+<p>第二种是分开安装即：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install fastapi</span><br><span class="line">pip install uvicorn[standard]</span><br></pre></td></tr></table></figure>
+
+<p>如果安装太慢的话，添加一个临时源吧，如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pyspide</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>fastapi服务创建有两种方式，第一种是通过代码启动，第二种是在命令行启动，如果你需要调试代码，建议你使用第一种，当然，某些编辑器提供直接的调试启动方法，但是需要注意配置启动函数与启动对象。这里给出两种启动方式：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">import</span> uvicorn <span class="comment"># 必须添加这个库</span></span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">root</span>():</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello World&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    uvicorn.run(app=<span class="string">&#x27;main:app&#x27;</span>, host=<span class="string">&quot;127.0.0.1&quot;</span>, port=<span class="number">8000</span>, reload=<span class="literal">True</span>, debug=<span class="literal">True</span>)<span class="comment"># 启动命令</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">root</span>():</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello World&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在文件目录下的命令行中输入以下命令：</span></span><br><span class="line"><span class="comment"># uvicorn main:app --host &#x27;0.0.0.0&#x27; --port 8080 --reload</span></span><br></pre></td></tr></table></figure>
+<p>uvicorn参数解释:  </p>
+<ul>
+<li>main: 指定主程序文件main.py文件, 如果main.py文件改成test.py 则命令也需要改为uvicorn test:app</li>
+<li>app：在main.py中使用app = FastAPI()创建的对象</li>
+<li>–host：远程主机ip，如果是本地则可以不要这个参数</li>
+<li>–host：端口号</li>
+<li>–reload：在修改源代码后程序会自动重新加载不用退出重新启动</li>
+</ul>
+<h2 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h2><p>在启动之初，fastapi提供一些关于swagger界面的配置信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line">app = FastAPI(</span><br><span class="line">    title=<span class="string">&quot;My Super Project&quot;</span>,</span><br><span class="line">    description=<span class="string">&quot;This is a very fancy project, with auto docs for the API and everything&quot;</span>,</span><br><span class="line">    version=<span class="string">&quot;2.5.0&quot;</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_items</span>():</span><br><span class="line">    <span class="keyword">return</span> [&#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;Foo&quot;</span>&#125;]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    uvicorn.run(app, host=<span class="string">&quot;0.0.0.0&quot;</span>, port=<span class="number">8080</span>, access_log=<span class="literal">False</span>, debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>同时支持对跨域的配置：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#可跨域访问的域名</span></span><br><span class="line">origins = [</span><br><span class="line">    <span class="string">&quot;http://localhost&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http://localhost:8080&quot;</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">#可跨域访问的基本请求设置</span></span><br><span class="line">app.add_middleware(</span><br><span class="line">    CORSMiddleware,</span><br><span class="line">    allow_origins=origins,</span><br><span class="line">    allow_credentials=<span class="literal">True</span>,</span><br><span class="line">    allow_methods=[<span class="string">&quot;*&quot;</span>],</span><br><span class="line">    allow_headers=[<span class="string">&quot;*&quot;</span>],</span><br><span class="line">)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>更多详细的配置可以查看FastAPI的源码进行查看。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>fastapi</tag>
+      </tags>
+  </entry>
 </search>
