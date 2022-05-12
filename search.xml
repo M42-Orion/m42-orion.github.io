@@ -641,4 +641,25 @@
         <tag>python</tag>
       </tags>
   </entry>
+  <entry>
+    <title>fastapi启动的初始化问题</title>
+    <url>/m42-orion/2022/05/12/fastapi%E5%90%AF%E5%8A%A8%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p><img src="https://liu__tao.gitee.io/drawing-bed/blog_img/fastapi%E5%90%AF%E5%8A%A8%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E9%97%AE%E9%A2%98/%E5%B0%81%E9%9D%A2.png"><br>在我最开始学习总结fastapi的时候，我就知道了fastapi可以通过命令行启动与调试模式启动，这里有一个巨大的坑需要注意，因为踩过，所以记录一下。</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>首先展示一段调试启动的代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"></span><br><span class="line">app = FastAPI(</span><br><span class="line">    title=<span class="string">&quot;My Super Project&quot;</span>,</span><br><span class="line">    description=<span class="string">&quot;This is a very fancy project, with auto docs for the API and everything&quot;</span>,</span><br><span class="line">    version=<span class="string">&quot;2.5.0&quot;</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_items</span>():</span><br><span class="line">    <span class="keyword">return</span> [&#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;Foo&quot;</span>&#125;]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    uvicorn.run(app, host=<span class="string">&quot;0.0.0.0&quot;</span>, port=<span class="number">8080</span>, access_log=<span class="literal">False</span>, debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这段代码目前只是一个单文件，但是假设在单文件当中，我引入了其他文件中的一个class实例化对象，并且将这个对象在app赋值之后也进行一个赋值初始化，如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> other <span class="keyword">import</span> otherobject <span class="comment">#otherobject是一个已经实例化之后的对象 </span></span><br><span class="line"></span><br><span class="line">app = FastAPI(</span><br><span class="line">    title=<span class="string">&quot;My Super Project&quot;</span>,</span><br><span class="line">    description=<span class="string">&quot;This is a very fancy project, with auto docs for the API and everything&quot;</span>,</span><br><span class="line">    version=<span class="string">&quot;2.5.0&quot;</span>,</span><br><span class="line">)</span><br><span class="line">otherobject.fun(<span class="number">1</span>) <span class="comment"># 赋值</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_items</span>():</span><br><span class="line">    <span class="keyword">return</span> [&#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;Foo&quot;</span>&#125;]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    uvicorn.run(app, host=<span class="string">&quot;0.0.0.0&quot;</span>, port=<span class="number">8080</span>, access_log=<span class="literal">False</span>, debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>问题来了，在项目启动之后otherobject还会是赋值后的otherobject吗？</p>
+<p>答案是：<strong>不是</strong></p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>因为这里必须搞清楚一件事情，python作为一种脚本语言，是逐行进行执行的，所以在启动的时候，python会按照顺序进行赋值，但是一旦执行到<code>uvicorn.run(app, host=&quot;0.0.0.0&quot;, port=8080, access_log=False, debug=True)</code>,这个时候就是交由uvicorn来启动一个项目了，当把权限交由给了uvicorn，它在启动服务的同时会重新引入其他文件的变量，但是却不会再一次执行当前的文件。因此otherobject会被导入两次但是第二次却不会被赋值。</p>
+]]></content>
+      <categories>
+        <category>错误</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
 </search>
