@@ -665,8 +665,7 @@
   <entry>
     <title>ElasticSearch之python总结</title>
     <url>/m42-orion/2022/05/12/ElasticSearch%E4%B9%8Bpython%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<p><img src="https://liu__tao.gitee.io/drawing-bed/blog_img/ElasticSearch%E4%B9%8Bpython%E6%80%BB%E7%BB%93/%E5%B0%81%E9%9D%A2.png"></p>
-<h2 id="对于ES"><a href="#对于ES" class="headerlink" title="对于ES"></a>对于ES</h2><p>ES数据库本身作为一种分布式的、查询优势、拓展优势、容错优势…..等等众多优点的数据库。更多的特点还是自行百度吧</p>
+    <content><![CDATA[<h2 id="对于ES"><a href="#对于ES" class="headerlink" title="对于ES"></a>对于ES</h2><p>ES数据库本身作为一种分布式的、查询优势、拓展优势、容错优势…..等等众多优点的数据库。更多的特点还是自行百度吧</p>
 <h2 id="python操作"><a href="#python操作" class="headerlink" title="python操作"></a>python操作</h2><p>安装：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip3 install elasticsearch</span><br></pre></td></tr></table></figure>
 
