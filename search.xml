@@ -687,4 +687,21 @@
         <tag>python</tag>
       </tags>
   </entry>
+  <entry>
+    <title>python海象语法</title>
+    <url>/m42-orion/2022/05/22/python%E6%B5%B7%E8%B1%A1%E8%AF%AD%E6%B3%95/</url>
+    <content><![CDATA[<p><img src="https://liu__tao.gitee.io/drawing-bed/blog_img/python%E6%B5%B7%E8%B1%A1%E8%AF%AD%E6%B3%95/%E5%B0%81%E9%9D%A2.jpg"><br>在我的工作当中，无意间接触到了一个别人写的一段代码,像这样：<code>if (n := len(a)) &gt; 10:</code>，凭借我的直觉，我能够轻易的读懂这段代码，但是我却从来没见过，于是我搜了一下，才知道这是python3.8的新语法，叫做海象语法，因为冒号像眼睛，等号像牙齿，所以被成为海象语法。</p>
+<h2 id="海象语法"><a href="#海象语法" class="headerlink" title="海象语法"></a>海象语法</h2><p>官方给出了几个案例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 赋值表达式有助于避免调用 len（） 两次</span></span><br><span class="line"><span class="keyword">if</span> (n := <span class="built_in">len</span>(a)) &gt; <span class="number">10</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;List is too long (<span class="subst">&#123;n&#125;</span> elements, expected &lt;= 10)&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一次用于测试是否发生了匹配，另一次用于提取子组</span></span><br><span class="line">discount = <span class="number">0.0</span></span><br><span class="line"><span class="keyword">if</span> (mo := re.search(<span class="string">r&#x27;(\d+)% discount&#x27;</span>, advertisement)):</span><br><span class="line">    discount = <span class="built_in">float</span>(mo.group(<span class="number">1</span>)) / <span class="number">100.0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Loop over fixed length blocks</span></span><br><span class="line"><span class="keyword">while</span> (block := f.read(<span class="number">256</span>)) != <span class="string">&#x27;&#x27;</span>:</span><br><span class="line">    process(block)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 其中表达式正文中还需要在筛选条件中计算的值</span></span><br><span class="line">[clean_name.title() <span class="keyword">for</span> name <span class="keyword">in</span> names</span><br><span class="line"> <span class="keyword">if</span> (clean_name := normalize(<span class="string">&#x27;NFC&#x27;</span>, name)) <span class="keyword">in</span> allowed_names]</span><br></pre></td></tr></table></figure>
+
+<p>在原来的python语言当中，需要判断的时候不能够将表达式赋值给变量，因此在进行判断操作之前，必须首先对判断变量进行赋值，而海象运算符使用得当可以极大程度的减少对于冗余代码的使用，免去过多的赋值操作。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>该写点什么，还是算吧！</p>
+]]></content>
+      <categories>
+        <category>海象语法</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
 </search>
