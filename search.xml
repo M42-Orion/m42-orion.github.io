@@ -707,8 +707,7 @@
   <entry>
     <title>静态资源与动态资源</title>
     <url>/m42-orion/2022/05/29/%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E4%B8%8E%E5%8A%A8%E6%80%81%E8%B5%84%E6%BA%90/</url>
-    <content><![CDATA[<p><img src="https://liu__tao.gitee.io/drawing-bed/blog_img/%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E4%B8%8E%E5%8A%A8%E6%80%81%E8%B5%84%E6%BA%90/%E5%B0%81%E9%9D%A2.jpg"></p>
-<h2 id="静态资源访问"><a href="#静态资源访问" class="headerlink" title="静态资源访问"></a>静态资源访问</h2><p>简单理解WEB服务静态和动态资源请求过程 </p>
+    <content><![CDATA[<h2 id="静态资源访问"><a href="#静态资源访问" class="headerlink" title="静态资源访问"></a>静态资源访问</h2><p>简单理解WEB服务静态和动态资源请求过程 </p>
 <ul>
 <li>用户发起访问  </li>
 <li>服务器端接收到请求，该请求到达服务器的内核空间，因为tcp/ip协议工作在内核空间；到达内核空间后，发现访问的是80端口的套接字，通过路由和相关解码，请求被转到服务器的用户空间，也就是转到了web服务上；  </li>
@@ -734,6 +733,35 @@
       </categories>
       <tags>
         <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>（fastapi三）中间件</title>
+    <url>/m42-orion/2022/05/31/%EF%BC%88fastapi%E4%B8%89%EF%BC%89%E4%B8%AD%E9%97%B4%E4%BB%B6/</url>
+    <content><![CDATA[<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><p>blog_img/fastapi系列/（fastapi一）安装与简单使用/封面.jpg<br>“中间件”是一个函数,它在每个请求被特定的路径操作处理之前,以及在每个响应返回之前工作.</p>
+<ul>
+<li>它接收你的应用程序的每一个请求.  </li>
+<li>然后它可以对这个请求做一些事情或者执行任何需要的代码.  </li>
+<li>然后它将请求传递给应用程序的其他部分 (通过某种路径操作).  </li>
+<li>然后它获取应用程序生产的响应 (通过某种路径操作).  </li>
+<li>它可以对该响应做些什么或者执行任何需要的代码.  </li>
+<li>然后它返回这个 响应.  </li>
+</ul>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Request</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.middleware(<span class="params"><span class="string">&quot;http&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">add_process_time_header</span>(<span class="params">request: Request, call_next</span>):</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    response = <span class="keyword">await</span> call_next(request)</span><br><span class="line">    process_time = time.time() - start_time</span><br><span class="line">    response.headers[<span class="string">&quot;X-Process-Time&quot;</span>] = <span class="built_in">str</span>(process_time)</span><br><span class="line">    <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li>request：项目接受的请求，可以获取请求信息  </li>
+<li>call_next：将 request 传递给相应的 路径操作.然后它将返回由相应的路径操作生成的 response.</li>
+<li> response.headers[“X-Process-Time”]：修改返回头信息</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>中间件能够在每一个请求接受之前对请求进行操作，捕获请求的信息，并对请求或者返回信息进行修改。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>fastapi</tag>
       </tags>
   </entry>
 </search>
