@@ -764,4 +764,34 @@
         <tag>fastapi</tag>
       </tags>
   </entry>
+  <entry>
+    <title>127.0.0.1与localhost的区别</title>
+    <url>/m42-orion/2022/05/31/127-0-0-1%E4%B8%8Elocalhost%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<h2 id="127-0-0-1"><a href="#127-0-0-1" class="headerlink" title="127.0.0.1"></a>127.0.0.1</h2><ul>
+<li>地址而非域名</li>
+<li>127.0.0.1在Windows等系统的正确解释是：本机地址（本机服务器或回送地址）  </li>
+<li>127.0.0.1是一个环回地址，根本不是一个网络地址  </li>
+<li>127.0.0.1是通过网卡传输的，依赖网卡，并受到网络防火墙和网卡相关的限制</li>
+<li>检测本机的回路是否正常，如果得到一个成功的ping返回，则可以认定你的IP栈是被初始化过的，TCP/IP协议安装正确。如果失败，那么你的IP栈失败，TCP/IP协议必须重新安装</li>
+<li>不联网、网卡传输，受防火墙和网卡的限制、本机访问    </li>
+</ul>
+<h2 id="localhost"><a href="#localhost" class="headerlink" title="localhost"></a>localhost</h2><ul>
+<li>域名而非地址</li>
+<li>localhost也叫local ，正确的解释是：本地服务器</li>
+<li>localhost 是一个域名，在过去它指向 127.0.0.1 这个IP地址。在操作系统支持 ipv6 后，它同时还指向ipv6 的地址 [::1] </li>
+<li>在计算机网络中，localhost是回路网络接口的一个标准主机名，相对应的ip地址是127.0.0.1</li>
+<li>localhost是一个保留域名，同时也是一个特殊的DNS主机名，代表分配给引用这个名称的计算机的ip地址，即所在计算机本身</li>
+<li>localhost是不经过网卡传输的，它不受网络防火墙和网卡相关的限制</li>
+<li>windows系统，在host文件中，localhost指向的ip是127.0.0.1,可通过编辑host文件改变指向</li>
+<li>不联网、不使用网卡，不受防火墙和网卡的限制、本机访问</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>loclhost是作为域名被解析的，因此两者虽然有类似的效果但是并不相同，一般设置程序时本地服务用localhost是最好的，localhost不会解析成IP，也不会占用网卡、网络资源。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
 </search>
