@@ -794,4 +794,32 @@
         <tag>杂谈</tag>
       </tags>
   </entry>
+  <entry>
+    <title>（fastapi四）文件传输</title>
+    <url>/m42-orion/2022/06/07/%EF%BC%88fastapi%E5%9B%9B%EF%BC%89%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93/</url>
+    <content><![CDATA[<h2 id="StreamingResponse"><a href="#StreamingResponse" class="headerlink" title="StreamingResponse"></a>StreamingResponse</h2><p>先看案例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> StreamingResponse</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">fake_video_streamer</span>():</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">        <span class="keyword">yield</span> <span class="string">b&quot;some fake video bytes&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">return</span> StreamingResponse(fake_video_streamer())</span><br></pre></td></tr></table></figure>
+
+<p>该方法在返回过程当时会将数据以流的形式进行返回,官方对此描述：采用异步生成器或普通生成器/迭代器，然后流式传输响应主体。在作用与文件返回的时候可以这样写：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> StreamingResponse</span><br><span class="line"></span><br><span class="line">some_file_path = <span class="string">&quot;large-video-file.mp4&quot;</span></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">iterfile</span>():  <span class="comment"># (1)</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(some_file_path, mode=<span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> file_like:  <span class="comment"># (2)</span></span><br><span class="line">            <span class="keyword">yield</span> <span class="keyword">from</span> file_like  <span class="comment"># (3)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> StreamingResponse(iterfile(), media_type=<span class="string">&quot;video/mp4&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="FileResponse"><a href="#FileResponse" class="headerlink" title="FileResponse"></a>FileResponse</h2><p>与其他响应类型相比，接受不同的参数集进行实例化：  </p>
+<ul>
+<li>path - 要流式传输的文件的文件路径。  </li>
+<li>headers - 任何自定义响应头，传入字典类型。  </li>
+<li>media_type - 给出媒体类型的字符串。如果未设置，则文件名或路径将用于推断媒体类型。  </li>
+<li>filename - 如果给出，它将包含在响应的 Content-Disposition 中。  </li>
+</ul>
+<p>文件响应将包含适当的 Content-Length，Last-Modified 和 ETag 的响应头。 使用案例如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> FileResponse</span><br><span class="line"></span><br><span class="line">some_file_path = <span class="string">&quot;large-video-file.mp4&quot;</span></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">return</span> FileResponse(some_file_path)</span><br></pre></td></tr></table></figure>
+
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>两种都是文件传输的一种方式，但是相对于<code>FileResponse</code>,如果面临文件较大的话不推荐使用，虽然该方法可以增加文件大小的容量，但是大文件传输与返回更推荐使用<code>StreamingResponse</code></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>fastapi</tag>
+      </tags>
+  </entry>
 </search>
