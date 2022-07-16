@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>文章关键字提取 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,关键字提取关键字提取作为文本分析的重要一环，现在已经拥有很多工具可以使用，一般工具被分为两类，第一类是基于算法的关键字提取，也就是将文本进行分词操作后对文本当中词语出现的频率做出统计，同时对一些助词,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/m42-orion/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="文章关键字提取 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,关键字提取关键字提取作为文本分析的重要一环，现在已经拥有很多工具可以使用，一般工具被分为两类，第一类是基于算法的关键字提取，也就是将文本进行分词操作后对文本当中词语出现的频率做出统计，同时对一些助词,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="文章关键字提取 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,关键字提取关键字提取作为文本分析的重要一环，现在已经拥有很多工具可以使用，一般工具被分为两类，第一类是基于算法的关键字提取，也就是将文本进行分词操作后对文本当中词语出现的频率做出统计，同时对一些助词,"/>
+    
+<link rel="stylesheet" href="/m42-orion/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://liu__tao.gitee.io/m42-orion"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">文章关键字提取</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">文章关键字提取</h1>
+        <div class="stuff">
+            <span>六月 27, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/m42-orion/tags/python/" rel="tag">python</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="关键字提取"><a href="#关键字提取" class="headerlink" title="关键字提取"></a>关键字提取</h2><p>关键字提取作为文本分析的重要一环，现在已经拥有很多工具可以使用，一般工具被分为两类，第一类是基于算法的关键字提取，也就是将文本进行分词操作后对文本当中词语出现的频率做出统计，同时对一些助词或者语气词进行过滤操作得到较为准确的关键词。第二类就是基于机器学习的关键词提取，需要对文章进行相应的向量计算，具体的算法需要依据实际情况考量。本文只展示第一种：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 加载模块</span></span><br><span class="line"><span class="keyword">from</span> textrank4ch.TextRank4Keyword <span class="keyword">import</span> TextRank4Keywords</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 准备预料, 输入时一个字符长串, 可含特殊字符</span></span><br><span class="line">corpus =  <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">据了解，为全面强化边境禁毒“清源断流”，严查严打跨境涉毒违法犯罪，国家移民管理机构广大移民管理警察在血与火、生与死的考验中，不惧牺牲，勇于担当，以“边境多查毒、内地少受害”为使命，昼夜坚守边境缉毒一线，充分发挥党政军警民合力强边固防机制作用，综合采取人防、物防、技防措施，严密边境前沿查堵、强化专案攻坚、紧抓边境辖区社会面管控、深化口岸边境执法协作，全力遏制境外毒品渗透内流和制毒物品走私出境，坚决筑起口岸边境禁毒的坚固防线。其间，广大移民管理警察还深入边境辖区村寨、学校，大力宣传法律法规及毒品危害，广泛发动群众参与到禁毒人民战争中来，有力构建群防群治的禁毒网络，营造了边境辖区对涉毒违法犯罪“人人喊打”的良好局面。</span></span><br><span class="line"><span class="string">国家移民管理局有关负责人表示，下一步，移民管理机构将继续深入研判毒品犯罪藏毒方式、涉毒群体、贩运方式、绕关避卡等规律特点，动态调整布设执勤点位织密边境查缉堵截网络；以大案复盘扩线为突破口，摸排盘踞本地、辐射周边的涉毒群体，深挖贩毒团伙网络，采取专班运作、专案经营、挂牌督办、多警种协同作战、口岸边境执法协作等方式推进大案专案侦办；结合“法治宣传固边防”活动，加大边境辖区禁毒宣传力度，持续开展“禁毒流动课堂”“禁毒宣传下基层”“全民禁毒宣传月”等集中宣传活动，努力提高群众自觉参与禁毒斗争的意识，进一步阻断境外毒品渗透内流通道，最大限度减少毒品渗透危害。</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对输入进行分析、得到全量的关键词相关信息, 如权重(PR)、词性</span></span><br><span class="line">t4kw = TextRank4Keywords()</span><br><span class="line">t4kw.analyze(text=corpus)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 再基于上述analyze的结果进行按需提取需要的关键字</span></span><br><span class="line"><span class="built_in">print</span>(t4kw.get_key_words(<span class="number">4</span>))</span><br></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/1805387841.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97%E6%8F%90%E5%8F%96"><span class="toc-number">1.</span> <span class="toc-text">关键字提取</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/m42-orion/js/plugin.js"></script>
+<script src="/m42-orion/js/typed.js"></script>
+<script src="/m42-orion/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/m42-orion/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/m42-orion/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/m42-orion/photoswipe/photoswipe.min.js"></script>
+<script src="/m42-orion/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

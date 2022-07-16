@@ -822,4 +822,16 @@
         <tag>fastapi</tag>
       </tags>
   </entry>
+  <entry>
+    <title>文章关键字提取</title>
+    <url>/m42-orion/2022/06/27/%E6%96%87%E7%AB%A0%E5%85%B3%E9%94%AE%E5%AD%97%E6%8F%90%E5%8F%96/</url>
+    <content><![CDATA[<h2 id="关键字提取"><a href="#关键字提取" class="headerlink" title="关键字提取"></a>关键字提取</h2><p>关键字提取作为文本分析的重要一环，现在已经拥有很多工具可以使用，一般工具被分为两类，第一类是基于算法的关键字提取，也就是将文本进行分词操作后对文本当中词语出现的频率做出统计，同时对一些助词或者语气词进行过滤操作得到较为准确的关键词。第二类就是基于机器学习的关键词提取，需要对文章进行相应的向量计算，具体的算法需要依据实际情况考量。本文只展示第一种：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 加载模块</span></span><br><span class="line"><span class="keyword">from</span> textrank4ch.TextRank4Keyword <span class="keyword">import</span> TextRank4Keywords</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 准备预料, 输入时一个字符长串, 可含特殊字符</span></span><br><span class="line">corpus =  <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">据了解，为全面强化边境禁毒“清源断流”，严查严打跨境涉毒违法犯罪，国家移民管理机构广大移民管理警察在血与火、生与死的考验中，不惧牺牲，勇于担当，以“边境多查毒、内地少受害”为使命，昼夜坚守边境缉毒一线，充分发挥党政军警民合力强边固防机制作用，综合采取人防、物防、技防措施，严密边境前沿查堵、强化专案攻坚、紧抓边境辖区社会面管控、深化口岸边境执法协作，全力遏制境外毒品渗透内流和制毒物品走私出境，坚决筑起口岸边境禁毒的坚固防线。其间，广大移民管理警察还深入边境辖区村寨、学校，大力宣传法律法规及毒品危害，广泛发动群众参与到禁毒人民战争中来，有力构建群防群治的禁毒网络，营造了边境辖区对涉毒违法犯罪“人人喊打”的良好局面。</span></span><br><span class="line"><span class="string">国家移民管理局有关负责人表示，下一步，移民管理机构将继续深入研判毒品犯罪藏毒方式、涉毒群体、贩运方式、绕关避卡等规律特点，动态调整布设执勤点位织密边境查缉堵截网络；以大案复盘扩线为突破口，摸排盘踞本地、辐射周边的涉毒群体，深挖贩毒团伙网络，采取专班运作、专案经营、挂牌督办、多警种协同作战、口岸边境执法协作等方式推进大案专案侦办；结合“法治宣传固边防”活动，加大边境辖区禁毒宣传力度，持续开展“禁毒流动课堂”“禁毒宣传下基层”“全民禁毒宣传月”等集中宣传活动，努力提高群众自觉参与禁毒斗争的意识，进一步阻断境外毒品渗透内流通道，最大限度减少毒品渗透危害。</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 对输入进行分析、得到全量的关键词相关信息, 如权重(PR)、词性</span></span><br><span class="line">t4kw = TextRank4Keywords()</span><br><span class="line">t4kw.analyze(text=corpus)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 再基于上述analyze的结果进行按需提取需要的关键字</span></span><br><span class="line"><span class="built_in">print</span>(t4kw.get_key_words(<span class="number">4</span>))</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
 </search>
