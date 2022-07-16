@@ -871,4 +871,27 @@
         <tag>fastapi</tag>
       </tags>
   </entry>
+  <entry>
+    <title>中文ocr</title>
+    <url>/m42-orion/2022/07/17/%E4%B8%AD%E6%96%87ocr/</url>
+    <content><![CDATA[<h2 id="cnocr"><a href="#cnocr" class="headerlink" title="cnocr"></a>cnocr</h2><p>cnocr是用来做中文OCR的Python 3包。cnocr自带了训练好的识别模型，所以安装后即可直接使用。目前使用的识别模型是crnn，识别准确度约为 98.7%。</p>
+<p><strong>安装：</strong><code>pip install cnocr</code></p>
+<p>代码引用</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> cnocr <span class="keyword">import</span> CnOcr </span><br><span class="line">ocr = CnOcr() </span><br><span class="line">res = ocr.ocr_for_single_line(<span class="string">&#x27;test.png&#x27;</span>) </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Predicted Chars:&quot;</span>, res)</span><br></pre></td></tr></table></figure>
+
+<p>首次使用cnocr时，系统会自动从Dropbox下载zip格式的模型压缩文件，并存于 <del>/.cnocr目录。 下载后的zip文件代码会自动对其解压，然后把解压后的模型相关文件放于</del>/.cnocr/models目录。 如果系统不能自动从Dropbox成功下载zip文件，则需要手动下载此zip文件并把它放于 ~/.cnocr目录。 另一个下载地址是百度云盘(提取码为pg26)。 放置好zip文件后，后面的事代码就会自动执行了。</p>
+<p>但是这样的识别并不准确，当图片中的文字太复杂的时候就需要另一个库的支持用于识别文字。</p>
+<h2 id="cnstd"><a href="#cnstd" class="headerlink" title="cnstd"></a>cnstd</h2><p><strong>安装：</strong><code>pip install cnstd</code>  </p>
+<p>该库可以与cnocr无缝衔接：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> cnstd <span class="keyword">import</span> CnStd</span><br><span class="line"><span class="keyword">from</span> cnocr <span class="keyword">import</span> CnOcr</span><br><span class="line"></span><br><span class="line">std = CnStd()</span><br><span class="line">cn_ocr = CnOcr()</span><br><span class="line"></span><br><span class="line">box_infos = std.detect(<span class="string">&#x27;examples/taobao.jpg&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> box_info <span class="keyword">in</span> box_infos[<span class="string">&#x27;detected_texts&#x27;</span>]:</span><br><span class="line">    cropped_img = box_info[<span class="string">&#x27;cropped_img&#x27;</span>]</span><br><span class="line">    ocr_res = cn_ocr.ocr_for_single_line(cropped_img)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;ocr result: %s&#x27;</span> % <span class="built_in">str</span>(ocr_res))</span><br></pre></td></tr></table></figure>
+
+<p>官方链接： <img src="https://github.com/breezedeus/cnstd" alt="cnstd"> <img src="https://github.com/breezedeus/cnocr" alt="cnocr"></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
 </search>
