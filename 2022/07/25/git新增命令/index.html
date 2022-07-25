@@ -5,12 +5,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>念念不忘，必有回响</title>
+    <title>git新增命令 - 念念不忘，必有回响</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="望,"> 
-    <meta name="description" content="望的个人博客,"> 
+    <meta name="description" content="望的个人博客,在以前的git切换分支还有回滚版本的时候使用命令checkout，但是这略微繁琐了一点，也不容区分与记忆，因此后来git就更新了两个命令：
+123456789$ git switch aaa # 切,"> 
     <meta name="author" content="望"> 
     <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
     <link rel="icon" href="/m42-orion/img/favicon.png"> 
@@ -20,16 +21,18 @@
     
     
     <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="念念不忘，必有回响"/>
-    <meta name="twitter:description" content="望的个人博客,"/>
+    <meta name="twitter:title" content="git新增命令 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,在以前的git切换分支还有回滚版本的时候使用命令checkout，但是这略微繁琐了一点，也不容区分与记忆，因此后来git就更新了两个命令：
+123456789$ git switch aaa # 切,"/>
     
     
     
     
     <meta property="og:site_name" content="念念不忘，必有回响"/>
     <meta property="og:type" content="object"/>
-    <meta property="og:title" content="念念不忘，必有回响"/>
-    <meta property="og:description" content="望的个人博客,"/>
+    <meta property="og:title" content="git新增命令 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,在以前的git切换分支还有回滚版本的时候使用命令checkout，但是这略微繁琐了一点，也不容区分与记忆，因此后来git就更新了两个命令：
+123456789$ git switch aaa # 切,"/>
     
 <link rel="stylesheet" href="/m42-orion/css/diaspora.css">
 
@@ -38,27 +41,70 @@
 <body class="loading">
     <span id="config-title" style="display:none">念念不忘，必有回响</span>
     <div id="loader"></div>
-    <div id="single" class="page">
-    <div id="top">
-        <a class="iconfont icon-left image-icon" href="javascript:history.back()"></a>
-    </div>
-    <div class="section">
-        <div class="article">
-            <div class="main">
-                <div class="content">
-                
-                    <div class="set">
-  <h2>分类</h2>
-  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/m42-orion/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">23</span></li><li class="category-list-item"><a class="category-list-link" href="/m42-orion/categories/%E9%94%99%E8%AF%AF/">错误</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/m42-orion/categories/%E5%B7%A5%E4%BD%9C/">工作</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/m42-orion/categories/%E7%90%90%E4%BA%8B/">琐事</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/m42-orion/categories/%E6%B5%B7%E8%B1%A1%E8%AF%AD%E6%B3%95/">海象语法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/m42-orion/categories/%E6%9D%82%E8%B0%88/">杂谈</a><span class="category-list-count">1</span></li></ul>
-</div>
-
-                
-                </div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://liu__tao.gitee.io/m42-orion"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">git新增命令</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
             </div>
+            <div id="qr"></div>
         </div>
     </div>
+    <div class="scrollbar"></div>
 </div>
 
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">git新增命令</h1>
+        <div class="stuff">
+            <span>七月 25, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/m42-orion/tags/git/" rel="tag">git</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>在以前的git切换分支还有回滚版本的时候使用命令<code>checkout</code>，但是这略微繁琐了一点，也不容区分与记忆，因此后来git就更新了两个命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git switch aaa <span class="comment"># 切换到 aaa分支</span></span><br><span class="line">$ git switch -c aaa <span class="comment"># 创建aaa，然后切换到 aaa分支</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ git restore [--worktree] aaa <span class="comment"># 从staged中恢复aaa到worktree</span></span><br><span class="line">$ git restore --staged aaa <span class="comment"># 从repo中恢复aaa到staged</span></span><br><span class="line">$ git restore --staged --worktree aaa <span class="comment"># 从repo中恢复aaa到staged和worktree</span></span><br><span class="line">$ git restore --<span class="built_in">source</span> dev aaa <span class="comment"># 从指定commit中恢复aaa到worktree</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这个更新是很早以前的事情了，但是碍于现在有时候开发git版本被统一，没有跟上导致查到命令没办法使用，所以记录一下而已，所以这篇文章的配乐也不是那么促进学习。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/862768857.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+				
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
 </body>
 
 <script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>

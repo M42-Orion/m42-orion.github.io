@@ -955,4 +955,19 @@
         <tag>杂谈</tag>
       </tags>
   </entry>
+  <entry>
+    <title>git新增命令</title>
+    <url>/m42-orion/2022/07/25/git%E6%96%B0%E5%A2%9E%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<p>在以前的git切换分支还有回滚版本的时候使用命令<code>checkout</code>，但是这略微繁琐了一点，也不容区分与记忆，因此后来git就更新了两个命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git switch aaa <span class="comment"># 切换到 aaa分支</span></span><br><span class="line">$ git switch -c aaa <span class="comment"># 创建aaa，然后切换到 aaa分支</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$ git restore [--worktree] aaa <span class="comment"># 从staged中恢复aaa到worktree</span></span><br><span class="line">$ git restore --staged aaa <span class="comment"># 从repo中恢复aaa到staged</span></span><br><span class="line">$ git restore --staged --worktree aaa <span class="comment"># 从repo中恢复aaa到staged和worktree</span></span><br><span class="line">$ git restore --<span class="built_in">source</span> dev aaa <span class="comment"># 从指定commit中恢复aaa到worktree</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这个更新是很早以前的事情了，但是碍于现在有时候开发git版本被统一，没有跟上导致查到命令没办法使用，所以记录一下而已，所以这篇文章的配乐也不是那么促进学习。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
 </search>
