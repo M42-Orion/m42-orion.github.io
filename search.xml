@@ -894,4 +894,65 @@
         <tag>杂谈</tag>
       </tags>
   </entry>
+  <entry>
+    <title>git分支怎样改名字</title>
+    <url>/m42-orion/2022/07/25/git%E5%88%86%E6%94%AF%E6%80%8E%E6%A0%B7%E6%94%B9%E5%90%8D%E5%AD%97/</url>
+    <content><![CDATA[<p>假设分支名称为oldName,想要修改为 newName</p>
+<p>1.本地分支重命名(还没有推送到远程)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git branch -m oldName newName</span><br></pre></td></tr></table></figure>
+
+<p>2.远程分支重命名 (已经推送远程-假设本地分支和远程对应分支名称相同)</p>
+<p>a. 重命名远程分支对应的本地分支</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git branch -m oldName newName</span><br></pre></td></tr></table></figure>
+
+<p>b. 删除远程分支</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push --delete origin oldName</span><br></pre></td></tr></table></figure>
+
+<p>c. 上传新命名的本地分支</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push origin newName</span><br></pre></td></tr></table></figure>
+
+<p>d.把修改后的本地分支与远程分支关联</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git branch --set-upstream-to origin/newName</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>supervisor</title>
+    <url>/m42-orion/2022/07/17/supervisor/</url>
+    <content><![CDATA[<h2 id="supervisor"><a href="#supervisor" class="headerlink" title="supervisor"></a>supervisor</h2><p>supervisor是一个Python开发的通用的进程管理程序，可以管理和监控Linux上面的进程，能将一个普通的命令行进程变为后台daemon，并监控进程状态，异常退出时能自动重启，但它不能管理原本就是daemon的进程。并且supervisor本身自己也是一个python库，因此可以使用pip进行直接安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install supervisor</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>supervisor管理进程依赖的相应的配置文件，配置文件可以通过命令生成：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">echo_supervisord_conf &gt; /app/install_files/supervisor</span><br></pre></td></tr></table></figure>
+
+<p>配置文件当中有许多可以配置的选项，这里不一一列举，只给出部分配置：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[program:project_name]</span><br><span class="line">directory = 工作目录</span><br><span class="line"><span class="built_in">command</span> = 脚本的启动命令</span><br><span class="line">autostart = <span class="literal">true</span></span><br><span class="line">autorestart = <span class="literal">true</span></span><br><span class="line">user = loanward</span><br><span class="line">stdout_logfile = /data/log/pro_stdout.log</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>project_name</code>: 必须是唯一的，否则将会出现错乱  </li>
+<li><code>directory</code>: 填写你启动脚本时的工作目录，如果你使用脚本的绝对目录，那么directory可以不设置  </li>
+<li><code>command</code>:是执行脚本的命令，不需要使用nohup让其变为后代进程，supervisor会自动将其变为后台进程  </li>
+<li><code>autostart</code>: 配置为True， supervisor 启动时，任务跟随启动  </li>
+<li><code>autorestart</code>: 配置为True， 进程不存在时会自动重启， 默认重启3次，想修改重启次数，可以配置startretries， 设置最多重启的次数  </li>
+<li><code>user</code>: 设置启动任务时所用的用户，supervisor 有必要使用root账号启动，这样才有权限配置其他启动账号  </li>
+<li><code>stdout_logfile</code>: 配置输出日志  </li>
+</ul>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">supervisord -c /etc/supervisord.conf</span><br></pre></td></tr></table></figure>
+
+<p>其他命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">supervisorctl status                         <span class="comment"># 查看进程状态</span></span><br><span class="line">supervisorctl stop project_name              <span class="comment"># 终止某个进程</span></span><br><span class="line">supervisorctl start project_name             <span class="comment"># 启动某个进程</span></span><br><span class="line">supervisorctl restart project_name           <span class="comment"># 重启某个进程</span></span><br><span class="line">supervisorctl reread                         <span class="comment"># 更新配置，根据最新的配置启动程序，会启动已经运行的程序</span></span><br><span class="line">supervisorctl update                         <span class="comment"># 更新配置，重启配置有变化的进程，不会重启那些配置没有变化</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>当你的程序需要对程序的进程进行管理的时候，尤其是部署服务的时候，这个工具非常适合python。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
 </search>
