@@ -1037,4 +1037,51 @@
         <tag>杂谈</tag>
       </tags>
   </entry>
+  <entry>
+    <title>python进程基本使用</title>
+    <url>/m42-orion/2022/08/01/python%E8%BF%9B%E7%A8%8B%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><h3 id="p-start-与-p-join"><a href="#p-start-与-p-join" class="headerlink" title="p.start() 与 p.join()"></a><code>p.start()</code> 与 <code>p.join()</code></h3><ul>
+<li><code>p.start()</code>:当前进程准备就绪，等待被CPU调度，简单理解也就是启动进程</li>
+<li><code>p.join()</code>:等待当前进程的任务执行完毕后再向下继续执行</li>
+</ul>
+<p>代码如下：  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">task</span>(<span class="params">ele</span>):</span><br><span class="line">    <span class="built_in">print</span>(ele)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;执行中&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    multiprocessing.set_start_method(<span class="string">&quot;spawn&quot;</span>)</span><br><span class="line">    ele = []</span><br><span class="line"></span><br><span class="line">    res = multiprocessing.Process(target=task,args=(ele,))</span><br><span class="line">    res.start()</span><br><span class="line">    res.join()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;继续执行&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><code>res.join()</code>的出现会使得程序在执行完子进程之后再继续执行主进程，当然，上述案例已经让程序按顺序执行了，进程意义不大了。</p>
+<h3 id="p-daemon-bool-守护进程（必须放置在start之前）"><a href="#p-daemon-bool-守护进程（必须放置在start之前）" class="headerlink" title="p.daemon = bool,守护进程（必须放置在start之前）"></a><code>p.daemon = bool</code>,守护进程（必须放置在start之前）</h3><ul>
+<li><code>p.daemon = True</code>,设置为守护进程，主进程执行完毕后子进程也将被自动关闭。</li>
+<li><code>p.daemon = Flase</code>,设置为非守护进程，主进程等待子进程执行结束之后，主进程才会被关闭结束。</li>
+</ul>
+<h3 id="获取进程的信息"><a href="#获取进程的信息" class="headerlink" title="获取进程的信息"></a>获取进程的信息</h3><ul>
+<li><code>os.getpid</code>与<code>os.getppid</code>:获取进程与父进程的pid</li>
+<li><code>len(threading.enumerate())</code>:获取进程下线程个数</li>
+<li><code>p.name = &quot;第一个进程&quot;</code>:设置进程名字</li>
+<li><code>multiprocessing.current_process().name</code>:获取当前进程的名字</li>
+</ul>
+<h3 id="自定义进程类"><a href="#自定义进程类" class="headerlink" title="自定义进程类"></a>自定义进程类</h3><p>可以直接讲线程需要做的事情写run方法当中</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyProcess</span>(multiprocessing.Process):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">run</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;开始执行&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    multiprocessing.set_start_method(<span class="string">&quot;spawn&quot;</span>)</span><br><span class="line">    p = MyProcess(args=(<span class="string">&quot;info&quot;</span>,))</span><br><span class="line">    p.start()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;继续执行&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="CPU个数"><a href="#CPU个数" class="headerlink" title="CPU个数"></a>CPU个数</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">multiprocessing.cpu_count()</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据共享"><a href="#数据共享" class="headerlink" title="数据共享"></a>数据共享</h2><p>数据共享分为三种情况</p>
+<ul>
+<li>第一种情况是进程方式选择为<code>fork</code>模式，子进程拷贝了主进程的资源与数据，但是拷贝了已经是完全一个新的变量了，子进程改变并不能导致主进程改变，但是可以共享<code>文件对象对象</code>，实现多个进程同时写入一个文件当中。</li>
+<li>第二种情况是接入第三方数据共享平台，如多个进程操控同一个数据库或者同一个文件，通过修改第三方的数据进程数据共享。</li>
+<li>最后一种情况是创建一个数据共享对象实现数据共享，案例如下：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> multiprocessing、</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">task</span>(<span class="params">key,value</span>):</span><br><span class="line">    dic[key]=value</span><br><span class="line"></span><br><span class="line"><span class="comment"># 共享字典</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    m = multiprocessing.Manager()</span><br><span class="line">    dic = m.<span class="built_in">dict</span>()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">         p = multiprocessing.Process(target=task,args=(i,<span class="number">100</span>))</span><br><span class="line">         p.start()</span><br><span class="line">         p.join()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">task</span>(<span class="params">args</span>):</span><br><span class="line">    q.put(args)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 共享队列</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    q = multiprocessing.Queue()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">        p = multiprocessing.Process(target=task,args=(i,))</span><br><span class="line">        p.start()</span><br><span class="line">        p.join()</span><br><span class="line">    v1 = q.get()</span><br><span class="line">    <span class="built_in">print</span>(v1)</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
 </search>
