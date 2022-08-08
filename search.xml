@@ -1171,4 +1171,37 @@
         <tag>图像</tag>
       </tags>
   </entry>
+  <entry>
+    <title>进程锁</title>
+    <url>/m42-orion/2022/08/08/python%E8%BF%9B%E7%A8%8B%E9%94%81%E4%B8%8E%E8%BF%9B%E7%A8%8B%E6%B1%A0/</url>
+    <content><![CDATA[<p>如果多个进程抢占去对某一个共同的对象的操作的时候，为了防止操作产生冲突，这个时候就可以通过锁的操作来避免。</p>
+<h2 id="案例展示"><a href="#案例展示" class="headerlink" title="案例展示"></a>案例展示</h2><p>以下展示没有使用锁的案例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process,Value,Array</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test_func</span>(<span class="params">n,</span>):</span><br><span class="line">    n.value = n.value + <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    num = Value(<span class="string">&#x27;i&#x27;</span>,<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">20</span>):</span><br><span class="line">        p = Process(target=test_func,args=(num,))</span><br><span class="line">        p.start()</span><br><span class="line"></span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line">    <span class="built_in">print</span>(num.value)</span><br></pre></td></tr></table></figure>
+
+<p>当改变<code>time.sleep()</code>的时间，就会发现每一次打印的结果都不一样，是因为多个进程在操作同一个对象的原因，在实际的工作当中，多个进程操作同一个对象是非常危险的时候，很有可能导致数据错乱或者数据不同步的情况发生。但是有两种情况列外，就是在操作队列与管道的时候，这两种数据结构由于自身的性质，只能排队被操作，因此不用担心可能出现的错误。</p>
+<p>想要保证操作对象时候数据不会被其他进程串改，需要保证在一个进程操作的时候，其他进程不能够访问该对象，即当前进程锁住该对象。操作如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Lock</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">for_fun</span>(<span class="params">lock</span>):</span><br><span class="line">    lock.acquire() <span class="comment"># 加锁</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line">    lock.release() <span class="comment"># 释放锁</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    lock = Lock()</span><br><span class="line">    p = Process(target=for_fun(), args=(lock, ))</span><br></pre></td></tr></table></figure>
+
+<h2 id="进程池"><a href="#进程池" class="headerlink" title="进程池"></a>进程池</h2><blockquote>
+<p>为什么要有进程池的概念？</p>
+</blockquote>
+<p>在实际的需求当中，往往需要创建多个进程，但是进程也不能够随意创建，进程太多不方便管理的同时还会降低效率，因此诞生了进程池，进程池这个对象维护了一个进程管理器，在这个进程池当中，进程是恒定的，被事先设置过。进程池会稳定维护四个进程，并且当任务传递过来后，进程池会接纳所有任务并且让任务等待也存在于进程池当中，不会因为进程不够用而阻塞程序的正常运行。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ProcessPoolExecutor,ThreadPoolExecutor</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">task</span>(<span class="params">num</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;执行&quot;</span>,num)</span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    pool = ProcessPoolExecutor(<span class="number">4</span>)</span><br><span class="line">    <span class="keyword">for</span> ele <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">        pool.submit(task,ele)</span><br></pre></td></tr></table></figure>
+
+<p>在进程池当中，进程都被进程池管理，如果想要进程在执行完毕后再做其他操作可以使用回调函数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;进程池 回调函数 回调函数会把任务函数的结果作为参数执行&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">work</span>():</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;%d 进程 work&quot;</span> % os.getpid())</span><br><span class="line">    <span class="keyword">return</span> time.time()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">call</span>(<span class="params">res</span>):</span><br><span class="line">    <span class="comment"># time.sleep(1)</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;处理回调结果：&#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(res)))</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    pool = Pool(<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">        <span class="comment"># 在进程池中的每个任务执行完毕时，执行回调函数</span></span><br><span class="line">        <span class="comment"># 使用callback回调函数时，会把工作任务func方法的返回结果传给callback方法进行处理</span></span><br><span class="line">        res = pool.apply_async(func=work, callback=call)</span><br><span class="line">    pool.close()  <span class="comment"># 必须等进程池关闭后，才能使用join()方法</span></span><br><span class="line">    pool.join()  <span class="comment"># 主进程等待子进程结束</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;main end&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：如果进程池当中要使用进程锁。则需要基于Manager钟的Lock和RLock来实现。</p>
+</blockquote>
+<p>这篇写得草率了，唉！</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
 </search>
