@@ -71,7 +71,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install supervisor</span><br></pre></td></tr></table></figure>
 
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>supervisor管理进程依赖的相应的配置文件，配置文件可以通过命令生成：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo_supervisord_conf &gt; /app/install_files/supervisor</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo_supervisord_conf &gt; /app/install_files/supervisor.conf</span><br></pre></td></tr></table></figure>
 
 <p>配置文件当中有许多可以配置的选项，这里不一一列举，只给出部分配置：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[program:project_name]</span><br><span class="line">directory = 工作目录</span><br><span class="line"><span class="built_in">command</span> = 脚本的启动命令</span><br><span class="line">autostart = <span class="literal">true</span></span><br><span class="line">autorestart = <span class="literal">true</span></span><br><span class="line">user = loanward</span><br><span class="line">stdout_logfile = /data/log/pro_stdout.log</span><br></pre></td></tr></table></figure>
@@ -86,7 +86,7 @@
 <li><code>stdout_logfile</code>: 配置输出日志  </li>
 </ul>
 <h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">supervisord -c /etc/supervisord.conf</span><br></pre></td></tr></table></figure>
-
+<p>这里路径为你当前文件所处的路径</p>
 <p>其他命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">supervisorctl status                         <span class="comment"># 查看进程状态</span></span><br><span class="line">supervisorctl stop project_name              <span class="comment"># 终止某个进程</span></span><br><span class="line">supervisorctl start project_name             <span class="comment"># 启动某个进程</span></span><br><span class="line">supervisorctl restart project_name           <span class="comment"># 重启某个进程</span></span><br><span class="line">supervisorctl reread                         <span class="comment"># 更新配置，根据最新的配置启动程序，会启动已经运行的程序</span></span><br><span class="line">supervisorctl update                         <span class="comment"># 更新配置，重启配置有变化的进程，不会重启那些配置没有变化</span></span><br></pre></td></tr></table></figure>
 
