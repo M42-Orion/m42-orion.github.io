@@ -1172,7 +1172,7 @@
       </tags>
   </entry>
   <entry>
-    <title>进程锁与进程锁</title>
+    <title>进程锁与进程池</title>
     <url>/m42-orion/2022/08/08/python%E8%BF%9B%E7%A8%8B%E9%94%81%E4%B8%8E%E8%BF%9B%E7%A8%8B%E6%B1%A0/</url>
     <content><![CDATA[<p>如果多个进程抢占去对某一个共同的对象的操作的时候，为了防止操作产生冲突，这个时候就可以通过锁的操作来避免。</p>
 <h2 id="案例展示"><a href="#案例展示" class="headerlink" title="案例展示"></a>案例展示</h2><p>以下展示没有使用锁的案例：</p>
@@ -1253,6 +1253,72 @@
       <categories>
         <category>学习</category>
         <category>python</category>
+      </categories>
+      <tags>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>conda那些命令</title>
+    <url>/m42-orion/2022/08/11/conda%E9%82%A3%E4%BA%9B%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><ul>
+<li><p>创建虚拟环境 ： <code>conda create --name my_first_env python=3.6</code></p>
+</li>
+<li><p>列出虚拟环境 ： <code>conda env list</code></p>
+</li>
+<li><p>激活虚拟环境 ： <code>conda activate my_first_env</code></p>
+</li>
+<li><p>查看环境信息 ： <code>conda info -e</code></p>
+</li>
+<li><p>根据路径激活虚拟环境 ： <code>conda source /root/python/bin/activate</code></p>
+</li>
+<li><p>推出虚拟环境 ： <code>conda deactivate</code></p>
+</li>
+<li><p>删除虚拟环境 ： <code>conda remove -n your_env_name --all</code></p>
+</li>
+<li><p>创建时候安装需要的包 ： <code>conda create -n env_name numpy matplotlib python=2.7</code></p>
+</li>
+<li><p>在离线的时候创建虚拟环境 ： <code>conda create -n env_name --offline python=3.8</code></p>
+</li>
+<li><p>环境复制 ： <code>conda create --name new_env_name --clone old_env_name</code></p>
+</li>
+<li><p>查看所有包 : <code>conda list</code></p>
+</li>
+</ul>
+<h2 id="conda-环境打包"><a href="#conda-环境打包" class="headerlink" title="conda 环境打包"></a>conda 环境打包</h2><p>安装需要的包：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> activate sample</span><br><span class="line">conda install conda-pack</span><br><span class="line">conda isntall -c conda-forge conda-pack</span><br></pre></td></tr></table></figure>
+
+<p>或pip:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install conda-pack</span><br><span class="line"><span class="comment"># 或者源码</span></span><br><span class="line">pip install git+https://github.com/conda/conda-pack.git</span><br></pre></td></tr></table></figure>
+
+<p>打包：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">conda-pack</span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line"><span class="comment"># example.tar.gz 即为打包完成的输出文件</span></span><br><span class="line"><span class="built_in">source</span> deactivate</span><br></pre></td></tr></table></figure>
+
+<p>解压与激活：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -xf example.tar.gz -C myenv</span><br><span class="line"><span class="built_in">source</span> myenv/bin/activate</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>值得注意的是，打包好的环境不需要系统当中提前安装基础环境，而是在解压激活之后就能够即刻使用。</p>
+</blockquote>
+<h2 id="关于conda的源"><a href="#关于conda的源" class="headerlink" title="关于conda的源"></a>关于conda的源</h2><p>添加源命令:</p>
+<p><code>conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/main/</code></p>
+<p>删除源命令：</p>
+<p><code>conda config --remove channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</code></p>
+<p>换回默认源：</p>
+<p><code>conda config --remove-key channels</code></p>
+<p>查看已经添加的源:</p>
+<p><code>conda config --show-sources</code></p>
+<p>移除镜像源:</p>
+<p><code>conda config --remove-key channels</code></p>
+<p>直接安装镜像源的某package：</p>
+<p><code>conda install -c 镜像源地址 package-name</code></p>
+<h2 id="pip的源"><a href="#pip的源" class="headerlink" title="pip的源"></a>pip的源</h2><p>换源：</p>
+<p><code>pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</code></p>
+<p>临时源：</p>
+<p><code>pip install package -i http://mirrors.aliyun.com/pypi/simple/</code></p>
+]]></content>
+      <categories>
+        <category>学习</category>
       </categories>
       <tags>
         <tag>杂谈</tag>
