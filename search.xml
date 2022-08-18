@@ -1324,4 +1324,48 @@
         <tag>杂谈</tag>
       </tags>
   </entry>
+  <entry>
+    <title>shell环境变量</title>
+    <url>/m42-orion/2022/08/18/shell%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<p><code>bash shell</code>用一个叫作环境变量(environment variable)的特性来存储有关shell会话和工作环境的信息(这也是它们被称作环境变量的原因)。这项特性允许你在内存中存储数据，以便程序或shell中运行的脚本能够轻松访问到它们。这也是存储持久数据的一种简便方法。</p>
+<p>简单来说环境变量就是在交互环境中预先被设定的变量，能够让程序启动的时候更快的找到他们或者为某些程序预先设置运行条件的变量设置。如电脑中两个Java，指定环境变量能够让Java默认启动第一个或者第二个。</p>
+<blockquote>
+<p>在shell编程中尽量使用大写字符作为变量名称。并且环境变量不能够以数字作为变量名的开头。</p>
+</blockquote>
+<h2 id="环境变量发赋值与输出"><a href="#环境变量发赋值与输出" class="headerlink" title="环境变量发赋值与输出"></a>环境变量发赋值与输出</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">变量名称=变量值</span><br><span class="line">echo $变量名称</span><br></pre></td></tr></table></figure>
+
+<h2 id="全局变量与局部变量"><a href="#全局变量与局部变量" class="headerlink" title="全局变量与局部变量"></a>全局变量与局部变量</h2><p>全局变量生效与所有的shell环境中。 <code>export a=1</code> </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@my server~]# echo $b</span><br><span class="line">2</span><br><span class="line">[root@myserver~]# b=2</span><br><span class="line">[root@myserver~]# export b</span><br><span class="line">[root@myserver~]# bash</span><br><span class="line">[root@myserver~]# echo $b</span><br><span class="line">2</span><br></pre></td></tr></table></figure>
+
+<p>局部:仅生效与当前的环境中  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@myserver~]# b=2</span><br></pre></td></tr></table></figure>
+
+<p>如何查看系统中的环境变量</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@myserver~]#env | grep HOME</span><br><span class="line">HOME=/root</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除环境变量"><a href="#删除环境变量" class="headerlink" title="删除环境变量"></a>删除环境变量</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@myserver~]# env | grep a=1</span><br><span class="line">a=1</span><br><span class="line">[root@myserver~]# unset a </span><br><span class="line">[root@myserver~]# env | grep a=1 </span><br></pre></td></tr></table></figure>
+
+<h2 id="etc-profile"><a href="#etc-profile" class="headerlink" title="/etc/profile"></a>/etc/profile</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看环境变量</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line"><span class="comment"># 新增环境变量</span></span><br><span class="line">PATH=<span class="variable">$PATH</span>:/root</span><br><span class="line"><span class="comment"># 修改文件</span></span><br><span class="line">vim /etc/profie</span><br><span class="line"><span class="comment"># 重新加载环境变量生效</span></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+
+<h2 id="环境变量涉及的文件"><a href="#环境变量涉及的文件" class="headerlink" title="环境变量涉及的文件"></a>环境变量涉及的文件</h2><ul>
+<li><code>/etc/profile</code> : The systemwide initialization file, executed for login shells。系统初始化文件，在login shells时执行</li>
+<li><code>/etc/bash.bash_logout</code> : The systemwide login shell cleanup file, executed when a login shell exits。系统的登录shell清理文件，当一个登录shell退出时执行。</li>
+<li><code>~/.bash_profile</code> : The personal initialization file, executed for login shells。个人初始化文件，为登录shell执行。</li>
+<li><code>~/.bashrc</code> : The individual per-interactive-shell startup file。每个交互式shell启动文件。</li>
+<li><code>~/.bash_logout</code> : The individual login shell cleanup file, executed when a login shell exits。单个登录shell清理文件，当一个登录shell退出时执行。</li>
+</ul>
+<p>这些文件涉及到bash与shell相关的知识，但是在个人配置环境变量的时候经常接触到，了解文件的作用机制可以更好的在不同文件当中设置环境变量</p>
+<h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>java 环境变量的配置：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/java/jdk1.8.0_241</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line">export CLASSPATH=.:$JAVA_HIOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>学习</category>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
 </search>
