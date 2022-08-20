@@ -1315,7 +1315,7 @@
 <h2 id="pip的源"><a href="#pip的源" class="headerlink" title="pip的源"></a>pip的源</h2><p>换源：</p>
 <p><code>pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</code></p>
 <p>临时源：</p>
-<p><code>pip install package -i http://mirrors.aliyun.com/pypi/simple/</code></p>
+<p><code>pip install package -i https://pypi.tuna.tsinghua.edu.cn/simple</code></p>
 ]]></content>
       <categories>
         <category>学习</category>
@@ -1366,6 +1366,88 @@
       </categories>
       <tags>
         <tag>杂谈</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>top命令基础</title>
+    <url>/m42-orion/2022/08/18/top%E5%91%BD%E4%BB%A4%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<p>top命令是Linux下常用的性能分析工具,能够实时显示系统中各个进程的资源占用状况,类似于Windows的任务管理器。top命令展示的信息众多，初学者可能不能够快速掌握所有信息概况，以下对top命令基础进行简单讲解。</p>
+<h2 id="top"><a href="#top" class="headerlink" title="top"></a>top</h2><p>在使用了top命令后会出现以下数据样式：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">top - 01:05:24 up 9 min,  0 <span class="built_in">users</span>,  load average: 0.00, 0.04, 0.05</span><br><span class="line">Tasks: 138 total,   1 running, 137 sleeping,   0 stopped,   0 zombie</span><br><span class="line">%Cpu(s):  0.1 us,  0.3 sy,  0.0 ni, 99.6 <span class="built_in">id</span>,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">KiB Mem :  7990064 total,  7001532 free,   698000 used,   290532 buff/cache</span><br><span class="line">KiB Swap:  8257532 total,  8257532 free,        0 used.  7043352 avail Mem </span><br><span class="line"></span><br><span class="line">   PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                                                                                   </span><br><span class="line">  1620 root      20   0  699732  38824  15664 S   0.7  0.5   0:02.71 node                                                                                                                                                      </span><br><span class="line">  1655 root      20   0 1023288 124372  21240 S   0.7  1.6   0:05.07 node                                                                                                                                                      </span><br><span class="line">  1398 root      20   0  157084   6040   4352 S   0.3  0.1   0:00.33 sshd                                                                                                                                                      </span><br><span class="line">  1474 root      20   0  954828  60136  18520 S   0.3  0.8   0:02.79 node                                                                                                                                                      </span><br><span class="line">     1 root      20   0  193704   6772   4140 S   0.0  0.1   0:00.95 systemd                                                                                                                                                   </span><br><span class="line">     2 root      20   0       0      0      0 S   0.0  0.0   0:00.00 kthreadd                                                                                                                                                  </span><br><span class="line">     3 root      20   0       0      0      0 S   0.0  0.0   0:00.06 kworker/0:0                                                                                                                                               </span><br><span class="line">     4 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/0:0H                                                                                                                                              </span><br><span class="line">     6 root      20   0       0      0      0 S   0.0  0.0   0:00.01 ksoftirqd/0                                                                                                                                               </span><br><span class="line">     7 root      rt   0       0      0      0 S   0.0  0.0   0:00.02 migration/0  </span><br></pre></td></tr></table></figure>
+
+<h3 id="系统概况"><a href="#系统概况" class="headerlink" title="系统概况"></a>系统概况</h3><p>首先是第一行，内容是：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">top - 01:05:24 up 9 min,  0 <span class="built_in">users</span>,  load average: 0.00, 0.04, 0.05</span><br></pre></td></tr></table></figure>
+
+<p>内容分别是：</p>
+<ul>
+<li><code>top</code> : 名称</li>
+<li><code>01:05:24</code> ： 系统当前时间</li>
+<li><code>up 9 min</code> ： 用户登录时间</li>
+<li><code>0 users</code> ： 当前登录用户数量</li>
+<li><code>load average: 0.00, 0.04, 0.05</code> ： 系统负载 一分钟/五分钟/十五分钟 三个时间段的统计</li>
+</ul>
+<blockquote>
+<p>注意 ： 对于单CPU的机器而言，1.00已经是满负载了</p>
+</blockquote>
+<h3 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h3><p>然后是第二行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Tasks: 138 total,   1 running, 137 sleeping,   0 stopped,   0 zombie</span><br></pre></td></tr></table></figure>
+
+<p>内容分别是：</p>
+<ul>
+<li><code>Tasks: 138 total</code> : 进程任务总数138个</li>
+<li><code>1 running</code> : 运行进程1个</li>
+<li><code>137 sleeping</code> : 137个进程正在睡眠状态</li>
+<li><code>0 stopped</code> : 停止进程0个</li>
+<li><code>0 zombie</code> : 僵尸进程0个</li>
+</ul>
+<h3 id="CPU-状态"><a href="#CPU-状态" class="headerlink" title="CPU 状态"></a>CPU 状态</h3><p>接着第三行： </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">%Cpu(s):  0.1 us,  0.3 sy,  0.0 ni, 99.6 <span class="built_in">id</span>,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>0.1 us</code> : 用户空间</li>
+<li><code>0.3 sy</code> : 内核空间</li>
+<li><code>0.0 ni</code> : 用户定义优先级</li>
+<li><code>99.6 id</code> : 空闲</li>
+<li><code>0.0 wa</code> : 等待io</li>
+<li><code>0.0 hi</code> : 硬中断</li>
+<li><code>0.0 si</code> : 软中断</li>
+<li><code>0.0 st</code> : 虚拟机</li>
+</ul>
+<p>以上数字含义为百分比</p>
+<h3 id="内存和Swap交换区状态"><a href="#内存和Swap交换区状态" class="headerlink" title="内存和Swap交换区状态"></a>内存和Swap交换区状态</h3><p>紧接第四行与第五行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">KiB Mem :  7990064 total,  7001532 free,   698000 used,   290532 buff/cache</span><br><span class="line">KiB Swap :  8257532 total,  8257532 free,        0 used.  7043352 avail Mem </span><br></pre></td></tr></table></figure>
+
+<p><code>KiB Mem</code>为物理内存区，<code>KiB Swap</code>是交换区，从左至右分别是总量、空闲、已经使用、（内核缓存用量与可用内存）</p>
+<h3 id="最后内容"><a href="#最后内容" class="headerlink" title="最后内容"></a>最后内容</h3><p>紧接着是关于系统中正在运行的进程信息，信息<strong>title</strong>如下:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>PID</code> : 进程id</li>
+<li><code>USER</code> : 进程归属者</li>
+<li><code>PR</code> : 优先级</li>
+<li><code>NI</code> : nice值</li>
+<li><code>VIRT</code> : 虚拟内存</li>
+<li><code>RES</code> : 无力内存</li>
+<li><code>SHR S  %CPU %MEM</code> : 共享内存/CPU/内存</li>
+<li><code>TIME+ COMMAND</code> : CPU总时间/命令</li>
+</ul>
+<h2 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h2><ul>
+<li><code>shift+e</code> : 切换内存显示模式（可重复按键切换）</li>
+<li><code>z</code> : 切换是否彩色显示（可重复按键切换）</li>
+<li><code>m</code> : 切换内存显示模式（可重复按键切换）</li>
+<li><code>e</code> : 切换底部进程中单位的显示模式（可重复按键切换）</li>
+<li><code>b</code> : 切换高亮选中（可重复按键切换）</li>
+<li><code>W</code> : 把当前配置保存到文件中，下次启动top会使用当前的配置</li>
+<li><code>h</code> : 进入帮助菜单 (进入菜单后，可按ESC或q退出帮助菜单)</li>
+<li><code>q</code> : 退出top命令</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
 </search>
