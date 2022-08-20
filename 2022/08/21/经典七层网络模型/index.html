@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>经典七层网络模型 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,以前： 为什么我用不到面试还要问？现在： 为什么我会用到这东西啊？
+前言七层网络模型是每一个程序员在基础学习的时候都需要面对的一个知识点，与其相关的还有五层模型与四层模型，其实都是一个东西在不同场景,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/m42-orion/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="经典七层网络模型 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,以前： 为什么我用不到面试还要问？现在： 为什么我会用到这东西啊？
+前言七层网络模型是每一个程序员在基础学习的时候都需要面对的一个知识点，与其相关的还有五层模型与四层模型，其实都是一个东西在不同场景,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="经典七层网络模型 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,以前： 为什么我用不到面试还要问？现在： 为什么我会用到这东西啊？
+前言七层网络模型是每一个程序员在基础学习的时候都需要面对的一个知识点，与其相关的还有五层模型与四层模型，其实都是一个东西在不同场景,"/>
+    
+<link rel="stylesheet" href="/m42-orion/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://liu__tao.gitee.io/m42-orion"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">经典七层网络模型</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">经典七层网络模型</h1>
+        <div class="stuff">
+            <span>八月 21, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/m42-orion/tags/%E5%8D%8F%E8%AE%AE/" rel="tag">协议</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/m42-orion/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>以前： 为什么我用不到面试还要问？<br>现在： 为什么我会用到这东西啊？</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>七层网络模型是每一个程序员在基础学习的时候都需要面对的一个知识点，与其相关的还有五层模型与四层模型，其实都是一个东西在不同场景使用和描述的不同，本质上差不多。</p>
+<p>七层模型全称是OSI七层模型，其中OSI叫做国际标准化组织，这个组织专门为全球制定一些标准。</p>
+<h2 id="OSI七层模型"><a href="#OSI七层模型" class="headerlink" title="OSI七层模型"></a>OSI七层模型</h2><p>依照顺序从上往下分别是：</p>
+<ul>
+<li>应用层</li>
+<li>表示层</li>
+<li>会话层</li>
+<li>传输层</li>
+<li>网络层</li>
+<li>数据链路层</li>
+<li>物理层</li>
+</ul>
+<p>建立七层模型的主要目的是为解决各种网络互联时遇到的兼容性问题。其最大的优点是将服务、接口和协议这三个概念明确地区分开来：服务说明某一层为上一层提供一些什么功能，接口说明上一层如何使用下层的服务，而协议则是如何实现本层的服务。如此各层之间就具有很强的独立性，互联网络中各实体采用什么样的协议是没有限制的，只要向上提供服务并且不改变相临层的接口就可以了。网络七层的划分也是为了使用网络的不同功能模块分担起不同的职责，也就带来如下好处：</p>
+<ul>
+<li>减轻问题的复杂程度，一旦发生网络故障，可迅速定位故障所处层次</li>
+<li>在各层分别定义标准接口，使具备相同对等层的不同网络设备能实现互操作。各层之间相对独立，一种高层次协议可放在多种低层次协议上运行。</li>
+<li>能有效刺激网络技术革新，因为每次更新都可以在小范围内进行，不需要更改整个系统</li>
+</ul>
+<p>七层模型每一层都有属于自己层的特殊协议，担任着该层的数据传输功能，数据在物理介质当中传输的时候，协议解析是从下往上解析，然后再从上往下封装。</p>
+<h3 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h3><p>是最靠近应用程序的OSI层。由用户使用相应的接口实现自己的服务。</p>
+<p>协议有：HTTP FTP SMTP等</p>
+<h3 id="表示层"><a href="#表示层" class="headerlink" title="表示层"></a>表示层</h3><p>数据的表示、安全、压缩。可确保一个系统的应用层所发送的信息被另一个系统的应用层读取。格式有: JPEG、ASCII、加密格式等。</p>
+<p>在表示层，数据按照网络能理解的方案进行格式化。管理数据的加密与解密。</p>
+<h3 id="会话层"><a href="#会话层" class="headerlink" title="会话层"></a>会话层</h3><p>建立、管理、终止会话，对应主机进程，指本地主机与远程主机正在进行的会话。负责在网络的两节点之间建立、维持和终止通信。</p>
+<p>会话层的功能包括：建立通信链接，保持会话过程通信连接的畅通，同步两个节点之间的对话，决定通信是否被终端以及通信中断时从何处重新发送。</p>
+<p>有人会把会话层称为网络通信得到“交通警察”。当通过拨号向你的ISP（因特网服务提供商）请求连接到因特网时，ISP服务器上的会话层向你与你的PC客户机上的会话层进行协商连接。若你的电话线偶然脱落时，会话层将会检测到连接中断并重新发起连接。会话层通过决定节点通信的优先级和通信时间的长短来设置通信期限。</p>
+<h3 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h3><p>定义传输数据的协议端口号，以及流控和差错校验。</p>
+<p>协议有：TCP UDP等，数据包一旦离开网卡即进入网络传输层。定义了一些传输数据的协议和端口号，如：TCP（传输控制协议，传输效率低，可靠性强，用于传输可靠性要求高，数据量大的数据），UDP（用户数据报协议，用于传输可靠性要求不高，数据量小的数据）。主要是讲从下层接收的数据进行分段和传输，到达目的地后再进行重组。常常把这一层数据叫做段。</p>
+<p>OSI模型中最终要的一层。传输协议同时进行浏览控制或是基于接收方可接收数据的快慢程度规定适当的发送速率。除此之外，传输层按照网络能处理的最大尺寸将较长的数据包进行强制分割。例如，以太网无法接收大于1500字节的数据包。发送方节点的传输层将数据分割成较小的数据片，同时对每一数据片安排一个序列号，以便数据到达接收方节点的传输层时，能以正确的顺序重组。该过程称作排序。</p>
+<h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><p>进行逻辑地址寻址，实现不同网络之间的路径选择等。协议有：ICMP IGMP IP ARP RARP等。</p>
+<p>在位于不同地理位置的网络中的两个主机系统之间提供连接和路径选择。Internet的发展使得从世界各站点访问信息的用户量大大增加，网络层正式管理这种连接的层。</p>
+<p>OSI模型的第三层，其主要功能是将网络地址翻译成对应的物理地址，并决定如何将数据从发送方路由到接收方。</p>
+<p>网络层通过综合考虑发送优先权、网络拥塞程度、服务质量以及可选路由的花费来决定从一个网络中节点A到另一个网络节点B的最佳路径。由于网络层处理，并智能指导数据传送，路由器连接网络各段，所以路由器属于网络层。在网络中，”路由“是基于编址方案、使用模式以及可达性来指导数据的发送。</p>
+<p>网络层用于本地LAN网段之上的计算机系统建立通信，它之所以可以这样做，是因为它有自已的路由地址结构，这种结构与第二层机器地址是分开的、独立的。这种协议称为路由或可路由协议。路由协议包括IP、Novell公司的IPX以及AppleTalk协议。</p>
+<h3 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h3><p>建立逻辑连接、进行硬件地址寻址、差错校验等功能。将比特组合成字节进而组合成帧，用MAC地址访问介质，错误发现但不能纠正。</p>
+<p>主要功能是如何在不可靠的物理线路上进行数据的可靠传递。为了保证传输，从网络层接收的数据被分割成特定的可被物理层传输的帧。帧是用来移动数据的结构包，它不仅包括原始数据，还包括发送方和接收方的物理地址以及检错和控制信息。其中的地址确定了帧将发往何处，而纠错和控制信息则确保帧无差错到达。如果在传送数据时，接收点检测到所传数据中有差错，就要通知发送方重发这一帧。</p>
+<p>数据链路层在物理层提供比特流服务的基础上，建立相邻节点之间的数据链路，通过差错控制提供数据帧在信道上无差错的传输，并进行各电路上的动作系列。作用主要是物理地址寻址、数据的成帧、流量控制、数据的检错、重发等。</p>
+<h3 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h3><p>建立、维护、断开物理连接。</p>
+<p>主要定义物理设备标准，如网线的接口类型，光纤的接口类型，各种传输介质的传输速率等。主要作用是传输比特流（就是有1、0转化为电力强弱来进行传输，到达目的地后在转化为1、0）。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>深入理解网模型有利于在逆向方向深入理解。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/479320305.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OSI%E4%B8%83%E5%B1%82%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">OSI七层模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82"><span class="toc-number">2.1.</span> <span class="toc-text">应用层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E7%A4%BA%E5%B1%82"><span class="toc-number">2.2.</span> <span class="toc-text">表示层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%9A%E8%AF%9D%E5%B1%82"><span class="toc-number">2.3.</span> <span class="toc-text">会话层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E8%BE%93%E5%B1%82"><span class="toc-number">2.4.</span> <span class="toc-text">传输层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="toc-number">2.5.</span> <span class="toc-text">网络层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="toc-number">2.6.</span> <span class="toc-text">数据链路层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%B1%82"><span class="toc-number">2.7.</span> <span class="toc-text">物理层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/m42-orion/js/plugin.js"></script>
+<script src="/m42-orion/js/typed.js"></script>
+<script src="/m42-orion/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/m42-orion/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/m42-orion/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/m42-orion/photoswipe/photoswipe.min.js"></script>
+<script src="/m42-orion/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>
