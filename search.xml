@@ -1565,7 +1565,7 @@
 <h2 id="原理讲解"><a href="#原理讲解" class="headerlink" title="原理讲解"></a>原理讲解</h2><p>首先确认笛卡尔坐标系当中想要确定一条线需要确定两个值,即方程式<code>y = kx + q</code>当中的<code>k</code>与<code>q</code>,确认了这两个值之后就能确认一条线的位置。于是乎，在霍夫空间中就以<code>(k,q)</code>的点来表示一条线段，由此实现了笛卡尔坐标系到霍夫空间的转化。</p>
 <p>反之如果知道笛卡尔坐标系当中的一个点，如<code>(4,5)</code>，怎么推导霍夫空间的函数呢？此时只需要带入方程式：<code>y = kx + q</code>,即可得出<code>q = 5-4x</code>。</p>
 <h3 id="特殊情况"><a href="#特殊情况" class="headerlink" title="特殊情况"></a>特殊情况</h3><p>在特殊的情况下，如果出现由<code>(1,2)、(1,2)、(1,3)、(1,4)</code>这四个点组成的直线，直线垂直于坐标轴x轴。原来的方程<code>y = kx + q</code>已经不能够适用在这样的情况之下了，该怎么办呢？</p>
-<p>这时候就需要祭出我们的极坐标系了！在极坐标系当中，一条线的方程式是<code>ρ = xcosθ + ysinθ</code>。其中<code>ρ</code>代表线上一点到原点的距离，<code>θ</code>代表线上一点于原点的连线和x轴的夹角，因此同理可以得出极坐标系于霍夫空间的对应关系，以极坐标系上的点为例。以<code>(1,0)</code>为例，带入方程：<code>ρ = xcosθ + ysinθ</code>可得``ρ = cosθ`</p>
+<p>这时候就需要祭出我们的极坐标系了！在极坐标系当中，一条线的方程式是<code>ρ = xcosθ + ysinθ</code>。其中<code>ρ</code>代表线上一点到原点的距离，<code>θ</code>代表线上一点于原点的连线和x轴的夹角，因此同理可以得出极坐标系于霍夫空间的对应关系，以极坐标系上的点为例。以<code>(1,0)</code>为例，带入方程：<code>ρ = xcosθ + ysinθ</code>可得<code>ρ = cosθ</code></p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>笛卡尔坐标系通过与霍夫空间进行转化，能够将两者的点与线进行映射从而找到图像中的线，因此只要使用适当的线的函数通过映射关系理论上可以找出任意的线甚至多边形。而在opnecv当中，已经通过python代码写好工具提供给我们使用了，代码案例如下：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">img = cv.imread(cv.samples.findFile(<span class="string">&#x27;sudoku.png&#x27;</span>))</span><br><span class="line">gray = cv.cvtColor(img,cv.COLOR_BGR2GRAY)</span><br><span class="line">edges = cv.Canny(gray,<span class="number">50</span>,<span class="number">150</span>,apertureSize = <span class="number">3</span>)</span><br><span class="line">lines = cv.HoughLines(edges,<span class="number">1</span>,np.pi/<span class="number">180</span>,<span class="number">200</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">    rho,theta = line[<span class="number">0</span>]</span><br><span class="line">    a = np.cos(theta)</span><br><span class="line">    b = np.sin(theta)</span><br><span class="line">    x0 = a*rho</span><br><span class="line">    y0 = b*rho</span><br><span class="line">    x1 = <span class="built_in">int</span>(x0 + <span class="number">1000</span>*(-b))</span><br><span class="line">    y1 = <span class="built_in">int</span>(y0 + <span class="number">1000</span>*(a))</span><br><span class="line">    x2 = <span class="built_in">int</span>(x0 - <span class="number">1000</span>*(-b))</span><br><span class="line">    y2 = <span class="built_in">int</span>(y0 - <span class="number">1000</span>*(a))</span><br><span class="line">    cv.line(img,(x1,y1),(x2,y2),(<span class="number">0</span>,<span class="number">0</span>,<span class="number">255</span>),<span class="number">2</span>)</span><br><span class="line">cv.imwrite(<span class="string">&#x27;houghlines3.jpg&#x27;</span>,img)</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
@@ -1573,6 +1573,48 @@
       </categories>
       <tags>
         <tag>图像处理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python保存变量</title>
+    <url>/m42-orion/2022/08/29/python%E4%BF%9D%E5%AD%98%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<p>在python程序当中，如果需要涉及到读取体积较大文件或者涉及较为复杂的变量处理的时候，在变量的处理或者序列化的阶段可能非常耗费时间，基于此我们可以提前将变量保存起来形成文件的格式。与原来的读取文本文件的方式不同，变量保存的文件读取之后直接就是包含数据结构与对象类型的变量，并且读取速度也会相应的快很多。</p>
+<p>python为不同的情况提供了多种变量的保存方式，有些库自己也提供某些变量的保存方式。以下展示几种python保存变量的方式。</p>
+<p>方法一：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"></span><br><span class="line"><span class="comment"># 存储变量的文件的名字</span></span><br><span class="line">filename = <span class="string">&#x27;shoplist.data&#x27;</span></span><br><span class="line"><span class="comment"># 初始化变量</span></span><br><span class="line">shoplist = [<span class="string">&#x27;apple&#x27;</span>, <span class="string">&#x27;mango&#x27;</span>, <span class="string">&#x27;carrot&#x27;</span>]</span><br><span class="line"><span class="comment"># 以二进制写模式打开目标文件</span></span><br><span class="line">f = <span class="built_in">open</span>(filename, <span class="string">&#x27;wb&#x27;</span>)</span><br><span class="line"><span class="comment"># 将变量存储到目标文件中区</span></span><br><span class="line">pickle.dump(shoplist, f)</span><br><span class="line"><span class="comment"># 关闭文件</span></span><br><span class="line">f.close()</span><br><span class="line"><span class="comment"># 删除变量</span></span><br><span class="line"><span class="keyword">del</span> shoplist</span><br><span class="line"><span class="comment"># 以二进制读模式打开目标文件</span></span><br><span class="line">f = <span class="built_in">open</span>(filename, <span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line"><span class="comment"># 将文件中的变量加载到当前工作区</span></span><br><span class="line">storedlist = pickle.load(f)</span><br><span class="line"><span class="built_in">print</span>(storedlist)</span><br></pre></td></tr></table></figure>
+
+<p>方法二：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#当然如果你安了sklearn，保存东西会简单一点。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.externals <span class="keyword">import</span> joblib</span><br><span class="line"><span class="comment"># 保存x</span></span><br><span class="line">joblib.dump(x, <span class="string">&#x27;x.pkl&#x27;</span>) </span><br><span class="line"><span class="comment"># 加载x</span></span><br><span class="line">x = joblib.load(<span class="string">&#x27;x.pkl&#x27;</span>) </span><br><span class="line">对于dataframe数据类型，也有自己的保存方法。</span><br></pre></td></tr></table></figure>
+
+<p>方法三：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">df = pd.DataFrame(np.arange(<span class="number">20</span>).reshape(<span class="number">4</span>, <span class="number">5</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;写入数据\n&#x27;</span>,df)</span><br><span class="line"><span class="comment"># 使用DataFrame的to_pickle属性就可以生成pickle文件对数据进行永久储存</span></span><br><span class="line">df.to_pickle(<span class="string">&#x27;foo.pkl&#x27;</span>)</span><br><span class="line"><span class="comment"># 使用pandas库的pd.read_pickle读取pickle数据</span></span><br><span class="line">dr = pd.read_pickle(<span class="string">&#x27;foo.pkl&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;读取数据\n&#x27;</span>, dr)</span><br></pre></td></tr></table></figure>
+
+<p>方法四：</p>
+<p>numpy保存文件</p>
+<p>二进制文件</p>
+<ul>
+<li>只保存数据不保存形状和元素类型<code>a.tofile(&#39;a.bin)</code></li>
+<li>读入时需要指定元素类型<code>b=np.fromfile(&#39;a.bin’,dtype=np.int32)</code></li>
+</ul>
+<p>npy文件</p>
+<ul>
+<li>保存：<code>np.save(&#39;a.npy&#39;,a)</code></li>
+<li>读取：<code>c=np.load(&#39;a.npy&#39;)</code></li>
+</ul>
+<p>txt和csv等文件</p>
+<ul>
+<li>保存：<code>np.savetxt(&#39;a.txt&#39; ,a,fmt=&#39;%d&#39;)</code></li>
+<li>读取：<code>np.loadtxt(&#39;a.txt&#39;,dtype=&#39;int&#39;)</code></li>
+</ul>
+<blockquote>
+<p><strong>注意：</strong>并不是所有的变量都能够保存并且落盘，某些变量不能够进行序列化或者本身只包含索引，因此会导致保存失败</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python基础</tag>
       </tags>
   </entry>
 </search>
