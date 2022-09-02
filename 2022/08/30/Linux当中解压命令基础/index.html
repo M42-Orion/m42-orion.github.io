@@ -1,0 +1,470 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Linux当中解压命令基础 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,在常见的Linux压缩当中，有两种格式是十分常见的，分别是zip与tar，这边文章对两种格式需要用到的命令做了基础性的总结。
+zip和unzipzip和unzip命令可以分别对文件进行压缩和解压缩
+,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/m42-orion/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Linux当中解压命令基础 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,在常见的Linux压缩当中，有两种格式是十分常见的，分别是zip与tar，这边文章对两种格式需要用到的命令做了基础性的总结。
+zip和unzipzip和unzip命令可以分别对文件进行压缩和解压缩
+,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Linux当中解压命令基础 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,在常见的Linux压缩当中，有两种格式是十分常见的，分别是zip与tar，这边文章对两种格式需要用到的命令做了基础性的总结。
+zip和unzipzip和unzip命令可以分别对文件进行压缩和解压缩
+,"/>
+    
+<link rel="stylesheet" href="/m42-orion/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://liu__tao.gitee.io/m42-orion"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Linux当中解压命令基础</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Linux当中解压命令基础</h1>
+        <div class="stuff">
+            <span>八月 30, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/m42-orion/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>在常见的Linux压缩当中，有两种格式是十分常见的，分别是<code>zip</code>与<code>tar</code>，这边文章对两种格式需要用到的命令做了基础性的总结。</p>
+<h2 id="zip和unzip"><a href="#zip和unzip" class="headerlink" title="zip和unzip"></a>zip和unzip</h2><p>zip和unzip命令可以分别对文件进行压缩和解压缩</p>
+<h3 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h3><p>zip可以对文件快速创建压缩包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">zip archive inpath inpath  ...</span><br><span class="line"><span class="comment"># archive指定生成压缩归档文件的路径</span></span><br><span class="line"><span class="comment"># inpath inpath ...要添加到压缩包中的文件路径</span></span><br></pre></td></tr></table></figure>
+
+<p>如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zip backup.zip <span class="built_in">test</span>/*.txt</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在windows当中压缩文件可以右键进行压缩，并且有多种选项，相对的在Linux也可以做这些选项，不过这些都涵盖在命令当中。</p>
+</blockquote>
+<h3 id="zip分卷压缩"><a href="#zip分卷压缩" class="headerlink" title="zip分卷压缩"></a>zip分卷压缩</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">zip -s 64k new.zip *.txt</span><br><span class="line"><span class="comment"># -s 64k 指定分卷大小为64K，zip允许的最小分卷大小为64k。</span></span><br><span class="line">zip test.zip  /bin/zsh  -s 100k</span><br></pre></td></tr></table></figure>
+
+<p>对压缩包重新分卷 如果你有一个较大的压缩包，要进行分卷也可以采用类似的方法。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zip big.ziph --out new.zip -s 1m</span><br></pre></td></tr></table></figure>
+
+<h3 id="zip的更多参数"><a href="#zip的更多参数" class="headerlink" title="zip的更多参数"></a>zip的更多参数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zip options archive inpath inpath ...</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>options在这里是指一系列的选项参数。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-r</td>
+<td>递归遍历目录</td>
+</tr>
+<tr>
+<td>-q</td>
+<td>不显示压缩命令的执行过程（q为quite缩写，安静模式）</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>删除压缩包中指定文件</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>添加密码，密码在命令行是明文</td>
+</tr>
+<tr>
+<td>-e</td>
+<td>添加密码，密码是隐藏的</td>
+</tr>
+</tbody></table>
+<blockquote>
+<ul>
+<li>不使用-r参数，压缩遇到目录，只会添加目录路径本身，不会遍历目录内其他文件</li>
+<li>-d 的含义是删除已经压缩好的压缩包当中的文件，不是在压缩过程中排除某个文件</li>
+<li>使用-p的时候需要添加密码参数，使用-e的时候不需要添加密码，等待输入回车后提示输入密码</li>
+</ul>
+</blockquote>
+<h3 id="unzip解压缩文件"><a href="#unzip解压缩文件" class="headerlink" title="unzip解压缩文件"></a>unzip解压缩文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">unzip filepath</span><br><span class="line"><span class="comment"># filepath 要解压缩的文件的路径。</span></span><br><span class="line">unzip test.zip</span><br></pre></td></tr></table></figure>
+
+<h3 id="unzip其他参数"><a href="#unzip其他参数" class="headerlink" title="unzip其他参数"></a>unzip其他参数</h3><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-v</td>
+<td>查看压缩包内容</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>指定解压缩路径</td>
+</tr>
+</tbody></table>
+<h2 id="gzip"><a href="#gzip" class="headerlink" title="gzip"></a>gzip</h2><p>gzip命令是一个既能进行压缩，又能进行解压缩的全能选手</p>
+<p><strong>使用方法</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gzip [OPTION] ... [FILE] ...</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>[OPTION]</code> 选项参数，可以指定多个选项参数</li>
+<li><code>[FILE]</code> 要压缩的文件路径，可以指定多个要压缩文件</li>
+</ul>
+<p>下面是常用参数的一个列表:</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>参数长名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c</td>
+<td>—stdout</td>
+<td>在标准输出上输出，保持原始文件</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>—decompress</td>
+<td>解压缩</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>—force</td>
+<td>强制覆盖输出文件并压缩链接</td>
+</tr>
+<tr>
+<td>-h</td>
+<td>—help</td>
+<td>显示帮助</td>
+</tr>
+<tr>
+<td>-k</td>
+<td>—keep</td>
+<td>保留（不删除）输入文件</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>—list</td>
+<td>列出压缩文件的内容</td>
+</tr>
+<tr>
+<td>-L</td>
+<td>—license</td>
+<td>显示软件许可证</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>—no</td>
+<td>name</td>
+</tr>
+<tr>
+<td>-N</td>
+<td>—name</td>
+<td>保存或恢复原始文件名称和时间戳</td>
+</tr>
+<tr>
+<td>-q</td>
+<td>—quiet</td>
+<td>禁用所有警告，安静模式</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>—recursive</td>
+<td>对目录启动递归操作</td>
+</tr>
+<tr>
+<td></td>
+<td>—syncable</td>
+<td>制作对rsync友好的存档</td>
+</tr>
+<tr>
+<td>-S</td>
+<td>—suffix=SUF</td>
+<td>在压缩文件上使用后缀 SUF</td>
+</tr>
+<tr>
+<td></td>
+<td>—synchronous</td>
+<td>同步输出（如果系统崩溃，则更安全，但是更慢）</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>—test</td>
+<td>测试压缩文件的完整性</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>—verbose</td>
+<td>详细输出执行过程</td>
+</tr>
+<tr>
+<td>-V</td>
+<td>—version</td>
+<td>显示版本号</td>
+</tr>
+<tr>
+<td>-1</td>
+<td>—fast</td>
+<td>更快的压缩速度</td>
+</tr>
+<tr>
+<td>-9</td>
+<td>—best</td>
+<td>最好的压缩率</td>
+</tr>
+</tbody></table>
+<h2 id="tar命令归档"><a href="#tar命令归档" class="headerlink" title="tar命令归档"></a>tar命令归档</h2><p>tar命令可以将多个文件归档到一个文件，或者从归档中还原出所有文件。</p>
+<p>这里tar命令的作用是把多个文件打包成一个文件，如果此时再对打包后的这个文件进行gzip压缩，这就会生成一个带压缩的归档文件，通常会看到.tar.gz这样的文件后缀。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar [options...] [file] ...</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>options为可选参数，可以有多个options参数</li>
+<li>file为要归档的文件路径，可以有多个这样的file</li>
+</ul>
+<p>下面是tar命令的一些常用的options参数。</p>
+<table>
+<thead>
+<tr>
+<th>选项参数</th>
+<th>长选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c</td>
+<td>—create</td>
+<td>创建一个新的归档文件</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>—append</td>
+<td>往归档文件末尾追加文件</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>—update</td>
+<td>将更新的文件更新到归档中</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>—get —extract</td>
+<td>将归档中解压文件</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>—diff —compare</td>
+<td>对归档和文件系统中的文件进行差异比较</td>
+</tr>
+<tr>
+<td></td>
+<td>—delete</td>
+<td>从归档文件中删除指定文件</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>—list</td>
+<td>查看归档文件中的内容列表</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>—verbose</td>
+<td>显示执行过程</td>
+</tr>
+<tr>
+<td>-z</td>
+<td>—gzip</td>
+<td>使用gzip进行压缩</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>—file</td>
+<td>指定备份文件名称</td>
+</tr>
+</tbody></table>
+<p>并且以上面的这些选项参数可以叠加使用,如下：</p>
+<h3 id="创建归档"><a href="#创建归档" class="headerlink" title="创建归档"></a>创建归档</h3><p>下面的这条命令，是对当前路径下所有的.txt后缀的文件进行归档，并使用gzip对归档文件进行压缩。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -czvf test.tar.gz <span class="built_in">test</span>/</span><br></pre></td></tr></table></figure>
+
+<p>-czvf 这是一个多个选项合并的写法，</p>
+<ul>
+<li>c 创建归档</li>
+<li>z 使用gzip进行压缩处理</li>
+<li>v 显示执行过程</li>
+<li>f 指定归档文件的名称，</li>
+<li><code>test.tar.gz</code> 为归档文件的名称</li>
+<li><code>test/</code> 为要归档的文件路径</li>
+</ul>
+<h3 id="解压归档"><a href="#解压归档" class="headerlink" title="解压归档"></a>解压归档</h3><p>使用下面这条命令，我们可以把一个gzip压缩的归档文件进行解压缩。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf test.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>注意实验前，先把test目录删除干净，然后再进行解压操作。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/531343949.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#zip%E5%92%8Cunzip"><span class="toc-number">1.</span> <span class="toc-text">zip和unzip</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#zip"><span class="toc-number">1.1.</span> <span class="toc-text">zip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zip%E5%88%86%E5%8D%B7%E5%8E%8B%E7%BC%A9"><span class="toc-number">1.2.</span> <span class="toc-text">zip分卷压缩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zip%E7%9A%84%E6%9B%B4%E5%A4%9A%E5%8F%82%E6%95%B0"><span class="toc-number">1.3.</span> <span class="toc-text">zip的更多参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#unzip%E8%A7%A3%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6"><span class="toc-number">1.4.</span> <span class="toc-text">unzip解压缩文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#unzip%E5%85%B6%E4%BB%96%E5%8F%82%E6%95%B0"><span class="toc-number">1.5.</span> <span class="toc-text">unzip其他参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gzip"><span class="toc-number">2.</span> <span class="toc-text">gzip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tar%E5%91%BD%E4%BB%A4%E5%BD%92%E6%A1%A3"><span class="toc-number">3.</span> <span class="toc-text">tar命令归档</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%BD%92%E6%A1%A3"><span class="toc-number">3.1.</span> <span class="toc-text">创建归档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%8E%8B%E5%BD%92%E6%A1%A3"><span class="toc-number">3.2.</span> <span class="toc-text">解压归档</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/m42-orion/js/plugin.js"></script>
+<script src="/m42-orion/js/typed.js"></script>
+<script src="/m42-orion/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/m42-orion/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/m42-orion/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/m42-orion/photoswipe/photoswipe.min.js"></script>
+<script src="/m42-orion/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>
