@@ -2133,4 +2133,58 @@
         <tag>杂谈</tag>
       </tags>
   </entry>
+  <entry>
+    <title>不常见的python类型校验</title>
+    <url>/m42-orion/2022/09/06/%E4%B8%8D%E5%B8%B8%E8%A7%81%E7%9A%84python%E7%B1%BB%E5%9E%8B%E6%A0%A1%E9%AA%8C/</url>
+    <content><![CDATA[<p>以前写过关于python类型校验的相关总结，但是不怎么全面，有些不常见的特殊情况并未被记录。</p>
+<h2 id="任意类型any"><a href="#任意类型any" class="headerlink" title="任意类型any"></a>任意类型any</h2><p>若声明某函数时指定函数传入参数的数据类型为any，则调用该函数时该参数的参数类型可以为任意类型。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">demo</span>(<span class="params">name: <span class="built_in">any</span>, age: <span class="string">&#x27;int &gt; 0&#x27;</span> = <span class="number">20</span></span>) -&gt; <span class="built_in">str</span>:  <span class="comment"># -&gt;str 表示该函数的返回值是str类型的</span></span><br><span class="line">    <span class="built_in">print</span>(name, <span class="built_in">type</span>(name))</span><br><span class="line">    <span class="built_in">print</span>(age, <span class="built_in">type</span>(age))</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;hello world&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 给List[float]类型取个别名为Vector</span></span><br><span class="line">Vector = <span class="type">List</span>[<span class="built_in">float</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">scale</span>(<span class="params">scalar: <span class="built_in">float</span>, vector: Vector</span>) -&gt; Vector:</span><br><span class="line">    <span class="keyword">return</span> [scalar * num <span class="keyword">for</span> num <span class="keyword">in</span> vector]</span><br><span class="line"></span><br><span class="line">new_vector = scale(<span class="number">2.0</span>, [<span class="number">1.0</span>, -<span class="number">4.2</span>, <span class="number">5.4</span>])</span><br></pre></td></tr></table></figure>
+
+<h2 id="内容与长度限制"><a href="#内容与长度限制" class="headerlink" title="内容与长度限制"></a>内容与长度限制</h2><p>在需要限制声明变量的长度以及包含类型的时候可以这样做：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Tuple</span></span><br><span class="line"></span><br><span class="line">version: <span class="type">Tuple</span>[<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>] = (<span class="number">3</span>, <span class="number">7</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="泛型与嵌套类型"><a href="#泛型与嵌套类型" class="headerlink" title="泛型与嵌套类型"></a>泛型与嵌套类型</h2><p>类型结构包含多种样式的时候可以使用泛型与嵌套类型的方式处理</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">var: <span class="type">List</span>[<span class="built_in">int</span> <span class="keyword">or</span> <span class="built_in">float</span>] = [<span class="number">2</span>, <span class="number">3.5</span>] <span class="comment"># 泛型</span></span><br><span class="line">var: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]] = [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">3</span>]] <span class="comment"># 嵌套类型</span></span><br><span class="line">person: <span class="type">Tuple</span>[<span class="built_in">str</span>, <span class="built_in">int</span>, <span class="built_in">float</span>] = (<span class="string">&#x27;Mike&#x27;</span>, <span class="number">22</span>, <span class="number">1.75</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Dict、Mapping、MutableMapping-Set、AbstractSet"><a href="#Dict、Mapping、MutableMapping-Set、AbstractSet" class="headerlink" title="Dict、Mapping、MutableMapping / Set、AbstractSet"></a>Dict、Mapping、MutableMapping / Set、AbstractSet</h2><p>在需要声明字典类型的时候需要十分注意，因为根据官方文档，<code>Dict</code> 推荐用于注解返回类型，<code>Mapping</code> 推荐用于注解参数。它们的使用方法都是一样的，其后跟一个中括号，中括号内分别声明键名、键值的类型.</p>
+<p>因此以下写法是不规范的，容易引起编辑器警告：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">testfun</span>(<span class="params">dict_info:<span class="type">Dict</span>[<span class="built_in">str</span>,<span class="built_in">int</span>]=&#123;<span class="string">&quot;key&quot;</span>:<span class="number">1</span>&#125;</span>):</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p>正确写法如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">size</span>(<span class="params">rect: Mapping[<span class="built_in">str</span>, <span class="built_in">int</span>]</span>) -&gt; <span class="type">Dict</span>[<span class="built_in">str</span>, <span class="built_in">int</span>]:</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&#x27;width&#x27;</span>: rect[<span class="string">&#x27;width&#x27;</span>] + <span class="number">100</span>, <span class="string">&#x27;height&#x27;</span>: rect[<span class="string">&#x27;width&#x27;</span>] + <span class="number">100</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><code>set</code>亦如此</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">describe</span>(<span class="params">s: AbstractSet[<span class="built_in">int</span>]</span>) -&gt; <span class="type">Set</span>[<span class="built_in">int</span>]:</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">set</span>(s)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sequence"><a href="#Sequence" class="headerlink" title="Sequence"></a>Sequence</h2><p>Sequence是一个泛型，其本身不需要去指定究竟是List还是tuple，用法与List类似</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">square</span>(<span class="params">elements: <span class="type">Sequence</span>[<span class="built_in">float</span>]</span>) -&gt; <span class="type">List</span>[<span class="built_in">float</span>]:</span><br><span class="line">    <span class="keyword">return</span> [x ** <span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> elements]</span><br></pre></td></tr></table></figure>
+
+<h2 id="无返回内容"><a href="#无返回内容" class="headerlink" title="无返回内容"></a>无返回内容</h2><p>当函数没有返回内容的时候也可以进行注解</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>() -&gt; NoReturn:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;hello&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="TypeVar"><a href="#TypeVar" class="headerlink" title="TypeVar"></a>TypeVar</h2><p>当使用场景当中某个返回变量可以是多种类型，但不能是某些少数类型的时候，可以采用TypeVar</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 例如一个人的身高，便可以使用 int 或 float 或 None 来表示，但不能用 dict 来表示，所以可以这么声明：</span></span><br><span class="line"></span><br><span class="line">height = <span class="number">1.75</span></span><br><span class="line">Height = TypeVar(<span class="string">&#x27;Height&#x27;</span>, <span class="built_in">int</span>, <span class="built_in">float</span>, <span class="literal">None</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_height</span>() -&gt; Height:</span><br><span class="line">    <span class="keyword">return</span> height</span><br></pre></td></tr></table></figure>
+
+<h2 id="Union"><a href="#Union" class="headerlink" title="Union"></a>Union</h2><p>Union，联合类型，Union[X, Y] 代表要么是 X 类型，要么是 Y 类型。但是不能是两者混用。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="type">Union</span>[<span class="type">Union</span>[<span class="built_in">int</span>, <span class="built_in">str</span>], <span class="built_in">float</span>] == <span class="type">Union</span>[<span class="built_in">int</span>, <span class="built_in">str</span>, <span class="built_in">float</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="Optional"><a href="#Optional" class="headerlink" title="Optional"></a>Optional</h2><p>Optional：意思是说这个参数可以为空或已经声明的类型，即 Optional[X] 等价于 Union[X, None]。</p>
+<p>在参数传递的时候某些参数不一定非要传值，这时候Optional作为一种可选类型非常好用。</p>
+<h2 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h2><p>如果想代表一个生成器类型，可以使用 Generator，它的声明比较特殊，其后的中括号紧跟着三个参数，分别代表 YieldType、SendType、ReturnType，如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> Generator</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">echo_round</span>() -&gt; Generator[<span class="built_in">int</span>, <span class="built_in">float</span>, <span class="built_in">str</span>]:</span><br><span class="line">    sent = <span class="keyword">yield</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> sent &gt;= <span class="number">0</span>:</span><br><span class="line">        sent = <span class="keyword">yield</span> <span class="built_in">round</span>(sent)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Done&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>在这里 yield 关键字后面紧跟的变量的类型就是 YieldType，yield 返回的结果的类型就是 SendType，最后生成器 return 的内容就是 ReturnType。</p>
+<p>当然很多情况下，生成器往往只需要 yield 内容就够了，我们是不需要 SendType 和 ReturnType 的，可以将其设置为空，如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> Generator</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">infinite_stream</span>(<span class="params">start: <span class="built_in">int</span></span>) -&gt; Generator[<span class="built_in">int</span>, <span class="literal">None</span>, <span class="literal">None</span>]:</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">yield</span> start</span><br><span class="line">        start += <span class="number">1</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
 </search>
