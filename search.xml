@@ -2408,4 +2408,24 @@
         <tag>日志</tag>
       </tags>
   </entry>
+  <entry>
+    <title>行尾序列是个啥？</title>
+    <url>/m42-orion/2022/10/19/%E8%A1%8C%E5%B0%BE%E5%BA%8F%E5%88%97%E6%98%AF%E4%B8%AA%E5%95%A5%EF%BC%9F/</url>
+    <content><![CDATA[<p>在使用vscode开发的时候，我一直很疑惑右下角的一个<code>选择行尾序列</code>的按钮，这东西到底什么用？为啥点击之后感觉也没啥变化？但是碍于我很懒，只想摆烂，所以一直没有去关心这个。但是好奇心终究还是挡不住，我还是打算将其搞个明白。</p>
+<hr>
+<h2 id="究竟是啥？"><a href="#究竟是啥？" class="headerlink" title="究竟是啥？"></a>究竟是啥？</h2><p>简单来说就是当我们需要写一段文本的时候如果需要换行，在<code>Linux</code>与<code>windows</code>下面是不同的，虽然我们同样看到的是换行的样式，但是实际被记录的是两种。</p>
+<p><code>Linux</code>下创建的<code>LinuxFIle</code>文件，用<code>Linux</code>的编辑器在里面写上文本。然后用<code>Python</code>显示出转义符，可以看到换行符是<code>\n</code>，这里的<code>\n</code>就是指的是换行符（<code>LF</code>）。</p>
+<p><code>Windows</code>下创建的文件，同样的处理方式，换行符是<code>\r\n</code>，<code>\r</code>指的就是回车（<code>CR</code>），<code>\r\n</code>连起来就是回车换行（<code>CRLF</code>）。</p>
+<blockquote>
+<p>总结来说就是：在Linux里编辑文件，一行结束后跟的是<code>\n</code>；在Windows里用自带的记事本编辑文件，一行结束后跟的是<code>\r\n</code></p>
+</blockquote>
+<h2 id="CR和LF"><a href="#CR和LF" class="headerlink" title="CR和LF"></a>CR和LF</h2><p><code>CR</code>和<code>LF</code>是缩写，其实他们的全称分别是：<code>Carriage-Return</code>和<code>Line-Feed</code>。追本溯源的说，<code>CR(Carriage-Return)</code>和<code>LF(Line-Feed)</code>这两个词来源于打字机的发明和使用。打字机的纸张向下卷动一行，就是换行(<code>LF</code>, <code>Line-Feed</code>),将打印头从最右边归位到最左边，就是回车(<code>CR</code>, <code>Carriage-Return</code>)</p>
+]]></content>
+      <categories>
+        <category>思考</category>
+      </categories>
+      <tags>
+        <tag>vscode</tag>
+      </tags>
+  </entry>
 </search>
