@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>with语句 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,在工作当中写代码的时候遇到当需要使用python打开文件的时候，程序会提示你使用with语句而是不是open+close，以前自己都未曾关心为啥，这样做有什么优势，现在越发好奇了。
+With语句是什,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/m42-orion/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="with语句 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,在工作当中写代码的时候遇到当需要使用python打开文件的时候，程序会提示你使用with语句而是不是open+close，以前自己都未曾关心为啥，这样做有什么优势，现在越发好奇了。
+With语句是什,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="with语句 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,在工作当中写代码的时候遇到当需要使用python打开文件的时候，程序会提示你使用with语句而是不是open+close，以前自己都未曾关心为啥，这样做有什么优势，现在越发好奇了。
+With语句是什,"/>
+    
+<link rel="stylesheet" href="/m42-orion/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://liu__tao.gitee.io/m42-orion"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">with语句</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">with语句</h1>
+        <div class="stuff">
+            <span>十月 30, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/m42-orion/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/m42-orion/tags/with/" rel="tag">with</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>在工作当中写代码的时候遇到当需要使用python打开文件的时候，程序会提示你使用<code>with</code>语句而是不是<code>open+close</code>，以前自己都未曾关心为啥，这样做有什么优势，现在越发好奇了。</p>
+<h2 id="With语句是什么？"><a href="#With语句是什么？" class="headerlink" title="With语句是什么？"></a>With语句是什么？</h2><p>最常见的解释就是说当年你需要打开一个文件的时候，如果只是打开不关闭是危险或者不规范的操作，所以必须要有打开也要有关闭，如下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;test.txt&quot;</span>)</span><br><span class="line">data = file.read()</span><br><span class="line">file.close()</span><br></pre></td></tr></table></figure>
+
+<p>但是这里有两个问题：  </p>
+<ul>
+<li>一是可能忘记关闭文件句柄；</li>
+<li>二是文件读取数据发生异常，没有进行任何处理。</li>
+</ul>
+<p>所以为了安全起见推荐有以下改进方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">file = <span class="built_in">open</span>(<span class="string">&quot;test.txt&quot;</span>)</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    data = file.read()</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    file.close()</span><br></pre></td></tr></table></figure>
+
+<p>虽然更加安全，但是冗长以及理解更困难的问题也随之出现了。而<code>with</code>语法正好可以解决这个问题：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;/tmp/foo.txt&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    data = file.read()</span><br></pre></td></tr></table></figure>
+
+<h2 id="上下文管理器"><a href="#上下文管理器" class="headerlink" title="上下文管理器"></a>上下文管理器</h2><p><code>with</code>语句的使用被成为上下文管理器。当与第一个例子对比时，可以看到，通过使用 <code>with</code>，许多样板代码（boilerplate code）被消掉了。 这就是 with 语句的主要优势，它确保文件会被关闭，而不用关注嵌套代码如何退出。上下文管理器的一个常见用例，是资源的加锁和解锁，以及关闭已打开的文件（就像我已经展示给你看的）。</p>
+<p>以下展示关于上下文管理器的实现代码：</p>
+<h3 id="基于类"><a href="#基于类" class="headerlink" title="基于类"></a>基于类</h3><p>一个上下文管理器的类，最起码要定义 <code>__enter__</code> 和 <code>__exit__</code> 方法。 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">File</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, file_name, method</span>):</span><br><span class="line">        self.file_obj = <span class="built_in">open</span>(file_name, method)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__enter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.file_obj</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__exit__</span>(<span class="params">self, <span class="built_in">type</span>, value, traceback</span>):</span><br><span class="line">        self.file_obj.close()</span><br></pre></td></tr></table></figure>
+
+<p>通过定义 <code>__enter__</code> 和 <code>__exit__</code> 方法，可以在<code>with</code>语句里使用它</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> File(<span class="string">&#x27;demo.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> opened_file:</span><br><span class="line">    opened_file.write(<span class="string">&#x27;Hola!&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p> <code>__exit__</code> 函数接受三个参数。这些参数对于每个上下文管理器类中的 <code>__exit__</code> 方法都是必须的。</p>
+<ul>
+<li>with 语句先暂存了 <code>File</code> 类的 <code>__exit__</code> 方法。</li>
+<li>然后它调用 File 类的 <code>__enter__</code> 方法。</li>
+<li><code>__enter__</code> 方法打开文件并返回给 <code>with</code> 语句。</li>
+<li>打开的文件句柄被传递给 <code>opened_file</code> 参数。</li>
+<li>使用 <code>.write()</code> 来写文件。</li>
+<li><code>with</code> 语句调用之前暂存的 <code>__exit__</code> 方法。</li>
+<li><code>__exit__</code> 方法关闭了文件。</li>
+</ul>
+<hr>
+<p><code>__exit__</code> 方法的这三个参数：<code>type</code>，<code>value</code> 和 <code>traceback</code>。 在第4步和第6步之间，如果发生异常，<code>Python</code> 会将异常的 <code>type</code>，<code>value</code> 和 <code>traceback</code> 传递给 <code>__exit__</code> 方法。 它让 <code>__exit__</code> 方法来决定如何关闭文件以及是否需要其他步骤。在案例中，并没有注意它们。<br>那如果文件对象抛出一个异常呢？万一尝试访问文件对象的一个不支持的方法。举个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> File(<span class="string">&#x27;demo.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> opened_file:</span><br><span class="line">    opened_file.undefined_function(<span class="string">&#x27;Hola!&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>来列一下，当异常发生时，with 语句会采取哪些步骤。</p>
+<ul>
+<li>它把异常的 <code>type</code>，<code>value</code> 和 <code>traceback</code> 传递给 <code>__exit__</code>方法。</li>
+<li>它让 <code>__exit__</code> 方法来处理异常。</li>
+<li>如果 <code>__exit__</code> 返回的是 <code>True</code>，那么这个异常就被优雅地处理了。</li>
+<li>如果 <code>__exit__</code> 返回的是 <code>True</code> 以外的任何东西，那么这个异常将被 <code>with</code> 语句抛出。</li>
+</ul>
+<p>案例中，<code>__exit__</code> 方法返回的是 <code>None</code> （如果没有 <code>return</code> 语句那么方法会返回 <code>None</code>）。因此，<code>with</code> 语句抛出了那个异常。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="number">2</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">AttributeError: <span class="string">&#x27;file&#x27;</span> <span class="built_in">object</span> has no attribute <span class="string">&#x27;undefined_function&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>尝试下在 <code>__exit__</code> 方法中处理异常：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">File</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, file_name, method</span>):</span><br><span class="line">        self.file_obj = <span class="built_in">open</span>(file_name, method)</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__enter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.file_obj</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__exit__</span>(<span class="params">self, <span class="built_in">type</span>, value, traceback</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Exception has been handled&quot;</span>)</span><br><span class="line">        self.file_obj.close()</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> File(<span class="string">&#x27;demo.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> opened_file:</span><br><span class="line">    opened_file.undefined_function()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Output: Exception has been handled</span></span><br></pre></td></tr></table></figure>
+
+<p><code>__exit__</code> 方法返回了 True，因此没有异常会被 with 语句抛出。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/1387308369.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#With%E8%AF%AD%E5%8F%A5%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">With语句是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">上下文管理器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E7%B1%BB"><span class="toc-number">2.1.</span> <span class="toc-text">基于类</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/m42-orion/js/plugin.js"></script>
+<script src="/m42-orion/js/typed.js"></script>
+<script src="/m42-orion/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/m42-orion/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/m42-orion/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/m42-orion/photoswipe/photoswipe.min.js"></script>
+<script src="/m42-orion/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>
