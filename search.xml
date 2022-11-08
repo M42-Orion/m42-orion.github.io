@@ -2491,4 +2491,72 @@
         <tag>with</tag>
       </tags>
   </entry>
+  <entry>
+    <title>docker基础</title>
+    <url>/m42-orion/2022/11/07/docker%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h2 id="关于docker"><a href="#关于docker" class="headerlink" title="关于docker"></a>关于docker</h2><p>Docker 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 Linux 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口（类似 iPhone 的 app）,更重要的是容器性能开销极低。</p>
+<blockquote>
+<p>翻简单来说就是可以可以打包环境而不需要打包整个虚拟机，只要其他电脑上有dockers，开发者就能让自己的项目在各种条件下执行起来</p>
+</blockquote>
+<h2 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h2><p>使用脚本安装 Docker：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo yum update</span><br><span class="line">$ curl -fsSL https://get.docker.com/ | sh</span><br><span class="line">$ sudo service docker start</span><br><span class="line">$ sudo docker run hello-world</span><br></pre></td></tr></table></figure>
+
+<h2 id="镜像与容器"><a href="#镜像与容器" class="headerlink" title="镜像与容器"></a>镜像与容器</h2><p>docker的镜像其实就是模板，跟我们常见的ISO镜像类似，是一个样板。使用镜像常见的应用或者系统，称之为一个容器。镜像是docker容器运行时的只读模板，镜像可以用来创建docker容器。</p>
+<p>Docker 利用容器来运行应用，一个Docker容器包含了所有的某个应用运行所需要的环境。每一个 Docker 容器都是从 Docker 镜像创建的。Docker 容器可以运行、开始、停止、移动和删除。每一个 Docker 容器都是独立和安全的应用平台。</p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">命令的格式：</span><br><span class="line">Usage: docker run [OPTIONS] IMAGE [COMMAND] [ARG...]</span><br><span class="line"></span><br><span class="line">-a, --attach=[] 登录容器（以docker run -d启动的容器）</span><br><span class="line">-c, --cpu-shares=0 设置容器CPU权重，在CPU共享场景使用</span><br><span class="line">--cap-add=[] 添加权限，权限清单详见：http://linux.die.net/man/7/capabilities</span><br><span class="line">--cap-drop=[] 删除权限，权限清单详见：http://linux.die.net/man/7/capabilities</span><br><span class="line">--cidfile=&quot;&quot; 运行容器后，在指定文件中写入容器PID值，一种典型的监控系统用法</span><br><span class="line">--cpuset=&quot;&quot; 设置容器可以使用哪些CPU，此参数可以用来容器独占CPU</span><br><span class="line">-d, --detach=false 指定容器运行于前台还是后台</span><br><span class="line">--device=[] 添加主机设备给容器，相当于设备直通</span><br><span class="line">--dns=[] 指定容器的dns服务器</span><br><span class="line">--dns-search=[] 指定容器的dns搜索域名，写入到容器的/etc/resolv.conf文件</span><br><span class="line">-e, --env=[] 指定环境变量，容器中可以使用该环境变量</span><br><span class="line">--entrypoint=&quot;&quot; 覆盖image的入口点</span><br><span class="line">--env-file=[] 指定环境变量文件，文件格式为每行一个环境变量</span><br><span class="line">--expose=[] 指定容器暴露的端口，即修改镜像的暴露端口</span><br><span class="line">-h, --hostname=&quot;&quot; 指定容器的主机名</span><br><span class="line">-i, --interactive=false 打开STDIN，用于控制台交互</span><br><span class="line">--link=[] 指定容器间的关联，使用其他容器的IP、env等信息</span><br><span class="line">--lxc-conf=[] 指定容器的配置文件，只有在指定--exec-driver=lxc时使用</span><br><span class="line">-m, --memory=&quot;&quot; 指定容器的内存上限</span><br><span class="line">--name=&quot;&quot; 指定容器名字，后续可以通过名字进行容器管理，links特性需要使用名字</span><br><span class="line">--net=&quot;bridge&quot; 容器网络设置</span><br><span class="line">-P, --publish-all=false 指定容器暴露的端口</span><br><span class="line">-p, --publish=[] 指定容器暴露的端口</span><br><span class="line">--privileged=false 指定容器是否为特权容器，特权容器拥有所有的capabilities</span><br><span class="line">--restart=&quot;&quot; 指定容器停止后的重启策略</span><br><span class="line">--rm=false 指定容器停止后自动删除容器(不支持以docker run -d启动的容器)</span><br><span class="line">--sig-proxy=true 设置由代理接受并处理信号，但是SIGCHLD、SIGSTOP和SIGKILL不能被代理</span><br><span class="line">-t, --tty=false 分配tty设备，该可以支持终端登录</span><br><span class="line">-u, --user=&quot;&quot; 指定容器的用户</span><br><span class="line">-v, --volume=[] 给容器挂载存储卷，挂载到容器的某个目录</span><br><span class="line">--volumes-from=[] 给容器挂载其他容器上的卷，挂载到容器的某个目录</span><br><span class="line">-w, --workdir=&quot;&quot; 指定容器的工作目录</span><br></pre></td></tr></table></figure>
+
+<h2 id="dockerfile"><a href="#dockerfile" class="headerlink" title="dockerfile"></a>dockerfile</h2><p>Dockerfile 是一个用来构建镜像的文本文件，文本内容包含了一条条构建镜像所需的指令和说明。</p>
+<p>Dockerfiel 包含两个常用的命令：</p>
+<ul>
+<li>FROM：定制的镜像都是基于 FROM 的镜像，这里的 nginx 就是定制需要的基础镜像。后续的操作都是基于 nginx。</li>
+<li>RUN：用于执行后面跟着的命令行命令。</li>
+</ul>
+<p>接着就能执行命令，构建镜像了：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker build -t 镜像名称 .     <span class="comment"># 后面的. 指的是当前文件夹 (其实是Dockerfile存放的文件夹)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="dockercompose"><a href="#dockercompose" class="headerlink" title="dockercompose"></a>dockercompose</h2><p>Docker Compose是一个用来定义和运行复杂应用的Docker工具。一个使用Docker容器的应用，通常由多个容器组成。使用Docker Compose不再需要使用shell脚本来启动容器。</p>
+<p>Compose 通过一个配置文件来管理多个Docker容器，在配置文件中，所有的容器通过services来定义，然后使用docker-compose脚本来启动，停止和重启应用，和应用中的服务以及所有依赖服务的容器，非常适合组合使用多个容器进行开发的场景。</p>
+<blockquote>
+<p>但是,Compose与Docker有兼容性问题，因此需要查询相关表对照表才可以正常使用</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>虚拟化</tag>
+        <tag>容器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python当中的回调函数是个啥？</title>
+    <url>/m42-orion/2022/11/08/python%E5%BD%93%E4%B8%AD%E7%9A%84%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E6%98%AF%E4%B8%AA%E5%95%A5%EF%BC%9F/</url>
+    <content><![CDATA[<p>在编程过程当中，一直在使用回调函数，但是自己却一直没有去深究回调函数究竟是个啥东西！因为使用的时候用就完事了。现在来深究一下！</p>
+<h2 id="回调函数的定义"><a href="#回调函数的定义" class="headerlink" title="回调函数的定义"></a>回调函数的定义</h2><p>回调函数就是一个被作为参数传递的函数。在C语言中，回调函数只能使用函数指针实现，在C++、Python、ECMAScript等更现代的编程语言中还可以使用仿函数或匿名函数。</p>
+<p>百度百科解释其机制:</p>
+<ul>
+<li>定义一个回调函数；</li>
+<li>提供函数实现的一方在初始化的时候，将回调函数的函数指针注册给调用者；</li>
+<li>当特定的事件或条件发生的时候，调用者使用函数指针调用回调函数对事件进行处理。</li>
+</ul>
+<p>简单来理解就是在最开始初始化一个函数，当需要使用到这个函数的时候调用这个函数指针对事件进行处理。这个解释其实也不简单，因为如果你使用的是python，没有指针会很难理解。</p>
+<p>由于在python中已经没有指针的概念，所以函数名字将作为参数传递给另一个函数作为参数，在事件触发的时候调用。如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">callbcak_func</span>(<span class="params">args</span>):</span><br><span class="line">    <span class="built_in">print</span>(*args)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">caller</span>(<span class="params">args, func</span>):</span><br><span class="line">    func(args)</span><br><span class="line"></span><br><span class="line">caller((<span class="number">1</span>,<span class="number">2</span>), callbcak_func)</span><br></pre></td></tr></table></figure>
+
+<p>软件模块之间总是存在着一定的接口,从调用方式上,可以把他们分为三类: 同步调用、回调和异步调用。</p>
+<ul>
+<li>同步调用是一种阻塞式调用，调用方要等待对方执行完毕才返回，它是一种单向调用；</li>
+<li>回调是一种双向调用模式，也就是说，被调用方在接口被调用时也会调用对方的接口；</li>
+<li>异步调用是一种类似消息或事件的机制，不过它的调用方向刚好相反，接口的服务在收到某种讯息或发生某种事件时，会主动通知客户方（即调用客户方的接口.</li>
+</ul>
+<p>回调和异步调用的关系非常紧密，通常我们使用回调来实现异步消息的注册，通过异步调用来实现消息的通知。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>回调</tag>
+      </tags>
+  </entry>
 </search>

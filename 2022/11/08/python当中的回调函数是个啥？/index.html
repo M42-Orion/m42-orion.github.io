@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>python当中的回调函数是个啥？ - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,在编程过程当中，一直在使用回调函数，但是自己却一直没有去深究回调函数究竟是个啥东西！因为使用的时候用就完事了。现在来深究一下！
+回调函数的定义回调函数就是一个被作为参数传递的函数。在C语言中，回调函,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/m42-orion/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="python当中的回调函数是个啥？ - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,在编程过程当中，一直在使用回调函数，但是自己却一直没有去深究回调函数究竟是个啥东西！因为使用的时候用就完事了。现在来深究一下！
+回调函数的定义回调函数就是一个被作为参数传递的函数。在C语言中，回调函,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="python当中的回调函数是个啥？ - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,在编程过程当中，一直在使用回调函数，但是自己却一直没有去深究回调函数究竟是个啥东西！因为使用的时候用就完事了。现在来深究一下！
+回调函数的定义回调函数就是一个被作为参数传递的函数。在C语言中，回调函,"/>
+    
+<link rel="stylesheet" href="/m42-orion/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://liu__tao.gitee.io/m42-orion"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">python当中的回调函数是个啥？</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">python当中的回调函数是个啥？</h1>
+        <div class="stuff">
+            <span>十一月 08, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/m42-orion/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/m42-orion/tags/%E5%9B%9E%E8%B0%83/" rel="tag">回调</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>在编程过程当中，一直在使用回调函数，但是自己却一直没有去深究回调函数究竟是个啥东西！因为使用的时候用就完事了。现在来深究一下！</p>
+<h2 id="回调函数的定义"><a href="#回调函数的定义" class="headerlink" title="回调函数的定义"></a>回调函数的定义</h2><p>回调函数就是一个被作为参数传递的函数。在C语言中，回调函数只能使用函数指针实现，在C++、Python、ECMAScript等更现代的编程语言中还可以使用仿函数或匿名函数。</p>
+<p>百度百科解释其机制:</p>
+<ul>
+<li>定义一个回调函数；</li>
+<li>提供函数实现的一方在初始化的时候，将回调函数的函数指针注册给调用者；</li>
+<li>当特定的事件或条件发生的时候，调用者使用函数指针调用回调函数对事件进行处理。</li>
+</ul>
+<p>简单来理解就是在最开始初始化一个函数，当需要使用到这个函数的时候调用这个函数指针对事件进行处理。这个解释其实也不简单，因为如果你使用的是python，没有指针会很难理解。</p>
+<p>由于在python中已经没有指针的概念，所以函数名字将作为参数传递给另一个函数作为参数，在事件触发的时候调用。如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">callbcak_func</span>(<span class="params">args</span>):</span><br><span class="line">    <span class="built_in">print</span>(*args)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">caller</span>(<span class="params">args, func</span>):</span><br><span class="line">    func(args)</span><br><span class="line"></span><br><span class="line">caller((<span class="number">1</span>,<span class="number">2</span>), callbcak_func)</span><br></pre></td></tr></table></figure>
+
+<p>软件模块之间总是存在着一定的接口,从调用方式上,可以把他们分为三类: 同步调用、回调和异步调用。</p>
+<ul>
+<li>同步调用是一种阻塞式调用，调用方要等待对方执行完毕才返回，它是一种单向调用；</li>
+<li>回调是一种双向调用模式，也就是说，被调用方在接口被调用时也会调用对方的接口；</li>
+<li>异步调用是一种类似消息或事件的机制，不过它的调用方向刚好相反，接口的服务在收到某种讯息或发生某种事件时，会主动通知客户方（即调用客户方的接口.</li>
+</ul>
+<p>回调和异步调用的关系非常紧密，通常我们使用回调来实现异步消息的注册，通过异步调用来实现消息的通知。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/524164335.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">回调函数的定义</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/m42-orion/js/plugin.js"></script>
+<script src="/m42-orion/js/typed.js"></script>
+<script src="/m42-orion/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/m42-orion/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/m42-orion/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/m42-orion/photoswipe/photoswipe.min.js"></script>
+<script src="/m42-orion/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>
