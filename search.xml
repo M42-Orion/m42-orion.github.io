@@ -1322,6 +1322,7 @@
       </categories>
       <tags>
         <tag>杂谈</tag>
+        <tag>conda</tag>
       </tags>
   </entry>
   <entry>
@@ -2594,6 +2595,64 @@
         <tag>python</tag>
         <tag>fastapi</tag>
         <tag>websocket</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>minio</title>
+    <url>/m42-orion/2022/11/14/minio/</url>
+    <content><![CDATA[<h1 id="对象存储MinIO入门介绍"><a href="#对象存储MinIO入门介绍" class="headerlink" title="对象存储MinIO入门介绍"></a>对象存储MinIO入门介绍</h1><h2 id="常见的对象存储方式对比"><a href="#常见的对象存储方式对比" class="headerlink" title="常见的对象存储方式对比"></a>常见的对象存储方式对比</h2><ul>
+<li><p>直接将图片保存到服务的硬盘</p>
+<ul>
+<li>优点：开发便捷，成本低</li>
+<li>缺点：扩容困难</li>
+</ul>
+</li>
+<li><p>使用分布式文件系统进行存储</p>
+<ul>
+<li>优点：容易实现扩容</li>
+<li>缺点：开发复杂度稍大（尤其是开发复杂的功能）</li>
+</ul>
+</li>
+<li><p>使用nfs做存储</p>
+<ul>
+<li>优点：开发较为便捷</li>
+<li>缺点：需要有一定的运维知识进行部署和维护</li>
+</ul>
+</li>
+<li><p>使用第三方的存储服务</p>
+<ul>
+<li>优点：开发简单，拥有强大功能，免维护</li>
+<li>缺点：付费</li>
+</ul>
+</li>
+</ul>
+<h2 id="对象存储MinIO"><a href="#对象存储MinIO" class="headerlink" title="对象存储MinIO"></a>对象存储MinIO</h2><p>MinIO是世界上最快的对象存储服务器，在标准硬件上，读写速度分贝为183GB/s 和 171GB/s，对象存储可以作为主要存储层，用于Spark，Presto，TensorFlow，H20.ai 以及替代产品等各种工作负载用于Hadoop HDFS</p>
+<p>MinIO是一种高性能的分布式对象存储系统，它是软件定义的，可在行业标准硬件上运行，并且在Apache 2.0许可下，百分百开放源代码。</p>
+<p>文档地址：<a href="https://docs.min.io/cn/">https://docs.min.io/cn/</a></p>
+<h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>set_your_key_here使用的是Docker的方式安装MinIO，首先拉取对应的镜像</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker pull minio/minio</span><br></pre></td></tr></table></figure>
+
+<p>然后set_your_key_here需要创建两个目录，用于保存set_your_key_here的文件和配置</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /home/minio/data</span><br><span class="line"><span class="built_in">mkdir</span> -p /home/minio/config</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h2><p>启动容器，后面有个目录，就是需要挂载的硬盘目录</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -p 9000:9000 --name minio \</span><br><span class="line">-e <span class="string">&quot;MINIO_ACCESS_KEY=set_your_key_here&quot;</span> \</span><br><span class="line">--privileged=<span class="literal">true</span> \</span><br><span class="line">-e <span class="string">&quot;MINIO_SECRET_KEY=set_your_key_here&quot;</span> \</span><br><span class="line">-v /home/minio/data:/data \</span><br><span class="line">-v /home/minio/config:/root/.minio \</span><br><span class="line">minio/minio server /data</span><br></pre></td></tr></table></figure>
+
+<p>上面的配置中，包含两个重要的信息【以后登录时会用到，可以修改成自己的】</p>
+<ul>
+<li>MINIO_ACCESS_KEY：公钥</li>
+<li>MINIO_SECRET_KEY：密钥</li>
+</ul>
+<p>如果需要后台运行，使用这条语句</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run --privileged -d -it -p 9000:9000 --name minio \</span><br><span class="line">-e <span class="string">&quot;MINIO_ACCESS_KEY=set_your_key_here&quot;</span> \</span><br><span class="line">--privileged=<span class="literal">true</span> \</span><br><span class="line">-e <span class="string">&quot;MINIO_SECRET_KEY=set_your_key_here&quot;</span> \</span><br><span class="line">-v /home/minio/data:/data \</span><br><span class="line">-v /home/minio/config:/root/.minio \</span><br><span class="line">minio/minio server /data</span><br></pre></td></tr></table></figure>
+
+<h2 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h2><p>成功启动之后就可以在相对应的端口打开对应的web界面了。这里指定port为9000，实际情况可以自己随意调整。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>minio</tag>
       </tags>
   </entry>
 </search>
