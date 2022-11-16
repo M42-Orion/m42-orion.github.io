@@ -2821,4 +2821,37 @@
         <tag>简单线性回归</tag>
       </tags>
   </entry>
+  <entry>
+    <title>代码混淆</title>
+    <url>/m42-orion/2022/11/16/%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86/</url>
+    <content><![CDATA[<p>很多时候开发者在给出自己的源代码的时候会考虑自己的代码太过容易被抄袭或者被阅读从而导致漏洞，对于前端来说，简单的代码与逻辑会给爬虫工程师逆向js加盐逻辑提供太简单的门槛，所以代码混淆操作逐渐变多，但是我个人作为一个普通开发，几乎用不到这样的技术。但是我觉得很有意思，因此记录了一些代码混淆的网站：</p>
+<p>JavaScript 混淆 ：</p>
+<ul>
+<li><a href="http://jshaman.com/#free">http://jshaman.com/#free</a></li>
+<li><a href="https://www.bugku.com/tools/jsfuck/">https://www.bugku.com/tools/jsfuck/</a></li>
+</ul>
+<p>PHP 混淆：</p>
+<ul>
+<li><a href="https://www.phpjiami.com/phpjiami.html">https://www.phpjiami.com/phpjiami.html</a></li>
+</ul>
+<p>Java 混淆：</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/272646403">https://zhuanlan.zhihu.com/p/272646403</a></li>
+</ul>
+<p>python 混淆：</p>
+<ul>
+<li><a href="https://pyob.oxyry.com/">https://pyob.oxyry.com/</a></li>
+</ul>
+<blockquote>
+<p>另附上一个加密网站，有很多好玩的加密： <a href="http://hi.pcmoe.net/">http://hi.pcmoe.net/</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>杂谈</category>
+      </categories>
+      <tags>
+        <tag>加密</tag>
+        <tag>代码混淆</tag>
+      </tags>
+  </entry>
 </search>
