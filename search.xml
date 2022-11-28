@@ -3138,4 +3138,18 @@
         <tag>博弈</tag>
       </tags>
   </entry>
+  <entry>
+    <title>windows取证基础之命名管道获取</title>
+    <url>/m42-orion/2022/11/28/windows%E5%8F%96%E8%AF%81%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%91%BD%E5%90%8D%E7%AE%A1%E9%81%93%E8%8E%B7%E5%8F%96/</url>
+    <content><![CDATA[<p>“命名管道”又名“命名管线”（Named Pipes），是一种简单的进程间通信（IPC）机制，Microsoft Windows大都提供了对它的支持（但不包括Windows CE）。命名管道可在同一台计算机的不同进程之间或在跨越一个网络的不同计算机的不同进程之间，支持可靠的、单向或双向的数据通信。推荐用命名管道作为进程通信方案的一项重要的原因是它们充分利用了Windows内建的安全特性（ACL等）。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> glob</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">look_for_files</span>(<span class="params">dir_to_look</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Looks for windows in a given directory. Supports the * wildcard character&quot;&quot;&quot;</span></span><br><span class="line">    found_files = []</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;*&quot;</span> <span class="keyword">in</span> dir_to_look:</span><br><span class="line">        found_files += glob.glob(dir_to_look)</span><br><span class="line">    <span class="keyword">elif</span> os.path.exists(dir_to_look):</span><br><span class="line">        found_files.append(dir_to_look)</span><br><span class="line">    <span class="keyword">return</span> found_files</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>():</span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> look_for_files(<span class="string">&#x27;\\\\.\\pipe\\*&#x27;</span>):</span><br><span class="line">        <span class="keyword">yield</span> p</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> test():</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>记录</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>Win10取证</tag>
+        <tag>命名管道</tag>
+      </tags>
+  </entry>
 </search>
