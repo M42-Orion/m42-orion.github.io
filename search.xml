@@ -3249,4 +3249,17 @@
         <tag>博弈</tag>
       </tags>
   </entry>
+  <entry>
+    <title>爬虫hook</title>
+    <url>/m42-orion/2022/11/30/%E7%88%AC%E8%99%ABhook/</url>
+    <content><![CDATA[<p>hook本质上就是重写函数，因为js反爬也是通过重写函数来进行加密或者反爬的。记录两个小脚本用于hook，虽然我早已经不从事爬虫工作,唉~！</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">f = Function</span><br><span class="line">Function = function(a)&#123;</span><br><span class="line">    <span class="keyword">if</span> (a!==<span class="string">&#x27;debugger&#x27;</span>)&#123;<span class="keyword">return</span> f(a)&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Function.prototype.constructor_ = Function.prototype.constructor;</span><br><span class="line">Function.prototype.constructor = function(x)&#123;</span><br><span class="line">    <span class="keyword">if</span> (x!==<span class="string">&#x27;debugger&#x27;</span>)&#123;<span class="keyword">return</span> Function.prototype.constructor_(x)&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">eval_ = <span class="built_in">eval</span>;</span><br><span class="line"><span class="built_in">eval</span> = function(a)&#123;</span><br><span class="line">    <span class="keyword">if</span>(a==<span class="string">&#x27;debugger&#x27;</span>)</span><br><span class="line">    &#123;<span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>&#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;<span class="keyword">return</span> eval_(a)&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">setTimeout = function(a,b)&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">setInterval = function()&#123;&#125;</span><br><span class="line"></span><br><span class="line">console.log_ = console.log</span><br><span class="line"></span><br><span class="line">Function.prototype.constructor_ = Function.prototype.constructor;</span><br><span class="line">Function.prototype.constructor = function(x)&#123;</span><br><span class="line">    debugger;</span><br><span class="line">    <span class="keyword">return</span> Function.prototype.constructor_(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">(function()&#123;</span><br><span class="line">    <span class="string">&#x27;use strict&#x27;</span></span><br><span class="line">    Object.defineProperty(document, <span class="string">&#x27;cookie&#x27;</span>, &#123;</span><br><span class="line">        get: function() &#123;</span><br><span class="line">            debugger;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="built_in">set</span>: function(value) &#123;</span><br><span class="line">            debugger;</span><br><span class="line">            <span class="keyword">return</span> value;</span><br><span class="line">        &#125;,</span><br><span class="line">&#125;);</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>爬虫</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
 </search>
