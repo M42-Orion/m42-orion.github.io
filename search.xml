@@ -3275,4 +3275,118 @@
         <tag>滑块验证码</tag>
       </tags>
   </entry>
+  <entry>
+    <title>git提交规范问题</title>
+    <url>/m42-orion/2023/01/30/git%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>一直以来个人提交git都是做了啥直接写啥，虽然尽可能的写得很详细但是时间一久难免忘记当时到底是做什么功能。受到同事的提醒，他将他使用的git提交规范推荐给了我，使用了一段时间后感觉确实工作内容看起来更加清晰了，虽然只是几个简单规范，但是受益匪浅。</p>
+<h2 id="git-提交规范"><a href="#git-提交规范" class="headerlink" title="git 提交规范"></a>git 提交规范</h2><p>为什么要制定提交规范？</p>
+<ul>
+<li>便于程序员对提交历史进行追溯，了解发生了什么情况。</li>
+<li>一旦约束了 Commit Message ，意味着我们将慎重的进行每一次提交，不能再一股脑的把各种各样的改动都放在一个git commit里面，这样一来整个代码改动的历史也将更加清晰。</li>
+<li>格式化的 Commit Message 才可以用于自动化输出 Change log 。</li>
+</ul>
+<hr>
+<p>业界通用的Git提交规范：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;<span class="built_in">type</span>&gt;(&lt;scope&gt;):&lt;subject&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>type: 用于说明 Git Commit 的类别，只允许使用下面的标识。</li>
+<li>scope: scope用于说明 Commit 影响的范围，比如数据层、控制层、视图层等，视项目不同而不同。</li>
+<li>subject: subject是 Commit 目的的简短描述，一般不超过50个字符。</li>
+</ul>
+<p>这里简单记录一下基本的提交规范：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>emji</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>feat</td>
+<td>✨</td>
+<td>引入新功能</td>
+</tr>
+<tr>
+<td>fix</td>
+<td>🐛</td>
+<td>修复 bug</td>
+</tr>
+<tr>
+<td>style</td>
+<td>💄</td>
+<td>更新 UI 样式文按键</td>
+</tr>
+<tr>
+<td>format</td>
+<td>🥚</td>
+<td>格式化代码</td>
+</tr>
+<tr>
+<td>docs</td>
+<td>📝</td>
+<td>添加/更新文档</td>
+</tr>
+<tr>
+<td>perf</td>
+<td>👌</td>
+<td>提高性能/优化</td>
+</tr>
+<tr>
+<td>init</td>
+<td>🎉</td>
+<td>初次提交/初始化项目</td>
+</tr>
+<tr>
+<td>test</td>
+<td>✅</td>
+<td>增加测试代码</td>
+</tr>
+<tr>
+<td>refactor</td>
+<td>🎨</td>
+<td>改进代码结构/代码格式</td>
+</tr>
+<tr>
+<td>patch</td>
+<td>🚑</td>
+<td>添加重要补丁</td>
+</tr>
+<tr>
+<td>file</td>
+<td>📦</td>
+<td>添加新文件</td>
+</tr>
+<tr>
+<td>publish</td>
+<td>🚀</td>
+<td>发布新版本</td>
+</tr>
+<tr>
+<td>tag</td>
+<td>📌</td>
+<td>发布新版本</td>
+</tr>
+<tr>
+<td>config</td>
+<td>🔧</td>
+<td>修改配置文件</td>
+</tr>
+<tr>
+<td>git</td>
+<td>🙈</td>
+<td>添加或修改.gitignore 文件</td>
+</tr>
+</tbody></table>
+<p>更加详细的规范可以参考这个： <a href="https://developer.aliyun.com/article/441408">https://developer.aliyun.com/article/441408</a></p>
+<p>如果懒的话可以使用插件帮助，在vscode上提供很多辅助插件，比如 git-commit-lint-vscode</p>
+]]></content>
+      <categories>
+        <category>记录</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
 </search>
