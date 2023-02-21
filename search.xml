@@ -3407,4 +3407,53 @@
         <tag>Linux</tag>
       </tags>
   </entry>
+  <entry>
+    <title>python代码加密</title>
+    <url>/m42-orion/2023/02/21/python%E4%BB%A3%E7%A0%81%E5%8A%A0%E5%AF%86/</url>
+    <content><![CDATA[<p>之前工作中需要使用到对python代码进行加密，因为许多核心代码设计到重要信息，不能暴露给客户。但是python作为一种脚本语言，既要保证运行部署方便又要考虑到代码破译的安全性问题。</p>
+<h2 id="编译加密"><a href="#编译加密" class="headerlink" title="编译加密"></a>编译加密</h2><p>编译加密就是常见的将python代码编译成为以后缀<code>.pyc</code>的文件，虽然不影响使用与部署，但是可以被反编译，直接使用uncompyle库进行反编译即可得到结果</p>
+<h2 id="代码混淆"><a href="#代码混淆" class="headerlink" title="代码混淆"></a>代码混淆</h2><p>代码混淆在我之前的记录当中提起过，<a href="https://pyob.oxyry.com/">网站</a></p>
+<p>优点：</p>
+<ul>
+<li>简单</li>
+<li>不可逆</li>
+<li>不影响逻辑</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>对于项目来说不友好</li>
+<li>混淆不可控</li>
+<li>逻辑依然可读</li>
+</ul>
+<h2 id="打包成exe文件"><a href="#打包成exe文件" class="headerlink" title="打包成exe文件"></a>打包成<code>exe</code>文件</h2><p>python可以使用<code>pyinstaller</code>将文件打包成exe文件，但是对于项目部署来说几乎全是缺点：</p>
+<ul>
+<li>内部路径找不到</li>
+<li>资源文件不好打包</li>
+<li>部署使用麻烦</li>
+<li>难以控制</li>
+</ul>
+<h2 id="生成使用-Cython"><a href="#生成使用-Cython" class="headerlink" title="生成使用 Cython"></a>生成使用 Cython</h2><p>它的原理：将 .py/.pyx 编译为 .c文件，再将 .c文件编译为 .so(Unix) 或 .pyd(Windows)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install Cython</span><br></pre></td></tr></table></figure>
+
+<p>优点：</p>
+<ul>
+<li>不可逆</li>
+<li>不影响使用</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>打包麻烦</li>
+<li>维护麻烦</li>
+</ul>
+<h2 id="PyArmor"><a href="#PyArmor" class="headerlink" title="PyArmor"></a>PyArmor</h2><p>这是一个python代码加密库，不影响项目结构进行加密，支持多种加密方式，部署也不受影响。但是不能调试！是当前觉得最好的加密方法，附上<a href="https://pyarmor.dashingsoft.com/index-zh.html">网站</a>与<a href="https://pyarmor.readthedocs.io/zh/latest/how-to-do.html">教程</a></p>
+]]></content>
+      <categories>
+        <category>杂谈</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>加密</tag>
+        <tag>代码混淆</tag>
+      </tags>
+  </entry>
 </search>
