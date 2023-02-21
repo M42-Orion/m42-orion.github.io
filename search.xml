@@ -3389,4 +3389,22 @@
         <tag>git</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Too many open files 解决办法</title>
+    <url>/m42-orion/2023/02/21/Linux%E6%96%87%E4%BB%B6%E6%89%93%E5%BC%80%E8%BF%87%E5%A4%9A%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>近期使用Linux操作系统的时候用到了多进程，导致同一时间内文件打开数量超过限制，从而导致进程卡死问题，在网上找到了以下解决方法</p>
+<h2 id="单个进程打开文件句柄数过多"><a href="#单个进程打开文件句柄数过多" class="headerlink" title="单个进程打开文件句柄数过多"></a>单个进程打开文件句柄数过多</h2><p><code>ulimit</code>中的<code>nofile</code>表示单进程可以打开的最大文件句柄数，可以通过<code>ulimit -a</code>查看，子进程默认继承父进程的限制（注意，是继承，不是共享，子进程和父进程打开的文件句柄数是单独算的）。<br>网上还有一种解读是<code>nofile</code>表示单用户可以打开的文件句柄数，因为他们在<code>limit.conf</code>中看到类似于<code>openstack soft nofile 65536</code>，便认为是<code>openstack</code>用户最多可以打开的文件句柄数。该解读是错误的，<code>openstack soft nofile 65536</code>表示的含义是当你执行<code>su - openstack</code>切换到<code>openstack</code>用户后，你创建的所有进程最大可以打开的文件句柄数是<code>65536</code>。<br>要查看一个进程可以打开的文件句柄数，可以通过<code>cat /proc/&lt;pid&gt;/limits</code>查看。</p>
+<p>要修改<code>ulimit</code>中的<code>nofile</code>，可以通过修改<code>/etc/security/limits.conf</code>文件，在其中加入类似<code>openstack soft nofile 65536</code>的语句来进行修改。修改完成后，可以通过<code>su - openstack</code>切换用户，或者重新登录，来使该配置生效。</p>
+<p>要动态修改一个进程的限制，可以使用<code>prlimit</code>命令，具体用法为：<code>prlimit --pid $&#123;pid&#125; --nofile=102400:102400</code>。</p>
+<h2 id="操作系统打开的文件句柄数过多"><a href="#操作系统打开的文件句柄数过多" class="headerlink" title="操作系统打开的文件句柄数过多"></a>操作系统打开的文件句柄数过多</h2><p>整个操作系统可以打开的文件句柄数是有限的，受内核参数<code>fs.file-max</code>影响。<br>可以通过执行<code>echo 100000000 &gt; /proc/sys/fs/file-max</code>命令来动态修改该值，也可以通过修改<code>/etc/sysctl.conf</code>文件来永久修改该值。</p>
+<h2 id="systemd对该进程进行了限制、"><a href="#systemd对该进程进行了限制、" class="headerlink" title="systemd对该进程进行了限制、"></a><code>systemd</code>对该进程进行了限制、</h2><p>该场景仅针对被<code>systemd</code>管理的进程（也就是可以通过<code>systemctl</code>来控制的进程）生效，可以通过修改该进程的<code>service</code>文件（通常在<code>/etc/systemd/system/</code>目录下），在<code>[Service]</code>下面添加<code>LimitNOFILE=20480000</code>来实现，修改完成之后需要执行<code>systemctl daemon-reload</code>来使该配置生效。</p>
+<h2 id="inotify达到上限"><a href="#inotify达到上限" class="headerlink" title="inotify达到上限"></a><code>inotify</code>达到上限</h2><p><code>inotify</code>是<code>linux</code>提供的一种监控机制，可以监控文件系统的变化。该机制受到2个内核参数的影响：<code>fs.inotify.max_user_instances</code>和<code>fs.inotify.max_user_watches</code>，其中<code>fs.inotify.max_user_instances</code>表示每个用户最多可以创建的<code>inotify instances</code>数量上限，<code>fs.inotify.max_user_watches</code>表示么个用户同时可以添加的<code>watch</code>数目，当出现<code>too many open files</code>问题而上面三种方法都无法解决时，可以尝试通过修改这2个内核参数来生效。修改方法是修改<code>/etc/sysctl.conf</code>文件，并执行<code>sysctl -p</code>。</p>
+]]></content>
+      <categories>
+        <category>记录</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
 </search>
