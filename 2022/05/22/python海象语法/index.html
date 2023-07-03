@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>python海象语法 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,在我的工作当中，无意间接触到了一个别人写的一段代码,像这样：if (n := len(a)) &amp;gt; 10:，凭借我的直觉，我能够轻易的读懂这段代码，但是我却从来没见过，于是我搜了一下，才知道这是,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="python海象语法 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,在我的工作当中，无意间接触到了一个别人写的一段代码,像这样：if (n := len(a)) &amp;gt; 10:，凭借我的直觉，我能够轻易的读懂这段代码，但是我却从来没见过，于是我搜了一下，才知道这是,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="python海象语法 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,在我的工作当中，无意间接触到了一个别人写的一段代码,像这样：if (n := len(a)) &amp;gt; 10:，凭借我的直觉，我能够轻易的读懂这段代码，但是我却从来没见过，于是我搜了一下，才知道这是,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">python海象语法</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">python海象语法</h1>
+        <div class="stuff">
+            <span>五月 22, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>在我的工作当中，无意间接触到了一个别人写的一段代码,像这样：<code>if (n := len(a)) &gt; 10:</code>，凭借我的直觉，我能够轻易的读懂这段代码，但是我却从来没见过，于是我搜了一下，才知道这是python3.8的新语法，叫做海象语法，因为冒号像眼睛，等号像牙齿，所以被成为海象语法。</p>
+<h2 id="海象语法"><a href="#海象语法" class="headerlink" title="海象语法"></a>海象语法</h2><p>官方给出了几个案例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 赋值表达式有助于避免调用 len（） 两次</span></span><br><span class="line"><span class="keyword">if</span> (n := <span class="built_in">len</span>(a)) &gt; <span class="number">10</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;List is too long (<span class="subst">&#123;n&#125;</span> elements, expected &lt;= 10)&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一次用于测试是否发生了匹配，另一次用于提取子组</span></span><br><span class="line">discount = <span class="number">0.0</span></span><br><span class="line"><span class="keyword">if</span> (mo := re.search(<span class="string">r&#x27;(\d+)% discount&#x27;</span>, advertisement)):</span><br><span class="line">    discount = <span class="built_in">float</span>(mo.group(<span class="number">1</span>)) / <span class="number">100.0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Loop over fixed length blocks</span></span><br><span class="line"><span class="keyword">while</span> (block := f.read(<span class="number">256</span>)) != <span class="string">&#x27;&#x27;</span>:</span><br><span class="line">    process(block)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 其中表达式正文中还需要在筛选条件中计算的值</span></span><br><span class="line">[clean_name.title() <span class="keyword">for</span> name <span class="keyword">in</span> names</span><br><span class="line"> <span class="keyword">if</span> (clean_name := normalize(<span class="string">&#x27;NFC&#x27;</span>, name)) <span class="keyword">in</span> allowed_names]</span><br></pre></td></tr></table></figure>
+
+<p>在原来的python语言当中，需要判断的时候不能够将表达式赋值给变量，因此在进行判断操作之前，必须首先对判断变量进行赋值，而海象运算符使用得当可以极大程度的减少对于冗余代码的使用，免去过多的赋值操作。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>该写点什么，还是算吧！</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/1468957767.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%B7%E8%B1%A1%E8%AF%AD%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">海象语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.</span> <span class="toc-text">总结</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

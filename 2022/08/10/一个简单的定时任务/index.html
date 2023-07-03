@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>一个简单的定时任务 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,在编写某些脚本的时候往往需要使用到定时执行任务，定时执行任务可以通过下发多进程或者使用某些调度算法实现，在python中为开发者提供了一个库可以快速实现定时任务并且不让主进程受到干扰。这个库就叫做：,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="一个简单的定时任务 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,在编写某些脚本的时候往往需要使用到定时执行任务，定时执行任务可以通过下发多进程或者使用某些调度算法实现，在python中为开发者提供了一个库可以快速实现定时任务并且不让主进程受到干扰。这个库就叫做：,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="一个简单的定时任务 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,在编写某些脚本的时候往往需要使用到定时执行任务，定时执行任务可以通过下发多进程或者使用某些调度算法实现，在python中为开发者提供了一个库可以快速实现定时任务并且不让主进程受到干扰。这个库就叫做：,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">一个简单的定时任务</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">一个简单的定时任务</h1>
+        <div class="stuff">
+            <span>八月 10, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%9D%82%E8%B0%88/" rel="tag">杂谈</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>在编写某些脚本的时候往往需要使用到定时执行任务，定时执行任务可以通过下发多进程或者使用某些调度算法实现，在python中为开发者提供了一个库可以快速实现定时任务并且不让主进程受到干扰。这个库就叫做：<code>APScheduler</code>。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>dvanced Python Scheduler (APScheduler) 是一个Python库，可实现延迟调度要执行Python代码的功能，可以只执行一次，也可以定期执行。可以随时添加新任务或删除旧任务。如果将job任务存储在数据库中，这些任务还将在重新启动调度程序后保持它们的状态并继续运行。当重新启动调度程序时，它将运行离线时应该运行的所有job任务，这个功能可以让程序弥补由于外部情况损失的任务。这个库有四个组件：</p>
+<ul>
+<li><strong><code>triggers</code>触发器</strong> : 包含调度逻辑，每一个job有它自己的触发器，用于决定job下一次运行时间。除了初始配置外，触发器完全是无状态的。</li>
+<li><strong><code>job stores</code>作业存储</strong> : 存储被调度的job，默认的job存储是简单地把job存储在内存中，其他的job存储是保存在数据库中。Job的数据在保存到持久化存储时被序列化，并在加载时进行反序列化。job存储(默认存储除外)不将job数据保存在内存中，而是充当后台保存、加载、更新和搜索job的中间人。job存储永远不能在调度程序之间共享。</li>
+<li><strong><code>executors</code>执行器</strong> : 负责处理job的运行，通过将job中指定的可调用对象 提交给一个线程或进程池来运行。当job完成时，执行器将会通知调度器，然后调度程序发出相应event。</li>
+<li><strong><code>schedulers</code>调度器</strong> : 一个应用程序中通常只有一个调度器在运行，应用程序开发人员通常不会直接处理job存储、执行器和触发器，相反，调度器程序提供了处理这些事件的接口。<br>配置job存储和执行器都是在调度器中完成，例如添加、修改和移除job。</li>
+</ul>
+<h3 id="简单实用"><a href="#简单实用" class="headerlink" title="简单实用"></a>简单实用</h3><p>APScheduler能够很轻易的实现定时任务的三个步骤：</p>
+<ul>
+<li>新建scheduler调度器  </li>
+<li>向调度器添加一个job调度任务  </li>
+<li>运行job调度任务  </li>
+</ul>
+<p>即创建任务，添加任务，启动任务</p>
+<p>案例一：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用blocking阻塞调度程序来调度每隔3秒执行一次的作业</span></span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> apscheduler.schedulers.blocking <span class="keyword">import</span> BlockingScheduler</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tick</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Tick! The time is: %s&#x27;</span> % datetime.now())</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    scheduler = BlockingScheduler()</span><br><span class="line">    scheduler.add_job(tick, <span class="string">&#x27;interval&#x27;</span>, seconds=<span class="number">3</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Press Ctrl+&#123;0&#125; to exit&#x27;</span>.<span class="built_in">format</span>(<span class="string">&#x27;Break&#x27;</span> <span class="keyword">if</span> os.name == <span class="string">&#x27;nt&#x27;</span> <span class="keyword">else</span> <span class="string">&#x27;C&#x27;</span>))</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        scheduler.start()</span><br><span class="line">    <span class="keyword">except</span> (KeyboardInterrupt, SystemExit):</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p>但是这个案例是会阻塞程序运行的，本质上与for循环实现的功能差不多一般情况下大多数人不会在有这样需求的情况下考虑它，多数时候我们希望我们是任务在后台被调度，不会阻塞程序的正常执行,如下</p>
+<p>案例二：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> apscheduler.schedulers.background <span class="keyword">import</span> BackgroundScheduler</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">tick</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Tick! The time is: %s&#x27;</span> % datetime.now())</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    scheduler = BackgroundScheduler()</span><br><span class="line">    scheduler.add_job(tick, <span class="string">&#x27;interval&#x27;</span>, seconds=<span class="number">3</span>)</span><br><span class="line">    scheduler.start()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Press Ctrl+&#123;0&#125; to exit&#x27;</span>.<span class="built_in">format</span>(<span class="string">&#x27;Break&#x27;</span> <span class="keyword">if</span> os.name == <span class="string">&#x27;nt&#x27;</span> <span class="keyword">else</span> <span class="string">&#x27;C&#x27;</span>))</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># This is here to simulate application activity (which keeps the main thread alive).</span></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            time.sleep(<span class="number">2</span>)</span><br><span class="line">    <span class="keyword">except</span> (KeyboardInterrupt, SystemExit):</span><br><span class="line">        <span class="comment"># Not strictly necessary if daemonic mode is enabled but should be done if possible</span></span><br><span class="line">        scheduler.shutdown()</span><br></pre></td></tr></table></figure>
+
+<p>这个调度器实现了同样的功能，也是每三秒执行一次，但是调度程序不会阻塞主进程的正常进行，更多调度方法如下：</p>
+<ul>
+<li><strong>BlockingScheduler</strong> : 调度器在当前进程的主线程中运行，也就是会阻塞当前线程。</li>
+<li><strong>BackgroundScheduler</strong> : 调度器在后台线程中运行，不会阻塞当前线程。（在没有使用下面5个框架时使用）</li>
+<li><strong>AsyncIOScheduler</strong> : 结合 asyncio 模块（一个异步框架）一起使用。</li>
+<li><strong>GeventScheduler</strong> : 程序中使用 gevent（高性能的Python并发框架）作为IO模型，和 GeventExecutor 配合使用。</li>
+<li><strong>TornadoScheduler</strong> : 程序中使用 Tornado（一个web框架）的IO模型。</li>
+<li><strong>TwistedScheduler</strong> : 配合 TwistedExecutor使用。</li>
+<li><strong>QtScheduler</strong> : 配合 Qt 应用使用。</li>
+</ul>
+<p>除了定时任务，当我们程序只需要在某一个特定时间执行一件事情，不需要重复执行的时候，调度器很明显就不够使用了，这时候就需要定时器也叫触发器：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 2019-03-29 14:00:00 时刻运行一次 job_func 方法</span></span><br><span class="line">scheduler.add_job(job_func, <span class="string">&#x27;date&#x27;</span>, run_date=datetime(<span class="number">2019</span>, <span class="number">3</span>, <span class="number">29</span>, <span class="number">14</span>, <span class="number">0</span>, <span class="number">0</span>), args=[<span class="string">&#x27;text&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p>触发器同时也支持其他的时间格式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sched.add_job(my_job, <span class="string">&#x27;date&#x27;</span>, run_date=date(<span class="number">2019</span>, <span class="number">3</span>, <span class="number">29</span>), args=[<span class="string">&#x27;text&#x27;</span>])</span><br><span class="line">sched.add_job(my_job, <span class="string">&#x27;date&#x27;</span>, run_date=<span class="string">&#x27;2019-03-29 14:30:05&#x27;</span>, args=[<span class="string">&#x27;text&#x27;</span>])</span><br><span class="line">sched.add_job(my_job, args=[<span class="string">&#x27;text&#x27;</span>]) <span class="comment">#立即运行</span></span><br></pre></td></tr></table></figure>
+
+<p>触发器除了能够定时触发还能够在某一个固定的时间段内执行指定数量的任务：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 2019-03-29 14:00:01 ~ 2019-03-29 14:00:10 之间, 每隔两分钟执行一次job_func方法。</span></span><br><span class="line">scheduler.add_job(job_func, <span class="string">&#x27;interval&#x27;</span>, minutes=<span class="number">2</span>, start_date=<span class="string">&#x27;2019-03-29 14:00:01&#x27;</span> , end_date=<span class="string">&#x27;2019-03-29 14:00:10&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>以及周期性触发：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在2019-03-30 00:00:00之前，每周一到周五的5:30(am)触发</span></span><br><span class="line">sched.add_job(job_function, <span class="string">&#x27;cron&#x27;</span>, day_of_week=<span class="string">&#x27;mon-fri&#x27;</span>, hour=<span class="number">5</span>, minute=<span class="number">30</span>, end_date=<span class="string">&#x27;2019-03-30&#x27;</span>)</span><br></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/1488302381.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%AE%9E%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text">简单实用</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

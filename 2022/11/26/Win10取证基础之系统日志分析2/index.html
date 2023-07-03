@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Win10取证基础之系统日志分析2 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,之前的时候为了解析系统的日志文件找库，找了之后又遇到不少问题，使用起来并不方便，然后就知道了原来是可以通过官方接口直接获取的，绝了….
+1234567891011121314151617181920,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Win10取证基础之系统日志分析2 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,之前的时候为了解析系统的日志文件找库，找了之后又遇到不少问题，使用起来并不方便，然后就知道了原来是可以通过官方接口直接获取的，绝了….
+1234567891011121314151617181920,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Win10取证基础之系统日志分析2 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,之前的时候为了解析系统的日志文件找库，找了之后又遇到不少问题，使用起来并不方便，然后就知道了原来是可以通过官方接口直接获取的，绝了….
+1234567891011121314151617181920,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Win10取证基础之系统日志分析2</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Win10取证基础之系统日志分析2</h1>
+        <div class="stuff">
+            <span>十一月 26, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Win10%E5%8F%96%E8%AF%81/" rel="tag">Win10取证</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/" rel="tag">日志分析</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>之前的时候为了解析系统的日志文件找库，找了之后又遇到不少问题，使用起来并不方便，然后就知道了原来是可以通过官方接口直接获取的，绝了….</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> win32evtlog </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">hand = win32evtlog.OpenEventLog(<span class="string">&quot;localhost&quot;</span>,<span class="string">&quot;System&quot;</span>)</span><br><span class="line">flags = win32evtlog.EVENTLOG_SEQUENTIAL_READ|win32evtlog.EVENTLOG_FORWARDS_READ</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    events = win32evtlog.ReadEventLog(hand, flags,<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> events:</span><br><span class="line">        <span class="keyword">for</span> event <span class="keyword">in</span> events:</span><br><span class="line">            EventID = event.EventID &amp; <span class="number">0x1FFFFFFF</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;Event ID:&#x27;</span>, event.EventID &amp; <span class="number">0x1FFFFFFF</span>) <span class="comment"># 事件标识id</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;Event Type&#x27;</span>,event.EventType)<span class="comment"># 事件等级</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;Event Category&#x27;</span>,event.EventCategory) <span class="comment"># 事件类别</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;ComputerName&#x27;</span>, event.ComputerName) <span class="comment"># 电脑名字</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;Time Generated&#x27;</span>, event.TimeGenerated) <span class="comment"># 生成时间</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;Time Written&#x27;</span>, event.TimeWritten) <span class="comment"># 写入时间</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;source&#x27;</span>,event.SourceName) <span class="comment"># 来源</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;RecordNumber&#x27;</span>,event.RecordNumber)<span class="comment"># 记录编号</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;Source Name&#x27;</span>,event.SourceName) <span class="comment"># 来源名</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;Event Data&#x27;</span>,event.Data) <span class="comment"># 事件信息</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<p>但是这个并不完整，有很多其实获取不到，比如进程id之类的，因此有另一个解决方案：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> win32evtlog</span><br><span class="line"><span class="keyword">import</span> xml.etree.ElementTree <span class="keyword">as</span> ET</span><br><span class="line"></span><br><span class="line"><span class="comment"># open event file</span></span><br><span class="line">query_handle = win32evtlog.EvtQuery(<span class="string">&#x27;D:/**/System.evtx&#x27;</span>,</span><br><span class="line">    win32evtlog.EvtQueryFilePath)</span><br><span class="line"></span><br><span class="line">read_count = <span class="number">0</span></span><br><span class="line">att_count = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    events = win32evtlog.EvtNext(query_handle, <span class="number">100</span>)</span><br><span class="line">    read_count += <span class="built_in">len</span>(events)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(events) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">for</span> event <span class="keyword">in</span> events:</span><br><span class="line">        xml_content = win32evtlog.EvtRender(event, win32evtlog.EvtRenderEventXml)</span><br><span class="line">        xml = ET.fromstring(xml_content)</span><br><span class="line">        ns = <span class="string">&#x27;&#123;http://schemas.microsoft.com/win/2004/08/events/event&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line">        event_id = xml.find(<span class="string">f&#x27;.//<span class="subst">&#123;ns&#125;</span>EventID&#x27;</span>).text</span><br><span class="line">        Version = xml.find(<span class="string">f&#x27;.//<span class="subst">&#123;ns&#125;</span>Version&#x27;</span>).text</span><br><span class="line">        level = xml.find(<span class="string">f&#x27;.//<span class="subst">&#123;ns&#125;</span>Level&#x27;</span>).text</span><br><span class="line">        Task = xml.find(<span class="string">f&#x27;.//<span class="subst">&#123;ns&#125;</span>Task&#x27;</span>).text</span><br><span class="line">        Opcode = xml.find(<span class="string">f&#x27;.//<span class="subst">&#123;ns&#125;</span>Opcode&#x27;</span>).text</span><br><span class="line">        Keywords = xml.find(<span class="string">f&#x27;.//<span class="subst">&#123;ns&#125;</span>Keywords&#x27;</span>).text</span><br><span class="line">        TimeCreated = xml.find(<span class="string">f&#x27;.//<span class="subst">&#123;ns&#125;</span>TimeCreated&#x27;</span>).get(<span class="string">&#x27;SystemTime&#x27;</span>)</span><br><span class="line">        EventRecordID = xml.find(<span class="string">f&#x27;.//<span class="subst">&#123;ns&#125;</span>EventRecordID&#x27;</span>).text</span><br><span class="line">        execution = xml.find(<span class="string">f&#x27;.//<span class="subst">&#123;ns&#125;</span>Execution&#x27;</span>)</span><br><span class="line">        process_id = execution.get(<span class="string">&#x27;ProcessID&#x27;</span>)</span><br><span class="line">        thread_id = execution.get(<span class="string">&#x27;ThreadID&#x27;</span>)</span><br><span class="line">        channel = xml.find(<span class="string">f&#x27;.//<span class="subst">&#123;ns&#125;</span>Channel&#x27;</span>).text</span><br><span class="line">        Computer = xml.find(<span class="string">f&#x27;.//<span class="subst">&#123;ns&#125;</span>Computer&#x27;</span>).text</span><br><span class="line">        EventData_list = [&#123;i.attrib.get(<span class="string">&#x27;Name&#x27;</span>):i.text&#125; <span class="keyword">for</span> i <span class="keyword">in</span> xml.findall(<span class="string">f&#x27;.//<span class="subst">&#123;ns&#125;</span>Data&#x27;</span>)]</span><br><span class="line">        user_data = xml.find(<span class="string">f&#x27;.//<span class="subst">&#123;ns&#125;</span>UserData&#x27;</span>)</span><br><span class="line">        <span class="keyword">if</span> event_id == <span class="string">&#x27;******&#x27;</span>:</span><br><span class="line">            <span class="built_in">print</span>(&#123;<span class="string">&#x27;event_id&#x27;</span>:event_id,<span class="string">&#x27;Version&#x27;</span>:Version,<span class="string">&#x27;level&#x27;</span>:level,</span><br><span class="line">                    <span class="string">&#x27;Task&#x27;</span>:Task,<span class="string">&#x27;Opcode&#x27;</span>:Opcode,<span class="string">&#x27;Keywords&#x27;</span>:Keywords,</span><br><span class="line">                    <span class="string">&#x27;TimeCreated&#x27;</span>:TimeCreated,<span class="string">&#x27;EventRecordID&#x27;</span>:EventRecordID,</span><br><span class="line">                    <span class="string">&#x27;process_id&#x27;</span>:process_id,<span class="string">&#x27;thread_id&#x27;</span>:thread_id,<span class="string">&#x27;channel&#x27;</span>:channel,</span><br><span class="line">                    <span class="string">&#x27;Computer&#x27;</span>:Computer,<span class="string">&#x27;EventData_list&#x27;</span>:EventData_list,<span class="string">&#x27;user_data&#x27;</span>:user_data&#125;)</span><br><span class="line">            att_count+=<span class="number">1</span></span><br><span class="line">        <span class="comment"># user_data has possible any data</span></span><br><span class="line">        </span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;Read <span class="subst">&#123;read_count&#125;</span> records ----<span class="subst">&#123;att_count&#125;</span>&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这个方案就能够直接拿到原始结构解析数据。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/487220184.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+				
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>
