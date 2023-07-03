@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>连接池 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,什么是连接池？在网上常常给出这样的解释：数据库连接池负责分配、管理和释放数据库连接，它允许应用程序重复使用一个现有的数据库连接，而不是再重新建立一个。
+更通俗一点就是，连接池维护着项目于数据库之间的,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/M42-Orion/M42-Orion.github.io/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="连接池 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,什么是连接池？在网上常常给出这样的解释：数据库连接池负责分配、管理和释放数据库连接，它允许应用程序重复使用一个现有的数据库连接，而不是再重新建立一个。
+更通俗一点就是，连接池维护着项目于数据库之间的,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="连接池 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,什么是连接池？在网上常常给出这样的解释：数据库连接池负责分配、管理和释放数据库连接，它允许应用程序重复使用一个现有的数据库连接，而不是再重新建立一个。
+更通俗一点就是，连接池维护着项目于数据库之间的,"/>
+    
+<link rel="stylesheet" href="/M42-Orion/M42-Orion.github.io/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://github.com/M42-Orion/M42-Orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">连接池</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">连接池</h1>
+        <div class="stuff">
+            <span>五月 08, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/M42-Orion/M42-Orion.github.io/tags/fastapi/" rel="tag">fastapi</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="什么是连接池？"><a href="#什么是连接池？" class="headerlink" title="什么是连接池？"></a>什么是连接池？</h2><p>在网上常常给出这样的解释：数据库连接池负责分配、管理和释放数据库连接，它允许应用程序重复使用一个现有的数据库连接，而不是再重新建立一个。</p>
+<p>更通俗一点就是，连接池维护着项目于数据库之间的联系，保证项目不会过于频繁的去连接数据库导致数据库压力过大。</p>
+<h2 id="为什么要使用连接池？"><a href="#为什么要使用连接池？" class="headerlink" title="为什么要使用连接池？"></a>为什么要使用连接池？</h2><p>数据库连接是一种关键的有限的昂贵的资源，这一点在多用户的网页应用程序中体现得尤为突出。一个数据库连接对象均对应一个物理数据库连接，每次操作都打开一个物理连接，使用完都关闭连接，这样造成系统的性能低下。如果连接池存在，操作只需要把任务丢给连接池，至于对数据库操作的进程等一系列问题，全权交给连接池来进行操作，由连接池自己控制与数据库的访问与操作。在没有连接池的情况下，连接数据库通常需要以下步骤：  </p>
+<ul>
+<li>TCP建立连接的三次握手  </li>
+<li>MySQL认证的三次握手  </li>
+<li>真正的SQL执行  </li>
+<li>MySQL的关闭  </li>
+<li>TCP的四次握手关闭  </li>
+</ul>
+<p>这样操作在代码上实现起来是很简单的，但是连接过程太耗时，连接过多容易出现内存泄漏，对于数据库访问大的项目来说这是十分致命的。</p>
+<h2 id="连接池的实现"><a href="#连接池的实现" class="headerlink" title="连接池的实现"></a>连接池的实现</h2><h3 id="基于别人的工具"><a href="#基于别人的工具" class="headerlink" title="基于别人的工具"></a>基于别人的工具</h3><p>实际上连接池的问题由来已久，因此早有人考虑到连接池的问题并为此写好了工具，在python语言中，提供一个库：<code>sqlalchemy </code>,这个库可以维护一个连接，让操作者不必担心在项目执行过程中断掉与数据库的联系。</p>
+<p>使用案例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">engine = create_engine(<span class="string">&quot;mysql://user:password@hostname/dbname?charset=utf8&quot;</span>,</span><br><span class="line">                       echo=<span class="literal">True</span>,</span><br><span class="line">                       pool_size=<span class="number">8</span>,</span><br><span class="line">                       pool_recycle=<span class="number">60</span>*<span class="number">30</span></span><br><span class="line">                       )</span><br></pre></td></tr></table></figure>
+
+<h3 id="自己写一个"><a href="#自己写一个" class="headerlink" title="自己写一个"></a>自己写一个</h3><p>如果自己写一个也是可以的，自己写连接池需要注意以下几点：</p>
+<ul>
+<li>最小连接数：是连接池一直保持的数据库连接,所以如果应用程序对数据库连接的使用量不大,将会有大量的数据库连接资源被浪费.</li>
+<li>最大连接数：是连接池能申请的最大连接数,如果数据库连接请求超过次数,后面的数据库连接请求将被加入到等待队列中,这会影响以后的数据库操作</li>
+<li>最大空闲时间</li>
+<li>获取连接超时时间</li>
+<li>超时重试连接次数</li>
+</ul>
+<p>在网上也有不少人写出来了一些自己的连接池</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"><span class="keyword">from</span> tools.setting <span class="keyword">import</span> config</span><br><span class="line"></span><br><span class="line">DB_CONFIG = config.mysql_info()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SQLManager</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 初始化实例方法</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">		self.conn = <span class="literal">None</span></span><br><span class="line">		self.cursor = <span class="literal">None</span></span><br><span class="line">		self.connect()</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 连接数据库</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">connect</span>(<span class="params">self</span>):</span><br><span class="line">		<span class="keyword">try</span>: <span class="comment"># 防止长连接导致挂掉</span></span><br><span class="line">			self.conn.ping()</span><br><span class="line">		<span class="keyword">except</span>:</span><br><span class="line">			self.conn = pymysql.connect(</span><br><span class="line">				host=DB_CONFIG[<span class="string">&quot;HOST&quot;</span>],</span><br><span class="line">				port=<span class="built_in">int</span>(DB_CONFIG[<span class="string">&quot;PORT&quot;</span>]),</span><br><span class="line">				user=DB_CONFIG[<span class="string">&quot;USER&quot;</span>],</span><br><span class="line">				passwd=DB_CONFIG[<span class="string">&quot;PASSWORD&quot;</span>],</span><br><span class="line">				db=DB_CONFIG[<span class="string">&quot;DBNAME&quot;</span>],</span><br><span class="line">				charset=DB_CONFIG[<span class="string">&quot;CHARSET&quot;</span>]</span><br><span class="line">			)</span><br><span class="line">			self.cursor = self.conn.cursor(cursor=pymysql.cursors.DictCursor)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 查询多条数据</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">get_list</span>(<span class="params">self, sql, args=<span class="literal">None</span></span>):</span><br><span class="line">		self.connect()</span><br><span class="line">		self.cursor.execute(sql.encode(<span class="string">&#x27;utf8&#x27;</span>), args)</span><br><span class="line">		result = self.cursor.fetchall()</span><br><span class="line">		<span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 查询单条数据</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">get_one</span>(<span class="params">self, sql, args=<span class="literal">None</span></span>):</span><br><span class="line">		self.connect()</span><br><span class="line">		self.cursor.execute(sql.encode(<span class="string">&#x27;utf8&#x27;</span>), args)</span><br><span class="line">		result = self.cursor.fetchone()</span><br><span class="line">		<span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 执行单条SQL语句</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">moddify</span>(<span class="params">self, sql, args=<span class="literal">None</span></span>):</span><br><span class="line">		self.connect()</span><br><span class="line">		self.cursor.execute(sql, args)</span><br><span class="line">		self.conn.commit()</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 我如果要批量执行多个创建操作，虽然只建立了一次数据库连接但是还是会多次提交，可不可以改成一次连接，</span></span><br><span class="line">	<span class="comment"># 一次提交呢？</span></span><br><span class="line">	<span class="comment"># 可以，只需要用上pymysql的executemany()</span></span><br><span class="line">	<span class="comment"># 方法就可以了。</span></span><br><span class="line">	<span class="comment"># 执行多条SQL语句</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">multi_modify</span>(<span class="params">self, sql, args=<span class="literal">None</span></span>):</span><br><span class="line">		self.connect()</span><br><span class="line">		self.cursor.executemany(sql.encode(<span class="string">&#x27;utf8&#x27;</span>), args)</span><br><span class="line">		self.conn.commit()</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 创建单条记录的语句</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">create</span>(<span class="params">self, sql, args=<span class="literal">None</span></span>):</span><br><span class="line">		self.connect()</span><br><span class="line">		self.cursor.execute(sql.encode(<span class="string">&#x27;utf8&#x27;</span>), args)</span><br><span class="line">		self.conn.commit()</span><br><span class="line">		last_id = self.cursor.lastrowid</span><br><span class="line">		<span class="keyword">return</span> last_id</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 关闭数据库cursor和连接</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">close</span>(<span class="params">self</span>):</span><br><span class="line">		self.connect()</span><br><span class="line">		self.cursor.close()</span><br><span class="line">		self.conn.close()</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 最后，我们每次操作完数据库之后都要手动关闭，可不可以写成自动关闭的呢？</span></span><br><span class="line">	<span class="comment"># 联想到我们之前学过的文件操作，使用with语句可以实现缩进结束自动关闭文件句柄的例子。</span></span><br><span class="line">	<span class="comment"># 我们来把我们的数据库连接类SQLManager类再优化下，使其支持with语句操作。</span></span><br><span class="line">	<span class="comment"># 进入with语句自动执行</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__enter__</span>(<span class="params">self</span>):</span><br><span class="line">		<span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 退出with语句块自动执行</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__exit__</span>(<span class="params">self, exc_type, exc_val, exc_tb</span>):</span><br><span class="line">		self.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">db = SQLManager()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="comment"># info = db.get_list(&#x27;select user_name from user_table where user_name=&quot;张三&quot;&#x27;)</span></span><br><span class="line">	<span class="comment"># time_info=datetime.datetime.now().strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)</span></span><br><span class="line">	<span class="comment"># sql_str = &quot;INSERT INTO user_table (create_time,update_time,user_name,password) VALUES (now(),now(),&#x27;&#123;&#125;&#x27;,&#123;&#125;)&quot;</span></span><br><span class="line">	<span class="comment"># db.create(sql_str)</span></span><br><span class="line">    <span class="comment"># print(info)</span></span><br><span class="line">	<span class="comment"># db.close()</span></span><br><span class="line">	sql_str = <span class="string">&quot;SELECT * FROM articles ORDER BY create_time DESC LIMIT &#123;&#125;,2;&quot;</span>.<span class="built_in">format</span>(<span class="number">2</span>*<span class="number">2</span>)</span><br><span class="line">	result = db.get_list(sql_str)</span><br><span class="line">	<span class="built_in">print</span>(result)</span><br></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/1384971398.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%9E%E6%8E%A5%E6%B1%A0%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什么是连接池？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E8%BF%9E%E6%8E%A5%E6%B1%A0%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">为什么要使用连接池？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">连接池的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%88%AB%E4%BA%BA%E7%9A%84%E5%B7%A5%E5%85%B7"><span class="toc-number">3.1.</span> <span class="toc-text">基于别人的工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%B7%B1%E5%86%99%E4%B8%80%E4%B8%AA"><span class="toc-number">3.2.</span> <span class="toc-text">自己写一个</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/js/plugin.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/js/typed.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/M42-Orion/M42-Orion.github.io/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/M42-Orion/M42-Orion.github.io/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/M42-Orion/M42-Orion.github.io/photoswipe/photoswipe.min.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>不常见的python类型校验 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,以前写过关于python类型校验的相关总结，但是不怎么全面，有些不常见的特殊情况并未被记录。
+任意类型any若声明某函数时指定函数传入参数的数据类型为any，则调用该函数时该参数的参数类型可以为任意,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/M42-Orion/M42-Orion.github.io/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="不常见的python类型校验 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,以前写过关于python类型校验的相关总结，但是不怎么全面，有些不常见的特殊情况并未被记录。
+任意类型any若声明某函数时指定函数传入参数的数据类型为any，则调用该函数时该参数的参数类型可以为任意,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="不常见的python类型校验 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,以前写过关于python类型校验的相关总结，但是不怎么全面，有些不常见的特殊情况并未被记录。
+任意类型any若声明某函数时指定函数传入参数的数据类型为any，则调用该函数时该参数的参数类型可以为任意,"/>
+    
+<link rel="stylesheet" href="/M42-Orion/M42-Orion.github.io/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://github.com/M42-Orion/M42-Orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">不常见的python类型校验</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">不常见的python类型校验</h1>
+        <div class="stuff">
+            <span>九月 06, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/M42-Orion/M42-Orion.github.io/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/M42-Orion/M42-Orion.github.io/tags/%E6%9D%82%E8%B0%88/" rel="tag">杂谈</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>以前写过关于python类型校验的相关总结，但是不怎么全面，有些不常见的特殊情况并未被记录。</p>
+<h2 id="任意类型any"><a href="#任意类型any" class="headerlink" title="任意类型any"></a>任意类型any</h2><p>若声明某函数时指定函数传入参数的数据类型为any，则调用该函数时该参数的参数类型可以为任意类型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">demo</span>(<span class="params">name: <span class="built_in">any</span>, age: <span class="string">&#x27;int &gt; 0&#x27;</span> = <span class="number">20</span></span>) -&gt; <span class="built_in">str</span>:  <span class="comment"># -&gt;str 表示该函数的返回值是str类型的</span></span><br><span class="line">    <span class="built_in">print</span>(name, <span class="built_in">type</span>(name))</span><br><span class="line">    <span class="built_in">print</span>(age, <span class="built_in">type</span>(age))</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;hello world&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 给List[float]类型取个别名为Vector</span></span><br><span class="line">Vector = <span class="type">List</span>[<span class="built_in">float</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">scale</span>(<span class="params">scalar: <span class="built_in">float</span>, vector: Vector</span>) -&gt; Vector:</span><br><span class="line">    <span class="keyword">return</span> [scalar * num <span class="keyword">for</span> num <span class="keyword">in</span> vector]</span><br><span class="line"></span><br><span class="line">new_vector = scale(<span class="number">2.0</span>, [<span class="number">1.0</span>, -<span class="number">4.2</span>, <span class="number">5.4</span>])</span><br></pre></td></tr></table></figure>
+
+<h2 id="内容与长度限制"><a href="#内容与长度限制" class="headerlink" title="内容与长度限制"></a>内容与长度限制</h2><p>在需要限制声明变量的长度以及包含类型的时候可以这样做：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Tuple</span></span><br><span class="line"></span><br><span class="line">version: <span class="type">Tuple</span>[<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>] = (<span class="number">3</span>, <span class="number">7</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="泛型与嵌套类型"><a href="#泛型与嵌套类型" class="headerlink" title="泛型与嵌套类型"></a>泛型与嵌套类型</h2><p>类型结构包含多种样式的时候可以使用泛型与嵌套类型的方式处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var: <span class="type">List</span>[<span class="built_in">int</span> <span class="keyword">or</span> <span class="built_in">float</span>] = [<span class="number">2</span>, <span class="number">3.5</span>] <span class="comment"># 泛型</span></span><br><span class="line">var: <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]] = [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">3</span>]] <span class="comment"># 嵌套类型</span></span><br><span class="line">person: <span class="type">Tuple</span>[<span class="built_in">str</span>, <span class="built_in">int</span>, <span class="built_in">float</span>] = (<span class="string">&#x27;Mike&#x27;</span>, <span class="number">22</span>, <span class="number">1.75</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Dict、Mapping、MutableMapping-Set、AbstractSet"><a href="#Dict、Mapping、MutableMapping-Set、AbstractSet" class="headerlink" title="Dict、Mapping、MutableMapping / Set、AbstractSet"></a>Dict、Mapping、MutableMapping / Set、AbstractSet</h2><p>在需要声明字典类型的时候需要十分注意，因为根据官方文档，<code>Dict</code> 推荐用于注解返回类型，<code>Mapping</code> 推荐用于注解参数。它们的使用方法都是一样的，其后跟一个中括号，中括号内分别声明键名、键值的类型.</p>
+<p>因此以下写法是不规范的，容易引起编辑器警告：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">testfun</span>(<span class="params">dict_info:<span class="type">Dict</span>[<span class="built_in">str</span>,<span class="built_in">int</span>]=&#123;<span class="string">&quot;key&quot;</span>:<span class="number">1</span>&#125;</span>):</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p>正确写法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">size</span>(<span class="params">rect: Mapping[<span class="built_in">str</span>, <span class="built_in">int</span>]</span>) -&gt; <span class="type">Dict</span>[<span class="built_in">str</span>, <span class="built_in">int</span>]:</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&#x27;width&#x27;</span>: rect[<span class="string">&#x27;width&#x27;</span>] + <span class="number">100</span>, <span class="string">&#x27;height&#x27;</span>: rect[<span class="string">&#x27;width&#x27;</span>] + <span class="number">100</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><code>set</code>亦如此</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">describe</span>(<span class="params">s: AbstractSet[<span class="built_in">int</span>]</span>) -&gt; <span class="type">Set</span>[<span class="built_in">int</span>]:</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">set</span>(s)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Sequence"><a href="#Sequence" class="headerlink" title="Sequence"></a>Sequence</h2><p>Sequence是一个泛型，其本身不需要去指定究竟是List还是tuple，用法与List类似</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">square</span>(<span class="params">elements: <span class="type">Sequence</span>[<span class="built_in">float</span>]</span>) -&gt; <span class="type">List</span>[<span class="built_in">float</span>]:</span><br><span class="line">    <span class="keyword">return</span> [x ** <span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> elements]</span><br></pre></td></tr></table></figure>
+
+<h2 id="无返回内容"><a href="#无返回内容" class="headerlink" title="无返回内容"></a>无返回内容</h2><p>当函数没有返回内容的时候也可以进行注解</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>() -&gt; NoReturn:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;hello&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="TypeVar"><a href="#TypeVar" class="headerlink" title="TypeVar"></a>TypeVar</h2><p>当使用场景当中某个返回变量可以是多种类型，但不能是某些少数类型的时候，可以采用TypeVar</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例如一个人的身高，便可以使用 int 或 float 或 None 来表示，但不能用 dict 来表示，所以可以这么声明：</span></span><br><span class="line"></span><br><span class="line">height = <span class="number">1.75</span></span><br><span class="line">Height = TypeVar(<span class="string">&#x27;Height&#x27;</span>, <span class="built_in">int</span>, <span class="built_in">float</span>, <span class="literal">None</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_height</span>() -&gt; Height:</span><br><span class="line">    <span class="keyword">return</span> height</span><br></pre></td></tr></table></figure>
+
+<h2 id="Union"><a href="#Union" class="headerlink" title="Union"></a>Union</h2><p>Union，联合类型，Union[X, Y] 代表要么是 X 类型，要么是 Y 类型。但是不能是两者混用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Union</span>[<span class="type">Union</span>[<span class="built_in">int</span>, <span class="built_in">str</span>], <span class="built_in">float</span>] == <span class="type">Union</span>[<span class="built_in">int</span>, <span class="built_in">str</span>, <span class="built_in">float</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="Optional"><a href="#Optional" class="headerlink" title="Optional"></a>Optional</h2><p>Optional：意思是说这个参数可以为空或已经声明的类型，即 Optional[X] 等价于 Union[X, None]。</p>
+<p>在参数传递的时候某些参数不一定非要传值，这时候Optional作为一种可选类型非常好用。</p>
+<h2 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h2><p>如果想代表一个生成器类型，可以使用 Generator，它的声明比较特殊，其后的中括号紧跟着三个参数，分别代表 YieldType、SendType、ReturnType，如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> Generator</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">echo_round</span>() -&gt; Generator[<span class="built_in">int</span>, <span class="built_in">float</span>, <span class="built_in">str</span>]:</span><br><span class="line">    sent = <span class="keyword">yield</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> sent &gt;= <span class="number">0</span>:</span><br><span class="line">        sent = <span class="keyword">yield</span> <span class="built_in">round</span>(sent)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Done&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>在这里 yield 关键字后面紧跟的变量的类型就是 YieldType，yield 返回的结果的类型就是 SendType，最后生成器 return 的内容就是 ReturnType。</p>
+<p>当然很多情况下，生成器往往只需要 yield 内容就够了，我们是不需要 SendType 和 ReturnType 的，可以将其设置为空，如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> Generator</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">infinite_stream</span>(<span class="params">start: <span class="built_in">int</span></span>) -&gt; Generator[<span class="built_in">int</span>, <span class="literal">None</span>, <span class="literal">None</span>]:</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">yield</span> start</span><br><span class="line">        start += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/553310138.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%BB%E6%84%8F%E7%B1%BB%E5%9E%8Bany"><span class="toc-number">1.</span> <span class="toc-text">任意类型any</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D"><span class="toc-number">2.</span> <span class="toc-text">类型别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AE%B9%E4%B8%8E%E9%95%BF%E5%BA%A6%E9%99%90%E5%88%B6"><span class="toc-number">3.</span> <span class="toc-text">内容与长度限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%9B%E5%9E%8B%E4%B8%8E%E5%B5%8C%E5%A5%97%E7%B1%BB%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text">泛型与嵌套类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dict%E3%80%81Mapping%E3%80%81MutableMapping-Set%E3%80%81AbstractSet"><span class="toc-number">5.</span> <span class="toc-text">Dict、Mapping、MutableMapping &#x2F; Set、AbstractSet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sequence"><span class="toc-number">6.</span> <span class="toc-text">Sequence</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E8%BF%94%E5%9B%9E%E5%86%85%E5%AE%B9"><span class="toc-number">7.</span> <span class="toc-text">无返回内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TypeVar"><span class="toc-number">8.</span> <span class="toc-text">TypeVar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Union"><span class="toc-number">9.</span> <span class="toc-text">Union</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Optional"><span class="toc-number">10.</span> <span class="toc-text">Optional</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generator"><span class="toc-number">11.</span> <span class="toc-text">Generator</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/js/plugin.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/js/typed.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/M42-Orion/M42-Orion.github.io/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/M42-Orion/M42-Orion.github.io/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/M42-Orion/M42-Orion.github.io/photoswipe/photoswipe.min.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

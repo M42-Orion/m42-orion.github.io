@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>top命令基础 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,top命令是Linux下常用的性能分析工具,能够实时显示系统中各个进程的资源占用状况,类似于Windows的任务管理器。top命令展示的信息众多，初学者可能不能够快速掌握所有信息概况，以下对top命,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/M42-Orion/M42-Orion.github.io/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="top命令基础 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,top命令是Linux下常用的性能分析工具,能够实时显示系统中各个进程的资源占用状况,类似于Windows的任务管理器。top命令展示的信息众多，初学者可能不能够快速掌握所有信息概况，以下对top命,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="top命令基础 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,top命令是Linux下常用的性能分析工具,能够实时显示系统中各个进程的资源占用状况,类似于Windows的任务管理器。top命令展示的信息众多，初学者可能不能够快速掌握所有信息概况，以下对top命,"/>
+    
+<link rel="stylesheet" href="/M42-Orion/M42-Orion.github.io/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://github.com/M42-Orion/M42-Orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">top命令基础</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">top命令基础</h1>
+        <div class="stuff">
+            <span>八月 18, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/M42-Orion/M42-Orion.github.io/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>top命令是Linux下常用的性能分析工具,能够实时显示系统中各个进程的资源占用状况,类似于Windows的任务管理器。top命令展示的信息众多，初学者可能不能够快速掌握所有信息概况，以下对top命令基础进行简单讲解。</p>
+<h2 id="top"><a href="#top" class="headerlink" title="top"></a>top</h2><p>在使用了top命令后会出现以下数据样式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">top - 01:05:24 up 9 min,  0 <span class="built_in">users</span>,  load average: 0.00, 0.04, 0.05</span><br><span class="line">Tasks: 138 total,   1 running, 137 sleeping,   0 stopped,   0 zombie</span><br><span class="line">%Cpu(s):  0.1 us,  0.3 sy,  0.0 ni, 99.6 <span class="built_in">id</span>,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br><span class="line">KiB Mem :  7990064 total,  7001532 free,   698000 used,   290532 buff/cache</span><br><span class="line">KiB Swap:  8257532 total,  8257532 free,        0 used.  7043352 avail Mem </span><br><span class="line"></span><br><span class="line">   PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                                                                                   </span><br><span class="line">  1620 root      20   0  699732  38824  15664 S   0.7  0.5   0:02.71 node                                                                                                                                                      </span><br><span class="line">  1655 root      20   0 1023288 124372  21240 S   0.7  1.6   0:05.07 node                                                                                                                                                      </span><br><span class="line">  1398 root      20   0  157084   6040   4352 S   0.3  0.1   0:00.33 sshd                                                                                                                                                      </span><br><span class="line">  1474 root      20   0  954828  60136  18520 S   0.3  0.8   0:02.79 node                                                                                                                                                      </span><br><span class="line">     1 root      20   0  193704   6772   4140 S   0.0  0.1   0:00.95 systemd                                                                                                                                                   </span><br><span class="line">     2 root      20   0       0      0      0 S   0.0  0.0   0:00.00 kthreadd                                                                                                                                                  </span><br><span class="line">     3 root      20   0       0      0      0 S   0.0  0.0   0:00.06 kworker/0:0                                                                                                                                               </span><br><span class="line">     4 root       0 -20       0      0      0 S   0.0  0.0   0:00.00 kworker/0:0H                                                                                                                                              </span><br><span class="line">     6 root      20   0       0      0      0 S   0.0  0.0   0:00.01 ksoftirqd/0                                                                                                                                               </span><br><span class="line">     7 root      rt   0       0      0      0 S   0.0  0.0   0:00.02 migration/0  </span><br></pre></td></tr></table></figure>
+
+<h3 id="系统概况"><a href="#系统概况" class="headerlink" title="系统概况"></a>系统概况</h3><p>首先是第一行，内容是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top - 01:05:24 up 9 min,  0 <span class="built_in">users</span>,  load average: 0.00, 0.04, 0.05</span><br></pre></td></tr></table></figure>
+
+<p>内容分别是：</p>
+<ul>
+<li><code>top</code> : 名称</li>
+<li><code>01:05:24</code> ： 系统当前时间</li>
+<li><code>up 9 min</code> ： 用户登录时间</li>
+<li><code>0 users</code> ： 当前登录用户数量</li>
+<li><code>load average: 0.00, 0.04, 0.05</code> ： 系统负载 一分钟/五分钟/十五分钟 三个时间段的统计</li>
+</ul>
+<blockquote>
+<p>注意 ： 对于单CPU的机器而言，1.00已经是满负载了</p>
+</blockquote>
+<h3 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h3><p>然后是第二行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Tasks: 138 total,   1 running, 137 sleeping,   0 stopped,   0 zombie</span><br></pre></td></tr></table></figure>
+
+<p>内容分别是：</p>
+<ul>
+<li><code>Tasks: 138 total</code> : 进程任务总数138个</li>
+<li><code>1 running</code> : 运行进程1个</li>
+<li><code>137 sleeping</code> : 137个进程正在睡眠状态</li>
+<li><code>0 stopped</code> : 停止进程0个</li>
+<li><code>0 zombie</code> : 僵尸进程0个</li>
+</ul>
+<h3 id="CPU-状态"><a href="#CPU-状态" class="headerlink" title="CPU 状态"></a>CPU 状态</h3><p>接着第三行： </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%Cpu(s):  0.1 us,  0.3 sy,  0.0 ni, 99.6 <span class="built_in">id</span>,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>0.1 us</code> : 用户空间</li>
+<li><code>0.3 sy</code> : 内核空间</li>
+<li><code>0.0 ni</code> : 用户定义优先级</li>
+<li><code>99.6 id</code> : 空闲</li>
+<li><code>0.0 wa</code> : 等待io</li>
+<li><code>0.0 hi</code> : 硬中断</li>
+<li><code>0.0 si</code> : 软中断</li>
+<li><code>0.0 st</code> : 虚拟机</li>
+</ul>
+<p>以上数字含义为百分比</p>
+<h3 id="内存和Swap交换区状态"><a href="#内存和Swap交换区状态" class="headerlink" title="内存和Swap交换区状态"></a>内存和Swap交换区状态</h3><p>紧接第四行与第五行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">KiB Mem :  7990064 total,  7001532 free,   698000 used,   290532 buff/cache</span><br><span class="line">KiB Swap :  8257532 total,  8257532 free,        0 used.  7043352 avail Mem </span><br></pre></td></tr></table></figure>
+
+<p><code>KiB Mem</code>为物理内存区，<code>KiB Swap</code>是交换区，从左至右分别是总量、空闲、已经使用、（内核缓存用量与可用内存）</p>
+<h3 id="最后内容"><a href="#最后内容" class="headerlink" title="最后内容"></a>最后内容</h3><p>紧接着是关于系统中正在运行的进程信息，信息<strong>title</strong>如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>PID</code> : 进程id</li>
+<li><code>USER</code> : 进程归属者</li>
+<li><code>PR</code> : 优先级</li>
+<li><code>NI</code> : nice值</li>
+<li><code>VIRT</code> : 虚拟内存</li>
+<li><code>RES</code> : 无力内存</li>
+<li><code>SHR S  %CPU %MEM</code> : 共享内存/CPU/内存</li>
+<li><code>TIME+ COMMAND</code> : CPU总时间/命令</li>
+</ul>
+<h2 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h2><ul>
+<li><code>shift+e</code> : 切换内存显示模式（可重复按键切换）</li>
+<li><code>z</code> : 切换是否彩色显示（可重复按键切换）</li>
+<li><code>m</code> : 切换内存显示模式（可重复按键切换）</li>
+<li><code>e</code> : 切换底部进程中单位的显示模式（可重复按键切换）</li>
+<li><code>b</code> : 切换高亮选中（可重复按键切换）</li>
+<li><code>W</code> : 把当前配置保存到文件中，下次启动top会使用当前的配置</li>
+<li><code>h</code> : 进入帮助菜单 (进入菜单后，可按ESC或q退出帮助菜单)</li>
+<li><code>q</code> : 退出top命令</li>
+</ul>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/1384971398.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#top"><span class="toc-number">1.</span> <span class="toc-text">top</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E6%A6%82%E5%86%B5"><span class="toc-number">1.1.</span> <span class="toc-text">系统概况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81"><span class="toc-number">1.2.</span> <span class="toc-text">进程状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU-%E7%8A%B6%E6%80%81"><span class="toc-number">1.3.</span> <span class="toc-text">CPU 状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%92%8CSwap%E4%BA%A4%E6%8D%A2%E5%8C%BA%E7%8A%B6%E6%80%81"><span class="toc-number">1.4.</span> <span class="toc-text">内存和Swap交换区状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E5%86%85%E5%AE%B9"><span class="toc-number">1.5.</span> <span class="toc-text">最后内容</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-number">2.</span> <span class="toc-text">常用快捷键</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/js/plugin.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/js/typed.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/M42-Orion/M42-Orion.github.io/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/M42-Orion/M42-Orion.github.io/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/M42-Orion/M42-Orion.github.io/photoswipe/photoswipe.min.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

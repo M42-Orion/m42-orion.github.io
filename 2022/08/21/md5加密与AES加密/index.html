@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>md5加密与AES加密 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,md5加密简介消息摘要算法第五版（英语：Message-Digest Algorithm 5，缩写为MD5），是当前计算机领域用于确保信息传输完整一致而广泛使用的散列算法之一（又译哈希算法、摘要算法,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/M42-Orion/M42-Orion.github.io/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="md5加密与AES加密 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,md5加密简介消息摘要算法第五版（英语：Message-Digest Algorithm 5，缩写为MD5），是当前计算机领域用于确保信息传输完整一致而广泛使用的散列算法之一（又译哈希算法、摘要算法,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="md5加密与AES加密 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,md5加密简介消息摘要算法第五版（英语：Message-Digest Algorithm 5，缩写为MD5），是当前计算机领域用于确保信息传输完整一致而广泛使用的散列算法之一（又译哈希算法、摘要算法,"/>
+    
+<link rel="stylesheet" href="/M42-Orion/M42-Orion.github.io/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://github.com/M42-Orion/M42-Orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">md5加密与AES加密</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">md5加密与AES加密</h1>
+        <div class="stuff">
+            <span>八月 21, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/M42-Orion/M42-Orion.github.io/tags/%E5%8A%A0%E5%AF%86/" rel="tag">加密</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="md5加密"><a href="#md5加密" class="headerlink" title="md5加密"></a>md5加密</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>消息摘要算法第五版（英语：Message-Digest Algorithm 5，缩写为MD5），是当前计算机领域用于确保信息传输完整一致而广泛使用的散列算法之一（又译哈希算法、摘要算法等），主流编程语言普遍已有MD5的实现。将数据 （如一段文字）运算变为另一固定长度值，是散列算法的基础原理，MD5的前身有MD2、MD3和MD4。MD5由MD4、MD3、MD2改进而来，主要增强算法复杂度和不可逆性。目前，MD5算法因其普遍、稳定、快速的特点，仍广泛应用于普通 数据的错误检查领域。例如在一些BitTorrent下载中，软件将通过计算MD5检验下载到的文件片段的完整性。MD5已经广泛使用在为文件传输提供一定的可靠性方面。例如，服务器预先提供一个MD5校验和，用户下载完文件以后， 用MD5算法计算下载文件的MD5校验和，然后通过检查这两个校验和是否一致，就能判断下载的文件是否出错。MD5是输入不定长度信息，输出固定长度128-bits的算法。经过程序流程，生成四个32位数据，最后联合起来成为一个 128-bits散列。基本方式为，求余、取余、调整长度、与链接变量进行循环运算,得出结果。</p>
+<h3 id="md5算法描述"><a href="#md5算法描述" class="headerlink" title="md5算法描述"></a>md5算法描述</h3><p>假设输入信息(input message)的长度为b(bit)，我们想要产生它的报文摘要，在此处b为任意的非负整数：b也可能为0，也不一定为8的整数倍，且可能是任意大的长度。设该信息的比特流表示如下： M[0] M[1] M[2] … M[b-1] 计算此信息的报文摘要需要如下5步：</p>
+<h4 id="补位"><a href="#补位" class="headerlink" title="补位"></a>补位</h4><p>信息计算前先要进行位补位，设补位后信息的长度为LEN(bit)，则LEN%512 = 448(bit)，即数据扩展至 K * 512 + 448(bit)。即K * 64+56(byte)，K为整数。补位操作始终要执行，即使补位前信息的长度对512求余的结果是448。具体补位操作：补一个1，然后补0至满足上述要求。总共最少要补1bit，最多补512bit。</p>
+<h4 id="尾部加上信息长度"><a href="#尾部加上信息长度" class="headerlink" title="尾部加上信息长度"></a>尾部加上信息长度</h4><p>将输入信息的原始长度b(bit)表示成一个64-bit的数字，把它添加到上一步的结果后面(在32位的机器上，这64位将用2个字来表示并且低位在前)。当遇到b大于2^64这种极少的情况时，b的高位被截去，仅使用b的低64位。经过上面两步，数据就被填补成长度为512(bit)的倍数。也就是说，此时的数据长度是16个字(32byte)的整数倍。此时的数据表示为： M[0 … N-1] 其中的N是16的倍数。</p>
+<h4 id="初始化缓存区"><a href="#初始化缓存区" class="headerlink" title="初始化缓存区"></a>初始化缓存区</h4><p>用一个四个字的缓冲器(A，B，C，D)来计算报文摘要，A,B,C,D分别是32位的寄存器，初始化使用的是十六进制表示的数字，注意低字节在前：<br>        word A: 01 23 45 67<br>        word B: 89 ab cd ef<br>        word C: fe dc ba 98<br>        word D: 76 54 32 10</p>
+<h4 id="转换"><a href="#转换" class="headerlink" title="转换"></a>转换</h4><p>首先定义4个辅助函数，每个函数的输入是三个32位的字，输出是一个32位的字：<br>        F(X,Y,Z) = XY v not(X) Z<br>        G(X,Y,Z) = XZ v Y not(Z)<br>        H(X,Y,Z) = X xor Y xor Z<br>        I(X,Y,Z) = Y xor (X v not(Z))</p>
+<pre><code>    FF(a,b,c,d,Mj,s,ti）表示 a = b + ((a + F(b,c,d) + Mj + ti) &lt;&lt; s)
+    GG(a,b,c,d,Mj,s,ti）表示 a = b + ((a + G(b,c,d) + Mj + ti) &lt;&lt; s)
+    HH(a,b,c,d,Mj,s,ti）表示 a = b + ((a + H(b,c,d) + Mj + ti) &lt;&lt; s)
+    Ⅱ（a,b,c,d,Mj,s,ti）表示 a = b + ((a + I(b,c,d) + Mj + ti) &lt;&lt; s)
+</code></pre>
+<p>这四轮（64步）是：</p>
+<p>第一轮</p>
+<p>FF(a,b,c,d,M0,7,0xd76aa478）<br>FF(d,a,b,c,M1,12,0xe8c7b756）<br>FF(c,d,a,b,M2,17,0x242070db)<br>FF(b,c,d,a,M3,22,0xc1bdceee)<br>FF(a,b,c,d,M4,7,0xf57c0faf)<br>FF(d,a,b,c,M5,12,0x4787c62a)<br>FF(c,d,a,b,M6,17,0xa8304613）<br>FF(b,c,d,a,M7,22,0xfd469501）<br>FF(a,b,c,d,M8,7,0x698098d8）<br>FF(d,a,b,c,M9,12,0x8b44f7af)<br>FF(c,d,a,b,M10,17,0xffff5bb1）<br>FF(b,c,d,a,M11,22,0x895cd7be)<br>FF(a,b,c,d,M12,7,0x6b901122）<br>FF(d,a,b,c,M13,12,0xfd987193）<br>FF(c,d,a,b,M14,17,0xa679438e)<br>FF(b,c,d,a,M15,22,0x49b40821）</p>
+<p>第二轮</p>
+<p>GG(a,b,c,d,M1,5,0xf61e2562）<br>GG(d,a,b,c,M6,9,0xc040b340）<br>GG(c,d,a,b,M11,14,0x265e5a51）<br>GG(b,c,d,a,M0,20,0xe9b6c7aa)<br>GG(a,b,c,d,M5,5,0xd62f105d)<br>GG(d,a,b,c,M10,9,0x02441453）<br>GG(c,d,a,b,M15,14,0xd8a1e681）<br>GG(b,c,d,a,M4,20,0xe7d3fbc8）<br>GG(a,b,c,d,M9,5,0x21e1cde6）<br>GG(d,a,b,c,M14,9,0xc33707d6）<br>GG(c,d,a,b,M3,14,0xf4d50d87）<br>GG(b,c,d,a,M8,20,0x455a14ed)<br>GG(a,b,c,d,M13,5,0xa9e3e905）<br>GG(d,a,b,c,M2,9,0xfcefa3f8）<br>GG(c,d,a,b,M7,14,0x676f02d9）<br>GG(b,c,d,a,M12,20,0x8d2a4c8a)</p>
+<p>第三轮</p>
+<p>HH(a,b,c,d,M5,4,0xfffa3942）<br>HH(d,a,b,c,M8,11,0x8771f681）<br>HH(c,d,a,b,M11,16,0x6d9d6122）<br>HH(b,c,d,a,M14,23,0xfde5380c)<br>HH(a,b,c,d,M1,4,0xa4beea44）<br>HH(d,a,b,c,M4,11,0x4bdecfa9）<br>HH(c,d,a,b,M7,16,0xf6bb4b60）<br>HH(b,c,d,a,M10,23,0xbebfbc70）<br>HH(a,b,c,d,M13,4,0x289b7ec6）<br>HH(d,a,b,c,M0,11,0xeaa127fa)<br>HH(c,d,a,b,M3,16,0xd4ef3085）<br>HH(b,c,d,a,M6,23,0x04881d05）<br>HH(a,b,c,d,M9,4,0xd9d4d039）<br>HH(d,a,b,c,M12,11,0xe6db99e5）<br>HH(c,d,a,b,M15,16,0x1fa27cf8）<br>HH(b,c,d,a,M2,23,0xc4ac5665）</p>
+<p>第四轮</p>
+<p>Ⅱ（a,b,c,d,M0,6,0xf4292244）<br>Ⅱ（d,a,b,c,M7,10,0x432aff97）<br>Ⅱ（c,d,a,b,M14,15,0xab9423a7）<br>Ⅱ（b,c,d,a,M5,21,0xfc93a039）<br>Ⅱ（a,b,c,d,M12,6,0x655b59c3）<br>Ⅱ（d,a,b,c,M3,10,0x8f0ccc92）<br>Ⅱ（c,d,a,b,M10,15,0xffeff47d)<br>Ⅱ（b,c,d,a,M1,21,0x85845dd1）<br>Ⅱ（a,b,c,d,M8,6,0x6fa87e4f)<br>Ⅱ（d,a,b,c,M15,10,0xfe2ce6e0)<br>Ⅱ（c,d,a,b,M6,15,0xa3014314）<br>Ⅱ（b,c,d,a,M13,21,0x4e0811a1）<br>Ⅱ（a,b,c,d,M4,6,0xf7537e82）<br>Ⅱ（d,a,b,c,M11,10,0xbd3af235）<br>Ⅱ（c,d,a,b,M2,15,0x2ad7d2bb)<br>Ⅱ（b,c,d,a,M9,21,0xeb86d391）</p>
+<h3 id="MD5算法总结"><a href="#MD5算法总结" class="headerlink" title="MD5算法总结"></a>MD5算法总结</h3><p>MD5算法本质上是将数据按照长度进行补位后，成为可以被算法处理长度的数据，然后按照64字节也就是512位进行切割，切割后会对每一个64字节进行计算。第一次计算会输入四个长度为16字节的固定幻数，每一次计算完成后也会得到相应的四个数，并将计算结果用于下一个64字节计算的输入值，反复如此直到所有的字节全部被运算完毕，最后得出的值就是加密后的结果。正式因为设计到长度和反复计算，因此每增加一个或者减少一个字节都会对最后结果产生巨大影响。</p>
+<h2 id="AES加密"><a href="#AES加密" class="headerlink" title="AES加密"></a>AES加密</h2><p>AES是一种经典的对称加密算法，也是一种区块加密算法，对称加密算法是指加密解密使用的是同一个密钥，区块加密指的是加密过程当中会将加密对象切分成块进程逐步加密，AES加密过程当中区块长出被限制在128位，但是密码长度有三种可选，分别是：128位、192位、256位。</p>
+<h2 id="加密计算过程"><a href="#加密计算过程" class="headerlink" title="加密计算过程"></a>加密计算过程</h2><p>以128位为例，加密过程是以126位一块明文信息与128位密钥作为输入，得出128位的密文信息，在加密过程当中明文区块会经过十一次计算才能得出最后结果。而原始的密钥会在这个过程当中生成11个子密码分别参与到该过程当中。</p>
+<p>十一步的第一步是是对加密信息进行诸位异或运算，接着是对同一个子模块循环递归十次计算。在加密子模块当中一共有四步操作，前三次分别是非线性运算-&gt;线性运算-&gt;非线性运算，最后是异或运算，输入的内容依然是明文与密钥，但是密钥仅仅参与最后一次异或运算当中。</p>
+<h3 id="第一次线性运算"><a href="#第一次线性运算" class="headerlink" title="第一次线性运算"></a>第一次线性运算</h3><p>第一次的线性运算hui将输入的值也就是一个128位16比特的数据按照矩阵进行排列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">B1 B5 B9 B13  </span><br><span class="line">B2 B6 B10 B14  </span><br><span class="line">B3 B7 B11 B15  </span><br><span class="line">B4 B8 B12 B16  </span><br></pre></td></tr></table></figure>
+
+<p>随后这个矩阵会被一个固定的映射表按照对应的映射关系替换掉：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A1 A5 A9 A13  </span><br><span class="line">A2 A6 A10 A14  </span><br><span class="line">A3 A7 A11 A15  </span><br><span class="line">A4 A8 A12 A16  </span><br></pre></td></tr></table></figure>
+
+<h3 id="第二次运算"><a href="#第二次运算" class="headerlink" title="第二次运算"></a>第二次运算</h3><p>第二次运算将改变矩阵结构对每一行进行移位得到如下结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A1 A5 A9 A13  </span><br><span class="line">A6 A10 A14 A2  </span><br><span class="line">A11 A15 A3 A7  </span><br><span class="line">A16 A4 A8 A12 </span><br></pre></td></tr></table></figure>
+
+<p>也就是第一行第0个移到第一行的最右边，第二行移1个，第三行2个，第四行3个。</p>
+<h3 id="第三次运算"><a href="#第三次运算" class="headerlink" title="第三次运算"></a>第三次运算</h3><p>第三次运算会诸列取出数据，并将每一列与一个4x4的矩阵进程乘法操作，然后将结果放回矩阵当中，由此三次运算结束。</p>
+<p>反复进过多次加密子模块的处理后，最终输出加密密文。</p>
+<h2 id="python-AES-加密"><a href="#python-AES-加密" class="headerlink" title="python AES 加密"></a>python AES 加密</h2><p>最后附上python的AES加密</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"></span><br><span class="line">password = <span class="string">b&#x27;1234567812345678&#x27;</span> <span class="comment">#秘钥，b就是表示为bytes类型</span></span><br><span class="line">text = <span class="string">b&#x27;abcdefghijklmnhi&#x27;</span> <span class="comment">#需要加密的内容，bytes类型</span></span><br><span class="line">aes = AES.new(password,AES.MODE_ECB) <span class="comment">#创建一个aes对象</span></span><br><span class="line"><span class="comment"># AES.MODE_ECB 表示模式是ECB模式</span></span><br><span class="line">en_text = aes.encrypt(text) <span class="comment">#加密明文</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;密文：&quot;</span>,en_text) <span class="comment">#加密明文，bytes类型</span></span><br><span class="line">den_text = aes.decrypt(en_text) <span class="comment"># 解密密文</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;明文：&quot;</span>,den_text)</span><br></pre></td></tr></table></figure>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/1317729847.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#md5%E5%8A%A0%E5%AF%86"><span class="toc-number">1.</span> <span class="toc-text">md5加密</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#md5%E7%AE%97%E6%B3%95%E6%8F%8F%E8%BF%B0"><span class="toc-number">1.2.</span> <span class="toc-text">md5算法描述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E4%BD%8D"><span class="toc-number">1.2.1.</span> <span class="toc-text">补位</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%BE%E9%83%A8%E5%8A%A0%E4%B8%8A%E4%BF%A1%E6%81%AF%E9%95%BF%E5%BA%A6"><span class="toc-number">1.2.2.</span> <span class="toc-text">尾部加上信息长度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%BC%93%E5%AD%98%E5%8C%BA"><span class="toc-number">1.2.3.</span> <span class="toc-text">初始化缓存区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.2.4.</span> <span class="toc-text">转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MD5%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93"><span class="toc-number">1.3.</span> <span class="toc-text">MD5算法总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AES%E5%8A%A0%E5%AF%86"><span class="toc-number">2.</span> <span class="toc-text">AES加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86%E8%AE%A1%E7%AE%97%E8%BF%87%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">加密计算过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%BA%BF%E6%80%A7%E8%BF%90%E7%AE%97"><span class="toc-number">3.1.</span> <span class="toc-text">第一次线性运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E8%BF%90%E7%AE%97"><span class="toc-number">3.2.</span> <span class="toc-text">第二次运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AC%A1%E8%BF%90%E7%AE%97"><span class="toc-number">3.3.</span> <span class="toc-text">第三次运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#python-AES-%E5%8A%A0%E5%AF%86"><span class="toc-number">4.</span> <span class="toc-text">python AES 加密</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/js/plugin.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/js/typed.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/M42-Orion/M42-Orion.github.io/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/M42-Orion/M42-Orion.github.io/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/M42-Orion/M42-Orion.github.io/photoswipe/photoswipe.min.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

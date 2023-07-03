@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>何为ssh? - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,在初学Linux的时候或者第一次使用git的时候一定会出现一种协议叫做ssh,并且不可避免的需要配置ssh协议，但是使用了很久都没有去关注ssh到底是什么？
+ssh协议（Secure Shell）s,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/M42-Orion/M42-Orion.github.io/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="何为ssh? - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,在初学Linux的时候或者第一次使用git的时候一定会出现一种协议叫做ssh,并且不可避免的需要配置ssh协议，但是使用了很久都没有去关注ssh到底是什么？
+ssh协议（Secure Shell）s,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="何为ssh? - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,在初学Linux的时候或者第一次使用git的时候一定会出现一种协议叫做ssh,并且不可避免的需要配置ssh协议，但是使用了很久都没有去关注ssh到底是什么？
+ssh协议（Secure Shell）s,"/>
+    
+<link rel="stylesheet" href="/M42-Orion/M42-Orion.github.io/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://github.com/M42-Orion/M42-Orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">何为ssh?</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">何为ssh?</h1>
+        <div class="stuff">
+            <span>九月 03, 2022</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/M42-Orion/M42-Orion.github.io/tags/%E5%8D%8F%E8%AE%AE/" rel="tag">协议</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/M42-Orion/M42-Orion.github.io/tags/%E7%BD%91%E7%BB%9C/" rel="tag">网络</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>在初学Linux的时候或者第一次使用git的时候一定会出现一种协议叫做ssh,并且不可避免的需要配置ssh协议，但是使用了很久都没有去关注ssh到底是什么？</p>
+<h2 id="ssh协议（Secure-Shell）"><a href="#ssh协议（Secure-Shell）" class="headerlink" title="ssh协议（Secure Shell）"></a>ssh协议（Secure Shell）</h2><p>ssh中文名为安全外壳,是一种网络安全<strong>协议</strong>，通过加密和认证机制实现安全的访问和文件传输等业务。SSH协议通过对网络数据进行加密和验证，在不安全的网络环境中提供了安全的登录和其他安全网络服务。作为Telnet和其他不安全远程shell协议的安全替代方案。</p>
+<p>SSH服务由服务端软件OpenSSH和连接客户端组成（SSH、SecureCRT,xshell等），默认端口是22。SSH是一个守护进程，负责实时监听客户端请求，并进行处理。</p>
+<p>ssh是一种应用层协议，它的传输层协议是tcp。</p>
+<h2 id="ssh连接流程"><a href="#ssh连接流程" class="headerlink" title="ssh连接流程"></a>ssh连接流程</h2><p>ssh协议建立连接的过程为：</p>
+<ul>
+<li>tcp三次握手  </li>
+<li>ssh协议版本协商  </li>
+<li>服务器端把公钥发给客户端  </li>
+<li>加密算法协商  </li>
+<li>客户端使用公钥对服务器端的密码加密并发送给服务器端  </li>
+<li>服务器端收到后用自己的私钥解密后得到用户名密码和本地密码对比，验证成功允许登录，否则需要客户端再次输入密码验证</li>
+</ul>
+<p>这里出现了两次协商，第一次见到协商的时候可能不理解怎么协商，会以为是什么专业名词，但是其实协商的意思。</p>
+<h3 id="版本协商"><a href="#版本协商" class="headerlink" title="版本协商"></a>版本协商</h3><p>SSH目前包括 SSH1和SSH2两个版本， 双方通过版本协商确定使用的版本。建立连接后，服务端向客户端发送报文<code>（版本标志字符串：SSH－&lt;主协议版本号&gt;.&lt;次协议版本号&gt;－&lt;软件版本号&gt;&gt;）</code>客户端收到报文后，解析数据包，如果服务端的协议版本号比自己的低，且客户端能支持服务端的低版本，就采用服务器端的低版本协议号，否则采用客户端自己的协议版本号。</p>
+<p>客户端回应服务器一个报文，包含客户端决定使用的协议版本号。服务端会比较客户端发来的版本号，决定是否能同客户端进行正常工作。</p>
+<p>协商成功，就会进入密钥和算法协商阶段，否则服务端断开TCP连接。</p>
+<h3 id="算法协商"><a href="#算法协商" class="headerlink" title="算法协商"></a>算法协商</h3><p>SSH支持多种加密算法， 在服务端和客户端分别发送算法协商报文给对方后，报文中包含自己支持的公钥算法列表、加密算法列表、MAC（Message Authentication Code，消息验证码）算法列表、压缩算法列表等协商信息。</p>
+<p>服务端和客户端根据对方和自己支持的算法列表确定最终使用的算法。</p>
+<h2 id="SSH的认证方式"><a href="#SSH的认证方式" class="headerlink" title="SSH的认证方式"></a>SSH的认证方式</h2><p>password认证</p>
+<p>客户端向服务端发出 password认证请求，然后将用户名和密码加密后发送给服务器；服务器将该信息解密后得到用户名和密码的明文，与自己设备上保存的用户名和密码进行比较，并返回认证成功或失败的消息。</p>
+<hr>
+<p>publickey 认证  </p>
+<p>采用数字签名的方法来认证客户端。目前，设备上可以利用RSA和 DSA两种公共密钥算法实现数字签名。</p>
+<p>客户端发送包含用户名、公共密钥和公共密钥算法的 publickey 认证请求给服务端。服务器、端对公钥进行合法性检查，如果不合法，则直接发送失败消息；否则，服务器利用数字签名对客户端进行认证，并返回认证成功或失败的消息。</p>
+<hr>
+<p>password-publickey 认证(SSH2.0)  </p>
+<p>指定该用户的认证方式为 password 和 publickey认证必须同时满足。</p>
+<blockquote>
+<p>说明：客户端版本为 SSH1的用户只要通过其中一种认证即可登录；客户端版本为 SSH2的用户必须两种认证都通过才能登录。</p>
+</blockquote>
+<hr>
+<p>any认证(SSH2.0)  </p>
+<p>指定该用户的认证方式可以是 password、 publickey中任意一种。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/1440424730.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ssh%E5%8D%8F%E8%AE%AE%EF%BC%88Secure-Shell%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">ssh协议（Secure Shell）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ssh%E8%BF%9E%E6%8E%A5%E6%B5%81%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">ssh连接流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%8D%8F%E5%95%86"><span class="toc-number">2.1.</span> <span class="toc-text">版本协商</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%8D%8F%E5%95%86"><span class="toc-number">2.2.</span> <span class="toc-text">算法协商</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH%E7%9A%84%E8%AE%A4%E8%AF%81%E6%96%B9%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">SSH的认证方式</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/js/plugin.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/js/typed.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/M42-Orion/M42-Orion.github.io/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/M42-Orion/M42-Orion.github.io/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/M42-Orion/M42-Orion.github.io/photoswipe/photoswipe.min.js"></script>
+<script src="/M42-Orion/M42-Orion.github.io/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>
