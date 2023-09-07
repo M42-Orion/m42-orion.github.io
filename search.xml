@@ -3604,5 +3604,75 @@
 <h2 id="体验网站"><a href="#体验网站" class="headerlink" title="体验网站"></a>体验网站</h2><p><a href="https://copy.sh/life/">https://copy.sh/life/</a></p>
 <p><a href="https://playgameoflife.com/">https://playgameoflife.com/</a></p>
 ]]></content>
+      <categories>
+        <category>思考</category>
+      </categories>
+      <tags>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>None、nan、null、&quot;&quot;</title>
+    <url>/2023/09/07/None%E3%80%81nan%E3%80%81null%E3%80%81%E2%80%9C%E2%80%9D/</url>
+    <content><![CDATA[<p>在python语言当中经常会遇到None、nan、null、””还有与之相关的0与False。这几个之间有着明显的区别同时又在特定的时候能够表达一个含义。</p>
+<h2 id="None"><a href="#None" class="headerlink" title="None"></a>None</h2><p>在Python中，None是一个特殊的对象，表示空或无值。它用于表示一个变量或返回值没有被赋予任何值。</p>
+<p>None在Python中被用作默认参数值、函数返回值或变量初始化时的占位符。当一个函数没有显式地返回任何值时，默认返回None。例如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">do_something</span>():</span><br><span class="line">    <span class="comment"># 执行一些操作，但没有返回值</span></span><br><span class="line"></span><br><span class="line">result = do_something()</span><br><span class="line"><span class="built_in">print</span>(result)  <span class="comment"># 输出 None</span></span><br><span class="line">在条件语句中，<span class="literal">None</span>被视为<span class="literal">False</span>。例如：</span><br><span class="line"></span><br><span class="line">python</span><br><span class="line">value = <span class="literal">None</span></span><br><span class="line"><span class="keyword">if</span> value:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;value is not None&quot;</span>)  <span class="comment"># 不会执行</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;value is None&quot;</span>)  <span class="comment"># 输出 value is None</span></span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，None是一个对象，而不是关键字。因此，可以将None赋值给变量，也可以作为函数的参数或返回值。但是，None不能与其他对象进行比较，只能使用<code>is</code>或<code>is not</code>运算符进行判断。例如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="literal">None</span></span><br><span class="line">b = <span class="literal">None</span></span><br><span class="line"><span class="keyword">if</span> a <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;a is None&quot;</span>)  <span class="comment"># 输出 a is None</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> a <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;a is not None&quot;</span>)  <span class="comment"># 不会执行</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> a == b:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;a equals b&quot;</span>)  <span class="comment"># 不会执行</span></span><br></pre></td></tr></table></figure>
+
+<p>None在Python中代表空或无值，用于表示变量没有被赋予任何值，或者函数没有返回值。它在条件语句中被视为False，可以用<code>is</code>或<code>is not</code>来判断变量是否为None。</p>
+<h2 id="nan"><a href="#nan" class="headerlink" title="nan"></a>nan</h2><p>在NumPy库中，NaN代表”不是一个数字”（Not a Number）。它是一种特殊的浮点数值，用于表示缺失或无效的数据。</p>
+<p>NaN的主要作用是处理缺失数据或在数学计算中表示无效的结果。当使用NumPy进行数值计算时，如果遇到缺失数据或无法进行有效计算的情况，通常会返回NaN。</p>
+<p>NaN的特点如下：</p>
+<ul>
+<li><ol>
+<li>NaN是一个浮点数值，用于表示无法进行有效计算或缺失数据。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>NaN在比较操作中不等于任何值，包括自身。这是因为NaN表示一个未知的值，无法与其他值进行比较。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>NaN在数学运算中具有传染性。任何与NaN进行计算的结果都将是NaN。这是为了防止无效的计算结果被误用。</li>
+</ol>
+</li>
+</ul>
+<p>在NumPy中，可以使用np.nan来表示NaN。例如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a = np.array([<span class="number">1</span>, <span class="number">2</span>, np.nan, <span class="number">4</span>])</span><br><span class="line"><span class="built_in">print</span>(a)  <span class="comment"># 输出 [ 1.  2. nan  4.]</span></span><br><span class="line"></span><br><span class="line">b = np.sqrt(a)</span><br><span class="line"><span class="built_in">print</span>(b)  <span class="comment"># 输出 [ 1.          1.41421356         nan  2.        ]</span></span><br></pre></td></tr></table></figure>
+
+<p>在处理包含NaN的数据时，通常需要使用一些特殊的函数来处理它们，例如<code>np.isnan()</code>用于检查数组中的NaN值，<code>np.nanmean()</code>用于计算数组的平均值（忽略NaN值），<code>np.nanmax()</code>用于找到数组中的最大值（忽略NaN值）等。</p>
+<p>NaN在NumPy库中代表不是一个数字，用于表示缺失或无效的数据。它在数学计算中具有传染性，任何与NaN进行计算的结果都将是NaN。处理包含NaN的数据时，需要使用特殊的函数来处理它们。</p>
+<h2 id="null"><a href="#null" class="headerlink" title="null"></a>null</h2><p>null并不存在于python当中，而是属于json的关键词，但是如果经常使用python操作json或者进行dict于json的转化就会经常遇到这个符号。<br>在JSON（JavaScript Object Notation）中，null代表空值或缺失值。它是JSON中的一个特殊关键字，用于表示一个没有值的对象属性。</p>
+<p>JSON是一种轻量级的数据交换格式，常用于数据传输和存储。null在JSON中用于表示一个空的或无效的值，与其他数据类型（如字符串、数字、布尔值和数组）相区别。<br>null的特点如下：</p>
+<ul>
+<li><ol>
+<li>null表示一个空值或缺失值，用于表示属性没有值。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>null不是字符串，也不是关键字，它是JSON语法中的一个特殊标记。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>null在JSON中是大小写敏感的，只能写成小写形式。</li>
+</ol>
+</li>
+</ul>
+<p>在JSON中，可以将null用作属性的值，例如：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;John&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="keyword">null</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;email&quot;</span><span class="punctuation">:</span> <span class="keyword">null</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>上述JSON对象中，”age”和”email”属性的值都是null，表示这些属性没有具体的值。在解析JSON数据时，可以使用不同的编程语言或库来处理null值。例如，在Python中，可以使用<code>json</code>模块来解析JSON数据，并使用<code>None</code>来表示null值。null在JSON中代表空值或缺失值，用于表示属性没有值。它是JSON语法中的一个特殊标记，不是字符串或关键字。在解析JSON数据时，可以使用不同的编程语言或库来处理null值。</p>
+<h2 id="“”以及-、-等"><a href="#“”以及-、-等" class="headerlink" title="“”以及[]、{}等"></a>“”以及[]、{}等</h2><p>在python当中想要表达一个变量不具备意义的时候可以可以选择None，也可以选择将其制空。但是需要注意<code>&quot;&quot;</code>以及<code>[]</code>、<code>&#123;&#125;</code>等值是具有自己类型的，只是表示当前这个类型的值为空。因此不能互通，也不是None类型。因此在使用函数注释或者装饰的时候需要注意默认参数值与返回值上使用的区别。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这几种值在bool状态下都表示False，包括0也表示False。但是每一种值都有属于自己的类型，在使用上表达不同的含义，仅在bool判断的时候能够作为一种含义表述。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
   </entry>
 </search>
