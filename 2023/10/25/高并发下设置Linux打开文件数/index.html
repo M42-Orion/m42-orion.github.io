@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>高并发下设置Linux打开文件数 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,在linux中，一切皆文件，所以连接数本身也会表现为文件打开数。默认情况下，linux单进程打开文件数的限制是1024 ， 非常低，在密集io型服务里很容易超过。
+代码如下：
+12345678910,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="高并发下设置Linux打开文件数 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,在linux中，一切皆文件，所以连接数本身也会表现为文件打开数。默认情况下，linux单进程打开文件数的限制是1024 ， 非常低，在密集io型服务里很容易超过。
+代码如下：
+12345678910,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="高并发下设置Linux打开文件数 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,在linux中，一切皆文件，所以连接数本身也会表现为文件打开数。默认情况下，linux单进程打开文件数的限制是1024 ， 非常低，在密集io型服务里很容易超过。
+代码如下：
+12345678910,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">高并发下设置Linux打开文件数</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">高并发下设置Linux打开文件数</h1>
+        <div class="stuff">
+            <span>十月 25, 2023</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>在linux中，一切皆文件，所以连接数本身也会表现为文件打开数。默认情况下，linux单进程打开文件数的限制是1024 ， 非常低，在密集io型服务里很容易超过。</p>
+<p>代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi /etc/sysctl.conf ,末尾添加</span></span><br><span class="line">fs.file-max = 655350000sss</span><br><span class="line">fs.nr_open = 655350000</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行命令生效</span></span><br><span class="line">sysctl -p</span><br><span class="line"><span class="comment"># 查看 max-file：</span></span><br><span class="line"><span class="built_in">cat</span> /proc/sys/fs/file-max</span><br><span class="line"><span class="comment"># 查看当前系统总打开文件数</span></span><br><span class="line"><span class="built_in">cat</span> /proc/sys/fs/file-nr</span><br><span class="line"><span class="comment"># 输出: 9344 0 592026，</span></span><br><span class="line"><span class="comment"># 分别为：1.已经分配的文件句柄数，2.已经分配但没有使用的文件句柄数，3.最大文件句柄数。</span></span><br><span class="line"><span class="comment"># 修改系统对单个进程打开的文件数限制</span></span><br><span class="line"><span class="built_in">ulimit</span> -n 655350000</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;* soft nofile 655350000&quot;</span> &gt;&gt; /etc/security/limits.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;* hard nofile 655350000&quot;</span> &gt;&gt; /etc/security/limits.conf</span><br><span class="line"><span class="comment"># 顺便附上查看各个进程打开的文件数的命令。显示格式是文件数 + 进程id</span></span><br><span class="line">lsof -n |awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span>|<span class="built_in">sort</span>|<span class="built_in">uniq</span> -c|<span class="built_in">sort</span> -nr|more</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果有安装nginx做转发，则还需要设置nginx </span></span><br><span class="line"><span class="comment">#打开nginx本身的文件数限制</span></span><br><span class="line">vi /etc/nginx/nginx.conf</span><br><span class="line"><span class="comment"># 找到相应位置覆盖修改这个配置</span></span><br><span class="line">worker_rlimit_nofile 655350000;</span><br><span class="line">events  &#123;</span><br><span class="line">  worker_connections 65535;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vi /etc/sysctl.conf 末尾添加tcp连接数相关配置</span><br><span class="line">net.core.somaxconn = 20480</span><br><span class="line">net.core.rmem_default = 262144</span><br><span class="line">net.core.wmem_default = 262144</span><br><span class="line">net.core.rmem_max = 16777216</span><br><span class="line">net.core.wmem_max = 16777216</span><br><span class="line">net.ipv4.tcp_rmem = 4096 4096 16777216</span><br><span class="line">net.ipv4.tcp_wmem = 4096 4096 16777216</span><br><span class="line">net.ipv4.tcp_mem = 786432 2097152 3145728</span><br><span class="line">net.ipv4.tcp_max_syn_backlog = 16384</span><br><span class="line">net.core.netdev_max_backlog = 20000</span><br><span class="line">net.ipv4.tcp_fin_timeout = 15</span><br><span class="line">net.ipv4.tcp_max_syn_backlog = 16384</span><br><span class="line">net.ipv4.tcp_tw_reuse = 1</span><br><span class="line">net.ipv4.tcp_tw_recycle = 1</span><br><span class="line">net.ipv4.tcp_max_orphans = 131072</span><br><span class="line">net.ipv4.tcp_syncookies = 0</span><br><span class="line">之后执行 sysctl -p 生效</span><br></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/176777937.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+				
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

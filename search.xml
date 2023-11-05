@@ -3675,4 +3675,122 @@
         <tag>python</tag>
       </tags>
   </entry>
+  <entry>
+    <title>openssl安装教程</title>
+    <url>/2023/10/31/openssl%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<p>下载网址<code>http://www.openssl.org/source/</code></p>
+<p>下载openssl到/usr/local/src目录下然后开始安装，一次执行以下命令即可。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar zxvf openssl-0.9.8k.tar.gz</span><br><span class="line"><span class="built_in">cd</span> openssl-0.9.8k</span><br><span class="line">./config shared zlib</span><br><span class="line">make</span><br><span class="line">make <span class="built_in">test</span></span><br><span class="line">make install</span><br><span class="line"><span class="built_in">mv</span> /usr/bin/openssl /usr/bin/openssl.save</span><br><span class="line"><span class="built_in">mv</span> /usr/include/openssl /usr/include/openssl.save</span><br><span class="line"><span class="built_in">mv</span> /usr/lib/libssl.so /usr/lib/libssl.so.save</span><br><span class="line"><span class="built_in">ln</span> -s /usr/local/ssl/bin/openssl /usr/bin/openssl</span><br><span class="line"><span class="built_in">ln</span> -s /usr/local/ssl/include/openssl /usr/include/openssl</span><br><span class="line"><span class="built_in">ln</span> -sv /usr/local/ssl/lib/libssl.so.0.9.8 /usr/lib/libssl.so</span><br></pre></td></tr></table></figure>
+
+<p>到此安装完毕，然后配置库文件搜索路径</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;/usr/local/ssl/lib&quot;</span> &gt;&gt; /etc/ld.so.conf</span><br><span class="line">ldconfig -v</span><br></pre></td></tr></table></figure>
+
+
+<p>最后检测一下安装结果</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openssl version</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>object当中有什么？</title>
+    <url>/2023/10/27/object%E5%BD%93%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%EF%BC%9F/</url>
+    <content><![CDATA[<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">classname</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    docstring</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">object</span>:</span><br><span class="line">    __doc__: <span class="built_in">str</span> | <span class="literal">None</span></span><br><span class="line">    __dict__: <span class="built_in">dict</span>[<span class="built_in">str</span>, <span class="type">Any</span>]</span><br><span class="line">    __module__: <span class="built_in">str</span></span><br><span class="line">    __annotations__: <span class="built_in">dict</span>[<span class="built_in">str</span>, <span class="type">Any</span>]</span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__class__</span>(<span class="params">self</span>) -&gt; <span class="built_in">type</span>[Self]: ...</span><br><span class="line">    <span class="comment"># Ignore errors about type mismatch between property getter and setter</span></span><br><span class="line"><span class="meta">    @__class__.setter</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__class__</span>(<span class="params">self, __<span class="built_in">type</span>: <span class="built_in">type</span>[<span class="built_in">object</span>]</span>) -&gt; <span class="literal">None</span>: ...  <span class="comment"># noqa: F811</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>: ...</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__new__</span>(<span class="params">cls</span>) -&gt; Self: ...</span><br><span class="line">    <span class="comment"># N.B. `object.__setattr__` and `object.__delattr__` are heavily special-cased by type checkers.</span></span><br><span class="line">    <span class="comment"># Overriding them in subclasses has different semantics, even if the override has an identical signature.</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__setattr__</span>(<span class="params">self, __name: <span class="built_in">str</span>, __value: <span class="type">Any</span></span>) -&gt; <span class="literal">None</span>: ...</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__delattr__</span>(<span class="params">self, __name: <span class="built_in">str</span></span>) -&gt; <span class="literal">None</span>: ...</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__eq__</span>(<span class="params">self, __value: <span class="built_in">object</span></span>) -&gt; <span class="built_in">bool</span>: ...</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__ne__</span>(<span class="params">self, __value: <span class="built_in">object</span></span>) -&gt; <span class="built_in">bool</span>: ...</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>) -&gt; <span class="built_in">str</span>: ...  <span class="comment"># noqa: Y029</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>) -&gt; <span class="built_in">str</span>: ...  <span class="comment"># noqa: Y029</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__hash__</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>: ...</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__format__</span>(<span class="params">self, __format_spec: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>: ...</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__getattribute__</span>(<span class="params">self, __name: <span class="built_in">str</span></span>) -&gt; <span class="type">Any</span>: ...</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__sizeof__</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>: ...</span><br><span class="line">    <span class="comment"># return type of pickle methods is rather hard to express in the current type system</span></span><br><span class="line">    <span class="comment"># see #6661 and https://docs.python.org/3/library/pickle.html#object.__reduce__</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__reduce__</span>(<span class="params">self</span>) -&gt; <span class="built_in">str</span> | <span class="built_in">tuple</span>[<span class="type">Any</span>, ...]: ...</span><br><span class="line">    <span class="keyword">if</span> sys.version_info &gt;= (<span class="number">3</span>, <span class="number">8</span>):</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">__reduce_ex__</span>(<span class="params">self, __protocol: SupportsIndex</span>) -&gt; <span class="built_in">str</span> | <span class="built_in">tuple</span>[<span class="type">Any</span>, ...]: ...</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">__reduce_ex__</span>(<span class="params">self, __protocol: <span class="built_in">int</span></span>) -&gt; <span class="built_in">str</span> | <span class="built_in">tuple</span>[<span class="type">Any</span>, ...]: ...</span><br><span class="line">    <span class="keyword">if</span> sys.version_info &gt;= (<span class="number">3</span>, <span class="number">11</span>):</span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">__getstate__</span>(<span class="params">self</span>) -&gt; <span class="built_in">object</span>: ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__dir__</span>(<span class="params">self</span>) -&gt; Iterable[<span class="built_in">str</span>]: ...</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init_subclass__</span>(<span class="params">cls</span>) -&gt; <span class="literal">None</span>: ...</span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__subclasshook__</span>(<span class="params">cls, __subclass: <span class="built_in">type</span></span>) -&gt; <span class="built_in">bool</span>: ...</span><br></pre></td></tr></table></figure>
+
+<h2 id="doc-str-None"><a href="#doc-str-None" class="headerlink" title="__doc__: str | None"></a><code>__doc__: str | None</code></h2><p><code>__doc__</code>方法是python内置方法之一，该方法通常会返回指定对象中的注释部分：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ClassName</span>:</span><br><span class="line">   <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">   这个是我定义的类的注释</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">   <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    这是一个类属性</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">index = ClassName()</span><br><span class="line"><span class="built_in">print</span>(index.__doc__)</span><br><span class="line"><span class="built_in">print</span>(index.__init__.__doc__)</span><br></pre></td></tr></table></figure>
+
+<h2 id="dict-dict-str-Any"><a href="#dict-dict-str-Any" class="headerlink" title="__dict__: dict[str, Any]"></a><code>__dict__: dict[str, Any]</code></h2><p><code>__dict__</code>属性在不同的地方有不同的使用：</p>
+<ul>
+<li>类<code>__dict__</code>属性：包括静态函数、普通函数、类函数或者全局变量、一些内置属性</li>
+<li>类对象<code>__dict__</code>属性：存储了一些<code>self.xxx</code>的一些东西，其中父类与子类对象共用<code>__dict__</code></li>
+<li>在字典中是一个字典里面存放的数据</li>
+<li>一些内置数据类型是没有<code>__dict__</code>属性的。比如<code>int</code>、<code>list</code>、<code>dict</code>等这些数据类型</li>
+<li>继承的时候<code>__dict__</code>属性中每个类的类变量，函数名都放在自己的<code>__dict__</code>中，实例变量的<code>__dict__</code>中父类和子类对象的<code>__dict__</code>是公用的</li>
+</ul>
+<h2 id="module-str"><a href="#module-str" class="headerlink" title="__module__: str"></a><code>__module__: str</code></h2><h2 id="annotations-dict-str-Any"><a href="#annotations-dict-str-Any" class="headerlink" title="__annotations__: dict[str, Any]"></a><code>__annotations__: dict[str, Any]</code></h2><h2 id="def-class-self-type-type-object-gt-None-noqa-F811"><a href="#def-class-self-type-type-object-gt-None-noqa-F811" class="headerlink" title="def __class__(self, __type: type[object]) -&gt; None: ...  # noqa: F811"></a><code>def __class__(self, __type: type[object]) -&gt; None: ...  # noqa: F811</code></h2><h2 id="def-init-self-gt-None"><a href="#def-init-self-gt-None" class="headerlink" title="def __init__(self) -&gt; None: ..."></a><code>def __init__(self) -&gt; None: ...</code></h2><h2 id="def-new-cls-gt-Self"><a href="#def-new-cls-gt-Self" class="headerlink" title="def __new__(cls) -&gt; Self: ..."></a><code>def __new__(cls) -&gt; Self: ...</code></h2><h2 id="def-setattr-self-name-str-value-Any-gt-None"><a href="#def-setattr-self-name-str-value-Any-gt-None" class="headerlink" title="def __setattr__(self, __name: str, __value: Any) -&gt; None: ..."></a><code>def __setattr__(self, __name: str, __value: Any) -&gt; None: ...</code></h2><h2 id="def-delattr-self-name-str-gt-None"><a href="#def-delattr-self-name-str-gt-None" class="headerlink" title="def __delattr__(self, __name: str) -&gt; None: ..."></a><code>def __delattr__(self, __name: str) -&gt; None: ...</code></h2><h2 id="def-eq-self-value-object-gt-bool"><a href="#def-eq-self-value-object-gt-bool" class="headerlink" title="def __eq__(self, __value: object) -&gt; bool: ..."></a><code>def __eq__(self, __value: object) -&gt; bool: ...</code></h2><h2 id="def-ne-self-value-object-gt-bool"><a href="#def-ne-self-value-object-gt-bool" class="headerlink" title="def __ne__(self, __value: object) -&gt; bool: ..."></a><code>def __ne__(self, __value: object) -&gt; bool: ...</code></h2><h2 id="def-str-self-gt-str-noqa-Y029"><a href="#def-str-self-gt-str-noqa-Y029" class="headerlink" title="def __str__(self) -&gt; str: ...  # noqa: Y029"></a><code>def __str__(self) -&gt; str: ...  # noqa: Y029</code></h2><h2 id="def-repr-self-gt-str-noqa-Y029"><a href="#def-repr-self-gt-str-noqa-Y029" class="headerlink" title="def __repr__(self) -&gt; str: ...  # noqa: Y029"></a><code>def __repr__(self) -&gt; str: ...  # noqa: Y029</code></h2><h2 id="def-hash-self-gt-int"><a href="#def-hash-self-gt-int" class="headerlink" title="def __hash__(self) -&gt; int: ..."></a><code>def __hash__(self) -&gt; int: ...</code></h2><h2 id="def-format-self-format-spec-str-gt-str"><a href="#def-format-self-format-spec-str-gt-str" class="headerlink" title="def __format__(self, __format_spec: str) -&gt; str: ..."></a><code>def __format__(self, __format_spec: str) -&gt; str: ...</code></h2><h2 id="def-getattribute-self-name-str-gt-Any"><a href="#def-getattribute-self-name-str-gt-Any" class="headerlink" title="def __getattribute__(self, __name: str) -&gt; Any: ..."></a><code>def __getattribute__(self, __name: str) -&gt; Any: ...</code></h2><h2 id="def-sizeof-self-gt-int"><a href="#def-sizeof-self-gt-int" class="headerlink" title="def __sizeof__(self) -&gt; int: ..."></a><code>def __sizeof__(self) -&gt; int: ...</code></h2><h2 id="def-reduce-self-gt-str-tuple-Any"><a href="#def-reduce-self-gt-str-tuple-Any" class="headerlink" title="def __reduce__(self) -&gt; str | tuple[Any, ...]: ..."></a><code>def __reduce__(self) -&gt; str | tuple[Any, ...]: ...</code></h2><h2 id="def-dir-self-gt-Iterable-str"><a href="#def-dir-self-gt-Iterable-str" class="headerlink" title="def __dir__(self) -&gt; Iterable[str]: ..."></a><code>def __dir__(self) -&gt; Iterable[str]: ...</code></h2><h2 id="def-init-subclass-cls-gt-None"><a href="#def-init-subclass-cls-gt-None" class="headerlink" title="def __init_subclass__(cls) -&gt; None: ..."></a><code>def __init_subclass__(cls) -&gt; None: ...</code></h2>]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python错误：libpython3.6m.so.1.0</title>
+    <url>/2023/10/31/python%E9%94%99%E8%AF%AF%EF%BC%9Alibpython3-6m-so-1-0/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">error <span class="keyword">while</span> loading shared libraries: libpython3.6m.so.1.0: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
+
+<p>在linux(centos)中编译安装python完成后，运行python3或python3 -V命令时，可能会报错</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">error <span class="keyword">while</span> loading shared libraries: libpython3.6m.so.1.0: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
+
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>centos系统默认加载/usr/lib,/lib下面库文件，python默认安装到非此类文件夹。(引自<a href="https://blog.csdn.net/learner198461/article/details/54598895">https://blog.csdn.net/learner198461/article/details/54598895</a>)</p>
+<p>解决办法</p>
+<p>将python3安装目录的lib目录下的文件libpython3.6m.so.1.0复制到/usr/lib/目录下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> /usr/local/python3/lib/libpython3.6m.so.1.0 /usr/lib/</span><br></pre></td></tr></table></figure>
+
+<p>将目录/usr/lib/添加到/etc/ld.so.conf.d/目录下的python3.6.conf文件中</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;/usr/lib&quot;</span> &gt; /etc/ld.so.conf.d/python3.6.conf</span><br></pre></td></tr></table></figure>
+
+<p>运行命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ldconfig</span><br></pre></td></tr></table></figure>
+
+<p>再运行 python3 或python3 -V，发现没有上述错误了</p>
+<h2 id="或"><a href="#或" class="headerlink" title="或"></a>或</h2><p>将python3安装目录的lib目录下的文件libpython3.6m.so.1.0复制到/usr/lib64/目录下即可</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> /usr/local/python3/lib/libpython3.6m.so.1.0 /usr/lib64</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>错误记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python3的ssl模块版本问题</title>
+    <url>/2023/10/31/python3%E7%9A%84ssl%E6%A8%A1%E5%9D%97%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>此模块提供对 Client 端和服务器端网络套接字的传输层安全性(通常称为“安全套接字层”)加密和对等身份验证Function的访问。该模块使用 OpenSSL 库。只要在该平台上安装了 OpenSSL，它就可以在所有现代 Unix 系统，Windows，Mac OS X 以及可能的其他平台上使用。</p>
+<blockquote>
+<p><strong>Note</strong><br>由于对 os 套接字 API 进行了调用，因此某些行为可能取决于平台。安装的 OpenSSL 版本也可能导致行为变化。例如，TLSv1.1 和 TLSv1.2 随附 openssl 版本 1.0.1.</p>
+</blockquote>
+<h2 id="Warning"><a href="#Warning" class="headerlink" title="Warning"></a>Warning</h2><p>请勿在未阅读Security considerations的情况下使用此模块。这样做可能会导致错误的安全感，因为 ssl 模块的默认设置不一定适合您的应用程序。</p>
+<h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>此模块提供了一个类ssl.SSLSocket，该类派生自socket.socket类型，并提供类似于套接字的包装器，该包装器还使用 SSL 对pass套接字的数据进行加密和解密。它支持其他方法，例如getpeercert()(用于检索连接另一侧的证书)和cipher()(用于检索用于安全连接的密码)。</p>
+<p>对于更复杂的应用程序，ssl.SSLContext类有助于 Management 设置和证书，然后可以passpass SSLContext.wrap_socket() 方法创建的 SSL 套接字继承这些设置和证书。</p>
+<p>在版本 3.5.3 中进行了更改：已更新以支持与 OpenSSL 1.1.0 链接</p>
+<p>在版本 3.6 中更改：不建议使用 OpenSSL 0.9.8、1.0.0 和 1.0.1，并且不再支持。将来，ssl 模块将至少需要 OpenSSL 1.0.2 或 1.1.0.</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>错误记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何解决robo3t无法翻页的错误</title>
+    <url>/2023/10/25/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3robo3t%E6%97%A0%E6%B3%95%E7%BF%BB%E9%A1%B5%E7%9A%84%E9%94%99%E8%AF%AF/</url>
+    <content><![CDATA[<p>问题:</p>
+<p>robo3t mongo工具 windows 版本连接mongo，翻页提示如下报错:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">The ntoreturn find <span class="built_in">command</span> parameter is not supported when FCV &gt;= 5.1</span><br></pre></td></tr></table></figure>
+
+<p>解决方案:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">db.adminCommand(&#123;setFeatureCompatibilityVersion: <span class="string">&quot;5.0&quot;</span>,&#125;)</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>高并发下设置Linux打开文件数</title>
+    <url>/2023/10/25/%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E8%AE%BE%E7%BD%AELinux%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E6%95%B0/</url>
+    <content><![CDATA[<p>在linux中，一切皆文件，所以连接数本身也会表现为文件打开数。默认情况下，linux单进程打开文件数的限制是1024 ， 非常低，在密集io型服务里很容易超过。</p>
+<p>代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># vi /etc/sysctl.conf ,末尾添加</span></span><br><span class="line">fs.file-max = 655350000sss</span><br><span class="line">fs.nr_open = 655350000</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行命令生效</span></span><br><span class="line">sysctl -p</span><br><span class="line"><span class="comment"># 查看 max-file：</span></span><br><span class="line"><span class="built_in">cat</span> /proc/sys/fs/file-max</span><br><span class="line"><span class="comment"># 查看当前系统总打开文件数</span></span><br><span class="line"><span class="built_in">cat</span> /proc/sys/fs/file-nr</span><br><span class="line"><span class="comment"># 输出: 9344 0 592026，</span></span><br><span class="line"><span class="comment"># 分别为：1.已经分配的文件句柄数，2.已经分配但没有使用的文件句柄数，3.最大文件句柄数。</span></span><br><span class="line"><span class="comment"># 修改系统对单个进程打开的文件数限制</span></span><br><span class="line"><span class="built_in">ulimit</span> -n 655350000</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;* soft nofile 655350000&quot;</span> &gt;&gt; /etc/security/limits.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;* hard nofile 655350000&quot;</span> &gt;&gt; /etc/security/limits.conf</span><br><span class="line"><span class="comment"># 顺便附上查看各个进程打开的文件数的命令。显示格式是文件数 + 进程id</span></span><br><span class="line">lsof -n |awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span>|<span class="built_in">sort</span>|<span class="built_in">uniq</span> -c|<span class="built_in">sort</span> -nr|more</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果有安装nginx做转发，则还需要设置nginx </span></span><br><span class="line"><span class="comment">#打开nginx本身的文件数限制</span></span><br><span class="line">vi /etc/nginx/nginx.conf</span><br><span class="line"><span class="comment"># 找到相应位置覆盖修改这个配置</span></span><br><span class="line">worker_rlimit_nofile 655350000;</span><br><span class="line">events  &#123;</span><br><span class="line">  worker_connections 65535;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vi /etc/sysctl.conf 末尾添加tcp连接数相关配置</span><br><span class="line">net.core.somaxconn = 20480</span><br><span class="line">net.core.rmem_default = 262144</span><br><span class="line">net.core.wmem_default = 262144</span><br><span class="line">net.core.rmem_max = 16777216</span><br><span class="line">net.core.wmem_max = 16777216</span><br><span class="line">net.ipv4.tcp_rmem = 4096 4096 16777216</span><br><span class="line">net.ipv4.tcp_wmem = 4096 4096 16777216</span><br><span class="line">net.ipv4.tcp_mem = 786432 2097152 3145728</span><br><span class="line">net.ipv4.tcp_max_syn_backlog = 16384</span><br><span class="line">net.core.netdev_max_backlog = 20000</span><br><span class="line">net.ipv4.tcp_fin_timeout = 15</span><br><span class="line">net.ipv4.tcp_max_syn_backlog = 16384</span><br><span class="line">net.ipv4.tcp_tw_reuse = 1</span><br><span class="line">net.ipv4.tcp_tw_recycle = 1</span><br><span class="line">net.ipv4.tcp_max_orphans = 131072</span><br><span class="line">net.ipv4.tcp_syncookies = 0</span><br><span class="line">之后执行 sysctl -p 生效</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
 </search>
