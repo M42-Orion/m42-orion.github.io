@@ -3779,6 +3779,12 @@
 
 <p>解决方案:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">db.adminCommand(&#123;setFeatureCompatibilityVersion: <span class="string">&quot;5.0&quot;</span>,&#125;)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>错误</tag>
+      </tags>
   </entry>
   <entry>
     <title>高并发下设置Linux打开文件数</title>
@@ -3791,6 +3797,44 @@
       </categories>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MobaXterm解除会话限制</title>
+    <url>/2023/11/06/MobaXterm%E8%A7%A3%E9%99%A4%E4%BC%9A%E8%AF%9D%E9%99%90%E5%88%B6/</url>
+    <content><![CDATA[<p>MobaXterm的会话一般来说是14个，更多的会话可以使用但不能保存，解除会话限制工具：</p>
+<p><a href="https://github.com/flygon2018/MobaXterm-keygen.git">https://github.com/flygon2018/MobaXterm-keygen.git</a></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>设置虚拟环境为32位或64位</title>
+    <url>/2023/11/16/%E8%AE%BE%E7%BD%AE%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E4%B8%BA32%E4%BD%8D%E6%88%9664%E4%BD%8D/</url>
+    <content><![CDATA[<h2 id="检查或更改conda设置"><a href="#检查或更改conda设置" class="headerlink" title="检查或更改conda设置"></a>检查或更改conda设置</h2><p>通过anaconda prompt，输入 conda info ，显示conda信息并检查平台</p>
+<h2 id="检查Python环境"><a href="#检查Python环境" class="headerlink" title="检查Python环境"></a>检查Python环境</h2><p>prompt中输入python，检查当前环境中的Python是64位还是32位,” MSC v.1916 32位”为32位，” MSC v.1916 64位”为64位。</p>
+<h2 id="切换到64位平台及环境"><a href="#切换到64位平台及环境" class="headerlink" title="切换到64位平台及环境"></a>切换到64位平台及环境</h2><ul>
+<li>第一步：set CONDA_FORCE_32BIT=0 </li>
+<li>第二步：set CONDA_SUBDIR=win-64</li>
+<li>第三步：conda info 查看结果</li>
+</ul>
+<h2 id="创建虚拟环境来安装64位的python"><a href="#创建虚拟环境来安装64位的python" class="headerlink" title="创建虚拟环境来安装64位的python"></a>创建虚拟环境来安装64位的python</h2><p>prompt中输入conda create -n python39_64 python=3.9</p>
+<h2 id="激活虚拟环境"><a href="#激活虚拟环境" class="headerlink" title="激活虚拟环境"></a>激活虚拟环境</h2><p>conda activate python39_64</p>
+<blockquote>
+<p>可能遇到的问题<br>如果发现虚拟环境安装的python不是64位的。则需要先执行命令conda deactivate退出虚拟环境，conda remove -n python39_64 –all 删除刚创建的虚拟环境，再试着重新操作（1）（2）步骤下载64位python。</p>
+</blockquote>
+<p>至此，已经完成python32位和64位并存。</p>
+<h2 id="退出虚拟环境"><a href="#退出虚拟环境" class="headerlink" title="退出虚拟环境"></a>退出虚拟环境</h2><p>执行命令conda deactivate</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
       </tags>
   </entry>
 </search>
