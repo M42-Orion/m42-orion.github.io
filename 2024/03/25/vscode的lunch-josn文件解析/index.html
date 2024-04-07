@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>vscode的lunch.josn文件解析 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,基础配置12345678910111213141516171819202122232425262728293031323334&amp;#123;    &amp;quot;version&amp;quot;: &amp;quot,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="vscode的lunch.josn文件解析 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,基础配置12345678910111213141516171819202122232425262728293031323334&amp;#123;    &amp;quot;version&amp;quot;: &amp;quot,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="vscode的lunch.josn文件解析 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,基础配置12345678910111213141516171819202122232425262728293031323334&amp;#123;    &amp;quot;version&amp;quot;: &amp;quot,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">vscode的lunch.josn文件解析</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">vscode的lunch.josn文件解析</h1>
+        <div class="stuff">
+            <span>三月 25, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/vscode/" rel="tag">vscode</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="基础配置"><a href="#基础配置" class="headerlink" title="基础配置"></a>基础配置</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span>   </span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Python: run_classifier.py&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;python&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="comment">// &quot;program&quot;: &quot;$&#123;workspaceFolder&#125;/test.py&quot;,</span></span><br><span class="line">            <span class="comment">// &quot;program&quot;: &quot;$&#123;workspaceFolder&#125;/train.py&quot;,</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/run_classifier.py&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;console&quot;</span><span class="punctuation">:</span> <span class="string">&quot;integratedTerminal&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="comment">// &quot;env&quot;: &#123;  </span></span><br><span class="line">            <span class="comment">//     &quot;CUDA_VISIBLE_DEVICES&quot;: &quot;0&quot;,</span></span><br><span class="line">            <span class="comment">//     // &quot;CUDA_LAUNCH_BLOCKING&quot;: &quot;1&quot;,</span></span><br><span class="line">            <span class="comment">// &#125;,</span></span><br><span class="line">            <span class="attr">&quot;justMyCode&quot;</span><span class="punctuation">:</span><span class="keyword">true</span><span class="punctuation">,</span>  <span class="comment">// 如果是false的话就会进到别的子程序里面，为了调试的直观，设置true比较好</span></span><br><span class="line"><span class="comment">// true就是调试的范围都是你写的代码</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                       <span class="string">&quot;--task_name&quot;</span><span class="punctuation">,</span> <span class="string">&quot;CoLA&quot;</span><span class="punctuation">,</span> </span><br><span class="line">                       <span class="string">&quot;--do_train&quot;</span><span class="punctuation">,</span> <span class="string">&quot;true&quot;</span><span class="punctuation">,</span></span><br><span class="line">                       <span class="string">&quot;--do_eval&quot;</span><span class="punctuation">,</span> <span class="string">&quot;true&quot;</span><span class="punctuation">,</span></span><br><span class="line">                       <span class="string">&quot;--data_dir&quot;</span><span class="punctuation">,</span> <span class="string">&quot;glue_data/CoLA&quot;</span><span class="punctuation">,</span></span><br><span class="line">                       <span class="string">&quot;--vocab_file&quot;</span><span class="punctuation">,</span> <span class="string">&quot;uncased_L-2_H-128_A-2/vocab.txt&quot;</span><span class="punctuation">,</span></span><br><span class="line">                       <span class="string">&quot;--bert_config_file&quot;</span><span class="punctuation">,</span> <span class="string">&quot;uncased_L-2_H-128_A-2/bert_config.json&quot;</span><span class="punctuation">,</span> </span><br><span class="line">                       <span class="string">&quot;--init_checkpoint&quot;</span><span class="punctuation">,</span> <span class="string">&quot;uncased_L-2_H-128_A-2/bert_model.ckpt&quot;</span><span class="punctuation">,</span> </span><br><span class="line">                       <span class="string">&quot;--max_seq_length&quot;</span><span class="punctuation">,</span> <span class="string">&quot;128&quot;</span> <span class="punctuation">,</span></span><br><span class="line">                       <span class="string">&quot;--train_batch_size&quot;</span><span class="punctuation">,</span> <span class="string">&quot;32&quot;</span><span class="punctuation">,</span></span><br><span class="line">                       <span class="string">&quot;--learning_rate&quot;</span><span class="punctuation">,</span> <span class="string">&quot;2e-5&quot;</span> <span class="punctuation">,</span></span><br><span class="line">                       <span class="string">&quot;--num_train_epochs&quot;</span><span class="punctuation">,</span> <span class="string">&quot;3.0&quot;</span> <span class="punctuation">,</span></span><br><span class="line">                       <span class="string">&quot;--output_dir&quot;</span><span class="punctuation">,</span> <span class="string">&quot;tmp/CoLA_output&quot;</span>                   </span><br><span class="line">            <span class="punctuation">]</span>       </span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="配置详情"><a href="#配置详情" class="headerlink" title="配置详情"></a>配置详情</h2><p>启动配置必须设定请求类型，属性request ， 分为launch(启动) 和 attach(附加)两种 ,看下面例子：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          ...</span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span> <span class="comment">//请求类型为启动</span></span><br><span class="line"></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">        ...</span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;attach&quot;</span>， <span class="comment">//请求类型为附加</span></span><br><span class="line"></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>下面是launch 和 attach 类型共有的属性：</p>
+<ul>
+<li><code>protocol</code> 设置调试协议</li>
+<li><code>auto</code> 尝试自动检测目标运行时使用的协议</li>
+<li><code>inspector</code> 新的V8调试器协议，解决遗留版本的多数问题，node versions &gt;= 6.3 and Electron versions &gt;= 1.7.4.</li>
+<li><code>legacy</code> 原始的v8调试器协议，node versions &lt; v8.0 and Electron versions &lt; 1.7.4.</li>
+<li><code>port调试使用的端口</code></li>
+<li><code>address</code> TCP/IP地址，用于远程调试</li>
+<li><code>localRoot</code> 远程调试时映射的本地地址</li>
+<li><code>remoteRoot</code> 远程调试时的远程目录地址</li>
+<li><code>sourceMaps</code>  默认为true</li>
+<li><code>outFiles</code> 当map文件不在js文件同目录时用于指定 sourceMaps的位置</li>
+<li><code>restart</code> 自动重启调试</li>
+<li><code>timeout</code> 配置自动附加的超时时间</li>
+<li><code>stopOnEntry</code> 自动断点到第一行代码处</li>
+<li><code>smartStep</code> 自动跳过未映射到源代码的代码</li>
+<li><code>skipFiles</code> :[]String,指定跳过单步调试的代码</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;skipFiles&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">   <span class="string">&quot;$&#123;workspaceFolder&#125;/node_modules/**/*.js&quot;</span><span class="punctuation">,</span>  <span class="comment">//跳过node_modules</span></span><br><span class="line">   <span class="string">&quot;$&#123;workspaceFolder&#125;/lib/**/*.js&quot;</span><span class="punctuation">,</span><span class="comment">//跳过lib</span></span><br><span class="line">   <span class="string">&quot;&lt;node_internals&gt;/**/*.js&quot;</span><span class="comment">//跳过node核心模块</span></span><br><span class="line"> <span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<p>trace启用诊断输出</p>
+<p>以下是特定于类型 launch(启动)的配置属性：</p>
+<ul>
+<li><code>program</code> 指定调试入口文件地址</li>
+<li><code>args</code> :[]String 传递给程序的参数,可在process.argv拿到</li>
+<li><code>cwd</code>  指定程序启动调试的目录 ,当vscode启动目录不是项目根目录，并且调试npm script时非常有用</li>
+<li><code>runtimeExecutable</code> 设置运行时可执行文件路径，默认是node,可以是其他的执行程序，如npm、nodemon</li>
+<li><code>runtimeArgs</code> 传递给运行时可执行文件的参数,例如：</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm launch app&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span><span class="punctuation">[</span><span class="string">&quot;a&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;runtimeExecutable&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npm&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;runtimeArgs&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;run-script&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;app&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;b&quot;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">6666</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>打印参数可以发现 args 、runtimeArgs都会传给程序，但是runtimeArgs参数会紧跟可执行文件</p>
+<ul>
+<li><code>runtimeVersion</code> 设置运行时可执行程序的版本，如果使用nvm，可以切换node.js版本</li>
+<li><code>env</code> 添加额外的环境变量</li>
+<li><code>envFile</code> 文件加载环境变量</li>
+<li><code>console</code> 配置终端可以是外部终端或者内部集成终端，默认值internalConsole</li>
+<li><code>outputCapture</code> -如果设置为std，则进程stdout / stderr的输出将显示在调试控制台中，而不是侦听调试端口上的输出。这对于直接写入stdout / stderr流而不是使用console.*API的程序或日志库很有用。</li>
+<li><code>autoAttachChildProcesses</code> 跟踪调试对象的所有子过程，并自动附加到在调试模式下启动的子过程</li>
+</ul>
+<p>以下是特定于类型 attach(附加)的配置属性：</p>
+<p>processId 指定nodejs进程id,由于每次启动都会变，传入”${command:PickProcess}”<br>questions：</p>
+<ol>
+<li>如果使用了符号链接怎么调试？<br>传递参数:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;runtimeArgs&quot;</span>: [<span class="string">&quot;--preserve-symlinks&quot;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>如果主脚本也在符号链接路径里面，需要再传递一个参数”–preserve-symlinks-main”，支持的版本是 Node 10+.</p>
+<ol start="2">
+<li>如何调试ECMAScript模块？</li>
+</ol>
+<p>如果使用esm或传递–experimental-modules给Node.js以便使用ECMAScript模块，则可以传递这些选项通过runtimeArgs属性：</p>
+<ul>
+<li><p>“runtimeArgs” : [“–experimental-modules”]  -使用Node v8.5.0 +中的实验性ECMAScript模块支持</p>
+</li>
+<li><p>“runtimeArgs” : [“-r”, “esm”] -使用esm ES模块加载器（请注意，[“-r esm”]如果没有逗号，则无法使用）</p>
+</li>
+</ul>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/2077030451.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">基础配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E8%AF%A6%E6%83%85"><span class="toc-number">2.</span> <span class="toc-text">配置详情</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Linux的df命令概述 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,命令概述df命令的英文全称即“Disk Free”，用于显示系统上可使用的磁盘空间。默认显示单位为KB，建议使用“df -h”的参数组合，根据磁盘容量自动变换合适的单位，更利于阅读，日常普遍用该命令,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="Linux的df命令概述 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,命令概述df命令的英文全称即“Disk Free”，用于显示系统上可使用的磁盘空间。默认显示单位为KB，建议使用“df -h”的参数组合，根据磁盘容量自动变换合适的单位，更利于阅读，日常普遍用该命令,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="Linux的df命令概述 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,命令概述df命令的英文全称即“Disk Free”，用于显示系统上可使用的磁盘空间。默认显示单位为KB，建议使用“df -h”的参数组合，根据磁盘容量自动变换合适的单位，更利于阅读，日常普遍用该命令,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">Linux的df命令概述</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">Linux的df命令概述</h1>
+        <div class="stuff">
+            <span>三月 25, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="命令概述"><a href="#命令概述" class="headerlink" title="命令概述"></a>命令概述</h2><p><code>df</code>命令的英文全称即“Disk Free”，用于显示系统上可使用的磁盘空间。默认显示单位为KB，建议使用“<code>df -h</code>”的参数组合，根据磁盘容量自动变换合适的单位，更利于阅读，日常普遍用该命令可以查看磁盘被占用了多少空间、还剩多少空间等信息。</p>
+<h2 id="命令语法"><a href="#命令语法" class="headerlink" title="命令语法"></a>命令语法</h2><p><code>df</code>【选项】 【参数】 </p>
+<h2 id="命令选项"><a href="#命令选项" class="headerlink" title="命令选项"></a>命令选项</h2><ul>
+<li><code>-a</code>或<code>--all</code>:显示所有的文件系统，包括虚拟文件系统</li>
+<li><code>-B</code>:<code>--block-size=&lt;区块大小&gt;</code> 以指定的区块大小来显示区块数目；</li>
+<li><code>-h</code>或<code>--human-readable</code>:以可读性较高的方式来显示信息；</li>
+<li><code>-H</code>或<code>--si</code>:与<code>-h</code>参数相同，但在计算时是以<code>1000 Bytes</code>为换算单位而非1024 Bytes；</li>
+<li><code>-i</code>或<code>--inodes</code>:显示inode的信息；</li>
+<li><code>-l</code>或<code>--local</code>:仅显示本地端的文件系统；</li>
+<li><code>-k</code>或<code>--kilobytes</code>:指定区块大小为1024字节，相当于<code>--block-size=1k</code></li>
+<li><code>-m</code>或<code>--megabytes</code>:指定区块大小为1048576字节，相当于<code>--block-size=1M</code></li>
+<li><code>--sync</code>:在取得磁盘使用信息前，先执行sync指令；</li>
+<li><code>--no-sync</code>:在取得磁盘使用信息前，不要执行sync指令，此为预设值；</li>
+<li><code>-P</code>或<code>--portability</code>:使用POSIX的输出格式；</li>
+<li><code>-t &lt;文件系统类型&gt;</code>或<code>--type=&lt;文件系统类型&gt;</code>:仅显示指定文件系统类型的磁盘信息；</li>
+<li><code>-T</code>或<code>--print-type</code>:显示文件系统的类型；</li>
+<li><code>-x &lt;文件系统类型&gt;</code>或<code>--exclude-type=&lt;文件系统类型&gt;</code>:不要显示指定文件系统类型的磁盘信息；</li>
+</ul>
+<h2 id="命令示例"><a href="#命令示例" class="headerlink" title="命令示例"></a>命令示例</h2><h3 id="查看包含指定文件磁盘空间使用情况"><a href="#查看包含指定文件磁盘空间使用情况" class="headerlink" title="查看包含指定文件磁盘空间使用情况:"></a>查看包含指定文件磁盘空间使用情况:</h3><figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@lzg ~]<span class="comment"># df /home/    #指定一个文件夹，查看该文件夹所在磁盘的使用情况</span></span><br><span class="line">Filesystem     1K-blocks  Used Available Use% Mounted on</span><br><span class="line">/dev/sda2      414110148 33064 414077084   1% /home</span><br><span class="line">[root@lzg ~]<span class="comment"># df /root/test.txt    #指定一个文件</span></span><br><span class="line">Filesystem     1K-blocks    Used Available Use% Mounted on</span><br><span class="line">/dev/sda5      104806400 1692812 103113588   2% /</span><br><span class="line">[root@lzg ~]<span class="comment"># df /root/text.txt /home/    #指定多个文件或文件夹</span></span><br><span class="line">Filesystem     1K-blocks    Used Available Use% Mounted on</span><br><span class="line">/dev/sda5      104806400 1692812 103113588   2% /</span><br><span class="line">/dev/sda2      414110148   33064 414077084   1% /home</span><br><span class="line">[root@lzg ~]<span class="comment"># df /root/ /home/ /etc/      #指定多个文件或文件夹</span></span><br><span class="line">Filesystem     1K-blocks    Used Available Use% Mounted on</span><br><span class="line">/dev/sda5      104806400 1692812 103113588   2% /</span><br><span class="line">/dev/sda2      414110148   33064 414077084   1% /home</span><br><span class="line">/dev/sda5      104806400 1692812 103113588   2% /</span><br><span class="line">[root@lzg ~]<span class="comment"># df                  #默认情况</span></span><br><span class="line">Filesystem     1K-blocks    Used Available Use% Mounted on</span><br><span class="line">devtmpfs         2013532       0   2013532   0% /dev</span><br><span class="line">tmpfs            2023336       0   2023336   0% /dev/shm</span><br><span class="line">tmpfs            2023336   25180   1998156   2% /run</span><br></pre></td></tr></table></figure>
+
+
+<p>输出结果列说明:</p>
+<ul>
+<li><code>Filesystem</code>:代表该文件系统是哪个分区，所以列出的是设备名称。</li>
+<li><code>1K-blocks</code>:说明下面的数字单位是1KB，可利用-h或-m来改变单位大小，也可以用-B来设置。</li>
+<li><code>Used</code>:已经使用的空间大小。</li>
+<li><code>Available</code>:剩余的空间大小。</li>
+<li><code>Use%</code>:磁盘使用率。如果使用率在90%以上时，就需要注意了，避免磁盘容量不足出现系统问题，尤其是对于文件内容增加较快的情况(如/home、/var/spool/mail等)。</li>
+<li><code>Mounted on</code>:磁盘挂载的目录，即该磁盘挂载到了哪个目录下面。</li>
+</ul>
+<h3 id="a查看所有文件系统"><a href="#a查看所有文件系统" class="headerlink" title="-a查看所有文件系统:"></a>-a查看所有文件系统:</h3><figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">[root@lzg ~]<span class="comment"># df -a</span></span><br><span class="line">Filesystem     1K-blocks    Used Available Use% Mounted on</span><br><span class="line">sysfs                  0       0         0    - /sys</span><br><span class="line">proc                   0       0         0    - /proc</span><br><span class="line">devtmpfs         2013532       0   2013532   0% /dev</span><br><span class="line">securityfs             0       0         0    - /sys/kernel/security</span><br><span class="line">tmpfs            2023336       0   2023336   0% /dev/shm</span><br><span class="line">devpts                 0       0         0    - /dev/pts</span><br><span class="line">tmpfs            2023336   25180   1998156   2% /run</span><br><span class="line">tmpfs            2023336       0   2023336   0% /sys/fs/cgroup</span><br><span class="line">cgroup                 0       0         0    - /sys/fs/cgroup/systemd</span><br><span class="line">pstore                 0       0         0    - /sys/fs/pstore</span><br><span class="line">cgroup                 0       0         0    - /sys/fs/cgroup/blkio</span><br><span class="line">cgroup                 0       0         0    - /sys/fs/cgroup/hugetlb</span><br><span class="line">cgroup                 0       0         0    - /sys/fs/cgroup/devices</span><br><span class="line">cgroup                 0       0         0    - /sys/fs/cgroup/cpuset</span><br><span class="line">cgroup                 0       0         0    - /sys/fs/cgroup/cpu,cpuacct</span><br><span class="line">cgroup                 0       0         0    - /sys/fs/cgroup/perf_event</span><br><span class="line">cgroup                 0       0         0    - /sys/fs/cgroup/freezer</span><br><span class="line">cgroup                 0       0         0    - /sys/fs/cgroup/net_cls,net_prio</span><br><span class="line">cgroup                 0       0         0    - /sys/fs/cgroup/pids</span><br><span class="line">cgroup                 0       0         0    - /sys/fs/cgroup/memory</span><br><span class="line">configfs               0       0         0    - /sys/kernel/config</span><br><span class="line">/dev/sda5      104806400 1692308 103114092   2% /</span><br><span class="line">selinuxfs              0       0         0    - /sys/fs/selinux</span><br><span class="line">debugfs                0       0         0    - /sys/kernel/debug</span><br><span class="line">mqueue                 0       0         0    - /dev/mqueue</span><br><span class="line">hugetlbfs              0       0         0    - /dev/hugepages</span><br><span class="line">/dev/sda2      414110148   33064 414077084   1% /home</span><br><span class="line">/dev/sda1        1038336  150724    887612  15% /boot</span><br><span class="line">systemd-1              -       -         -    - /proc/sys/fs/binfmt_misc</span><br><span class="line">binfmt_misc            0       0         0    - /proc/sys/fs/binfmt_misc</span><br><span class="line">tmpfs            2023336       4   2023332   1% /tmp</span><br><span class="line">tmpfs             404668       0    404668   0% /run/user/0</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>说明:系统里面存在很多特殊的文件系统，这些比较特殊的文件系统几乎都是在内存当中，（如/proc挂载点），所以，这些特殊文件系统都不会占据硬盘空间。</p>
+</blockquote>
+<h3 id="指定单位大小显示"><a href="#指定单位大小显示" class="headerlink" title="指定单位大小显示:"></a>指定单位大小显示:</h3><figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[root@lzg ~]<span class="comment"># df -B 1k            #1k为单位</span></span><br><span class="line">Filesystem     1K-blocks    Used Available Use% Mounted on</span><br><span class="line">devtmpfs         2013532       0   2013532   0% /dev</span><br><span class="line">tmpfs            2023336       0   2023336   0% /dev/shm</span><br><span class="line">tmpfs            2023336   25180   1998156   2% /run</span><br><span class="line">tmpfs            2023336       0   2023336   0% /sys/fs/cgroup</span><br><span class="line">/dev/sda5      104806400 1692308 103114092   2% /</span><br><span class="line">/dev/sda2      414110148   33064 414077084   1% /home</span><br><span class="line">/dev/sda1        1038336  150724    887612  15% /boot</span><br><span class="line">tmpfs            2023336       4   2023332   1% /tmp</span><br><span class="line">tmpfs             404668       0    404668   0% /run/user/0</span><br><span class="line">[root@lzg ~]<span class="comment"># df --block-size 1m   #1M为单位</span></span><br><span class="line">Filesystem     1M-blocks  Used Available Use% Mounted on</span><br><span class="line">devtmpfs            1967     0      1967   0% /dev</span><br><span class="line">tmpfs               1976     0      1976   0% /dev/shm</span><br><span class="line">tmpfs               1976    25      1952   2% /run</span><br><span class="line">tmpfs               1976     0      1976   0% /sys/fs/cgroup</span><br><span class="line">/dev/sda5         102350  1653    100698   2% /</span><br><span class="line">/dev/sda2         404405    33    404373   1% /home</span><br><span class="line">/dev/sda1           1014   148       867  15% /boot</span><br><span class="line">tmpfs               1976     1      1976   1% /tmp</span><br><span class="line">tmpfs                396     0       396   0% /run/user/0</span><br></pre></td></tr></table></figure>
+
+<h3 id="h-以易读的方式显示"><a href="#h-以易读的方式显示" class="headerlink" title="-h 以易读的方式显示:"></a><code>-h</code> 以易读的方式显示:</h3><figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@lzg ~]<span class="comment"># df -h</span></span><br><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">devtmpfs        2.0G     0  2.0G   0% /dev</span><br><span class="line">tmpfs           2.0G     0  2.0G   0% /dev/shm</span><br><span class="line">tmpfs           2.0G   25M  2.0G   2% /run</span><br><span class="line">tmpfs           2.0G     0  2.0G   0% /sys/fs/cgroup</span><br><span class="line">/dev/sda5       100G  1.7G   99G   2% /</span><br><span class="line">/dev/sda2       395G   33M  395G   1% /home</span><br><span class="line">/dev/sda1      1014M  148M  867M  15% /boot</span><br><span class="line">tmpfs           2.0G  4.0K  2.0G   1% /tmp</span><br><span class="line">tmpfs           396M     0  396M   0% /run/user/0</span><br></pre></td></tr></table></figure>
+
+<h3 id="以inode的数量显示"><a href="#以inode的数量显示" class="headerlink" title="以inode的数量显示:"></a>以<code>inode</code>的数量显示:</h3><figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@lzg ~]<span class="comment"># df -i</span></span><br><span class="line">Filesystem        Inodes IUsed     IFree IUse% Mounted on</span><br><span class="line">devtmpfs          503383   376    503007    1% /dev</span><br><span class="line">tmpfs             505834     1    505833    1% /dev/shm</span><br><span class="line">tmpfs             505834   475    505359    1% /run</span><br><span class="line">tmpfs             505834    16    505818    1% /sys/fs/cgroup</span><br><span class="line">/dev/sda5       52428800 36206  52392594    1% /</span><br><span class="line">/dev/sda2      207156224    23 207156201    1% /home</span><br><span class="line">/dev/sda1         524288   334    523954    1% /boot</span><br><span class="line">tmpfs             505834     2    505832    1% /tmp</span><br><span class="line">tmpfs             505834     1    505833    1% /run/user/0</span><br></pre></td></tr></table></figure>
+
+<h3 id="T-显示出每个文件系统的类型"><a href="#T-显示出每个文件系统的类型" class="headerlink" title="-T 显示出每个文件系统的类型:"></a><code>-T</code> 显示出每个文件系统的类型:</h3><figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@lzg ~]<span class="comment"># df -T</span></span><br><span class="line">Filesystem     Type     1K-blocks    Used Available Use% Mounted on</span><br><span class="line">devtmpfs       devtmpfs   2013532       0   2013532   0% /dev</span><br><span class="line">tmpfs          tmpfs      2023336       0   2023336   0% /dev/shm</span><br><span class="line">tmpfs          tmpfs      2023336   25180   1998156   2% /run</span><br><span class="line">tmpfs          tmpfs      2023336       0   2023336   0% /sys/fs/cgroup</span><br><span class="line">/dev/sda5      xfs      104806400 1692308 103114092   2% /</span><br><span class="line">/dev/sda2      xfs      414110148   33064 414077084   1% /home</span><br><span class="line">/dev/sda1      xfs        1038336  150724    887612  15% /boot</span><br><span class="line">tmpfs          tmpfs      2023336       4   2023332   1% /tmp</span><br><span class="line">tmpfs          tmpfs       404668       0    404668   0% /run/user/0</span><br></pre></td></tr></table></figure>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/29460504.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">命令概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%AF%AD%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">命令语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E9%80%89%E9%A1%B9"><span class="toc-number">3.</span> <span class="toc-text">命令选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E7%A4%BA%E4%BE%8B"><span class="toc-number">4.</span> <span class="toc-text">命令示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%8C%85%E5%90%AB%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E4%BD%BF%E7%94%A8%E6%83%85%E5%86%B5"><span class="toc-number">4.1.</span> <span class="toc-text">查看包含指定文件磁盘空间使用情况:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#a%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">4.2.</span> <span class="toc-text">-a查看所有文件系统:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E5%AE%9A%E5%8D%95%E4%BD%8D%E5%A4%A7%E5%B0%8F%E6%98%BE%E7%A4%BA"><span class="toc-number">4.3.</span> <span class="toc-text">指定单位大小显示:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#h-%E4%BB%A5%E6%98%93%E8%AF%BB%E7%9A%84%E6%96%B9%E5%BC%8F%E6%98%BE%E7%A4%BA"><span class="toc-number">4.4.</span> <span class="toc-text">-h 以易读的方式显示:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A5inode%E7%9A%84%E6%95%B0%E9%87%8F%E6%98%BE%E7%A4%BA"><span class="toc-number">4.5.</span> <span class="toc-text">以inode的数量显示:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#T-%E6%98%BE%E7%A4%BA%E5%87%BA%E6%AF%8F%E4%B8%AA%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">4.6.</span> <span class="toc-text">-T 显示出每个文件系统的类型:</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>
