@@ -3856,7 +3856,177 @@
   <entry>
     <title>NVIDIA环境安装</title>
     <url>/2024/03/25/NVIDIA%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h2 id="操作系统环境"><a href="#操作系统环境" class="headerlink" title="操作系统环境"></a>操作系统环境</h2><p>系统信息: <code>Linux user-Super-Server 5.15.0-97-generic #107~20.04.1-Ubuntu SMP Fri Feb 9 14:20:11 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux</code></p>
+<h2 id="驱动环境"><a href="#驱动环境" class="headerlink" title="驱动环境"></a>驱动环境</h2><h3 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h3><ul>
+<li>cuda版本: <code>cuda_12.2.2_535.104.05_linux.run</code></li>
+<li>NVIDIA版本: <code>NVIDIA-Linux-x86_64-535.154.05.run</code></li>
+</ul>
+<hr>
+<h4 id="错误备注"><a href="#错误备注" class="headerlink" title="错误备注"></a>错误备注</h4><ul>
+<li>cuda安装包当中包含NVIDIA的驱动，但是不能直接安装cuda,会导致模型加载出错，必须分开安装</li>
+<li>cuda12.3版本不可用，禁止安装，可能导致驱动损坏问题以及模型加载过慢问题</li>
+<li>安装之前一定保证原始环境当中没有cuda与NVIDIA的任何信息，否则可能导致安装冲突失败</li>
+<li>确认卸载后驱动挂载还会存在，需要重启电脑才能保证驱动挂载被清理掉</li>
+<li>禁止使用Ubuntu官方源进行安装</li>
+</ul>
+<h3 id="安装流程"><a href="#安装流程" class="headerlink" title="安装流程"></a>安装流程</h3><h4 id="安装NVIDIA"><a href="#安装NVIDIA" class="headerlink" title="安装NVIDIA"></a>安装NVIDIA</h4><p>1、查看操作系统</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">root@user-Super-Server:~<span class="comment"># lsb_release -d</span></span><br><span class="line">Description:    Ubuntu 20.04.6 LTS</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>2、查看显卡信息</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">root@user-Super-Server:~<span class="comment"># lspci | grep VGA</span></span><br><span class="line">03:00.0 VGA compatible controller: ASPEED Technology, Inc. ASPEED Graphics Family (rev 52)</span><br><span class="line">31:00.0 VGA compatible controller: NVIDIA Corporation Device 2684 (rev a1)</span><br><span class="line">4b:00.0 VGA compatible controller: NVIDIA Corporation Device 2684 (rev a1)</span><br><span class="line">b1:00.0 VGA compatible controller: NVIDIA Corporation Device 2684 (rev a1)</span><br><span class="line">ca:00.0 VGA compatible controller: NVIDIA Corporation Device 2684 (rev a1)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在<a href="http://pci-ids.ucw.cz/mods/PC/10de?action=help?help=pci">pci-ids.ucw.cz</a>输入上面的 2684 得出当前显卡信息为：AD102 [GeForce RTX 4090]</p>
+</blockquote>
+<p>也可以使用以下命令查看显卡更多信息</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo lshw -numeric  -C display</span><br></pre></td></tr></table></figure>
+
+<p>3、安装GCC、G++、make等工具</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">sudo apt-get install build-essential</span><br><span class="line"><span class="comment"># gcc --version 验证gcc是否安装成功</span></span><br><span class="line">sudo apt-get install g++</span><br><span class="line">sudo apt-get install make</span><br></pre></td></tr></table></figure>
+
+<p>安装结果如下</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">root@user-Super-Server:~<span class="comment"># gcc --version</span></span><br><span class="line">gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0</span><br><span class="line">Copyright (C) 2019 Free Software Foundation, Inc.</span><br><span class="line">This is free software; see the <span class="built_in">source</span> <span class="keyword">for</span> copying conditions.  There is NO</span><br><span class="line">warranty; not even <span class="keyword">for</span> MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span><br><span class="line">root@user-Super-Server:~<span class="comment"># g++ --version</span></span><br><span class="line">g++ (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0</span><br><span class="line">Copyright (C) 2019 Free Software Foundation, Inc.</span><br><span class="line">This is free software; see the <span class="built_in">source</span> <span class="keyword">for</span> copying conditions.  There is NO</span><br><span class="line">warranty; not even <span class="keyword">for</span> MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span><br><span class="line">root@user-Super-Server:~<span class="comment"># make --version</span></span><br><span class="line">GNU Make 4.2.1</span><br><span class="line">为 x86_64-pc-linux-gnu 编译</span><br><span class="line">Copyright (C) 1988-2016 Free Software Foundation, Inc.</span><br><span class="line">许可证：GPLv3+：GNU 通用公共许可证第 3 版或更新版本&lt;http://gnu.org/licenses/gpl.html&gt;。</span><br><span class="line">本软件是自由软件：您可以自由修改和重新发布它。</span><br><span class="line">在法律允许的范围内没有其他保证。</span><br></pre></td></tr></table></figure>
+
+<p>4、卸载nvidia旧驱动</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">sudo /usr/bin/nvidia-uninstall</span><br><span class="line">sudo apt-get --purge remove nvidia*</span><br><span class="line">sudo apt-get purge nvidia*</span><br><span class="line">sudo apt-get purge libnvidia*</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>直到命令不输出任何内容：<code>sudo dpkg --list | grep nvidia-*</code> 为保证驱动正常被取消挂载，请重启电脑后再次确认</p>
+</blockquote>
+<p>5、根据显卡型号，下载对应的显卡驱动</p>
+<p>下载驱动网址：<a href="https://www.nvidia.com/Download/index.aspx?lang=en-us">Official Drivers | NVIDIA</a></p>
+<blockquote>
+<p>可以选择版本下载，点击 <a href="https://www.nvidia.com/Download/Find.aspx?lang=en-us">Official Advanced Driver Search | NVIDIA</a>根据自己的显卡型号，查找驱动，我这里选择<code>NVIDIA-Linux-x86_64-535.154.05.run</code>安装驱动之前,需要禁用<code>nouveau</code>（<code>nouveau</code> 是专门用来逆向工程 <code>NVIDIA</code> 闭源驱动的开源驱动项目）,因为<code>ubuntu</code>安装时会默认安装<code>nouveau</code>驱动，如果不禁用，会阻碍<code>NVIDIA</code>官方驱动的安装。</p>
+</blockquote>
+<p>禁用<code>nouveau</code>方法如下:</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">sudo vim /etc/modprobe.d/blacklist.conf</span><br></pre></td></tr></table></figure>
+
+<p>在文件末尾添加：</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">blacklist nouveau</span><br><span class="line">blacklist lbm‐nouveau</span><br><span class="line">options nouveau modeset=0</span><br><span class="line"><span class="built_in">alias</span> nouveau off</span><br><span class="line"><span class="built_in">alias</span> lbm‐nouveau off</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>对刚才修改的文件进行更新：<code>sudo update-initramfs -u</code></li>
+<li>重启计算机：<code>sudo reboot</code></li>
+</ul>
+<blockquote>
+<p>查看<code>nouveau</code>是否禁用成功：<code>lsmod | grep nouveau</code>，执行完这句，如没有任何输出，表示禁用成功。</p>
+</blockquote>
+<p>6、关闭图形界面(选择性操作)</p>
+<p>进入tty模式(具体操作依情况而定)输入：<code>sudo service lightdm stop</code></p>
+<p>7、开始安装驱动</p>
+<p>进入驱动所在目录，给驱动文件付权限，然后安装：</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">chmod</span> +x NVIDIA-Linux-x86_64-535.154.05.run</span><br><span class="line">sudo sh NVIDIA-Linux-x86_64-535.154.05.run  -no-opengl-files -no-x-check -no-nouveau-check</span><br></pre></td></tr></table></figure>
+
+<p>参数说明:  </p>
+<ul>
+<li>-no-x-check：安装驱动时关闭 X 服务</li>
+<li>-no-nouveau-check：安装驱动时禁用 nouveau</li>
+<li>-no-opengl-files：只安装驱动文件，不安装 OpenGL 文件</li>
+</ul>
+<p>操作项说明:  </p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">Would you like to register the kernel module souces with DKMS? This will allow DKMS to automatically build a new module, <span class="keyword">if</span> you install a different kernel later?  </span><br><span class="line">选择 No 继续。</span><br><span class="line">Nvidia<span class="string">&#x27;s 32-bit compatibility libraries? </span></span><br><span class="line"><span class="string">选择 No 继续。</span></span><br><span class="line"><span class="string">Would you like to run the nvidia-xconfigutility to automatically update your x configuration so that the NVIDIA x driver will be used when you restart x? Any pre-existing x confile will be backed up.  </span></span><br><span class="line"><span class="string">选择 Yes  继续</span></span><br></pre></td></tr></table></figure>
+
+<p>8、挂载 Nvidia 驱动</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">sudo modprobe nvidia</span><br></pre></td></tr></table></figure>
+
+<p>9、查看驱动是否安装成功</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
+
+<p>输出结果如下:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@user-Super-Server:~<span class="comment"># nvidia-smi</span></span><br><span class="line">Thu Feb 29 15:25:16 2024</span><br><span class="line">+---------------------------------------------------------------------------------------+</span><br><span class="line">| NVIDIA-SMI 535.104.05             Driver Version: 535.104.05   CUDA Version: 12.2     |</span><br><span class="line">|-----------------------------------------+----------------------+----------------------+</span><br><span class="line">| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |</span><br><span class="line">| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |</span><br><span class="line">|                                         |                      |               MIG M. |</span><br><span class="line">|=========================================+======================+======================|</span><br><span class="line">|   0  NVIDIA GeForce RTX 4090        Off | 00000000:31:00.0 Off |                  Off |</span><br><span class="line">| 55%   47C    P2              90W / 450W |  20175MiB / 24564MiB |    100%      Default |</span><br><span class="line">|                                         |                      |                  N/A |</span><br><span class="line">+-----------------------------------------+----------------------+----------------------+</span><br><span class="line">|   1  NVIDIA GeForce RTX 4090        Off | 00000000:4B:00.0 Off |                  Off |</span><br><span class="line">| 46%   48C    P2             112W / 450W |  20431MiB / 24564MiB |    100%      Default |</span><br><span class="line">|                                         |                      |                  N/A |</span><br><span class="line">+-----------------------------------------+----------------------+----------------------+</span><br><span class="line">|   2  NVIDIA GeForce RTX 4090        Off | 00000000:B1:00.0 Off |                  Off |</span><br><span class="line">| 52%   48C    P2             106W / 450W |  17871MiB / 24564MiB |    100%      Default |</span><br><span class="line">|                                         |                      |                  N/A |</span><br><span class="line">+-----------------------------------------+----------------------+----------------------+</span><br><span class="line">|   3  NVIDIA GeForce RTX 4090        Off | 00000000:CA:00.0 Off |                  Off |</span><br><span class="line">| 69%   49C    P2             115W / 450W |  22477MiB / 24564MiB |    100%      Default |</span><br><span class="line">|                                         |                      |                  N/A |</span><br><span class="line">+-----------------------------------------+----------------------+----------------------+</span><br><span class="line"></span><br><span class="line">+---------------------------------------------------------------------------------------+</span><br><span class="line">| Processes:                                                                            |</span><br><span class="line">|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |</span><br><span class="line">|        ID   ID                                                             Usage      |</span><br><span class="line">|=======================================================================================|</span><br><span class="line">|    0   N/A  N/A   1828292      C   ...onda3/envs/llama_factory/bin/python    20142MiB |</span><br><span class="line">|    1   N/A  N/A   1828293      C   ...onda3/envs/llama_factory/bin/python    20398MiB |</span><br><span class="line">|    2   N/A  N/A   1828294      C   ...onda3/envs/llama_factory/bin/python    17838MiB |</span><br><span class="line">|    3   N/A  N/A   1828295      C   ...onda3/envs/llama_factory/bin/python    22444MiB |</span><br><span class="line">+---------------------------------------------------------------------------------------+</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="安装CUDA"><a href="#安装CUDA" class="headerlink" title="安装CUDA"></a>安装CUDA</h4><p>1、查看自己电脑的驱动程序版本</p>
+<p><code>nvidia-smi</code>命令结果输出右上角可以看到最高版本的cuda不能大于12.2,具体驱动程序对应的cuda版本可以通过<a href="https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/">官网查看</a></p>
+<p>2、下载cuda</p>
+<p>官网地址：<a href="https://developer.nvidia.com/cuda-toolkit-archive">CUDA Toolkit Archive | NVIDIA Developer</a></p>
+<p>这里依据个人情况自定义去下载，当前文档使用版本为:<code>cuda_12.2.2_535.104.05_linux.run</code></p>
+<p>3、卸载旧版本</p>
+<p>开始卸载旧版本CUDA(确保一定没有cuda环境):  </p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">sudo apt-get --purge remove <span class="string">&quot;*cuda*&quot;</span> <span class="string">&quot;*cublas*&quot;</span> <span class="string">&quot;*cufft*&quot;</span> <span class="string">&quot;*cufile*&quot;</span> <span class="string">&quot;*curand*&quot;</span>  <span class="string">&quot;*cusolver*&quot;</span> <span class="string">&quot;*cusparse*&quot;</span> <span class="string">&quot;*gds-tools*&quot;</span> <span class="string">&quot;*npp*&quot;</span> <span class="string">&quot;*nvjpeg*&quot;</span> <span class="string">&quot;nsight*&quot;</span> <span class="string">&quot;*nvvm*&quot;</span></span><br><span class="line">sudo apt-get autoremove</span><br></pre></td></tr></table></figure>
+<p>或  </p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">sudo /usr/local/cuda-12.1/bin/cuda-uninstaller</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>用空格选择所有cuda相关文件，确认，需要一会儿提示成功卸载。</p>
+</blockquote>
+<p>最后确认删除磁盘文件,手动删除命令：<code>sudo rm -rf /usr/local/cuda-12...</code></p>
+<p>4、开始准备安装</p>
+<p>修改安装包:  </p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">vi cuda_12.2.2_535.104.05_linux.run</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>编辑修改/tmp为/data/tmp ==(就在开头几行不用往下找)==</p>
+</blockquote>
+<p>执行安装cuda:</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">sudo sh cuda_12.2.2_535.104.05_linux.run</span><br></pre></td></tr></table></figure>
+
+<p>配置环境变量:  </p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">sudo  vim /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>在文件末尾添加：  </p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=<span class="variable">$LD_LIBRARY_PATH</span>:/usr/local/cuda-12.2/lib64</span><br><span class="line"><span class="built_in">export</span> PATH=/usr/local/cuda-12.2/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+
+<p>重新加载环境变量:</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>5、看看cuda安装是否正常：</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">root@user-Super-Server:~<span class="comment"># nvcc  -V</span></span><br><span class="line">nvcc: NVIDIA (R) Cuda compiler driver</span><br><span class="line">Copyright (c) 2005-2023 NVIDIA Corporation</span><br><span class="line">Built on Tue_Aug_15_22:02:13_PDT_2023</span><br><span class="line">Cuda compilation tools, release 12.2, V12.2.140</span><br><span class="line">Build cuda_12.2.r12.2/compiler.33191640_0</span><br></pre></td></tr></table></figure>
+
+<h2 id="python-环境"><a href="#python-环境" class="headerlink" title="python 环境"></a>python 环境</h2><p>==为方便环境安装部署迁移等操作，python环境统一为miniconda==</p>
+<h3 id="安装与卸载miniconda"><a href="#安装与卸载miniconda" class="headerlink" title="安装与卸载miniconda"></a>安装与卸载miniconda</h3><p>安装可以从<a href="https://www.baidu.com/link?url=MlS43r54KznxORhbbMO60R9LgfVLpBy9CWEbQHGU6ULHYOwG-ojmm_tRL8e12hnf&wd=&eqid=872456a00001007e0000000365e03679">官网</a>进行下载安装，也可以使用<a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/">清华国内源</a>，尽可能使用最高版本，最高版本可以创建更多其他版本的虚拟环境。</p>
+<p>当前主机下载的版本为: <code>Miniconda3-py310_23.11.0-2-Linux-x86_64.sh</code>，可以直接运行安装，所有选项均可为默认选项。</p>
+<blockquote>
+<p>Linux自带python环境，因此需要注意的是，安装好miniconda之后miniconda会覆盖掉原本的python环境，因此如果你有需求使用原始的python环境，需要注意环境变量覆盖的问题。</p>
+</blockquote>
+<p>安装成功演示:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(base) root@user-Super-Server:~<span class="comment"># python</span></span><br><span class="line">Python 3.10.13 (main, Sep 11 2023, 13:44:35) [GCC 11.2.0] on linux</span><br><span class="line">Type <span class="string">&quot;help&quot;</span>, <span class="string">&quot;copyright&quot;</span>, <span class="string">&quot;credits&quot;</span> or <span class="string">&quot;license&quot;</span> <span class="keyword">for</span> more information.</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>(base)</code> 关键词是成功激活<code>conda</code>环境的关键标识,不同的虚拟环境标识会显示对应虚拟环境的名字，之后的文档都将会出现这样标识以指定<code>python</code>环境信息。</p>
+</blockquote>
+<p>如何卸载miniconda如下：</p>
+<p>查看miniconda信息:</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">(base) root@user-Super-Server:~<span class="comment"># conda info</span></span><br><span class="line"></span><br><span class="line">     active environment : base</span><br><span class="line">    active <span class="built_in">env</span> location : /root/miniconda3</span><br><span class="line">            shell level : 1</span><br><span class="line">       user config file : /root/.condarc</span><br><span class="line"> populated config files :</span><br><span class="line">          conda version : 24.1.2</span><br><span class="line">    conda-build version : not installed</span><br><span class="line">         python version : 3.10.13.final.0</span><br><span class="line">                 solver : libmamba (default)</span><br><span class="line">       virtual packages : __archspec=1=icelake</span><br><span class="line">                          __conda=24.1.2=0</span><br><span class="line">                          __cuda=12.2=0</span><br><span class="line">                          __glibc=2.31=0</span><br><span class="line">                          __linux=5.15.0=0</span><br><span class="line">                          __unix=0=0</span><br><span class="line">       base environment : /root/miniconda3  (writable)</span><br><span class="line">      conda av data <span class="built_in">dir</span> : /root/miniconda3/etc/conda</span><br><span class="line">  conda av metadata url : None</span><br><span class="line">           channel URLs : https://repo.anaconda.com/pkgs/main/linux-64</span><br><span class="line">                          https://repo.anaconda.com/pkgs/main/noarch</span><br><span class="line">                          https://repo.anaconda.com/pkgs/r/linux-64</span><br><span class="line">                          https://repo.anaconda.com/pkgs/r/noarch</span><br><span class="line">          package cache : /root/miniconda3/pkgs</span><br><span class="line">                          /root/.conda/pkgs</span><br><span class="line">       envs directories : /root/miniconda3/envs</span><br><span class="line">                          /root/.conda/envs</span><br><span class="line">               platform : linux-64</span><br><span class="line">             user-agent : conda/24.1.2 requests/2.31.0 CPython/3.10.13 Linux/5.15.0-97-generic ubuntu/20.04.6 glibc/2.31 solver/libmamba conda-libmamba-solver/23.12.0 libmambapy/1.5.3</span><br><span class="line">                UID:GID : 0:0</span><br><span class="line">             netrc file : None</span><br><span class="line">           offline mode : False</span><br></pre></td></tr></table></figure>
+
+<p>进入安装目录后执行卸载命令:</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">bash /path/to/miniconda3/uninstall-miniconda.sh -u</span><br></pre></td></tr></table></figure>
+
+<p>随后手动清除对应的环境变量文件(~/.bashrc或/etc/profile)当中的内容之后重新加载环境变量文件<br>来更新配置:</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line">或</span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建虚拟环境"><a href="#创建虚拟环境" class="headerlink" title="创建虚拟环境"></a>创建虚拟环境</h3><ul>
+<li>创建虚拟环境: <code>conda create -n 环境名 python=3.9</code></li>
+<li>进入虚拟环境: <code>conda activate 环境名</code></li>
+<li>退出虚拟环境: <code>conda deactivate</code></li>
+<li>查看虚拟环境列表: <code>conda env list</code></li>
+<li>删除虚拟环境: <code>conda remove -n 环境名 --all</code> 或 <code>conda env remove --name 环境名</code></li>
+<li>复制虚拟环境: <code>conda create -n 新环境名 --clone 旧环境名</code></li>
+</ul>
+<h3 id="安装python库等操作"><a href="#安装python库等操作" class="headerlink" title="安装python库等操作"></a>安装python库等操作</h3><p>安装可以使用pip安装或conda命令安装:</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">pip install xxx</span><br><span class="line">conda install xxx</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>conda不是python，conda是一个环境管理工具，conda命令安装的库稳定性更好更安全也更不容易在安装过程当中出错，并且conda当中包含很多属于自己的工具，但是pip作为python指定安装工具，包含更多更新的工具，也包含==未验证的工具==，两者在大多数时候可以搭配使用。</p>
+</blockquote>
+<p>安装速度过慢可以采用临时源解决：</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">pip install 指定安装的库 -i https://pypi.tuna.tsinghua.edu.cn/simple </span><br></pre></td></tr></table></figure>
+<p>提供以下国内几种源:  </p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">清华：https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">阿里云：http://mirrors.aliyun.com/pypi/simple/</span><br><span class="line">中国科技大学: https://pypi.mirrors.ustc.edu.cn/simple/</span><br><span class="line">华中理工大学：http://pypi.hustunique.com/</span><br><span class="line">山东理工大学：http://pypi.sdutlinux.org/ </span><br><span class="line">豆瓣：http://pypi.douban.com/simple/</span><br></pre></td></tr></table></figure>
+
+<h4 id="必须安装的库"><a href="#必须安装的库" class="headerlink" title="必须安装的库"></a>必须安装的库</h4><p>项目当中往往需要使用到环境迁移配置好的环境想要进行有效迁移往往很麻烦，<code>conda</code>提供一个优秀的环境打包工具:<code>conda-pack</code>,该工具可以在同类型操作系统之间快速迁移<code>python</code>的工作环境，并且不会对原始环境有任何影响。</p>
+<p>安装:</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">conda install conda-pack</span><br></pre></td></tr></table></figure>
+
+<p>使用(激活conda环境后):</p>
+<figure class="highlight bash"><figcaption><span>&#123;.line-numbers&#125;</span></figcaption><table><tr><td class="code"><pre><span class="line">conda pack -n 环境名称</span><br><span class="line"><span class="comment"># -o 参数指定打包路径和名称，把虚拟环境 my_env 打包为 out_name.tar.gz</span></span><br><span class="line">conda pack -n 环境名称 -o out_name.tar.gz</span><br><span class="line"><span class="comment"># 把某个特定路径的虚拟环境打包为 my_env.tar.gz</span></span><br><span class="line">conda pack -p /explicit/path/to/环境名称</span><br></pre></td></tr></table></figure>
+
+<p>迁移到其他机器上：</p>
+<ul>
+<li>进入对应的同操作系统类型机器</li>
+<li>创建一个环境放置的目录</li>
+<li>将condapack打包后的文件放置在该目录下后解压</li>
+</ul>
+<p>激活环境：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># linux</span></span><br><span class="line"><span class="built_in">source</span> .../bin/activate</span><br><span class="line"><span class="comment"># windows</span></span><br><span class="line">.../bin/activate/activate.bat</span><br></pre></td></tr></table></figure>
+
+]]></content>
       <categories>
         <category>杂谈</category>
       </categories>
@@ -3997,9 +4167,10 @@
 <p>解决方法（easy）</p>
 <p><a href="https://github.com/Korea-Health-Datathon/KHD2020/issues/78">setup 에서 cv2 설치 오류가 발생합니다. · Issue #78 · Korea-Health-Datathon/KHD2020 · GitHub</a></p>
 <ul>
-<li>卸载 pip uninstall opencv-python</li>
-<li>安装 pip install opencv-python-headless<br>在Stack Overflow上有其他回答</li>
+<li>卸载 <code>pip uninstall opencv-python</code></li>
+<li>安装 <code>pip install opencv-python-headless</code></li>
 </ul>
+<p>在Stack Overflow上有其他回答</p>
 <h2 id="Ubuntu系统"><a href="#Ubuntu系统" class="headerlink" title="Ubuntu系统"></a>Ubuntu系统</h2><p>在docker中出错,将以下行添加到您的 Dockerfile：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ubuntu系统</span></span><br><span class="line">RUN apt-get update</span><br><span class="line">RUN apt-get install ffmpeg libsm6 libxext6  -y</span><br></pre></td></tr></table></figure>
 
@@ -4040,6 +4211,17 @@
 ]]></content>
       <categories>
         <category>琐事</category>
+      </categories>
+      <tags>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>时区与时间</title>
+    <url>/2024/04/10/%E6%97%B6%E5%8C%BA%E4%B8%8E%E6%97%B6%E9%97%B4/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>学习</category>
       </categories>
       <tags>
         <tag>杂谈</tag>
