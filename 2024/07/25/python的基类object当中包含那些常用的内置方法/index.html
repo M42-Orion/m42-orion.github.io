@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>python的基类object当中包含那些常用的内置方法 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,object在 Python 中，object 类是所有类的基类。它定义了一些内置方法，这些方法在所有对象中都可用。以下是一些常见的 object 类的内置方法及其作用：
+
+__init__(sel,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="python的基类object当中包含那些常用的内置方法 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,object在 Python 中，object 类是所有类的基类。它定义了一些内置方法，这些方法在所有对象中都可用。以下是一些常见的 object 类的内置方法及其作用：
+
+__init__(sel,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="python的基类object当中包含那些常用的内置方法 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,object在 Python 中，object 类是所有类的基类。它定义了一些内置方法，这些方法在所有对象中都可用。以下是一些常见的 object 类的内置方法及其作用：
+
+__init__(sel,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">python的基类object当中包含那些常用的内置方法</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">python的基类object当中包含那些常用的内置方法</h1>
+        <div class="stuff">
+            <span>七月 25, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="object"><a href="#object" class="headerlink" title="object"></a>object</h2><p>在 Python 中，<code>object</code> 类是所有类的基类。它定义了一些内置方法，这些方法在所有对象中都可用。以下是一些常见的 <code>object</code> 类的内置方法及其作用：</p>
+<ol>
+<li><p><code>__init__(self, ...)</code></p>
+<ul>
+<li><strong>作用</strong>: 构造函数，用于初始化对象。当创建对象时，这个方法会被自动调用。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, value</span>):</span><br><span class="line">        self.value = value</span><br><span class="line"></span><br><span class="line">obj = MyClass(<span class="number">10</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__del__(self)</code></p>
+<ul>
+<li><strong>作用</strong>: 析构函数，当对象被销毁时，这个方法会被调用。注意，Python 的垃圾回收机制会自动处理对象的销毁，所以这个方法通常不需要手动调用。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__del__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Object is being destroyed&quot;</span>)</span><br><span class="line"></span><br><span class="line">obj = MyClass()</span><br><span class="line"><span class="keyword">del</span> obj  <span class="comment"># 或者 obj = None</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__str__(self)</code></p>
+<ul>
+<li><strong>作用</strong>: 返回对象的字符串表示，当使用 <code>print()</code> 函数或 <code>str()</code> 函数时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;MyClass object with value: <span class="subst">&#123;self.value&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">obj = MyClass()</span><br><span class="line">obj.value = <span class="number">10</span></span><br><span class="line"><span class="built_in">print</span>(obj)  <span class="comment"># 输出: MyClass object with value: 10</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__repr__(self)</code></p>
+<ul>
+<li><strong>作用</strong>: 返回对象的“官方”字符串表示，通常用于调试。如果 <code>__repr__</code> 没有被定义，Python 会调用 <code>__str__</code>。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;MyClass(value=<span class="subst">&#123;self.value&#125;</span>)&quot;</span></span><br><span class="line"></span><br><span class="line">obj = MyClass()</span><br><span class="line">obj.value = <span class="number">10</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">repr</span>(obj))  <span class="comment"># 输出: MyClass(value=10)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__eq__(self, other)</code></p>
+<ul>
+<li><strong>作用</strong>: 比较两个对象是否相等，当使用 <code>==</code> 运算符时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__eq__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(other, MyClass):</span><br><span class="line">            <span class="keyword">return</span> self.value == other.value</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">obj1 = MyClass()</span><br><span class="line">obj1.value = <span class="number">10</span></span><br><span class="line">obj2 = MyClass()</span><br><span class="line">obj2.value = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(obj1 == obj2)  <span class="comment"># 输出: True</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__ne__(self, other)</code></p>
+<ul>
+<li><strong>作用</strong>: 比较两个对象是否不相等，当使用 <code>!=</code> 运算符时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__ne__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">not</span> self.__eq__(other)</span><br><span class="line"></span><br><span class="line">obj1 = MyClass()</span><br><span class="line">obj1.value = <span class="number">10</span></span><br><span class="line">obj2 = MyClass()</span><br><span class="line">obj2.value = <span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(obj1 != obj2)  <span class="comment"># 输出: True</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__lt__(self, other)</code></p>
+<ul>
+<li><strong>作用</strong>: 比较两个对象是否小于，当使用 <code>&lt;</code> 运算符时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__lt__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(other, MyClass):</span><br><span class="line">            <span class="keyword">return</span> self.value &lt; other.value</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NotImplemented</span></span><br><span class="line"></span><br><span class="line">obj1 = MyClass()</span><br><span class="line">obj1.value = <span class="number">10</span></span><br><span class="line">obj2 = MyClass()</span><br><span class="line">obj2.value = <span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(obj1 &lt; obj2)  <span class="comment"># 输出: True</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__le__(self, other)</code></p>
+<ul>
+<li><strong>作用</strong>: 比较两个对象是否小于或等于，当使用 <code>&lt;=</code> 运算符时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__le__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(other, MyClass):</span><br><span class="line">            <span class="keyword">return</span> self.value &lt;= other.value</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NotImplemented</span></span><br><span class="line"></span><br><span class="line">obj1 = MyClass()</span><br><span class="line">obj1.value = <span class="number">10</span></span><br><span class="line">obj2 = MyClass()</span><br><span class="line">obj2.value = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(obj1 &lt;= obj2)  <span class="comment"># 输出: True</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__gt__(self, other)</code></p>
+<ul>
+<li><strong>作用</strong>: 比较两个对象是否大于，当使用 <code>&gt;</code> 运算符时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__gt__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(other, MyClass):</span><br><span class="line">            <span class="keyword">return</span> self.value &gt; other.value</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NotImplemented</span></span><br><span class="line"></span><br><span class="line">obj1 = MyClass()</span><br><span class="line">obj1.value = <span class="number">20</span></span><br><span class="line">obj2 = MyClass()</span><br><span class="line">obj2.value = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(obj1 &gt; obj2)  <span class="comment"># 输出: True</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__ge__(self, other)</code></p>
+<ul>
+<li><strong>作用</strong>: 比较两个对象是否大于或等于，当使用 <code>&gt;=</code> 运算符时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__ge__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(other, MyClass):</span><br><span class="line">            <span class="keyword">return</span> self.value &gt;= other.value</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NotImplemented</span></span><br><span class="line"></span><br><span class="line">obj1 = MyClass()</span><br><span class="line">obj1.value = <span class="number">20</span></span><br><span class="line">obj2 = MyClass()</span><br><span class="line">obj2.value = <span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(obj1 &gt;= obj2)  <span class="comment"># 输出: True</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<ol start="11">
+<li><p><code>__hash__(self)</code></p>
+<ul>
+<li><strong>作用</strong>: 返回对象的哈希值，当对象需要被用作字典的键或集合的元素时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__hash__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">hash</span>(self.value)</span><br><span class="line"></span><br><span class="line">obj1 = MyClass()</span><br><span class="line">obj1.value = <span class="number">10</span></span><br><span class="line">obj2 = MyClass()</span><br><span class="line">obj2.value = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hash</span>(obj1))  <span class="comment"># 输出: 哈希值</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hash</span>(obj2))  <span class="comment"># 输出: 哈希值</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__bool__(self)</code></p>
+<ul>
+<li><strong>作用</strong>: 返回对象的布尔值，当使用 <code>bool()</code> 函数时，会调用这个方法。如果没有定义 <code>__bool__</code>，Python 会尝试调用 <code>__len__</code> 方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__bool__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.value &gt; <span class="number">0</span></span><br><span class="line"></span><br><span class="line">obj1 = MyClass()</span><br><span class="line">obj1.value = <span class="number">10</span></span><br><span class="line">obj2 = MyClass()</span><br><span class="line">obj2.value = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bool</span>(obj1))  <span class="comment"># 输出: True</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bool</span>(obj2))  <span class="comment"># 输出: False</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__len__(self)</code></p>
+<ul>
+<li><strong>作用</strong>: 返回对象的长度，当使用 <code>len()</code> 函数时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__len__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.values)</span><br><span class="line"></span><br><span class="line">obj = MyClass()</span><br><span class="line">obj.values = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(obj))  <span class="comment"># 输出: 3</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__getitem__(self, key)</code></p>
+<ul>
+<li><strong>作用</strong>: 当使用索引操作符 <code>[]</code> 获取对象中的元素时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__getitem__</span>(<span class="params">self, key</span>):</span><br><span class="line">        <span class="keyword">return</span> self.values[key]</span><br><span class="line"></span><br><span class="line">obj = MyClass()</span><br><span class="line">obj.values = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="built_in">print</span>(obj[<span class="number">1</span>])  <span class="comment"># 输出: 2</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__setitem__(self, key, value)</code></p>
+<ul>
+<li><strong>作用</strong>: 当使用索引操作符 <code>[]</code> 设置对象中的元素时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__setitem__</span>(<span class="params">self, key, value</span>):</span><br><span class="line">        self.values[key] = value</span><br><span class="line"></span><br><span class="line">obj = MyClass()</span><br><span class="line">obj.values = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">obj[<span class="number">1</span>] = <span class="number">10</span></span><br><span class="line"><span class="built_in">print</span>(obj.values)  <span class="comment"># 输出: [1, 10, 3]</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__delitem__(self, key)</code></p>
+<ul>
+<li><strong>作用</strong>: 当使用索引操作符 <code>[]</code> 删除对象中的元素时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__delitem__</span>(<span class="params">self, key</span>):</span><br><span class="line">        <span class="keyword">del</span> self.values[key]</span><br><span class="line"></span><br><span class="line">obj = MyClass()</span><br><span class="line">obj.values = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">del</span> obj[<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span>(obj.values)  <span class="comment"># 输出: [1, 3]</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__iter__(self)</code></p>
+<ul>
+<li><strong>作用</strong>: 返回一个迭代器对象，当使用 <code>for</code> 循环遍历对象时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__iter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">iter</span>(self.values)</span><br><span class="line"></span><br><span class="line">obj = MyClass()</span><br><span class="line">obj.values = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> obj:</span><br><span class="line">    <span class="built_in">print</span>(value)  <span class="comment"># 输出: 1 2 3</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__next__(self)</code></p>
+<ul>
+<li><strong>作用</strong>: 返回迭代器的下一个元素，当使用 <code>next()</code> 函数时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, values</span>):</span><br><span class="line">        self.values = values</span><br><span class="line">        self.index = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__iter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__next__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> self.index &lt; <span class="built_in">len</span>(self.values):</span><br><span class="line">            result = self.values[self.index]</span><br><span class="line">            self.index += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> StopIteration</span><br><span class="line"></span><br><span class="line">obj = MyClass([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> obj:</span><br><span class="line">    <span class="built_in">print</span>(value)  <span class="comment"># 输出: 1 2 3</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h2 id="补充-function"><a href="#补充-function" class="headerlink" title="补充 function"></a>补充 <code>function</code></h2><p>在 Python 中，函数也是对象，它们是 <code>function</code> 类的实例。你可以使用一些内置函数和方法来获取函数的基本信息。以下是一些常用的方法：</p>
+<ol>
+<li><p><code>__name__</code></p>
+<ul>
+<li><strong>作用</strong>: 返回函数的名称。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>():</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(my_function.__name__)  <span class="comment"># 输出: my_function</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__doc__</code></p>
+<ul>
+<li><strong>作用</strong>: 返回函数的文档字符串（docstring），即函数的注释。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;This is a docstring.&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(my_function.__doc__)  <span class="comment"># 输出: This is a docstring.</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__annotations__</code></p>
+<ul>
+<li><strong>作用</strong>: 返回函数参数和返回值的注解字典。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>(<span class="params">param1: <span class="built_in">int</span>, param2: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(my_function.__annotations__)  <span class="comment"># 输出: &#123;&#x27;param1&#x27;: &lt;class &#x27;int&#x27;&gt;, &#x27;param2&#x27;: &lt;class &#x27;str&#x27;&gt;, &#x27;return&#x27;: &lt;class &#x27;bool&#x27;&gt;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__code__</code></p>
+<ul>
+<li><strong>作用</strong>: 返回一个 <code>code</code> 对象，包含了函数的编译代码。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>():</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(my_function.__code__)  <span class="comment"># 输出: &lt;code object my_function at 0x...&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__defaults__</code></p>
+<ul>
+<li><strong>作用</strong>: 返回一个元组，包含了函数的默认参数值。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>(<span class="params">param1, param2=<span class="number">10</span></span>):</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(my_function.__defaults__)  <span class="comment"># 输出: (10,)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__code__.co_varnames</code></p>
+<ul>
+<li><strong>作用</strong>: 返回一个列表，包含了函数的局部变量名。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>(<span class="params">param1, param2</span>):</span><br><span class="line">    local_var = <span class="number">10</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(my_function.__code__.co_varnames)  <span class="comment"># 输出: (&#x27;param1&#x27;, &#x27;param2&#x27;, &#x27;local_var&#x27;)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__code__.co_argcount</code></p>
+<ul>
+<li><strong>作用</strong>: 返回函数的参数数量（不包括默认参数）。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>(<span class="params">param1, param2</span>):</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(my_function.__code__.co_argcount)  <span class="comment"># 输出: 2</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>inspect.signature()</code></p>
+<ul>
+<li><strong>作用</strong>: 返回一个 <code>Signature</code> 对象，包含了函数的参数信息。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> inspect</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>(<span class="params">param1, param2=<span class="number">10</span></span>):</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">sig = inspect.signature(my_function)</span><br><span class="line"><span class="built_in">print</span>(sig)  <span class="comment"># 输出: (param1, param2=10)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/1437287329.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#object"><span class="toc-number">1.</span> <span class="toc-text">object</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85-function"><span class="toc-number">2.</span> <span class="toc-text">补充 function</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

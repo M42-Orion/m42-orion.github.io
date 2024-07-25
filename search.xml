@@ -4315,4 +4315,347 @@
         <tag>协议</tag>
       </tags>
   </entry>
+  <entry>
+    <title>(fastapi八)如何捕获一些特殊的状态码</title>
+    <url>/2024/07/24/fastapi%E5%85%AB-%E5%A6%82%E4%BD%95%E6%8D%95%E8%8E%B7%E4%B8%80%E4%BA%9B%E7%89%B9%E6%AE%8A%E7%9A%84%E7%8A%B6%E6%80%81%E7%A0%81/</url>
+    <content><![CDATA[<!-- [text](https://blog.csdn.net/weixin_36179862/article/details/110507491) -->
+
+<h2 id="Exception"><a href="#Exception" class="headerlink" title="Exception"></a>Exception</h2><p>在 Python 中，<code>Exception</code> 是所有内置异常的基类。通过继承 <code>Exception</code>，你可以创建自定义的异常类型，以便在代码中处理特定的错误情况。以下是对 <code>Exception</code> 的详细解释以及一些高级案例。</p>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><h4 id="创建自定义异常"><a href="#创建自定义异常" class="headerlink" title="创建自定义异常"></a>创建自定义异常</h4><p>你可以通过继承 <code>Exception</code> 来创建自定义异常类：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyCustomError</span>(<span class="title class_ inherited__">Exception</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, message: <span class="built_in">str</span></span>):</span><br><span class="line">        self.message = message</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.message</span><br></pre></td></tr></table></figure>
+
+<h4 id="抛出自定义异常"><a href="#抛出自定义异常" class="headerlink" title="抛出自定义异常"></a>抛出自定义异常</h4><p>在函数中，你可以使用 <code>raise</code> 关键字抛出自定义异常：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">divide</span>(<span class="params">a: <span class="built_in">int</span>, b: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    <span class="keyword">if</span> b == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">raise</span> MyCustomError(<span class="string">&quot;Cannot divide by zero&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> a / b</span><br></pre></td></tr></table></figure>
+
+<h4 id="捕获自定义异常"><a href="#捕获自定义异常" class="headerlink" title="捕获自定义异常"></a>捕获自定义异常</h4><p>你可以使用 <code>try</code> 和 <code>except</code> 块来捕获并处理自定义异常：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    result = divide(<span class="number">10</span>, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">except</span> MyCustomError <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Caught an exception: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="高级案例"><a href="#高级案例" class="headerlink" title="高级案例"></a>高级案例</h3><h4 id="1-带有详细信息的自定义异常"><a href="#1-带有详细信息的自定义异常" class="headerlink" title="1. 带有详细信息的自定义异常"></a>1. 带有详细信息的自定义异常</h4><p>你可以为自定义异常添加更多的属性，以便在捕获时提供更多的上下文信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyCustomError</span>(<span class="title class_ inherited__">Exception</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, message: <span class="built_in">str</span>, code: <span class="built_in">int</span></span>):</span><br><span class="line">        self.message = message</span><br><span class="line">        self.code = code</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;Error <span class="subst">&#123;self.code&#125;</span>: <span class="subst">&#123;self.message&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-使用自定义异常进行错误处理"><a href="#2-使用自定义异常进行错误处理" class="headerlink" title="2. 使用自定义异常进行错误处理"></a>2. 使用自定义异常进行错误处理</h4><p>在处理复杂逻辑时，你可以使用自定义异常来区分不同的错误类型：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">InvalidInputError</span>(<span class="title class_ inherited__">MyCustomError</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, message: <span class="built_in">str</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(message, <span class="number">400</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">InternalServerError</span>(<span class="title class_ inherited__">MyCustomError</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, message: <span class="built_in">str</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(message, <span class="number">500</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">process_data</span>(<span class="params">data: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">        <span class="keyword">raise</span> InvalidInputError(<span class="string">&quot;Input data is empty&quot;</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 处理数据</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">raise</span> InternalServerError(<span class="string">f&quot;An internal error occurred: <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-捕获多个自定义异常"><a href="#3-捕获多个自定义异常" class="headerlink" title="3. 捕获多个自定义异常"></a>3. 捕获多个自定义异常</h4><p>你可以使用多个 <code>except</code> 块来捕获不同的自定义异常：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    result = divide(<span class="number">10</span>, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">except</span> InvalidInputError <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Invalid input: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line"><span class="keyword">except</span> InternalServerError <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Internal server error: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><code>Exception</code> 是 Python 中用于处理异常的基础类。通过创建自定义异常，你可以更好地控制错误处理逻辑，提高代码的可读性和可维护性。在处理复杂逻辑时，使用自定义异常可以更清晰地区分不同的错误类型，并为其提供详细的上下文信息。</p>
+<h2 id="HTTPException"><a href="#HTTPException" class="headerlink" title="HTTPException"></a>HTTPException</h2><p><code>HTTPException</code> 是 FastAPI 中用于抛出 HTTP 错误的异常类。它允许你定义自定义的 HTTP 响应状态码和响应体，从而提供更灵活的错误处理机制。下面是关于 <code>HTTPException</code> 的详细解释：</p>
+<h3 id="基本用法-1"><a href="#基本用法-1" class="headerlink" title="基本用法"></a>基本用法</h3><p><code>HTTPException</code> 的基本用法如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> HTTPException</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&#123;item_id&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_item</span>(<span class="params">item_id: <span class="built_in">int</span></span>):</span><br><span class="line">    <span class="keyword">if</span> item_id == <span class="number">3</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">418</span>, detail=<span class="string">&quot;This item is a teapot&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;item_id&quot;</span>: item_id&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，当 <code>item_id</code> 为 3 时，会抛出一个 <code>HTTPException</code>，状态码为 418（这是一个 HTTP 状态码，表示“我是一个茶壶”）。</p>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p><code>HTTPException</code> 构造函数接受以下参数：</p>
+<ul>
+<li><code>status_code</code>：HTTP 状态码，例如 404、500 等。</li>
+<li><code>detail</code>：错误详情，通常是一个字符串，用于描述错误原因。</li>
+<li><code>headers</code>：一个字典，包含额外的 HTTP 响应头。</li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>以下是一些使用 <code>HTTPException</code> 的示例：</p>
+<h4 id="1-抛出-404-错误"><a href="#1-抛出-404-错误" class="headerlink" title="1. 抛出 404 错误"></a>1. 抛出 404 错误</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> HTTPException</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&#123;item_id&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_item</span>(<span class="params">item_id: <span class="built_in">int</span></span>):</span><br><span class="line">    <span class="keyword">if</span> item_id == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">404</span>, detail=<span class="string">&quot;Item not found&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;item_id&quot;</span>: item_id&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-抛出-400-错误并添加自定义头"><a href="#2-抛出-400-错误并添加自定义头" class="headerlink" title="2. 抛出 400 错误并添加自定义头"></a>2. 抛出 400 错误并添加自定义头</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> HTTPException</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&#123;item_id&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_item</span>(<span class="params">item_id: <span class="built_in">int</span></span>):</span><br><span class="line">    <span class="keyword">if</span> item_id &lt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(</span><br><span class="line">            status_code=<span class="number">400</span>,</span><br><span class="line">            detail=<span class="string">&quot;Item ID must be a positive integer&quot;</span>,</span><br><span class="line">            headers=&#123;<span class="string">&quot;X-Error&quot;</span>: <span class="string">&quot;Invalid-Item-ID&quot;</span>&#125;</span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;item_id&quot;</span>: item_id&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-抛出-500-错误并添加多个头"><a href="#3-抛出-500-错误并添加多个头" class="headerlink" title="3. 抛出 500 错误并添加多个头"></a>3. 抛出 500 错误并添加多个头</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> HTTPException</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&#123;item_id&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_item</span>(<span class="params">item_id: <span class="built_in">int</span></span>):</span><br><span class="line">    <span class="keyword">if</span> item_id == <span class="number">999</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(</span><br><span class="line">            status_code=<span class="number">500</span>,</span><br><span class="line">            detail=<span class="string">&quot;Internal server error&quot;</span>,</span><br><span class="line">            headers=&#123;</span><br><span class="line">                <span class="string">&quot;X-Error&quot;</span>: <span class="string">&quot;Internal-Error&quot;</span>,</span><br><span class="line">                <span class="string">&quot;X-Internal-Error-Code&quot;</span>: <span class="string">&quot;500-001&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;item_id&quot;</span>: item_id&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义异常处理"><a href="#自定义异常处理" class="headerlink" title="自定义异常处理"></a>自定义异常处理</h3><p>FastAPI 允许你自定义异常处理逻辑，以便在捕获到 <code>HTTPException</code> 时执行特定的操作。例如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Request</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> JSONResponse</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> HTTPException</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.exception_handler(<span class="params">HTTPException</span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">http_exception_handler</span>(<span class="params">request: Request, exc: HTTPException</span>):</span><br><span class="line">    <span class="keyword">return</span> JSONResponse(</span><br><span class="line">        status_code=exc.status_code,</span><br><span class="line">        content=&#123;<span class="string">&quot;message&quot;</span>: exc.detail&#125;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&#123;item_id&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_item</span>(<span class="params">item_id: <span class="built_in">int</span></span>):</span><br><span class="line">    <span class="keyword">if</span> item_id == <span class="number">3</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">418</span>, detail=<span class="string">&quot;This item is a teapot&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;item_id&quot;</span>: item_id&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，当捕获到 <code>HTTPException</code> 时，会返回一个 JSON 响应，而不是默认的 HTML 响应。</p>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p><code>HTTPException</code> 是 FastAPI 中一个非常有用的工具，它允许你抛出自定义的 HTTP 错误，并控制响应的状态码、详情和头信息。通过自定义异常处理，你可以进一步优化错误处理逻辑，提高应用的健壮性和用户体验。</p>
+<h2 id="RequestValidationError"><a href="#RequestValidationError" class="headerlink" title="RequestValidationError"></a>RequestValidationError</h2><p><code>RequestValidationError</code> 是 FastAPI 中用于处理请求验证错误的异常类。当请求中的数据不符合 OpenAPI 或 Pydantic 模型定义时，FastAPI 会抛出这个异常。通过捕获和处理 <code>RequestValidationError</code>，你可以向客户端返回详细的验证错误信息。</p>
+<h3 id="基本用法-2"><a href="#基本用法-2" class="headerlink" title="基本用法"></a>基本用法</h3><p><code>RequestValidationError</code> 通常在请求处理函数中自动抛出，但你也可以手动抛出它来处理特定的验证错误。以下是一个基本示例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Query</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> RequestValidationError</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_items</span>(<span class="params">q: <span class="built_in">str</span> = Query(<span class="params">..., min_length=<span class="number">3</span></span>)</span>):</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;q&quot;</span>: q&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，如果 <code>q</code> 参数的长度小于 3，FastAPI 会自动抛出 <code>RequestValidationError</code>。</p>
+<h3 id="自定义异常处理-1"><a href="#自定义异常处理-1" class="headerlink" title="自定义异常处理"></a>自定义异常处理</h3><p>你可以通过自定义异常处理来捕获和处理 <code>RequestValidationError</code>。例如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Request</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> JSONResponse</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> RequestValidationError</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.exception_handler(<span class="params">RequestValidationError</span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">validation_exception_handler</span>(<span class="params">request: Request, exc: RequestValidationError</span>):</span><br><span class="line">    <span class="keyword">return</span> JSONResponse(</span><br><span class="line">        status_code=<span class="number">422</span>,</span><br><span class="line">        content=&#123;<span class="string">&quot;detail&quot;</span>: exc.errors()&#125;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_items</span>(<span class="params">q: <span class="built_in">str</span> = Query(<span class="params">..., min_length=<span class="number">3</span></span>)</span>):</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;q&quot;</span>: q&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，当捕获到 <code>RequestValidationError</code> 时，会返回一个 JSON 响应，包含详细的验证错误信息。</p>
+<h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><p><code>RequestValidationError</code> 的主要属性是 <code>errors</code>，它是一个包含所有验证错误的列表。每个错误都是一个字典，包含以下字段：</p>
+<ul>
+<li><code>loc</code>：错误的位置，通常是一个元组，表示模型路径。</li>
+<li><code>msg</code>：错误消息，描述了验证失败的原因。</li>
+<li><code>type</code>：错误类型，表示验证失败的具体原因。</li>
+</ul>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>以下是一些使用 <code>RequestValidationError</code> 的示例：</p>
+<h4 id="1-抛出自定义验证错误"><a href="#1-抛出自定义验证错误" class="headerlink" title="1. 抛出自定义验证错误"></a>1. 抛出自定义验证错误</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Query</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> RequestValidationError</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_items</span>(<span class="params">q: <span class="built_in">str</span> = Query(<span class="params">..., min_length=<span class="number">3</span></span>)</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(q) &lt; <span class="number">3</span>:</span><br><span class="line">        <span class="keyword">raise</span> RequestValidationError([&#123;<span class="string">&quot;loc&quot;</span>: (<span class="string">&quot;query&quot;</span>, <span class="string">&quot;q&quot;</span>), <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;Query must be at least 3 characters long&quot;</span>, <span class="string">&quot;type&quot;</span>: <span class="string">&quot;string.min_length&quot;</span>&#125;])</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;q&quot;</span>: q&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-捕获并处理验证错误"><a href="#2-捕获并处理验证错误" class="headerlink" title="2. 捕获并处理验证错误"></a>2. 捕获并处理验证错误</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Request</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> JSONResponse</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> RequestValidationError</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.exception_handler(<span class="params">RequestValidationError</span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">validation_exception_handler</span>(<span class="params">request: Request, exc: RequestValidationError</span>):</span><br><span class="line">    <span class="keyword">return</span> JSONResponse(</span><br><span class="line">        status_code=<span class="number">422</span>,</span><br><span class="line">        content=&#123;<span class="string">&quot;detail&quot;</span>: exc.errors()&#125;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_items</span>(<span class="params">q: <span class="built_in">str</span> = Query(<span class="params">..., min_length=<span class="number">3</span></span>)</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(q) &lt; <span class="number">3</span>:</span><br><span class="line">        <span class="keyword">raise</span> RequestValidationError([&#123;<span class="string">&quot;loc&quot;</span>: (<span class="string">&quot;query&quot;</span>, <span class="string">&quot;q&quot;</span>), <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;Query must be at least 3 characters long&quot;</span>, <span class="string">&quot;type&quot;</span>: <span class="string">&quot;string.min_length&quot;</span>&#125;])</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;q&quot;</span>: q&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><p><code>RequestValidationError</code> 是 FastAPI 中一个非常有用的工具，它允许你捕获和处理请求验证错误，并向客户端返回详细的错误信息。通过自定义异常处理，你可以进一步优化错误处理逻辑，提高应用的健壮性和用户体验。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>fastapi</tag>
+        <tag>状态码</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python函数缓存之lru_cache</title>
+    <url>/2024/07/25/python%E5%87%BD%E6%95%B0%E7%BC%93%E5%AD%98%E4%B9%8Blru-cache/</url>
+    <content><![CDATA[<h2 id="lru-cache"><a href="#lru-cache" class="headerlink" title="lru_cache"></a><code>lru_cache</code></h2><p><code>lru_cache</code> 是 Python 标准库 <code>functools</code> 模块中的一个装饰器，用于实现缓存功能。它通过缓存函数的返回值来提高函数的执行效率，特别是对于计算密集型函数或具有大量重复输入的函数。</p>
+<p><code>lru_cache</code> 的全称是 “Least Recently Used Cache”，即最近最少使用缓存。它使用一个字典来存储函数的返回值，字典的键是函数的参数，值是函数的返回值。当函数被调用时，<code>lru_cache</code> 会首先检查参数是否已经在缓存中，如果在，则直接返回缓存中的值；如果不在，则计算函数的返回值，并将结果存入缓存。</p>
+<p><code>lru_cache</code> 有一些可选参数，可以用来控制缓存的大小和过期时间。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> lru_cache</span><br><span class="line"></span><br><span class="line"><span class="meta">@lru_cache(<span class="params">maxsize=<span class="number">128</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fibonacci</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line">    <span class="keyword">return</span> fibonacci(n-<span class="number">1</span>) + fibonacci(n-<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中，<code>lru_cache</code> 装饰器将 <code>fibonacci</code> 函数的返回值缓存起来，最多缓存 128 个结果。当 <code>fibonacci</code> 函数被调用时，<code>lru_cache</code> 会首先检查参数是否已经在缓存中，如果在，则直接返回缓存中的值；如果不在，则计算函数的返回值，并将结果存入缓存。</p>
+<p>需要注意的是，<code>lru_cache</code> 只能缓存可哈希的参数。如果函数的参数是不可哈希的，如列表或字典，<code>lru_cache</code> 将无法缓存函数的返回值。</p>
+<p>另外，<code>lru_cache</code> 不会自动清理缓存。如果缓存中的数据不再需要，需要手动清理缓存。可以使用 <code>cache_clear()</code> 方法来清空缓存。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">fibonacci.cache_clear()</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><p><code>lru_cache</code> 可以用于各种场景，以下是一些常见的使用案例：</p>
+<ol>
+<li><strong>缓存函数结果</strong></li>
+</ol>
+<p><code>lru_cache</code> 可以用于缓存函数的结果，避免重复计算。这在处理递归函数或计算密集型函数时特别有用。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> lru_cache</span><br><span class="line"></span><br><span class="line"><span class="meta">@lru_cache(<span class="params">maxsize=<span class="number">128</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fibonacci</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line">    <span class="keyword">return</span> fibonacci(n-<span class="number">1</span>) + fibonacci(n-<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(fibonacci(<span class="number">30</span>))  <span class="comment"># 输出: 832040</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>优化性能</strong></li>
+</ol>
+<p><code>lru_cache</code> 可以用于优化性能，特别是在处理大量重复输入的函数时。通过缓存函数的结果，可以避免重复计算，从而提高函数的执行效率。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> lru_cache</span><br><span class="line"></span><br><span class="line"><span class="meta">@lru_cache(<span class="params">maxsize=<span class="number">128</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">heavy_computation</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="comment"># 模拟一个计算密集型函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(<span class="built_in">range</span>(n))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(heavy_computation(<span class="number">1000000</span>))  <span class="comment"># 输出: 499999500000</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><strong>限制缓存大小</strong></li>
+</ol>
+<p><code>lru_cache</code> 的 <code>maxsize</code> 参数可以用于限制缓存的大小。当缓存满了之后，<code>lru_cache</code> 会自动删除最近最少使用的缓存项。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> lru_cache</span><br><span class="line"></span><br><span class="line"><span class="meta">@lru_cache(<span class="params">maxsize=<span class="number">3</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">heavy_computation</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="comment"># 模拟一个计算密集型函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(<span class="built_in">range</span>(n))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(heavy_computation(<span class="number">1000000</span>))  <span class="comment"># 输出: 499999500000</span></span><br><span class="line"><span class="built_in">print</span>(heavy_computation(<span class="number">2000000</span>))  <span class="comment"># 输出: 1999999000000</span></span><br><span class="line"><span class="built_in">print</span>(heavy_computation(<span class="number">3000000</span>))  <span class="comment"># 输出: 2999999000000</span></span><br><span class="line"><span class="built_in">print</span>(heavy_computation(<span class="number">4000000</span>))  <span class="comment"># 输出: 3999999000000</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中，<code>lru_cache</code> 的 <code>maxsize</code> 参数被设置为 3，所以最多只能缓存 3 个结果。当第 4 个结果被计算出来时，<code>lru_cache</code> 会自动删除最近最少使用的缓存项。</p>
+<ol start="4">
+<li><strong>缓存过期</strong>：<code>lru_cache</code> 还可以用于实现缓存过期。通过设置 <code>typed</code> 参数为 <code>True</code>，<code>lru_cache</code> 会将缓存项的类型作为键的一部分，从而实现缓存过期。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> lru_cache</span><br><span class="line"></span><br><span class="line"><span class="meta">@lru_cache(<span class="params">typed=<span class="literal">True</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">heavy_computation</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="comment"># 模拟一个计算密集型函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(<span class="built_in">range</span>(n))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(heavy_computation(<span class="number">1000000</span>))  <span class="comment"># 输出: 499999500000</span></span><br><span class="line"><span class="built_in">print</span>(heavy_computation(<span class="number">1000000</span>))  <span class="comment"># 输出: 499999500000</span></span><br><span class="line"><span class="built_in">print</span>(heavy_computation(<span class="number">2000000</span>))  <span class="comment"># 输出: 1999999000000</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中，<code>lru_cache</code> 的 <code>typed</code> 参数被设置为 <code>True</code>，所以 <code>heavy_computation</code> 函数的结果会被缓存两次，一次是 <code>n</code> 为 1000000，一次是 <code>n</code> 为 2000000。当 <code>n</code> 为 1000000 时，<code>lru_cache</code> 会返回缓存中的结果；当 <code>n</code> 为 2000000 时，<code>lru_cache</code> 会重新计算结果，并将结果存入缓存。</p>
+<p>总结起来，<code>lru_cache</code> 是一个非常有用的装饰器，可以帮助我们提高函数的执行效率，特别是在处理大量重复输入或计算密集型函数时。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python的基类object当中包含那些常用的内置方法</title>
+    <url>/2024/07/25/python%E7%9A%84%E5%9F%BA%E7%B1%BBobject%E5%BD%93%E4%B8%AD%E5%8C%85%E5%90%AB%E9%82%A3%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="object"><a href="#object" class="headerlink" title="object"></a>object</h2><p>在 Python 中，<code>object</code> 类是所有类的基类。它定义了一些内置方法，这些方法在所有对象中都可用。以下是一些常见的 <code>object</code> 类的内置方法及其作用：</p>
+<ol>
+<li><p><code>__init__(self, ...)</code></p>
+<ul>
+<li><strong>作用</strong>: 构造函数，用于初始化对象。当创建对象时，这个方法会被自动调用。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, value</span>):</span><br><span class="line">        self.value = value</span><br><span class="line"></span><br><span class="line">obj = MyClass(<span class="number">10</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__del__(self)</code></p>
+<ul>
+<li><strong>作用</strong>: 析构函数，当对象被销毁时，这个方法会被调用。注意，Python 的垃圾回收机制会自动处理对象的销毁，所以这个方法通常不需要手动调用。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__del__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Object is being destroyed&quot;</span>)</span><br><span class="line"></span><br><span class="line">obj = MyClass()</span><br><span class="line"><span class="keyword">del</span> obj  <span class="comment"># 或者 obj = None</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__str__(self)</code></p>
+<ul>
+<li><strong>作用</strong>: 返回对象的字符串表示，当使用 <code>print()</code> 函数或 <code>str()</code> 函数时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;MyClass object with value: <span class="subst">&#123;self.value&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">obj = MyClass()</span><br><span class="line">obj.value = <span class="number">10</span></span><br><span class="line"><span class="built_in">print</span>(obj)  <span class="comment"># 输出: MyClass object with value: 10</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__repr__(self)</code></p>
+<ul>
+<li><strong>作用</strong>: 返回对象的“官方”字符串表示，通常用于调试。如果 <code>__repr__</code> 没有被定义，Python 会调用 <code>__str__</code>。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__repr__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;MyClass(value=<span class="subst">&#123;self.value&#125;</span>)&quot;</span></span><br><span class="line"></span><br><span class="line">obj = MyClass()</span><br><span class="line">obj.value = <span class="number">10</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">repr</span>(obj))  <span class="comment"># 输出: MyClass(value=10)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__eq__(self, other)</code></p>
+<ul>
+<li><strong>作用</strong>: 比较两个对象是否相等，当使用 <code>==</code> 运算符时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__eq__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(other, MyClass):</span><br><span class="line">            <span class="keyword">return</span> self.value == other.value</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">obj1 = MyClass()</span><br><span class="line">obj1.value = <span class="number">10</span></span><br><span class="line">obj2 = MyClass()</span><br><span class="line">obj2.value = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(obj1 == obj2)  <span class="comment"># 输出: True</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__ne__(self, other)</code></p>
+<ul>
+<li><strong>作用</strong>: 比较两个对象是否不相等，当使用 <code>!=</code> 运算符时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__ne__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">not</span> self.__eq__(other)</span><br><span class="line"></span><br><span class="line">obj1 = MyClass()</span><br><span class="line">obj1.value = <span class="number">10</span></span><br><span class="line">obj2 = MyClass()</span><br><span class="line">obj2.value = <span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(obj1 != obj2)  <span class="comment"># 输出: True</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__lt__(self, other)</code></p>
+<ul>
+<li><strong>作用</strong>: 比较两个对象是否小于，当使用 <code>&lt;</code> 运算符时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__lt__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(other, MyClass):</span><br><span class="line">            <span class="keyword">return</span> self.value &lt; other.value</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NotImplemented</span></span><br><span class="line"></span><br><span class="line">obj1 = MyClass()</span><br><span class="line">obj1.value = <span class="number">10</span></span><br><span class="line">obj2 = MyClass()</span><br><span class="line">obj2.value = <span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(obj1 &lt; obj2)  <span class="comment"># 输出: True</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__le__(self, other)</code></p>
+<ul>
+<li><strong>作用</strong>: 比较两个对象是否小于或等于，当使用 <code>&lt;=</code> 运算符时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__le__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(other, MyClass):</span><br><span class="line">            <span class="keyword">return</span> self.value &lt;= other.value</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NotImplemented</span></span><br><span class="line"></span><br><span class="line">obj1 = MyClass()</span><br><span class="line">obj1.value = <span class="number">10</span></span><br><span class="line">obj2 = MyClass()</span><br><span class="line">obj2.value = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(obj1 &lt;= obj2)  <span class="comment"># 输出: True</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__gt__(self, other)</code></p>
+<ul>
+<li><strong>作用</strong>: 比较两个对象是否大于，当使用 <code>&gt;</code> 运算符时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__gt__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(other, MyClass):</span><br><span class="line">            <span class="keyword">return</span> self.value &gt; other.value</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NotImplemented</span></span><br><span class="line"></span><br><span class="line">obj1 = MyClass()</span><br><span class="line">obj1.value = <span class="number">20</span></span><br><span class="line">obj2 = MyClass()</span><br><span class="line">obj2.value = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(obj1 &gt; obj2)  <span class="comment"># 输出: True</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__ge__(self, other)</code></p>
+<ul>
+<li><strong>作用</strong>: 比较两个对象是否大于或等于，当使用 <code>&gt;=</code> 运算符时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__ge__</span>(<span class="params">self, other</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(other, MyClass):</span><br><span class="line">            <span class="keyword">return</span> self.value &gt;= other.value</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NotImplemented</span></span><br><span class="line"></span><br><span class="line">obj1 = MyClass()</span><br><span class="line">obj1.value = <span class="number">20</span></span><br><span class="line">obj2 = MyClass()</span><br><span class="line">obj2.value = <span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(obj1 &gt;= obj2)  <span class="comment"># 输出: True</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<ol start="11">
+<li><p><code>__hash__(self)</code></p>
+<ul>
+<li><strong>作用</strong>: 返回对象的哈希值，当对象需要被用作字典的键或集合的元素时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__hash__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">hash</span>(self.value)</span><br><span class="line"></span><br><span class="line">obj1 = MyClass()</span><br><span class="line">obj1.value = <span class="number">10</span></span><br><span class="line">obj2 = MyClass()</span><br><span class="line">obj2.value = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hash</span>(obj1))  <span class="comment"># 输出: 哈希值</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hash</span>(obj2))  <span class="comment"># 输出: 哈希值</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__bool__(self)</code></p>
+<ul>
+<li><strong>作用</strong>: 返回对象的布尔值，当使用 <code>bool()</code> 函数时，会调用这个方法。如果没有定义 <code>__bool__</code>，Python 会尝试调用 <code>__len__</code> 方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__bool__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.value &gt; <span class="number">0</span></span><br><span class="line"></span><br><span class="line">obj1 = MyClass()</span><br><span class="line">obj1.value = <span class="number">10</span></span><br><span class="line">obj2 = MyClass()</span><br><span class="line">obj2.value = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bool</span>(obj1))  <span class="comment"># 输出: True</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bool</span>(obj2))  <span class="comment"># 输出: False</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__len__(self)</code></p>
+<ul>
+<li><strong>作用</strong>: 返回对象的长度，当使用 <code>len()</code> 函数时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__len__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.values)</span><br><span class="line"></span><br><span class="line">obj = MyClass()</span><br><span class="line">obj.values = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(obj))  <span class="comment"># 输出: 3</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__getitem__(self, key)</code></p>
+<ul>
+<li><strong>作用</strong>: 当使用索引操作符 <code>[]</code> 获取对象中的元素时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__getitem__</span>(<span class="params">self, key</span>):</span><br><span class="line">        <span class="keyword">return</span> self.values[key]</span><br><span class="line"></span><br><span class="line">obj = MyClass()</span><br><span class="line">obj.values = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="built_in">print</span>(obj[<span class="number">1</span>])  <span class="comment"># 输出: 2</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__setitem__(self, key, value)</code></p>
+<ul>
+<li><strong>作用</strong>: 当使用索引操作符 <code>[]</code> 设置对象中的元素时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__setitem__</span>(<span class="params">self, key, value</span>):</span><br><span class="line">        self.values[key] = value</span><br><span class="line"></span><br><span class="line">obj = MyClass()</span><br><span class="line">obj.values = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">obj[<span class="number">1</span>] = <span class="number">10</span></span><br><span class="line"><span class="built_in">print</span>(obj.values)  <span class="comment"># 输出: [1, 10, 3]</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__delitem__(self, key)</code></p>
+<ul>
+<li><strong>作用</strong>: 当使用索引操作符 <code>[]</code> 删除对象中的元素时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__delitem__</span>(<span class="params">self, key</span>):</span><br><span class="line">        <span class="keyword">del</span> self.values[key]</span><br><span class="line"></span><br><span class="line">obj = MyClass()</span><br><span class="line">obj.values = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">del</span> obj[<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span>(obj.values)  <span class="comment"># 输出: [1, 3]</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__iter__(self)</code></p>
+<ul>
+<li><strong>作用</strong>: 返回一个迭代器对象，当使用 <code>for</code> 循环遍历对象时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__iter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">iter</span>(self.values)</span><br><span class="line"></span><br><span class="line">obj = MyClass()</span><br><span class="line">obj.values = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> obj:</span><br><span class="line">    <span class="built_in">print</span>(value)  <span class="comment"># 输出: 1 2 3</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__next__(self)</code></p>
+<ul>
+<li><strong>作用</strong>: 返回迭代器的下一个元素，当使用 <code>next()</code> 函数时，会调用这个方法。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, values</span>):</span><br><span class="line">        self.values = values</span><br><span class="line">        self.index = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__iter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__next__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> self.index &lt; <span class="built_in">len</span>(self.values):</span><br><span class="line">            result = self.values[self.index]</span><br><span class="line">            self.index += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> StopIteration</span><br><span class="line"></span><br><span class="line">obj = MyClass([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> obj:</span><br><span class="line">    <span class="built_in">print</span>(value)  <span class="comment"># 输出: 1 2 3</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h2 id="补充-function"><a href="#补充-function" class="headerlink" title="补充 function"></a>补充 <code>function</code></h2><p>在 Python 中，函数也是对象，它们是 <code>function</code> 类的实例。你可以使用一些内置函数和方法来获取函数的基本信息。以下是一些常用的方法：</p>
+<ol>
+<li><p><code>__name__</code></p>
+<ul>
+<li><strong>作用</strong>: 返回函数的名称。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>():</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(my_function.__name__)  <span class="comment"># 输出: my_function</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__doc__</code></p>
+<ul>
+<li><strong>作用</strong>: 返回函数的文档字符串（docstring），即函数的注释。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;This is a docstring.&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(my_function.__doc__)  <span class="comment"># 输出: This is a docstring.</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__annotations__</code></p>
+<ul>
+<li><strong>作用</strong>: 返回函数参数和返回值的注解字典。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>(<span class="params">param1: <span class="built_in">int</span>, param2: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(my_function.__annotations__)  <span class="comment"># 输出: &#123;&#x27;param1&#x27;: &lt;class &#x27;int&#x27;&gt;, &#x27;param2&#x27;: &lt;class &#x27;str&#x27;&gt;, &#x27;return&#x27;: &lt;class &#x27;bool&#x27;&gt;&#125;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__code__</code></p>
+<ul>
+<li><strong>作用</strong>: 返回一个 <code>code</code> 对象，包含了函数的编译代码。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>():</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(my_function.__code__)  <span class="comment"># 输出: &lt;code object my_function at 0x...&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__defaults__</code></p>
+<ul>
+<li><strong>作用</strong>: 返回一个元组，包含了函数的默认参数值。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>(<span class="params">param1, param2=<span class="number">10</span></span>):</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(my_function.__defaults__)  <span class="comment"># 输出: (10,)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__code__.co_varnames</code></p>
+<ul>
+<li><strong>作用</strong>: 返回一个列表，包含了函数的局部变量名。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>(<span class="params">param1, param2</span>):</span><br><span class="line">    local_var = <span class="number">10</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(my_function.__code__.co_varnames)  <span class="comment"># 输出: (&#x27;param1&#x27;, &#x27;param2&#x27;, &#x27;local_var&#x27;)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>__code__.co_argcount</code></p>
+<ul>
+<li><strong>作用</strong>: 返回函数的参数数量（不包括默认参数）。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>(<span class="params">param1, param2</span>):</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(my_function.__code__.co_argcount)  <span class="comment"># 输出: 2</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>inspect.signature()</code></p>
+<ul>
+<li><strong>作用</strong>: 返回一个 <code>Signature</code> 对象，包含了函数的参数信息。</li>
+<li><strong>示例</strong>:<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> inspect</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>(<span class="params">param1, param2=<span class="number">10</span></span>):</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">sig = inspect.signature(my_function)</span><br><span class="line"><span class="built_in">print</span>(sig)  <span class="comment"># 输出: (param1, param2=10)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>循环、迭代器、生成器</title>
+    <url>/2024/07/25/%E5%BE%AA%E7%8E%AF%E3%80%81%E8%BF%AD%E4%BB%A3%E5%99%A8%E3%80%81%E7%94%9F%E6%88%90%E5%99%A8/</url>
+    <content><![CDATA[<h1 id="循环、迭代器和生成器"><a href="#循环、迭代器和生成器" class="headerlink" title="循环、迭代器和生成器"></a>循环、迭代器和生成器</h1><p>在 Python 中，循环、迭代器和生成器是处理数据的重要工具。它们可以帮助我们遍历数据、生成数据以及优化性能。下面我们将详细解释这些概念。</p>
+<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><p>循环是一种编程结构，用于重复执行一段代码。Python 提供了两种循环结构：<code>for</code> 循环和 <code>while</code> 循环。</p>
+<h3 id="for-循环"><a href="#for-循环" class="headerlink" title="for 循环"></a><code>for</code> 循环</h3><p><code>for</code> 循环用于遍历一个可迭代对象（如列表、元组、字典、集合、字符串等）中的元素。每次循环，都会将可迭代对象中的一个元素赋值给循环变量，并执行循环体。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+
+<h3 id="while-循环"><a href="#while-循环" class="headerlink" title="while 循环"></a><code>while</code> 循环</h3><p><code>while</code> 循环用于在条件为真时重复执行一段代码。每次循环，都会检查条件，如果条件为真，则执行循环体。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> i &lt; <span class="number">5</span>:</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br><span class="line">    i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+
+<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>迭代器是一种用于遍历可迭代对象的对象。迭代器对象有一个 <code>__iter__()</code> 方法，返回迭代器本身，以及一个 <code>__next__()</code> 方法，返回下一个元素。当没有更多元素时，<code>__next__()</code> 方法会抛出 <code>StopIteration</code> 异常。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyIterator</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, data</span>):</span><br><span class="line">        self.data = data</span><br><span class="line">        self.index = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__iter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__next__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> self.index &lt; <span class="built_in">len</span>(self.data):</span><br><span class="line">            result = self.data[self.index]</span><br><span class="line">            self.index += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> StopIteration</span><br><span class="line"></span><br><span class="line">iterator = MyIterator([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> iterator:</span><br><span class="line">    <span class="built_in">print</span>(value)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<h2 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h2><p>生成器是一种特殊的迭代器，它使用 <code>yield</code> 关键字来生成元素。生成器函数在每次调用 <code>yield</code> 关键字时暂停执行，并返回一个值。下次调用 <code>next()</code> 函数时，生成器函数会从上次暂停的地方继续执行。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_generator</span>():</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="number">2</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> my_generator():</span><br><span class="line">    <span class="built_in">print</span>(value)</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+
+<p>生成器函数和普通函数的主要区别在于，生成器函数使用 <code>yield</code> 关键字来生成元素，而不是使用 <code>return</code> 关键字。生成器函数返回一个生成器对象，可以使用 <code>for</code> 循环或 <code>next()</code> 函数来遍历生成器对象。</p>
+<p>总结起来，循环、迭代器和生成器是处理数据的重要工具。循环用于重复执行一段代码，迭代器用于遍历可迭代对象，生成器用于生成元素。它们可以帮助我们更灵活地处理数据，提高代码的可读性和性能。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
 </search>

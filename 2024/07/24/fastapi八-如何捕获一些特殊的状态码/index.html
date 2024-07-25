@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>(fastapi八)如何捕获一些特殊的状态码 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,
+
+Exception在 Python 中，Exception 是所有内置异常的基类。通过继承 Exception，你可以创建自定义的异常类型，以便在代码中处理特定的错误情况。以下是对 Except,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="(fastapi八)如何捕获一些特殊的状态码 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,
+
+Exception在 Python 中，Exception 是所有内置异常的基类。通过继承 Exception，你可以创建自定义的异常类型，以便在代码中处理特定的错误情况。以下是对 Except,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="(fastapi八)如何捕获一些特殊的状态码 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,
+
+Exception在 Python 中，Exception 是所有内置异常的基类。通过继承 Exception，你可以创建自定义的异常类型，以便在代码中处理特定的错误情况。以下是对 Except,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">(fastapi八)如何捕获一些特殊的状态码</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">(fastapi八)如何捕获一些特殊的状态码</h1>
+        <div class="stuff">
+            <span>七月 24, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/fastapi/" rel="tag">fastapi</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E7%8A%B6%E6%80%81%E7%A0%81/" rel="tag">状态码</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <!-- [text](https://blog.csdn.net/weixin_36179862/article/details/110507491) -->
+
+<h2 id="Exception"><a href="#Exception" class="headerlink" title="Exception"></a>Exception</h2><p>在 Python 中，<code>Exception</code> 是所有内置异常的基类。通过继承 <code>Exception</code>，你可以创建自定义的异常类型，以便在代码中处理特定的错误情况。以下是对 <code>Exception</code> 的详细解释以及一些高级案例。</p>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><h4 id="创建自定义异常"><a href="#创建自定义异常" class="headerlink" title="创建自定义异常"></a>创建自定义异常</h4><p>你可以通过继承 <code>Exception</code> 来创建自定义异常类：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyCustomError</span>(<span class="title class_ inherited__">Exception</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, message: <span class="built_in">str</span></span>):</span><br><span class="line">        self.message = message</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.message</span><br></pre></td></tr></table></figure>
+
+<h4 id="抛出自定义异常"><a href="#抛出自定义异常" class="headerlink" title="抛出自定义异常"></a>抛出自定义异常</h4><p>在函数中，你可以使用 <code>raise</code> 关键字抛出自定义异常：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">divide</span>(<span class="params">a: <span class="built_in">int</span>, b: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    <span class="keyword">if</span> b == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">raise</span> MyCustomError(<span class="string">&quot;Cannot divide by zero&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> a / b</span><br></pre></td></tr></table></figure>
+
+<h4 id="捕获自定义异常"><a href="#捕获自定义异常" class="headerlink" title="捕获自定义异常"></a>捕获自定义异常</h4><p>你可以使用 <code>try</code> 和 <code>except</code> 块来捕获并处理自定义异常：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    result = divide(<span class="number">10</span>, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">except</span> MyCustomError <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Caught an exception: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="高级案例"><a href="#高级案例" class="headerlink" title="高级案例"></a>高级案例</h3><h4 id="1-带有详细信息的自定义异常"><a href="#1-带有详细信息的自定义异常" class="headerlink" title="1. 带有详细信息的自定义异常"></a>1. 带有详细信息的自定义异常</h4><p>你可以为自定义异常添加更多的属性，以便在捕获时提供更多的上下文信息：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyCustomError</span>(<span class="title class_ inherited__">Exception</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, message: <span class="built_in">str</span>, code: <span class="built_in">int</span></span>):</span><br><span class="line">        self.message = message</span><br><span class="line">        self.code = code</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;Error <span class="subst">&#123;self.code&#125;</span>: <span class="subst">&#123;self.message&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-使用自定义异常进行错误处理"><a href="#2-使用自定义异常进行错误处理" class="headerlink" title="2. 使用自定义异常进行错误处理"></a>2. 使用自定义异常进行错误处理</h4><p>在处理复杂逻辑时，你可以使用自定义异常来区分不同的错误类型：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">InvalidInputError</span>(<span class="title class_ inherited__">MyCustomError</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, message: <span class="built_in">str</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(message, <span class="number">400</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">InternalServerError</span>(<span class="title class_ inherited__">MyCustomError</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, message: <span class="built_in">str</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(message, <span class="number">500</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">process_data</span>(<span class="params">data: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">        <span class="keyword">raise</span> InvalidInputError(<span class="string">&quot;Input data is empty&quot;</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 处理数据</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">raise</span> InternalServerError(<span class="string">f&quot;An internal error occurred: <span class="subst">&#123;<span class="built_in">str</span>(e)&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-捕获多个自定义异常"><a href="#3-捕获多个自定义异常" class="headerlink" title="3. 捕获多个自定义异常"></a>3. 捕获多个自定义异常</h4><p>你可以使用多个 <code>except</code> 块来捕获不同的自定义异常：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    result = divide(<span class="number">10</span>, <span class="number">0</span>)</span><br><span class="line"><span class="keyword">except</span> InvalidInputError <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Invalid input: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line"><span class="keyword">except</span> InternalServerError <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Internal server error: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><code>Exception</code> 是 Python 中用于处理异常的基础类。通过创建自定义异常，你可以更好地控制错误处理逻辑，提高代码的可读性和可维护性。在处理复杂逻辑时，使用自定义异常可以更清晰地区分不同的错误类型，并为其提供详细的上下文信息。</p>
+<h2 id="HTTPException"><a href="#HTTPException" class="headerlink" title="HTTPException"></a>HTTPException</h2><p><code>HTTPException</code> 是 FastAPI 中用于抛出 HTTP 错误的异常类。它允许你定义自定义的 HTTP 响应状态码和响应体，从而提供更灵活的错误处理机制。下面是关于 <code>HTTPException</code> 的详细解释：</p>
+<h3 id="基本用法-1"><a href="#基本用法-1" class="headerlink" title="基本用法"></a>基本用法</h3><p><code>HTTPException</code> 的基本用法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> HTTPException</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&#123;item_id&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_item</span>(<span class="params">item_id: <span class="built_in">int</span></span>):</span><br><span class="line">    <span class="keyword">if</span> item_id == <span class="number">3</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">418</span>, detail=<span class="string">&quot;This item is a teapot&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;item_id&quot;</span>: item_id&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，当 <code>item_id</code> 为 3 时，会抛出一个 <code>HTTPException</code>，状态码为 418（这是一个 HTTP 状态码，表示“我是一个茶壶”）。</p>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p><code>HTTPException</code> 构造函数接受以下参数：</p>
+<ul>
+<li><code>status_code</code>：HTTP 状态码，例如 404、500 等。</li>
+<li><code>detail</code>：错误详情，通常是一个字符串，用于描述错误原因。</li>
+<li><code>headers</code>：一个字典，包含额外的 HTTP 响应头。</li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>以下是一些使用 <code>HTTPException</code> 的示例：</p>
+<h4 id="1-抛出-404-错误"><a href="#1-抛出-404-错误" class="headerlink" title="1. 抛出 404 错误"></a>1. 抛出 404 错误</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> HTTPException</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&#123;item_id&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_item</span>(<span class="params">item_id: <span class="built_in">int</span></span>):</span><br><span class="line">    <span class="keyword">if</span> item_id == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">404</span>, detail=<span class="string">&quot;Item not found&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;item_id&quot;</span>: item_id&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-抛出-400-错误并添加自定义头"><a href="#2-抛出-400-错误并添加自定义头" class="headerlink" title="2. 抛出 400 错误并添加自定义头"></a>2. 抛出 400 错误并添加自定义头</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> HTTPException</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&#123;item_id&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_item</span>(<span class="params">item_id: <span class="built_in">int</span></span>):</span><br><span class="line">    <span class="keyword">if</span> item_id &lt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(</span><br><span class="line">            status_code=<span class="number">400</span>,</span><br><span class="line">            detail=<span class="string">&quot;Item ID must be a positive integer&quot;</span>,</span><br><span class="line">            headers=&#123;<span class="string">&quot;X-Error&quot;</span>: <span class="string">&quot;Invalid-Item-ID&quot;</span>&#125;</span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;item_id&quot;</span>: item_id&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-抛出-500-错误并添加多个头"><a href="#3-抛出-500-错误并添加多个头" class="headerlink" title="3. 抛出 500 错误并添加多个头"></a>3. 抛出 500 错误并添加多个头</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> HTTPException</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&#123;item_id&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_item</span>(<span class="params">item_id: <span class="built_in">int</span></span>):</span><br><span class="line">    <span class="keyword">if</span> item_id == <span class="number">999</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(</span><br><span class="line">            status_code=<span class="number">500</span>,</span><br><span class="line">            detail=<span class="string">&quot;Internal server error&quot;</span>,</span><br><span class="line">            headers=&#123;</span><br><span class="line">                <span class="string">&quot;X-Error&quot;</span>: <span class="string">&quot;Internal-Error&quot;</span>,</span><br><span class="line">                <span class="string">&quot;X-Internal-Error-Code&quot;</span>: <span class="string">&quot;500-001&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;item_id&quot;</span>: item_id&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义异常处理"><a href="#自定义异常处理" class="headerlink" title="自定义异常处理"></a>自定义异常处理</h3><p>FastAPI 允许你自定义异常处理逻辑，以便在捕获到 <code>HTTPException</code> 时执行特定的操作。例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Request</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> JSONResponse</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> HTTPException</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.exception_handler(<span class="params">HTTPException</span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">http_exception_handler</span>(<span class="params">request: Request, exc: HTTPException</span>):</span><br><span class="line">    <span class="keyword">return</span> JSONResponse(</span><br><span class="line">        status_code=exc.status_code,</span><br><span class="line">        content=&#123;<span class="string">&quot;message&quot;</span>: exc.detail&#125;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&#123;item_id&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_item</span>(<span class="params">item_id: <span class="built_in">int</span></span>):</span><br><span class="line">    <span class="keyword">if</span> item_id == <span class="number">3</span>:</span><br><span class="line">        <span class="keyword">raise</span> HTTPException(status_code=<span class="number">418</span>, detail=<span class="string">&quot;This item is a teapot&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;item_id&quot;</span>: item_id&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，当捕获到 <code>HTTPException</code> 时，会返回一个 JSON 响应，而不是默认的 HTML 响应。</p>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p><code>HTTPException</code> 是 FastAPI 中一个非常有用的工具，它允许你抛出自定义的 HTTP 错误，并控制响应的状态码、详情和头信息。通过自定义异常处理，你可以进一步优化错误处理逻辑，提高应用的健壮性和用户体验。</p>
+<h2 id="RequestValidationError"><a href="#RequestValidationError" class="headerlink" title="RequestValidationError"></a>RequestValidationError</h2><p><code>RequestValidationError</code> 是 FastAPI 中用于处理请求验证错误的异常类。当请求中的数据不符合 OpenAPI 或 Pydantic 模型定义时，FastAPI 会抛出这个异常。通过捕获和处理 <code>RequestValidationError</code>，你可以向客户端返回详细的验证错误信息。</p>
+<h3 id="基本用法-2"><a href="#基本用法-2" class="headerlink" title="基本用法"></a>基本用法</h3><p><code>RequestValidationError</code> 通常在请求处理函数中自动抛出，但你也可以手动抛出它来处理特定的验证错误。以下是一个基本示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Query</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> RequestValidationError</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_items</span>(<span class="params">q: <span class="built_in">str</span> = Query(<span class="params">..., min_length=<span class="number">3</span></span>)</span>):</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;q&quot;</span>: q&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，如果 <code>q</code> 参数的长度小于 3，FastAPI 会自动抛出 <code>RequestValidationError</code>。</p>
+<h3 id="自定义异常处理-1"><a href="#自定义异常处理-1" class="headerlink" title="自定义异常处理"></a>自定义异常处理</h3><p>你可以通过自定义异常处理来捕获和处理 <code>RequestValidationError</code>。例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Request</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> JSONResponse</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> RequestValidationError</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.exception_handler(<span class="params">RequestValidationError</span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">validation_exception_handler</span>(<span class="params">request: Request, exc: RequestValidationError</span>):</span><br><span class="line">    <span class="keyword">return</span> JSONResponse(</span><br><span class="line">        status_code=<span class="number">422</span>,</span><br><span class="line">        content=&#123;<span class="string">&quot;detail&quot;</span>: exc.errors()&#125;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_items</span>(<span class="params">q: <span class="built_in">str</span> = Query(<span class="params">..., min_length=<span class="number">3</span></span>)</span>):</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;q&quot;</span>: q&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，当捕获到 <code>RequestValidationError</code> 时，会返回一个 JSON 响应，包含详细的验证错误信息。</p>
+<h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><p><code>RequestValidationError</code> 的主要属性是 <code>errors</code>，它是一个包含所有验证错误的列表。每个错误都是一个字典，包含以下字段：</p>
+<ul>
+<li><code>loc</code>：错误的位置，通常是一个元组，表示模型路径。</li>
+<li><code>msg</code>：错误消息，描述了验证失败的原因。</li>
+<li><code>type</code>：错误类型，表示验证失败的具体原因。</li>
+</ul>
+<h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><p>以下是一些使用 <code>RequestValidationError</code> 的示例：</p>
+<h4 id="1-抛出自定义验证错误"><a href="#1-抛出自定义验证错误" class="headerlink" title="1. 抛出自定义验证错误"></a>1. 抛出自定义验证错误</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Query</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> RequestValidationError</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_items</span>(<span class="params">q: <span class="built_in">str</span> = Query(<span class="params">..., min_length=<span class="number">3</span></span>)</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(q) &lt; <span class="number">3</span>:</span><br><span class="line">        <span class="keyword">raise</span> RequestValidationError([&#123;<span class="string">&quot;loc&quot;</span>: (<span class="string">&quot;query&quot;</span>, <span class="string">&quot;q&quot;</span>), <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;Query must be at least 3 characters long&quot;</span>, <span class="string">&quot;type&quot;</span>: <span class="string">&quot;string.min_length&quot;</span>&#125;])</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;q&quot;</span>: q&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-捕获并处理验证错误"><a href="#2-捕获并处理验证错误" class="headerlink" title="2. 捕获并处理验证错误"></a>2. 捕获并处理验证错误</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, Request</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> JSONResponse</span><br><span class="line"><span class="keyword">from</span> fastapi.exceptions <span class="keyword">import</span> RequestValidationError</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.exception_handler(<span class="params">RequestValidationError</span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">validation_exception_handler</span>(<span class="params">request: Request, exc: RequestValidationError</span>):</span><br><span class="line">    <span class="keyword">return</span> JSONResponse(</span><br><span class="line">        status_code=<span class="number">422</span>,</span><br><span class="line">        content=&#123;<span class="string">&quot;detail&quot;</span>: exc.errors()&#125;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/items/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">read_items</span>(<span class="params">q: <span class="built_in">str</span> = Query(<span class="params">..., min_length=<span class="number">3</span></span>)</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(q) &lt; <span class="number">3</span>:</span><br><span class="line">        <span class="keyword">raise</span> RequestValidationError([&#123;<span class="string">&quot;loc&quot;</span>: (<span class="string">&quot;query&quot;</span>, <span class="string">&quot;q&quot;</span>), <span class="string">&quot;msg&quot;</span>: <span class="string">&quot;Query must be at least 3 characters long&quot;</span>, <span class="string">&quot;type&quot;</span>: <span class="string">&quot;string.min_length&quot;</span>&#125;])</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;q&quot;</span>: q&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><p><code>RequestValidationError</code> 是 FastAPI 中一个非常有用的工具，它允许你捕获和处理请求验证错误，并向客户端返回详细的错误信息。通过自定义异常处理，你可以进一步优化错误处理逻辑，提高应用的健壮性和用户体验。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/472109598.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Exception"><span class="toc-number">1.</span> <span class="toc-text">Exception</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text">基本用法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8"><span class="toc-number">1.1.1.</span> <span class="toc-text">创建自定义异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%9B%E5%87%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8"><span class="toc-number">1.1.2.</span> <span class="toc-text">抛出自定义异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8D%95%E8%8E%B7%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8"><span class="toc-number">1.1.3.</span> <span class="toc-text">捕获自定义异常</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E6%A1%88%E4%BE%8B"><span class="toc-number">1.2.</span> <span class="toc-text">高级案例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%B8%A6%E6%9C%89%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8"><span class="toc-number">1.2.1.</span> <span class="toc-text">1. 带有详细信息的自定义异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8%E8%BF%9B%E8%A1%8C%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">1.2.2.</span> <span class="toc-text">2. 使用自定义异常进行错误处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%8D%95%E8%8E%B7%E5%A4%9A%E4%B8%AA%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8"><span class="toc-number">1.2.3.</span> <span class="toc-text">3. 捕获多个自定义异常</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.3.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTPException"><span class="toc-number">2.</span> <span class="toc-text">HTTPException</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-1"><span class="toc-number">2.1.</span> <span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-number">2.2.</span> <span class="toc-text">参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.3.</span> <span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%8A%9B%E5%87%BA-404-%E9%94%99%E8%AF%AF"><span class="toc-number">2.3.1.</span> <span class="toc-text">1. 抛出 404 错误</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%8A%9B%E5%87%BA-400-%E9%94%99%E8%AF%AF%E5%B9%B6%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%B4"><span class="toc-number">2.3.2.</span> <span class="toc-text">2. 抛出 400 错误并添加自定义头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%8A%9B%E5%87%BA-500-%E9%94%99%E8%AF%AF%E5%B9%B6%E6%B7%BB%E5%8A%A0%E5%A4%9A%E4%B8%AA%E5%A4%B4"><span class="toc-number">2.3.3.</span> <span class="toc-text">3. 抛出 500 错误并添加多个头</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">2.4.</span> <span class="toc-text">自定义异常处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-1"><span class="toc-number">2.5.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RequestValidationError"><span class="toc-number">3.</span> <span class="toc-text">RequestValidationError</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-2"><span class="toc-number">3.1.</span> <span class="toc-text">基本用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86-1"><span class="toc-number">3.2.</span> <span class="toc-text">自定义异常处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0-1"><span class="toc-number">3.3.</span> <span class="toc-text">参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="toc-number">3.4.</span> <span class="toc-text">示例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%8A%9B%E5%87%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E9%AA%8C%E8%AF%81%E9%94%99%E8%AF%AF"><span class="toc-number">3.4.1.</span> <span class="toc-text">1. 抛出自定义验证错误</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%8D%95%E8%8E%B7%E5%B9%B6%E5%A4%84%E7%90%86%E9%AA%8C%E8%AF%81%E9%94%99%E8%AF%AF"><span class="toc-number">3.4.2.</span> <span class="toc-text">2. 捕获并处理验证错误</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93-2"><span class="toc-number">3.5.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

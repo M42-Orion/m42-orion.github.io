@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>python函数缓存之lru_cache - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,lru_cachelru_cache 是 Python 标准库 functools 模块中的一个装饰器，用于实现缓存功能。它通过缓存函数的返回值来提高函数的执行效率，特别是对于计算密集型函数或具有大,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="python函数缓存之lru_cache - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,lru_cachelru_cache 是 Python 标准库 functools 模块中的一个装饰器，用于实现缓存功能。它通过缓存函数的返回值来提高函数的执行效率，特别是对于计算密集型函数或具有大,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="python函数缓存之lru_cache - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,lru_cachelru_cache 是 Python 标准库 functools 模块中的一个装饰器，用于实现缓存功能。它通过缓存函数的返回值来提高函数的执行效率，特别是对于计算密集型函数或具有大,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">python函数缓存之lru_cache</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">python函数缓存之lru_cache</h1>
+        <div class="stuff">
+            <span>七月 25, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="lru-cache"><a href="#lru-cache" class="headerlink" title="lru_cache"></a><code>lru_cache</code></h2><p><code>lru_cache</code> 是 Python 标准库 <code>functools</code> 模块中的一个装饰器，用于实现缓存功能。它通过缓存函数的返回值来提高函数的执行效率，特别是对于计算密集型函数或具有大量重复输入的函数。</p>
+<p><code>lru_cache</code> 的全称是 “Least Recently Used Cache”，即最近最少使用缓存。它使用一个字典来存储函数的返回值，字典的键是函数的参数，值是函数的返回值。当函数被调用时，<code>lru_cache</code> 会首先检查参数是否已经在缓存中，如果在，则直接返回缓存中的值；如果不在，则计算函数的返回值，并将结果存入缓存。</p>
+<p><code>lru_cache</code> 有一些可选参数，可以用来控制缓存的大小和过期时间。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> lru_cache</span><br><span class="line"></span><br><span class="line"><span class="meta">@lru_cache(<span class="params">maxsize=<span class="number">128</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fibonacci</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line">    <span class="keyword">return</span> fibonacci(n-<span class="number">1</span>) + fibonacci(n-<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中，<code>lru_cache</code> 装饰器将 <code>fibonacci</code> 函数的返回值缓存起来，最多缓存 128 个结果。当 <code>fibonacci</code> 函数被调用时，<code>lru_cache</code> 会首先检查参数是否已经在缓存中，如果在，则直接返回缓存中的值；如果不在，则计算函数的返回值，并将结果存入缓存。</p>
+<p>需要注意的是，<code>lru_cache</code> 只能缓存可哈希的参数。如果函数的参数是不可哈希的，如列表或字典，<code>lru_cache</code> 将无法缓存函数的返回值。</p>
+<p>另外，<code>lru_cache</code> 不会自动清理缓存。如果缓存中的数据不再需要，需要手动清理缓存。可以使用 <code>cache_clear()</code> 方法来清空缓存。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fibonacci.cache_clear()</span><br></pre></td></tr></table></figure>
+
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><p><code>lru_cache</code> 可以用于各种场景，以下是一些常见的使用案例：</p>
+<ol>
+<li><strong>缓存函数结果</strong></li>
+</ol>
+<p><code>lru_cache</code> 可以用于缓存函数的结果，避免重复计算。这在处理递归函数或计算密集型函数时特别有用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> lru_cache</span><br><span class="line"></span><br><span class="line"><span class="meta">@lru_cache(<span class="params">maxsize=<span class="number">128</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fibonacci</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line">    <span class="keyword">return</span> fibonacci(n-<span class="number">1</span>) + fibonacci(n-<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(fibonacci(<span class="number">30</span>))  <span class="comment"># 输出: 832040</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>优化性能</strong></li>
+</ol>
+<p><code>lru_cache</code> 可以用于优化性能，特别是在处理大量重复输入的函数时。通过缓存函数的结果，可以避免重复计算，从而提高函数的执行效率。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> lru_cache</span><br><span class="line"></span><br><span class="line"><span class="meta">@lru_cache(<span class="params">maxsize=<span class="number">128</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">heavy_computation</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="comment"># 模拟一个计算密集型函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(<span class="built_in">range</span>(n))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(heavy_computation(<span class="number">1000000</span>))  <span class="comment"># 输出: 499999500000</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><strong>限制缓存大小</strong></li>
+</ol>
+<p><code>lru_cache</code> 的 <code>maxsize</code> 参数可以用于限制缓存的大小。当缓存满了之后，<code>lru_cache</code> 会自动删除最近最少使用的缓存项。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> lru_cache</span><br><span class="line"></span><br><span class="line"><span class="meta">@lru_cache(<span class="params">maxsize=<span class="number">3</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">heavy_computation</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="comment"># 模拟一个计算密集型函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(<span class="built_in">range</span>(n))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(heavy_computation(<span class="number">1000000</span>))  <span class="comment"># 输出: 499999500000</span></span><br><span class="line"><span class="built_in">print</span>(heavy_computation(<span class="number">2000000</span>))  <span class="comment"># 输出: 1999999000000</span></span><br><span class="line"><span class="built_in">print</span>(heavy_computation(<span class="number">3000000</span>))  <span class="comment"># 输出: 2999999000000</span></span><br><span class="line"><span class="built_in">print</span>(heavy_computation(<span class="number">4000000</span>))  <span class="comment"># 输出: 3999999000000</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中，<code>lru_cache</code> 的 <code>maxsize</code> 参数被设置为 3，所以最多只能缓存 3 个结果。当第 4 个结果被计算出来时，<code>lru_cache</code> 会自动删除最近最少使用的缓存项。</p>
+<ol start="4">
+<li><strong>缓存过期</strong>：<code>lru_cache</code> 还可以用于实现缓存过期。通过设置 <code>typed</code> 参数为 <code>True</code>，<code>lru_cache</code> 会将缓存项的类型作为键的一部分，从而实现缓存过期。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> lru_cache</span><br><span class="line"></span><br><span class="line"><span class="meta">@lru_cache(<span class="params">typed=<span class="literal">True</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">heavy_computation</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="comment"># 模拟一个计算密集型函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(<span class="built_in">range</span>(n))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(heavy_computation(<span class="number">1000000</span>))  <span class="comment"># 输出: 499999500000</span></span><br><span class="line"><span class="built_in">print</span>(heavy_computation(<span class="number">1000000</span>))  <span class="comment"># 输出: 499999500000</span></span><br><span class="line"><span class="built_in">print</span>(heavy_computation(<span class="number">2000000</span>))  <span class="comment"># 输出: 1999999000000</span></span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中，<code>lru_cache</code> 的 <code>typed</code> 参数被设置为 <code>True</code>，所以 <code>heavy_computation</code> 函数的结果会被缓存两次，一次是 <code>n</code> 为 1000000，一次是 <code>n</code> 为 2000000。当 <code>n</code> 为 1000000 时，<code>lru_cache</code> 会返回缓存中的结果；当 <code>n</code> 为 2000000 时，<code>lru_cache</code> 会重新计算结果，并将结果存入缓存。</p>
+<p>总结起来，<code>lru_cache</code> 是一个非常有用的装饰器，可以帮助我们提高函数的执行效率，特别是在处理大量重复输入或计算密集型函数时。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/1828574198.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#lru-cache"><span class="toc-number">1.</span> <span class="toc-text">lru_cache</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-number">2.</span> <span class="toc-text">案例</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>
