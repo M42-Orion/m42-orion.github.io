@@ -4399,7 +4399,7 @@
     <content><![CDATA[<h2 id="lru-cache"><a href="#lru-cache" class="headerlink" title="lru_cache"></a><code>lru_cache</code></h2><p><code>lru_cache</code> 是 Python 标准库 <code>functools</code> 模块中的一个装饰器，用于实现缓存功能。它通过缓存函数的返回值来提高函数的执行效率，特别是对于计算密集型函数或具有大量重复输入的函数。</p>
 <p><code>lru_cache</code> 的全称是 “Least Recently Used Cache”，即最近最少使用缓存。它使用一个字典来存储函数的返回值，字典的键是函数的参数，值是函数的返回值。当函数被调用时，<code>lru_cache</code> 会首先检查参数是否已经在缓存中，如果在，则直接返回缓存中的值；如果不在，则计算函数的返回值，并将结果存入缓存。</p>
 <p><code>lru_cache</code> 有一些可选参数，可以用来控制缓存的大小和过期时间。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> lru_cache</span><br><span class="line"></span><br><span class="line"><span class="meta">@lru_cache(<span class="params">maxsize=<span class="number">128</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fibonacci</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line">    <span class="keyword">return</span> fibonacci(n-<span class="number">1</span>) + fibonacci(n-<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> lru_cache</span><br><span class="line"></span><br><span class="line"><span class="meta">@lru_cache(<span class="params">maxsize=<span class="number">128</span></span>) </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fibonacci</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> n</span><br><span class="line">    <span class="keyword">return</span> fibonacci(n-<span class="number">1</span>) + fibonacci(n-<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 
 <p>在上面的例子中，<code>lru_cache</code> 装饰器将 <code>fibonacci</code> 函数的返回值缓存起来，最多缓存 128 个结果。当 <code>fibonacci</code> 函数被调用时，<code>lru_cache</code> 会首先检查参数是否已经在缓存中，如果在，则直接返回缓存中的值；如果不在，则计算函数的返回值，并将结果存入缓存。</p>
 <p>需要注意的是，<code>lru_cache</code> 只能缓存可哈希的参数。如果函数的参数是不可哈希的，如列表或字典，<code>lru_cache</code> 将无法缓存函数的返回值。</p>
@@ -4657,5 +4657,44 @@
         <tag>python</tag>
         <tag>基础</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>行存储与列存储</title>
+    <url>/2024/07/29/%E8%A1%8C%E5%AD%98%E5%82%A8%E4%B8%8E%E5%88%97%E5%AD%98%E5%82%A8/</url>
+    <content><![CDATA[<p>在数据库领域，数据存储的方式主要有两种：行存储（Row Storage）和列存储（Column Storage）。这两种存储方式各有优缺点，适用于不同的场景。本文将详细介绍行存储与列存储的区别、优缺点及适用场景。</p>
+<h2 id="行存储与列存储的区别"><a href="#行存储与列存储的区别" class="headerlink" title="行存储与列存储的区别"></a>行存储与列存储的区别</h2><h3 id="存储方式"><a href="#存储方式" class="headerlink" title="存储方式"></a>存储方式</h3><p>行存储是将一行数据存储在一起，列存储是将一列数据存储在一起。</p>
+<h3 id="数据访问方式"><a href="#数据访问方式" class="headerlink" title="数据访问方式"></a>数据访问方式</h3><p>行存储通常以行为单位进行数据访问，列存储通常以列为单位进行数据访问。</p>
+<h3 id="数据压缩"><a href="#数据压缩" class="headerlink" title="数据压缩"></a>数据压缩</h3><p>行存储通常使用行级别的压缩算法，列存储通常使用列级别的压缩算法。</p>
+<h3 id="数据更新"><a href="#数据更新" class="headerlink" title="数据更新"></a>数据更新</h3><p>行存储在更新数据时，需要更新整行数据，列存储在更新数据时，只需要更新对应的列。</p>
+<h2 id="行存储的优缺点"><a href="#行存储的优缺点" class="headerlink" title="行存储的优缺点"></a>行存储的优缺点</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ol>
+<li>数据访问速度快：行存储以行为单位进行数据访问，可以快速定位到需要的数据行。</li>
+<li>数据更新方便：行存储在更新数据时，只需要更新整行数据，不需要更新其他列。</li>
+<li>支持事务：行存储支持事务，可以保证数据的一致性和完整性。</li>
+</ol>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ol>
+<li>数据压缩率低：行存储通常使用行级别的压缩算法，压缩率相对较低。</li>
+<li>数据扫描效率低：行存储在扫描数据时，需要扫描整行数据，效率相对较低。</li>
+<li>不适合OLAP场景：行存储在OLAP场景下，无法高效地进行列级别的数据聚合和分析。</li>
+</ol>
+<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><ol>
+<li>OLTP场景：行存储在OLTP场景下，可以快速进行数据插入、更新和删除操作，适合事务处理。</li>
+<li>数据库管理系统：行存储在数据库管理系统（DBMS）中，可以支持事务、索引等功能。</li>
+</ol>
+<h2 id="列存储的优缺点"><a href="#列存储的优缺点" class="headerlink" title="列存储的优缺点"></a>列存储的优缺点</h2><h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><ol>
+<li>数据压缩率高：列存储通常使用列级别的压缩算法，压缩率相对较高。</li>
+<li>数据扫描效率高：列存储在扫描数据时，只需要扫描需要的列，效率相对较高。</li>
+<li>适合OLAP场景：列存储在OLAP场景下，可以高效地进行列级别的数据聚合和分析。</li>
+</ol>
+<h3 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h3><ol>
+<li>数据访问速度慢：列存储以列为单位进行数据访问，需要先定位到需要的列，再进行数据访问，速度相对较慢。</li>
+<li>数据更新复杂：列存储在更新数据时，需要更新对应的列，操作相对复杂。</li>
+<li>不支持事务：列存储通常不支持事务，无法保证数据的一致性和完整性。</li>
+</ol>
+<h3 id="适用场景-1"><a href="#适用场景-1" class="headerlink" title="适用场景"></a>适用场景</h3><ol>
+<li>OLAP场景：列存储在OLAP场景下，可以高效地进行数据聚合和分析，适合大数据量的查询和分析。</li>
+<li>数据仓库：列存储在数据仓库中，可以存储大量历史数据，并进行高效的数据分析和报表生成。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>行存储和列存储各有优缺点，适用于不同的场景。在实际应用中，可以根据具体的需求和场景，选择合适的存储方式。</p>
+]]></content>
   </entry>
 </search>
