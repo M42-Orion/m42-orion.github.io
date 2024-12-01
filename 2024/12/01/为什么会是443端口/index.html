@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>为什么会是443端口 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,引言在使用Nginx进行HTTPS服务配置时，我遇到一个问题：只有443端口可以访问HTTPS服务。我很好奇为什么会是443端口。
+443端口的历史原因443端口是HTTP Secure（HTTPS,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="为什么会是443端口 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,引言在使用Nginx进行HTTPS服务配置时，我遇到一个问题：只有443端口可以访问HTTPS服务。我很好奇为什么会是443端口。
+443端口的历史原因443端口是HTTP Secure（HTTPS,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="为什么会是443端口 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,引言在使用Nginx进行HTTPS服务配置时，我遇到一个问题：只有443端口可以访问HTTPS服务。我很好奇为什么会是443端口。
+443端口的历史原因443端口是HTTP Secure（HTTPS,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">为什么会是443端口</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">为什么会是443端口</h1>
+        <div class="stuff">
+            <span>十二月 01, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>在使用Nginx进行HTTPS服务配置时，我遇到一个问题：只有443端口可以访问HTTPS服务。我很好奇为什么会是443端口。</p>
+<h2 id="443端口的历史原因"><a href="#443端口的历史原因" class="headerlink" title="443端口的历史原因"></a>443端口的历史原因</h2><p>443端口是HTTP Secure（HTTPS）服务的默认端口，这个数字并非随意选择。在互联网的早期，端口号被分配给特定的服务，而443端口被指定为SSL（Secure Sockets Layer）服务的端口，这是HTTPS的前身。随着时间的推移，SSL被TLS（Transport Layer Security）取代，但443端口作为安全通信端口的传统得以保留。</p>
+<h3 id="SSL-TLS协议"><a href="#SSL-TLS协议" class="headerlink" title="SSL/TLS协议"></a>SSL/TLS协议</h3><p>SSL/TLS协议是用于在互联网上提供安全通信的加密协议。它通过加密数据、验证身份和确保数据完整性来保护通信的安全。在HTTPS中，SSL/TLS协议用于加密客户端和服务器之间的数据传输，确保数据在传输过程中不被窃听或篡改。SSL是Secure Sockets Layer的缩写，TLS是Transport Layer Security的缩写，SSL中文含义是“安全套接字层”。TLS是the Transport Layer Security的缩写，中文含义是“传输层安全协议”。SSL被TLS取代的原因是TLS在SSL的基础上进行了改进和增强，提供了更好的安全性和性能。</p>
+<h2 id="443端口的技术原因"><a href="#443端口的技术原因" class="headerlink" title="443端口的技术原因"></a>443端口的技术原因</h2><p>在技术层面，443端口的广泛使用有几个原因：</p>
+<ol>
+<li><strong>默认配置</strong>：大多数服务器和客户端软件默认使用443端口进行HTTPS通信，这使得配置和使用变得简单快捷。</li>
+<li><strong>安全性</strong>：443端口与SSL/TLS协议紧密关联，这些协议提供了数据加密、完整性校验和身份验证，增强了通信的安全性。</li>
+<li><strong>兼容性</strong>：由于443端口的广泛使用，几乎所有的网络设备和中间件都支持通过该端口的HTTPS流量，确保了广泛的兼容性。</li>
+</ol>
+<h2 id="Nginx配置与端口转发"><a href="#Nginx配置与端口转发" class="headerlink" title="Nginx配置与端口转发"></a>Nginx配置与端口转发</h2><p>在使用Nginx进行端口转发时，我们可能会遇到只有443端口可以访问的问题。这通常是由于以下几个原因：</p>
+<ol>
+<li><strong>配置错误</strong>：Nginx配置文件中可能存在错误，导致非443端口的HTTPS服务无法正确转发。例如，SSL证书可能只配置在443端口，而其他端口没有正确配置。</li>
+<li><strong>防火墙限制</strong>：服务器或网络的防火墙可能只允许443端口的流量通过，而阻止了其他端口的HTTPS流量。</li>
+<li><strong>浏览器行为</strong>：大多数浏览器默认只接受443端口的HTTPS连接，对于非标准端口的HTTPS连接可能会发出警告或拒绝连接。</li>
+</ol>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>要解决只有443端口可以访问HTTPS服务的问题，可以采取以下措施：</p>
+<ol>
+<li><strong>检查Nginx配置</strong>：确保Nginx配置文件中所有需要的端口都正确配置了SSL证书和监听指令。</li>
+<li><strong>调整防火墙规则</strong>：检查并调整服务器和网络的防火墙规则，允许除443端口外的其他端口的HTTPS流量。</li>
+<li><strong>浏览器设置</strong>：对于开发和测试目的，可以在浏览器中设置以接受非标准端口的HTTPS连接。</li>
+</ol>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>443端口作为HTTPS服务的默认端口，有着深厚的历史和技术背景。在使用Nginx进行HTTPS服务配置时，确保正确配置Nginx和防火墙规则，以允许非443端口的HTTPS流量，可以避免只有443端口可以访问的问题。通过这些措施，可以确保HTTPS服务的灵活性和安全性。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/2614818190.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#443%E7%AB%AF%E5%8F%A3%E7%9A%84%E5%8E%86%E5%8F%B2%E5%8E%9F%E5%9B%A0"><span class="toc-number">2.</span> <span class="toc-text">443端口的历史原因</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSL-TLS%E5%8D%8F%E8%AE%AE"><span class="toc-number">2.1.</span> <span class="toc-text">SSL&#x2F;TLS协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#443%E7%AB%AF%E5%8F%A3%E7%9A%84%E6%8A%80%E6%9C%AF%E5%8E%9F%E5%9B%A0"><span class="toc-number">3.</span> <span class="toc-text">443端口的技术原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nginx%E9%85%8D%E7%BD%AE%E4%B8%8E%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91"><span class="toc-number">4.</span> <span class="toc-text">Nginx配置与端口转发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">5.</span> <span class="toc-text">解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">6.</span> <span class="toc-text">结论</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

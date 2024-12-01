@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>conda与pip - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,conda与pip的区别conda install 和 pip install 是两种常用的Python包管理工具,它们都可以用来安装和管理Python库。但是,它们在安装源和安装方式上有一些区别。,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="conda与pip - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,conda与pip的区别conda install 和 pip install 是两种常用的Python包管理工具,它们都可以用来安装和管理Python库。但是,它们在安装源和安装方式上有一些区别。,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="conda与pip - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,conda与pip的区别conda install 和 pip install 是两种常用的Python包管理工具,它们都可以用来安装和管理Python库。但是,它们在安装源和安装方式上有一些区别。,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">conda与pip</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">conda与pip</h1>
+        <div class="stuff">
+            <span>十二月 01, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="conda与pip的区别"><a href="#conda与pip的区别" class="headerlink" title="conda与pip的区别"></a>conda与pip的区别</h2><p>conda install 和 pip install 是两种常用的Python包管理工具,它们都可以用来安装和管理Python库。但是,它们在安装源和安装方式上有一些区别。</p>
+<ol>
+<li>安装源</li>
+</ol>
+<p>conda install 使用的是Anaconda的官方源,而pip install 可以指定任意源来安装库。因此,conda install 安装的库通常都是官方版本的库,而pip install 安装的库可能是官方版本的库,也可能是其他版本的库。</p>
+<ol start="2">
+<li>安装方式</li>
+</ol>
+<p>conda install 使用的是Anaconda的包管理器,它会在安装库时自动处理依赖关系,并将其安装到Anaconda的虚拟环境中。因此,使用conda install 安装的库都是独立的,不会影响系统中的其他Python库。而pip install 安装的库则是直接安装到系统Python的site-packages目录中,可能会与其他库发生冲突。</p>
+<ol start="3">
+<li>影响或问题</li>
+</ol>
+<p>(1) 版本冲突</p>
+<p>由于pip install 安装的库是直接安装到系统Python的site-packages目录中,因此可能会与其他库发生版本冲突。例如,如果系统中已经安装了一个版本的库,而使用pip install 安装了另一个版本的库,可能会导致系统中的库出现兼容性问题。</p>
+<p>(2) 依赖问题</p>
+<p>pip install 安装的库不会自动处理依赖关系,因此可能会出现依赖问题。例如,如果安装的库依赖于其他库,而没有正确安装依赖库,可能会导致库无法正常使用。</p>
+<p>(3) 环境问题</p>
+<p>conda install 安装的库都是独立的,不会影响系统中的其他Python库。而pip install 安装的库则是直接安装到系统Python的site-packages目录中,可能会与其他库发生冲突。因此,如果需要使用不同的库,建议使用conda install 安装到不同的环境中。</p>
+<p>参考内容:</p>
+<p>[1] Anaconda官方文档: <a target="_blank" rel="noopener" href="https://docs.conda.io/en/latest/">https://docs.conda.io/en/latest/</a><br>[2] pip官方文档: <a target="_blank" rel="noopener" href="https://pip.pypa.io/en/stable/">https://pip.pypa.io/en/stable/</a><br>[3] conda vs pip: <a target="_blank" rel="noopener" href="https://www.anaconda.com/products/distribution#conda-vs-pip">https://www.anaconda.com/products/distribution#conda-vs-pip</a></p>
+<p>conda install 和 pip install 在安装源和安装方式上有一些区别,可能会导致一些影响或问题。因此,在使用这两种工具时,需要根据具体需求进行选择。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/2146228675.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#conda%E4%B8%8Epip%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.</span> <span class="toc-text">conda与pip的区别</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>fstapi后台任务 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,在现代的 Web 开发中，后台任务处理是一个常见的需求。FastAPI 提供了一个非常方便的功能，名为 BackgroundTasks，它允许在处理请求后执行一些后台任务。这些任务对于不需要即时返回,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="fstapi后台任务 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,在现代的 Web 开发中，后台任务处理是一个常见的需求。FastAPI 提供了一个非常方便的功能，名为 BackgroundTasks，它允许在处理请求后执行一些后台任务。这些任务对于不需要即时返回,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="fstapi后台任务 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,在现代的 Web 开发中，后台任务处理是一个常见的需求。FastAPI 提供了一个非常方便的功能，名为 BackgroundTasks，它允许在处理请求后执行一些后台任务。这些任务对于不需要即时返回,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">fstapi后台任务</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">fstapi后台任务</h1>
+        <div class="stuff">
+            <span>十二月 01, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>在现代的 Web 开发中，后台任务处理是一个常见的需求。FastAPI 提供了一个非常方便的功能，名为 <code>BackgroundTasks</code>，它允许在处理请求后执行一些后台任务。这些任务对于不需要即时返回结果的操作非常有用，比如发送电子邮件、日志记录、数据缓存等。</p>
+<h2 id="BackgroundTasks-的基本使用"><a href="#BackgroundTasks-的基本使用" class="headerlink" title="BackgroundTasks 的基本使用"></a>BackgroundTasks 的基本使用</h2><p>首先，看看如何在 FastAPI 中使用 <code>BackgroundTasks</code>。</p>
+<ol>
+<li><strong>导入 BackgroundTasks</strong>：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, BackgroundTasks</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>定义后台任务函数</strong>：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">some_background_task</span>(<span class="params">arg1, arg2</span>):</span><br><span class="line">    <span class="comment"># 后台任务的代码</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;后台任务执行，参数：<span class="subst">&#123;arg1&#125;</span>, <span class="subst">&#123;arg2&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><strong>在路径操作函数中添加后台任务</strong>：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&quot;/background_task/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">background_task</span>(<span class="params">background_tasks: BackgroundTasks</span>):</span><br><span class="line">    background_tasks.add_task(some_background_task, <span class="string">&quot;参数1&quot;</span>, <span class="string">&quot;参数2&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;后台任务添加成功&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，当客户端发送 POST 请求到 <code>/background_task/</code> 路径时，<code>some_background_task</code> 函数将作为一个后台任务被添加，并在主函数执行完毕后开始运行。</p>
+<h2 id="BackgroundTasks-是并行的吗？"><a href="#BackgroundTasks-是并行的吗？" class="headerlink" title="BackgroundTasks 是并行的吗？"></a>BackgroundTasks 是并行的吗？</h2><p>关于 <code>BackgroundTasks</code> 的并行性，这是一个常见的问题。答案是，<code>BackgroundTasks</code> 默认情况下是顺序执行的，而不是并行的。这意味着，即使你添加了多个后台任务，它们也会按照添加的顺序一个接一个地执行。</p>
+<p>然而，如果你需要并行执行后台任务，FastAPI 也支持这一点。你可以通过定义异步的后台任务函数来实现。</p>
+<h2 id="使用异步后台任务实现并行执行"><a href="#使用异步后台任务实现并行执行" class="headerlink" title="使用异步后台任务实现并行执行"></a>使用异步后台任务实现并行执行</h2><p>以下是如何使用异步后台任务的示例：</p>
+<ol>
+<li><strong>定义异步后台任务函数</strong>：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">some_background_task</span>(<span class="params">arg1, arg2</span>):</span><br><span class="line">    <span class="comment"># 异步后台任务的代码</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;异步后台任务执行，参数：<span class="subst">&#123;arg1&#125;</span>, <span class="subst">&#123;arg2&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(<span class="number">1</span>)  <span class="comment"># 模拟异步操作</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>在路径操作函数中添加异步后台任务</strong>：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&quot;/background_tasks_async/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">background_tasks_async</span>(<span class="params">background_tasks: BackgroundTasks</span>):</span><br><span class="line">    background_tasks.add_task(some_background_task, <span class="string">&quot;参数1&quot;</span>, <span class="string">&quot;参数2&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;异步后台任务添加成功&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>some_background_task</code> 是一个异步函数，它将被并行执行，前提是 FastAPI 应用是在支持异步的 ASGI 服务器上运行的（例如 Uvicorn）。</p>
+<p>请注意，即使任务是异步的，它们仍然会在单个进程或线程中按顺序添加到事件循环中，由事件循环来调度它们的执行。这意味着，尽管任务可以并发运行，但它们并不是在多个 CPU 核心上真正并行执行的。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>FastAPI 的 <code>BackgroundTasks</code> 提供了一种简单而有效的方式来处理后台任务。虽然它默认是顺序执行的，但通过使用异步函数，可以实现任务的并行执行。这使得 FastAPI 成为构建高效、可扩展的 Web 应用的理想选择。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/1437287329.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BackgroundTasks-%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">BackgroundTasks 的基本使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BackgroundTasks-%E6%98%AF%E5%B9%B6%E8%A1%8C%E7%9A%84%E5%90%97%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">BackgroundTasks 是并行的吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%BC%82%E6%AD%A5%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1%E5%AE%9E%E7%8E%B0%E5%B9%B6%E8%A1%8C%E6%89%A7%E8%A1%8C"><span class="toc-number">3.</span> <span class="toc-text">使用异步后台任务实现并行执行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">4.</span> <span class="toc-text">结论</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

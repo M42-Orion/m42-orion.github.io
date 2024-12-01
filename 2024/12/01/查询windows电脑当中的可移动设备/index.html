@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>查询windows电脑当中的可移动设备 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,Win32_DiskDrive在WMI（Windows Management Instrumentation）中，Win32_DiskDrive 类的 MediaType 属性用于描述磁盘驱动器的媒,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="查询windows电脑当中的可移动设备 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,Win32_DiskDrive在WMI（Windows Management Instrumentation）中，Win32_DiskDrive 类的 MediaType 属性用于描述磁盘驱动器的媒,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="查询windows电脑当中的可移动设备 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,Win32_DiskDrive在WMI（Windows Management Instrumentation）中，Win32_DiskDrive 类的 MediaType 属性用于描述磁盘驱动器的媒,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">查询windows电脑当中的可移动设备</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">查询windows电脑当中的可移动设备</h1>
+        <div class="stuff">
+            <span>十二月 01, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="Win32-DiskDrive"><a href="#Win32-DiskDrive" class="headerlink" title="Win32_DiskDrive"></a><code>Win32_DiskDrive</code></h2><p>在<code>WMI（Windows Management Instrumentation）</code>中，<code>Win32_DiskDrive</code> 类的 <code>MediaType</code> 属性用于描述磁盘驱动器的媒体类型。根据微软的文档，<code>MediaType</code> 属性可以取以下值：</p>
+<ul>
+<li><code>Unknown</code>：未知的媒体类型</li>
+<li><code>Fixed hard disk media</code>：固定硬盘媒体</li>
+<li><code>Removable media</code>：可移动媒体，如<code>USB</code>闪存驱动器、软盘等</li>
+<li><code>CD-ROM media</code>：<code>CD-ROM</code>媒体</li>
+<li><code>RAM disk</code>：<code>RAM</code>磁盘</li>
+<li><code>Flash memory</code>：闪存</li>
+<li><code>Network disk</code>：网络磁盘</li>
+<li><code>Virtual disk</code>：虚拟磁盘</li>
+<li><code>Optical disk</code>：光盘</li>
+<li><code>Magnetic disk</code>：磁盘</li>
+<li><code>Other</code>：其他类型的媒体</li>
+</ul>
+<h2 id="代码逻辑"><a href="#代码逻辑" class="headerlink" title="代码逻辑"></a>代码逻辑</h2><p>当前代码的主要功能是通过<code>WMI（Windows Management Instrumentation）</code>查询<code>Windows</code>系统中的磁盘驱动器信息，并将结果存储在一个字典中。然后，它遍历这个字典，查找媒体类型为“可移动媒体”或“外部硬盘媒体”的逻辑磁盘<code>设备ID</code>，并打印这些<code>设备ID</code>。</p>
+<p>导入wmi模块：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> wmi</span><br></pre></td></tr></table></figure>
+<p>这行代码导入了<code>Python</code>的<code>wmi</code>模块，该模块允许<code>Python</code>程序访问<code>Windows Management Instrumentation API</code>，从而可以查询和管理<code>Windows</code>系统的各种信息。</p>
+<p>创建<code>WMI</code>对象：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c = wmi.WMI()</span><br></pre></td></tr></table></figure>
+<p>这行代码创建了一个<code>WMI</code>对象<code>c</code>，用于后续的<code>WMI</code>查询。</p>
+<p>查询磁盘驱动器信息：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drives = c.Win32_DiskDrive()</span><br></pre></td></tr></table></figure>
+<p>这行代码查询系统中的所有磁盘驱动器信息，并将结果存储在<code>drives</code>变量中。</p>
+<p>初始化字典：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drives_dict = &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>这行代码创建了一个空字典<code>drives_dict</code>，用于存储后续查询到的磁盘驱动器和逻辑磁盘的关联信息。</p>
+<p>遍历磁盘驱动器：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> drive <span class="keyword">in</span> drives:</span><br><span class="line">    partitions = drive.associators(<span class="string">&quot;Win32_DiskDriveToDiskPartition&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> partition <span class="keyword">in</span> partitions:</span><br><span class="line">        logical_disks = partition.associators(<span class="string">&quot;Win32_LogicalDiskToPartition&quot;</span>)</span><br><span class="line">        <span class="keyword">for</span> logical_disk <span class="keyword">in</span> logical_disks:</span><br><span class="line">            drives_dict[logical_disk.DeviceID] = drive.MediaType</span><br></pre></td></tr></table></figure>
+<p>这段代码遍历每个磁盘驱动器，通过<code>WMI</code>的关联查询获取每个磁盘驱动器对应的磁盘分区，然后再获取每个磁盘分区对应的逻辑磁盘。最后，它将逻辑磁盘的设备<code>ID</code>和磁盘驱动器的媒体类型存储在<code>drives_dict</code>字典中。</p>
+<p>遍历字典，查找特定媒体类型的逻辑磁盘：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> key, value <span class="keyword">in</span> drives_dict.items():</span><br><span class="line">    <span class="keyword">if</span> value <span class="keyword">in</span> [<span class="string">&#x27;Removable Media&#x27;</span>, <span class="string">&#x27;External hard disk media&#x27;</span>]:</span><br><span class="line">        <span class="built_in">print</span>(key)</span><br></pre></td></tr></table></figure>
+<p>这段代码遍历<code>drives_dict</code>字典中的每个键值对，检查媒体类型是否为“可移动媒体”或“外部硬盘媒体”。如果是，它打印出逻辑磁盘的<code>设备ID</code>。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/2008448364.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Win32-DiskDrive"><span class="toc-number">1.</span> <span class="toc-text">Win32_DiskDrive</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91"><span class="toc-number">2.</span> <span class="toc-text">代码逻辑</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

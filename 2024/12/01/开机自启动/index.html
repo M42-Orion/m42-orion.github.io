@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>开机自启动 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,开机自启动自启动程序是指在系统启动时自动运行的程序。这些程序可能会影响系统的启动速度和性能，因此了解如何获取和管理这些程序是非常重要的。本文将介绍一种使用 Python 实现的方法，通过调用系统命令,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="开机自启动 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,开机自启动自启动程序是指在系统启动时自动运行的程序。这些程序可能会影响系统的启动速度和性能，因此了解如何获取和管理这些程序是非常重要的。本文将介绍一种使用 Python 实现的方法，通过调用系统命令,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="开机自启动 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,开机自启动自启动程序是指在系统启动时自动运行的程序。这些程序可能会影响系统的启动速度和性能，因此了解如何获取和管理这些程序是非常重要的。本文将介绍一种使用 Python 实现的方法，通过调用系统命令,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">开机自启动</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">开机自启动</h1>
+        <div class="stuff">
+            <span>十二月 01, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="开机自启动"><a href="#开机自启动" class="headerlink" title="开机自启动"></a>开机自启动</h2><p>自启动程序是指在系统启动时自动运行的程序。这些程序可能会影响系统的启动速度和性能，因此了解如何获取和管理这些程序是非常重要的。本文将介绍一种使用 Python 实现的方法，通过调用系统命令和处理 CSV 文件来获取自启动程序的信息。</p>
+<h2 id="windows代码实现"><a href="#windows代码实现" class="headerlink" title="windows代码实现"></a>windows代码实现</h2><p>确定 autorunsc 程序的名称：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">autorunsc_name = <span class="string">&quot;autorunsc64.exe&quot;</span> <span class="keyword">if</span> platform.architecture()[<span class="number">0</span>] == <span class="string">&quot;64bit&quot;</span> <span class="keyword">else</span> <span class="string">&quot;autorunsc32.exe&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这行代码根据当前系统的架构（64 位或 32 位）来确定 autorunsc 程序的文件名。<br>终止正在运行的 autorunsc 进程：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> process <span class="keyword">in</span> psutil.process_iter():</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        name = process.name()</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        name = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> name == autorunsc_name:</span><br><span class="line">            process.terminate()</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        setting.log.error(<span class="string">&quot;终止垃圾进程失败,原因: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(e)))</span><br><span class="line">        <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<p>这段代码遍历所有正在运行的进程，尝试终止名为 autorunsc 的进程，以确保没有其他实例在运行。</p>
+<p>执行 autorunsc 命令并保存结果到临时文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">autoruns_path = os.path.join(setting.PROJ_PATH, autorunsc_name)</span><br><span class="line">result_temp_path = os.path.join(setting.PROJ_PATH, <span class="string">&#x27;res_h.csv&#x27;</span>)</span><br><span class="line">os.system(<span class="string">&quot;&#123;&#125; /accepteula -a h -s -h -ct &gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(autoruns_path, result_temp_path))</span><br></pre></td></tr></table></figure>
+<p>这行代码执行 autorunsc 命令，并将结果保存到一个临时的 CSV 文件中。</p>
+<p>处理 CSV 文件中的数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(result_temp_path, <span class="string">&quot;rt&quot;</span>, encoding=<span class="string">&quot;UTF-16&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> csv.DictReader(f, delimiter=<span class="string">&quot;\t&quot;</span>):</span><br><span class="line">        clean_data = get_line(self, row, self.display_list)</span><br><span class="line">        data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">        write_file(self.file, data)</span><br></pre></td></tr></table></figure>
+<p>这段代码打开临时 CSV 文件，逐行读取数据，并使用 get_line 函数处理每一行数据。处理后的数据被转换为 JSON 格式，并写入到输出文件中。</p>
+<p>删除临时文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.remove(result_temp_path)</span><br></pre></td></tr></table></figure>
+<p>最后，这行代码删除临时 CSV 文件，以保持文件系统的整洁。</p>
+<p>这个方法通过调用 autorunsc 命令获取 Windows 自启动程序的信息，并将这些信息处理后写入到指定的文件中。</p>
+<h2 id="Linux代码实现"><a href="#Linux代码实现" class="headerlink" title="Linux代码实现"></a>Linux代码实现</h2><p>下面是对代码的详细解释：<br>执行 systemctl list-unit-files 命令并获取结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res_list = exe_cmd(<span class="string">&quot;systemctl list-unit-files&quot;</span>).split(<span class="string">&quot;\n&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>这行代码执行 systemctl list-unit-files 命令，并将结果按行分割成列表。</p>
+<p>遍历结果列表，处理每一行数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> res_list[<span class="number">1</span>:-<span class="number">2</span>:]:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        line = line.split()</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(line) == <span class="number">3</span>:</span><br><span class="line">            name, state, _ = line</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            name, state = line</span><br><span class="line"></span><br><span class="line">        source_data = &#123;</span><br><span class="line">            <span class="string">&quot;Name&quot;</span>: name,</span><br><span class="line">            <span class="string">&quot;State&quot;</span>: state</span><br><span class="line">        &#125;</span><br><span class="line">        clean_data = get_line(self, source_data, self.display)</span><br><span class="line">        data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">        write_file(self.file, data)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        setting.log.error(<span class="built_in">str</span>(e))</span><br></pre></td></tr></table></figure>
+
+<p>这段代码遍历结果列表，跳过第一行和最后两行，因为它们不包含服务信息。对于每一行数据，它尝试将其分割成两部分或三部分（取决于是否有额外的信息），然后将服务名和状态保存到 source_data 字典中。接着，它调用 get_line 函数处理 source_data，并将处理后的数据转换为 JSON 格式，最后写入到输出文件中。如果在处理过程中遇到异常，它会记录错误信息。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/2029479894.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8"><span class="toc-number">1.</span> <span class="toc-text">开机自启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#windows%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">windows代码实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">Linux代码实现</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>百度网盘windows取证 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,百度网盘在windows操作系统当中，当安装了百度网盘之后，BaiduYunCacheFileV0当中会保存百度网盘的所有文件信息以及文件下载上传记录，即时没办法登录百度网盘也能够通过BaiduYu,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="百度网盘windows取证 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,百度网盘在windows操作系统当中，当安装了百度网盘之后，BaiduYunCacheFileV0当中会保存百度网盘的所有文件信息以及文件下载上传记录，即时没办法登录百度网盘也能够通过BaiduYu,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="百度网盘windows取证 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,百度网盘在windows操作系统当中，当安装了百度网盘之后，BaiduYunCacheFileV0当中会保存百度网盘的所有文件信息以及文件下载上传记录，即时没办法登录百度网盘也能够通过BaiduYu,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">百度网盘windows取证</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">百度网盘windows取证</h1>
+        <div class="stuff">
+            <span>十二月 01, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="百度网盘"><a href="#百度网盘" class="headerlink" title="百度网盘"></a>百度网盘</h2><p>在windows操作系统当中，当安装了百度网盘之后，BaiduYunCacheFileV0当中会保存百度网盘的所有文件信息以及文件下载上传记录，即时没办法登录百度网盘也能够通过BaiduYunCacheFileV0获取全部信息。以下将展示基于python实现的百度网盘信息获取。</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>下面是对代码的详细解释</p>
+<p>获取百度网盘安装目录：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">users_path = os.path.join(self.get_baidu_pan_install_dir(), <span class="string">&quot;users&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>这行代码调用 get_baidu_pan_install_dir 方法获取百度网盘的安装目录，并拼接上 “users” 文件夹的路径，得到用户文件夹的路径。</p>
+<p>遍历用户文件夹：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> md5 <span class="keyword">in</span> os.listdir(users_path):</span><br><span class="line">    md5_path = os.path.join(users_path, md5)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.isdir(md5_path):</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> os.listdir(md5_path):</span><br></pre></td></tr></table></figure>
+<p>这段代码遍历用户文件夹中的每个子文件夹（以 MD5 值命名），并进一步遍历每个子文件夹中的文件和文件夹。</p>
+<p>处理用户文件夹：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> i!= <span class="string">&quot;AutoBackupFileList&quot;</span> <span class="keyword">and</span> os.path.isdir(os.path.join(md5_path, i)):</span><br><span class="line">    source_data = &#123;</span><br><span class="line">        <span class="string">&quot;Name&quot;</span>: i,</span><br><span class="line">        <span class="string">&quot;FilePath&quot;</span>: <span class="string">&quot;/&#123;&#125;&quot;</span>.<span class="built_in">format</span>(i),</span><br><span class="line">        <span class="string">&quot;ParentPath&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Size&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Md5&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="string">&quot;iconMd5&quot;</span>: <span class="string">&quot;folder&quot;</span>,</span><br><span class="line">        <span class="string">&quot;UpdateTime&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="string">&quot;User&quot;</span>: i</span><br><span class="line">    &#125;</span><br><span class="line">    user_path = <span class="string">&quot;/&#123;&#125;&quot;</span>.<span class="built_in">format</span>(i)</span><br><span class="line">    clean_data = get_line(self, source_data, self.display)</span><br><span class="line">    data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">    write_file(self.file, data)</span><br></pre></td></tr></table></figure>
+<p>这段代码处理用户文件夹，如果文件夹名不是 “AutoBackupFileList”，则创建一个包含文件夹信息的 source_data 字典，并将其写入到输出文件中。</p>
+<p>判断数据库文件是否存在：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">all_file_db = os.path.join(md5_path, <span class="string">&quot;BaiduYunCacheFileV0.db&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(all_file_db):</span><br><span class="line">    <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<p>这段代码检查每个用户文件夹中是否存在名为 “BaiduYunCacheFileV0.db” 的数据库文件，如果不存在，则跳过该用户文件夹。</p>
+<p>读取数据库文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    conn = sqlite3.connect(all_file_db)</span><br><span class="line">    conn.row_factory = self.dict_factory</span><br><span class="line">    cursor = conn.cursor()</span><br><span class="line">    <span class="comment"># 同理，上传下载分别是download_history_file、upload_history_file</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> cursor.execute(<span class="string">&quot;select * from cache_file&quot;</span>):</span><br><span class="line">        parent_path = item.get(<span class="string">&quot;parent_path&quot;</span>)</span><br><span class="line">        server_filename = item.get(<span class="string">&quot;server_filename&quot;</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            iconMd5 = server_filename.split(<span class="string">&quot;.&quot;</span>, maxsplit=<span class="number">1</span>)[<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            iconMd5 = <span class="string">&quot;folder&quot;</span></span><br><span class="line">        source_data = &#123;</span><br><span class="line">            <span class="string">&quot;Name&quot;</span>: server_filename,</span><br><span class="line">            <span class="string">&quot;FilePath&quot;</span>: user_path + os.path.join(parent_path, server_filename),</span><br><span class="line">            <span class="string">&quot;ParentPath&quot;</span>: user_path + parent_path[:-<span class="number">1</span>:],</span><br><span class="line">            <span class="string">&quot;Size&quot;</span>: item.get(<span class="string">&quot;file_size&quot;</span>),</span><br><span class="line">            <span class="string">&quot;Md5&quot;</span>: item.get(<span class="string">&quot;md5&quot;</span>),</span><br><span class="line">            <span class="string">&quot;iconMd5&quot;</span>: iconMd5,</span><br><span class="line">            <span class="string">&quot;ServerMtime&quot;</span>: item.get(<span class="string">&quot;server_mtime&quot;</span>),</span><br><span class="line">            <span class="string">&quot;LocalMtime&quot;</span>: item.get(<span class="string">&quot;local_mtime&quot;</span>),</span><br><span class="line">            <span class="string">&quot;User&quot;</span>: i</span><br><span class="line">        &#125;</span><br><span class="line">        clean_data = get_line(self, source_data, self.display)</span><br><span class="line">        data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">        write_file(self.file, data)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    setting.log.error(e)</span><br><span class="line">    <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<p>这段代码尝试连接到数据库文件，并读取其中的 “cache_file” 表中的所有数据。对于每一条数据，它创建一个包含文件信息的 source_data 字典，并将其写入到输出文件中。如果在处理过程中遇到异常，它会记录错误信息并跳过当前用户文件夹。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/2148749734.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98"><span class="toc-number">1.</span> <span class="toc-text">百度网盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">代码实现</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

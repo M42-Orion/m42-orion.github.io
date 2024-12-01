@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>主机驱动提取 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,意义在网络取证中，获取主机驱动信息对于理解系统的配置和行为至关重要。可列举以下几点：
+
+确定系统组件：驱动程序是操作系统与硬件设备之间的桥梁，获取驱动信息可以帮助识别连接到系统的所有硬件设备，包括网,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="主机驱动提取 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,意义在网络取证中，获取主机驱动信息对于理解系统的配置和行为至关重要。可列举以下几点：
+
+确定系统组件：驱动程序是操作系统与硬件设备之间的桥梁，获取驱动信息可以帮助识别连接到系统的所有硬件设备，包括网,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="主机驱动提取 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,意义在网络取证中，获取主机驱动信息对于理解系统的配置和行为至关重要。可列举以下几点：
+
+确定系统组件：驱动程序是操作系统与硬件设备之间的桥梁，获取驱动信息可以帮助识别连接到系统的所有硬件设备，包括网,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">主机驱动提取</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">主机驱动提取</h1>
+        <div class="stuff">
+            <span>十二月 01, 2024</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="意义"><a href="#意义" class="headerlink" title="意义"></a>意义</h2><p>在网络取证中，获取主机驱动信息对于理解系统的配置和行为至关重要。可列举以下几点：</p>
+<ul>
+<li>确定系统组件：驱动程序是操作系统与硬件设备之间的桥梁，获取驱动信息可以帮助识别连接到系统的所有硬件设备，包括网络卡、存储设备、图形卡等 。</li>
+<li>分析潜在风险：某些驱动程序可能包含已知的安全漏洞，通过分析驱动信息，取证专家可以识别可能被利用的脆弱点 。</li>
+<li>检测恶意软件活动：攻击者有时会安装或修改驱动程序以隐藏其活动或获得对系统的更高权限。审查驱动程序可以帮助发现这些恶意更改 。</li>
+<li>系统行为分析：驱动程序影响系统的行为和性能。通过审查驱动程序，可以了解系统在正常和异常情况下的行为模式 。</li>
+<li>追踪网络活动：网络驱动程序特别重要，因为它们处理所有网络通信。取证专家可以通过分析网络驱动程序来追踪网络连接和数据流 。</li>
+<li>支持法律程序：在法律诉讼中，可能需要提供系统驱动程序的信息作为证据，以证明或反驳与案件相关的技术方面的论点 。</li>
+<li>系统恢复和重建：在事件响应中，获取驱动信息有助于重建受损系统的原始状态，这对于恢复服务和防止未来的攻击至关重要 。</li>
+<li>兼容性和性能优化：驱动程序信息有助于确定系统组件之间的兼容性问题，并进行必要的调整以优化系统性能 。</li>
+</ul>
+<h2 id="windows上实现"><a href="#windows上实现" class="headerlink" title="windows上实现"></a>windows上实现</h2><p>定义要查找的进程名称：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pe_name = <span class="string">&quot;WinDriver.exe&quot;</span></span><br></pre></td></tr></table></figure>
+<p>这行代码定义了一个字符串 <code>pe_name</code>，其值为 “WinDriver.exe”，即要查找的进程名称。</p>
+<p>遍历所有进程：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> process <span class="keyword">in</span> psutil.process_iter():</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        name = process.name()</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        name = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> name == pe_name:</span><br><span class="line">            setting.log.error(<span class="string">&quot;检测到%s已在运行, 正在终止重启&quot;</span> % name)</span><br><span class="line">            process.terminate()</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        setting.log.error(<span class="string">&quot;终止失败,原因: %s&quot;</span> % <span class="built_in">str</span>(e))</span><br><span class="line">        <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<p>这段代码使用 <code>psutil.process_iter()</code> 遍历所有正在运行的进程。对于每个进程，它尝试获取进程的名称，并检查该名称是否与 <code>pe_name</code> 相匹配。如果匹配，它会尝试终止该进程，并记录错误信息。</p>
+<p>获取驱动程序信息：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pe_path = os.path.join(setting.PROJ_PATH, pe_name)</span><br><span class="line">process = exe_cmd(pe_path)</span><br></pre></td></tr></table></figure>
+<p>这两行代码首先构建了 <code>WinDriver.exe</code> 的完整路径，然后使用 <code>exe_cmd</code> 函数执行该程序，以获取驱动程序的信息。</p>
+<p>处理驱动程序信息：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    item = process.stdout.readline().decode(<span class="string">&quot;gbk&quot;</span>)  <span class="comment"># type: ignore</span></span><br><span class="line">    <span class="keyword">if</span> item:</span><br><span class="line">        line = item.split(<span class="string">&quot;|&quot;</span>)</span><br><span class="line">        source_data = &#123;</span><br><span class="line">            <span class="string">&quot;Name&quot;</span>: line[<span class="number">0</span>],</span><br><span class="line">            <span class="string">&quot;Path&quot;</span>: line[<span class="number">1</span>],</span><br><span class="line">            <span class="string">&quot;Address&quot;</span>: line[<span class="number">2</span>],</span><br><span class="line">            <span class="string">&quot;Description&quot;</span>: line[<span class="number">3</span>],</span><br><span class="line">            <span class="string">&quot;Company&quot;</span>: line[<span class="number">4</span>],</span><br><span class="line">            <span class="string">&quot;Version&quot;</span>: line[<span class="number">5</span>],</span><br><span class="line">            <span class="string">&quot;Type&quot;</span>: line[<span class="number">6</span>],</span><br><span class="line">            <span class="string">&quot;Md5&quot;</span>: line[<span class="number">7</span>]</span><br><span class="line">        &#125;</span><br><span class="line">        clean_data = get_line(self, source_data, self.display)</span><br><span class="line">        data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">        write_file(self.file, data)</span><br><span class="line">    <span class="keyword">elif</span> process.poll() <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<p>这段代码使用一个无限循环来读取 <code>WinDriver.exe</code> 进程的标准输出。对于每一行输出，它将其分割成多个部分，并将这些部分存储在 <code>source_data</code> 字典中。然后，它调用 <code>get_line</code> 方法处理 <code>source_data</code>，并将处理后的数据转换为 <code>JSON</code> 格式，然后写入到输出文件中。如果 <code>process.poll()</code> 返回非空值，则表示进程已经结束，循环也随之结束。</p>
+<h2 id="Linux上实现"><a href="#Linux上实现" class="headerlink" title="Linux上实现"></a>Linux上实现</h2><p>执行 <code>lsmod</code> 命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">t = exe_cmd(<span class="string">&quot;lsmod&quot;</span>).split(<span class="string">&quot;\n&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>这行代码执行 <code>lsmod</code> 命令，该命令用于列出当前系统中已加载的内核模块。执行结果以字符串形式返回，并通过 <code>split(&quot;\n&quot;)</code> 方法分割成多行。</p>
+<p>遍历输出结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> t[<span class="number">1</span>:]:</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> line:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    module, size, depend = line.split(maxsplit=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>这段代码遍历 <code>lsmod</code> 命令的输出结果，跳过第一行（通常是标题行）。对于每一行，它使用 <code>split(maxsplit=2)</code> 方法将其分割成最多三个部分：模块名、大小和依赖项。</p>
+<p>构建源数据字典：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">source_data = &#123;</span><br><span class="line">    <span class="string">&quot;Module&quot;</span>: module,</span><br><span class="line">    <span class="string">&quot;Size&quot;</span>: size,</span><br><span class="line">    <span class="string">&quot;Depend&quot;</span>: depend</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这行代码将获取到的模块名、大小和依赖项封装成一个字典，其中键对应于 <code>display_list</code> 中的 <code>output</code> 字段。</p>
+<p>处理数据并写入文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">clean_data = get_line(self, source_data, self.display_list)</span><br><span class="line">data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">write_file(self.file, data)</span><br></pre></td></tr></table></figure>
+<p>这行代码调用 <code>get_line</code> 方法处理 <code>source_data</code>，并将处理后的数据转换为 <code>JSON</code> 格式，然后写入到输出文件中。</p>
+<h2 id="拓展-lsmod"><a href="#拓展-lsmod" class="headerlink" title="拓展-lsmod"></a>拓展-<code>lsmod</code></h2><p><code>lsmod</code> 是一个用于在 <code>Linux</code> 系统上列出已加载内核模块的命令。内核模块是可加载的代码块，它们可以在系统运行时动态地插入到内核中，以提供额外的功能，比如硬件驱动程序、文件系统支持、网络协议等。</p>
+<p><code>lsmod</code> 命令的输出通常包含以下列：</p>
+<ul>
+<li><code>Module</code>: 模块的名称。</li>
+<li><code>Size</code>: 模块占用的内存大小（以字节为单位）。</li>
+<li><code>Used by</code>: 依赖于该模块的其他模块数量。</li>
+</ul>
+<p>lsmod 命令的输出结果类似于以下示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Module                  Size  Used by</span><br><span class="line">nls_iso8859_1           16384  1 </span><br><span class="line">vfat                   20480  1 </span><br><span class="line">fat                    73728  1 vfat</span><br></pre></td></tr></table></figure>
+<p>在这个示例中，<code>nls_iso8859_1</code>、<code>vfat</code> 和 <code>fat</code> <code>是已加载的内核模块名称，Size</code> 列显示了每个模块占用的内存大小，<code>Used by</code> 列显示了依赖于该模块的其他模块数量。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/1941300314.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%84%8F%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">意义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#windows%E4%B8%8A%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">windows上实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E4%B8%8A%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">Linux上实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%93%E5%B1%95-lsmod"><span class="toc-number">4.</span> <span class="toc-text">拓展-lsmod</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

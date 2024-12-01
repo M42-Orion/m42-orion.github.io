@@ -4697,4 +4697,1088 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>行存储和列存储各有优缺点，适用于不同的场景。在实际应用中，可以根据具体的需求和场景，选择合适的存储方式。</p>
 ]]></content>
   </entry>
+  <entry>
+    <title>SQLAlchemy版本问题导致不可用</title>
+    <url>/2024/12/01/SQLAlchemy%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98%E5%AF%BC%E8%87%B4%E4%B8%8D%E5%8F%AF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近，我遇到了一个关于SQLAlchemy版本的问题。我尝试使用SQLAlchemy与关系型数据库进行交互，但在某些情况下，它似乎与我的当前环境不兼容。经过一番研究，我发现了SQLAlchemy的两个主要版本——SQLAlchemy 1.x和SQLAlchemy 2.x，并了解了它们之间的区别以及如何解决兼容性问题。</p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>SQLAlchemy是一个Python库，用于与关系型数据库进行交互。它提供了两个主要版本：SQLAlchemy 1.x和SQLAlchemy 2.x。在这两个版本之间有一些关键区别：</p>
+<ol>
+<li><p>主要功能变化：SQLAlchemy 2.x引入了一些新的主要功能，例如支持关系、更高级的ORM功能和更好的性能。</p>
+</li>
+<li><p>兼容性问题：虽然SQLAlchemy 2.x在大多数情况下与SQLAlchemy 1.x兼容，但在某些情况下，例如使用特定数据库引擎或特定ORM功能时，可能会遇到兼容性问题。在这种情况下，您可能需要升级或降级您的SQLAlchemy版本以解决兼容性问题。</p>
+</li>
+</ol>
+<p>要了解更多信息，请查看SQLAlchemy的官方文档，特别是SQLAlchemy 2.0的迁移指南：<a href="https://docs.sqlalchemy.org/en/14/changelog/migration_20.html">https://docs.sqlalchemy.org/en/14/changelog/migration_20.html</a></p>
+<p>如果您遇到与SQLAlchemy版本相关的问题，请确保您的环境（例如数据库引擎、操作系统等）与您尝试使用的SQLAlchemy版本兼容。如果您无法解决问题，请尝试升级或降级SQLAlchemy版本，或考虑使用其他数据库库。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>要解决SQLAlchemy版本问题，您可以尝试以下几种方法：</p>
+<ol>
+<li>升级或降级SQLAlchemy版本：如果您遇到与SQLAlchemy版本相关的问题，您可以尝试升级或降级SQLAlchemy版本。您可以使用pip命令来升级或降级SQLAlchemy版本，例如：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install --upgrade sqlalchemy</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install sqlalchemy==1.4.23</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>检查兼容性问题：如果您遇到与SQLAlchemy版本相关的问题，请检查您的环境（例如数据库引擎、操作系统等）与您尝试使用的SQLAlchemy版本是否兼容。您可以在SQLAlchemy的官方文档中找到有关兼容性的信息。</p>
+</li>
+<li><p>使用其他数据库库：如果您无法解决与SQLAlchemy版本相关的问题，您可以考虑使用其他数据库库，例如PyMySQL、psycopg2等。这些库提供了与SQLAlchemy类似的功能，但可能更易于使用或与您的环境兼容。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>32位与64位的区别</title>
+    <url>/2024/12/01/32%E4%BD%8D%E4%B8%8E64%E4%BD%8D%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<h2 id="32位与64位的区别"><a href="#32位与64位的区别" class="headerlink" title="32位与64位的区别"></a>32位与64位的区别</h2><p>首先，我们需要了解计算机中的位数的概念。计算机中的位数指的是计算机中用于表示数据的最大二进制数。例如，32位计算机可以处理最大为2^32-1的整数，而64位计算机可以处理最大为2^64-1的整数。</p>
+<p>接下来，我们来详细解释32位程序与64位程序的区别。</p>
+<ol>
+<li>程序的地址空间不同</li>
+</ol>
+<p>32位程序的地址空间为4GB，而64位程序的地址空间为16GB。这意味着32位程序可以访问的内存地址范围比64位程序要小得多。</p>
+<ol start="2">
+<li>程序的寻址能力不同</li>
+</ol>
+<p>32位程序的寻址能力为4GB，而64位程序的寻址能力为16GB。这意味着32位程序可以访问的内存地址范围比64位程序要小得多。</p>
+<ol start="3">
+<li>程序的寄存器不同</li>
+</ol>
+<p>32位程序使用32位寄存器，而64位程序使用64位寄存器。这意味着32位程序可以处理的数据范围比64位程序要小得多。</p>
+<ol start="4">
+<li>程序的指令集不同</li>
+</ol>
+<p>32位程序使用32位指令集，而64位程序使用64位指令集。这意味着32位程序可以执行的指令比64位程序要少得多。</p>
+<ol start="5">
+<li>程序的兼容性问题</li>
+</ol>
+<p>由于32位程序和64位程序的地址空间和寄存器不同，因此它们之间可能存在兼容性问题。例如，某些32位程序可能无法在64位计算机上运行，或者在运行时出现错误。</p>
+<h2 id="两者之间的兼容"><a href="#两者之间的兼容" class="headerlink" title="两者之间的兼容"></a>两者之间的兼容</h2><ol>
+<li>操作系统兼容性</li>
+</ol>
+<p>由于32位程序在64位计算机上运行时可能存在兼容性问题，因此需要操作系统提供兼容性支持。例如，Windows操作系统提供了兼容性模式，允许32位程序在64位计算机上运行。</p>
+<ol start="2">
+<li>程序兼容性</li>
+</ol>
+<p>某些32位程序可能已经针对64位计算机进行了优化，因此可以在64位计算机上运行。但是，这种兼容性可能并不完全，可能会导致程序在运行时出现错误。</p>
+<ol start="3">
+<li>硬件兼容性</li>
+</ol>
+<p>某些硬件设备可能仅支持32位程序，因此无法在64位计算机上运行。<br>32位程序可以在64位计算机上运行的原因是操作系统提供了兼容性支持，以及某些程序针对64位计算机进行了优化。但是，这种兼容性可能并不完全，可能会导致程序在运行时出现错误。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Gradio基础尝试</title>
+    <url>/2024/12/01/Gradio%E5%9F%BA%E7%A1%80%E5%B0%9D%E8%AF%95/</url>
+    <content><![CDATA[<h2 id="Gradio库：快速构建机器学习应用界面"><a href="#Gradio库：快速构建机器学习应用界面" class="headerlink" title="Gradio库：快速构建机器学习应用界面"></a>Gradio库：快速构建机器学习应用界面</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Gradio是一个Python库，它允许我们快速构建机器学习模型的Web界面。通过简单的代码，我们可以将复杂的机器学习模型转变为易于使用的Web应用。本文将带你了解Gradio的基本用法，包括<code>Interface</code>、<code>ChatInterface</code>和<code>TabbedInterface</code>三种界面的构建方法。</p>
+<h2 id="Gradio-Interface基础"><a href="#Gradio-Interface基础" class="headerlink" title="Gradio Interface基础"></a>Gradio Interface基础</h2><h3 id="什么是Interface？"><a href="#什么是Interface？" class="headerlink" title="什么是Interface？"></a>什么是Interface？</h3><p><code>Interface</code>是Gradio中最基础的界面类型，它允许我们围绕一个函数构建一个Web界面。这个函数可以是一个机器学习模型的预测函数，每个参数对应一个输入组件，函数返回值对应输出组件。</p>
+<h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><h2 id="Gradio-Interface案例：由浅入深"><a href="#Gradio-Interface案例：由浅入深" class="headerlink" title="Gradio Interface案例：由浅入深"></a>Gradio Interface案例：由浅入深</h2><h3 id="案例一：简单的文本反转"><a href="#案例一：简单的文本反转" class="headerlink" title="案例一：简单的文本反转"></a>案例一：简单的文本反转</h3><p>这是最简单的Gradio Interface案例，我们将创建一个Web界面，用户输入文本后，界面返回文本的反转。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> gradio <span class="keyword">as</span> gr</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个函数，接受一个字符串并返回其反转</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">reverse_text</span>(<span class="params">text</span>):</span><br><span class="line">    <span class="keyword">return</span> text[::-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用Gradio Interface创建Web界面</span></span><br><span class="line"><span class="comment"># 输入和输出都是文本类型</span></span><br><span class="line">iface = gr.Interface(fn=reverse_text, inputs=<span class="string">&quot;text&quot;</span>, outputs=<span class="string">&quot;text&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务器，用户可以在浏览器中访问这个界面</span></span><br><span class="line">iface.launch()</span><br></pre></td></tr></table></figure>
+
+<h3 id="案例二：图像识别"><a href="#案例二：图像识别" class="headerlink" title="案例二：图像识别"></a>案例二：图像识别</h3><p>在这个案例中，我们将创建一个图像识别的Web界面，用户上传一张图片，模型识别图片中的内容并返回。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> gradio <span class="keyword">as</span> gr</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> some_image_recognition_library  <span class="comment"># 假设的图像识别库</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义图像识别函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">recognize_image</span>(<span class="params">image</span>):</span><br><span class="line">    <span class="comment"># 使用图像识别库处理图片</span></span><br><span class="line">    result = some_image_recognition_library.recognize(image)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建Interface实例</span></span><br><span class="line"><span class="comment"># 输入是图像，输出是文本</span></span><br><span class="line">iface = gr.Interface(fn=recognize_image, inputs=gr.Image(), outputs=<span class="string">&quot;text&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务器</span></span><br><span class="line">iface.launch()</span><br></pre></td></tr></table></figure>
+
+<h3 id="案例三：自定义机器学习模型预测"><a href="#案例三：自定义机器学习模型预测" class="headerlink" title="案例三：自定义机器学习模型预测"></a>案例三：自定义机器学习模型预测</h3><p>在这个高级案例中，我们将创建一个Web界面，用于自定义机器学习模型的预测。假设我们有一个训练好的模型<code>my_model</code>，我们希望用户能够输入特征数据，模型返回预测结果。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> gradio <span class="keyword">as</span> gr</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> my_machine_learning_library <span class="keyword">import</span> my_model  <span class="comment"># 假设的机器学习模型</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义模型预测函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">predict</span>(<span class="params">data</span>):</span><br><span class="line">    <span class="comment"># 将输入数据转换为模型需要的格式</span></span><br><span class="line">    data = np.array(data)</span><br><span class="line">    <span class="comment"># 使用模型进行预测</span></span><br><span class="line">    prediction = my_model.predict(data)</span><br><span class="line">    <span class="keyword">return</span> prediction</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建Interface实例</span></span><br><span class="line"><span class="comment"># 输入是数字滑块，输出是图表</span></span><br><span class="line">iface = gr.Interface(</span><br><span class="line">    fn=predict,</span><br><span class="line">    inputs=[gr.Slider(minimum=<span class="number">0</span>, maximum=<span class="number">10</span>, step=<span class="number">1</span>, label=<span class="string">&quot;Feature 1&quot;</span>), </span><br><span class="line">            gr.Slider(minimum=<span class="number">0</span>, maximum=<span class="number">10</span>, step=<span class="number">1</span>, label=<span class="string">&quot;Feature 2&quot;</span>)],</span><br><span class="line">    outputs=gr.Plot()</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务器</span></span><br><span class="line">iface.launch()</span><br></pre></td></tr></table></figure>
+
+<h2 id="Gradio-ChatInterface"><a href="#Gradio-ChatInterface" class="headerlink" title="Gradio ChatInterface"></a>Gradio ChatInterface</h2><h3 id="什么是ChatInterface？"><a href="#什么是ChatInterface？" class="headerlink" title="什么是ChatInterface？"></a>什么是ChatInterface？</h3><p><code>ChatInterface</code>是Gradio提供的一种聊天界面，适用于构建聊天机器人应用。它可以接受文本输入，并显示与聊天机器人的交互历史。</p>
+<h3 id="案例一：基础聊天机器人"><a href="#案例一：基础聊天机器人" class="headerlink" title="案例一：基础聊天机器人"></a>案例一：基础聊天机器人</h3><p>在这个基础案例中，我们将创建一个简单的聊天机器人界面，用户可以输入文本，机器人返回一个固定的回复。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> gradio <span class="keyword">as</span> gr</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个简单的聊天机器人函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">chatbot</span>(<span class="params">input_message, chat_history</span>):</span><br><span class="line">    <span class="comment"># 这里只是一个简单的回复，实际应用中应根据input_message和chat_history来生成回复</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;你好！这是一个基础的聊天机器人。&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用Gradio ChatInterface创建聊天界面</span></span><br><span class="line">chatbot_interface = gr.ChatInterface(fn=chatbot, multimodal=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务器，用户可以在浏览器中访问这个界面</span></span><br><span class="line">chatbot_interface.launch()</span><br></pre></td></tr></table></figure>
+
+<h3 id="案例二：智能问答系统"><a href="#案例二：智能问答系统" class="headerlink" title="案例二：智能问答系统"></a>案例二：智能问答系统</h3><p>在这个案例中，我们将创建一个智能问答系统，用户可以输入问题，系统根据预设的问答对返回答案。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> gradio <span class="keyword">as</span> gr</span><br><span class="line"></span><br><span class="line"><span class="comment"># 预设的问答对</span></span><br><span class="line">qa_pairs = &#123;</span><br><span class="line">    <span class="string">&quot;你是谁？&quot;</span>: <span class="string">&quot;我是一个智能问答系统。&quot;</span>,</span><br><span class="line">    <span class="string">&quot;你来自哪里？&quot;</span>: <span class="string">&quot;我来自云端。&quot;</span>,</span><br><span class="line">    <span class="comment"># 更多的问答对...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义问答系统函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">answer_question</span>(<span class="params">input_message, chat_history</span>):</span><br><span class="line">    <span class="comment"># 根据用户的问题返回答案</span></span><br><span class="line">    <span class="keyword">return</span> qa_pairs.get(input_message, <span class="string">&quot;对不起，我不知道如何回答这个问题。&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建ChatInterface实例</span></span><br><span class="line">chatbot_interface = gr.ChatInterface(fn=answer_question, multimodal=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务器</span></span><br><span class="line">chatbot_interface.launch()</span><br></pre></td></tr></table></figure>
+
+<h3 id="案例三：基于机器学习的聊天机器人"><a href="#案例三：基于机器学习的聊天机器人" class="headerlink" title="案例三：基于机器学习的聊天机器人"></a>案例三：基于机器学习的聊天机器人</h3><p>在这个高级案例中，我们将创建一个基于机器学习模型的聊天机器人，用户可以输入文本，机器人利用模型生成回复。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> gradio <span class="keyword">as</span> gr</span><br><span class="line"><span class="keyword">import</span> some_chat_model_library  <span class="comment"># 假设的聊天模型库</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 假设的聊天模型</span></span><br><span class="line">chat_model = some_chat_model_library.load_model()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义聊天机器人函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">chatbot</span>(<span class="params">input_message, chat_history</span>):</span><br><span class="line">    <span class="comment"># 使用聊天模型生成回复</span></span><br><span class="line">    response = chat_model.generate_response(input_message, chat_history)</span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建ChatInterface实例</span></span><br><span class="line">chatbot_interface = gr.ChatInterface(fn=chatbot, multimodal=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务器</span></span><br><span class="line">chatbot_interface.launch()</span><br></pre></td></tr></table></figure>
+
+<h2 id="Gradio-TabbedInterface"><a href="#Gradio-TabbedInterface" class="headerlink" title="Gradio TabbedInterface"></a>Gradio TabbedInterface</h2><h3 id="什么是TabbedInterface？"><a href="#什么是TabbedInterface？" class="headerlink" title="什么是TabbedInterface？"></a>什么是TabbedInterface？</h3><p><code>TabbedInterface</code>允许我们将多个<code>Interface</code>或<code>Blocks</code>组织在一个带有标签页的界面中。每个<code>Interface</code>或<code>Blocks</code>都会在单独的标签页中渲染。</p>
+<h3 id="案例一：基础标签页界面"><a href="#案例一：基础标签页界面" class="headerlink" title="案例一：基础标签页界面"></a>案例一：基础标签页界面</h3><p>在这个基础案例中，我们将创建一个包含两个标签页的界面，每个标签页都有一个简单的文本输入和输出功能。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> gradio <span class="keyword">as</span> gr</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义两个简单的函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">greet</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;Hello &quot;</span> + name + <span class="string">&quot;!&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">farewell</span>(<span class="params">name</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;Goodbye &quot;</span> + name + <span class="string">&quot;!&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建两个Interface实例</span></span><br><span class="line">greet_interface = gr.Interface(fn=greet, inputs=<span class="string">&quot;text&quot;</span>, outputs=<span class="string">&quot;text&quot;</span>, title=<span class="string">&quot;Greeting&quot;</span>)</span><br><span class="line">farewell_interface = gr.Interface(fn=farewell, inputs=<span class="string">&quot;text&quot;</span>, outputs=<span class="string">&quot;text&quot;</span>, title=<span class="string">&quot;Farewell&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用TabbedInterface将两个Interface组合在一起</span></span><br><span class="line">tabbed_demo = gr.TabbedInterface([greet_interface, farewell_interface], [<span class="string">&quot;Greet&quot;</span>, <span class="string">&quot;Farewell&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务器</span></span><br><span class="line">tabbed_demo.launch()</span><br></pre></td></tr></table></figure>
+
+<h3 id="案例二：包含图像处理的标签页界面"><a href="#案例二：包含图像处理的标签页界面" class="headerlink" title="案例二：包含图像处理的标签页界面"></a>案例二：包含图像处理的标签页界面</h3><p>在这个案例中，我们将创建一个包含三个标签页的界面，其中两个标签页用于图像处理（一个用于图像上传，一个用于图像转换），另一个标签页用于文本处理。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> gradio <span class="keyword">as</span> gr</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义函数：图像上传</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">process_image</span>(<span class="params">image</span>):</span><br><span class="line">    <span class="comment"># 这里只是一个示例，实际应用中应根据需要处理图像</span></span><br><span class="line">    image = image.convert(<span class="string">&quot;L&quot;</span>)  <span class="comment"># 转换为灰度图</span></span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义函数：文本反转</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">reverse_text</span>(<span class="params">text</span>):</span><br><span class="line">    <span class="keyword">return</span> text[::-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建Interface实例</span></span><br><span class="line">image_upload_interface = gr.Interface(fn=process_image, inputs=gr.Image(), outputs=gr.Image(), title=<span class="string">&quot;Upload Image&quot;</span>)</span><br><span class="line">text_reverse_interface = gr.Interface(fn=reverse_text, inputs=<span class="string">&quot;text&quot;</span>, outputs=<span class="string">&quot;text&quot;</span>, title=<span class="string">&quot;Reverse Text&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建TabbedInterface实例</span></span><br><span class="line">tabbed_demo = gr.TabbedInterface([image_upload_interface, text_reverse_interface], [<span class="string">&quot;Image Processing&quot;</span>, <span class="string">&quot;Text&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务器</span></span><br><span class="line">tabbed_demo.launch()</span><br></pre></td></tr></table></figure>
+
+<h3 id="案例三：复杂的多标签页机器学习应用界面"><a href="#案例三：复杂的多标签页机器学习应用界面" class="headerlink" title="案例三：复杂的多标签页机器学习应用界面"></a>案例三：复杂的多标签页机器学习应用界面</h3><p>在这个高级案例中，我们将创建一个包含多个标签页的界面，每个标签页都用于不同的机器学习任务，如图像分类、语音识别和自然语言处理。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> gradio <span class="keyword">as</span> gr</span><br><span class="line"><span class="keyword">import</span> some_ml_library  <span class="comment"># 假设的机器学习库</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义函数：图像分类</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">classify_image</span>(<span class="params">image</span>):</span><br><span class="line">    classification = some_ml_library.image_classification_model.predict(image)</span><br><span class="line">    <span class="keyword">return</span> classification</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义函数：语音识别</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">recognize_speech</span>(<span class="params">speech</span>):</span><br><span class="line">    transcription = some_ml_library.speech_recognition_model.transcribe(speech)</span><br><span class="line">    <span class="keyword">return</span> transcription</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义函数：自然语言处理</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">process_text</span>(<span class="params">text</span>):</span><br><span class="line">    <span class="comment"># 假设的自然语言处理任务：情感分析</span></span><br><span class="line">    sentiment = some_ml_library.nlp_model.analyze_sentiment(text)</span><br><span class="line">    <span class="keyword">return</span> sentiment</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建Interface实例</span></span><br><span class="line">image_classification_interface = gr.Interface(fn=classify_image, inputs=gr.Image(), outputs=<span class="string">&quot;text&quot;</span>, title=<span class="string">&quot;Image Classification&quot;</span>)</span><br><span class="line">speech_recognition_interface = gr.Interface(fn=recognize_speech, inputs=gr.Audio(), outputs=<span class="string">&quot;text&quot;</span>, title=<span class="string">&quot;Speech Recognition&quot;</span>)</span><br><span class="line">nlp_interface = gr.Interface(fn=process_text, inputs=<span class="string">&quot;text&quot;</span>, outputs=<span class="string">&quot;text&quot;</span>, title=<span class="string">&quot;Natural Language Processing&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建TabbedInterface实例</span></span><br><span class="line">tabbed_ml_app = gr.TabbedInterface([image_classification_interface, speech_recognition_interface, nlp_interface], [<span class="string">&quot;Image Classification&quot;</span>, <span class="string">&quot;Speech Recognition&quot;</span>, <span class="string">&quot;NLP&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动服务器</span></span><br><span class="line">tabbed_ml_app.launch()</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Gradio提供了强大的工具，使得我们可以快速地将机器学习模型转化为易于使用的Web应用。通过<code>Interface</code>、<code>ChatInterface</code>和<code>TabbedInterface</code>三种界面类型，我们可以根据不同的应用场景选择合适的界面类型，快速构建出既美观又实用的Web界面。希望本文能帮助你快速上手Gradio，构建出自己的机器学习应用。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>anaconda与python</title>
+    <url>/2024/12/01/anaconda%E4%B8%8Epython/</url>
+    <content><![CDATA[<h2 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h2><p>Python是一种广泛使用的编程语言，它以其简洁的语法和强大的库支持而闻名。然而，Python在科学计算和数据分析领域中的使用受到了一些限制。为了解决这个问题，Anaconda应运而生，它是一个用于科学计算的Python发行版，它包含了Python解释器、大量的科学计算库和工具，以及一个包管理器conda。</p>
+<h2 id="Python与Anaconda的关系"><a href="#Python与Anaconda的关系" class="headerlink" title="Python与Anaconda的关系"></a>Python与Anaconda的关系</h2><p>Python与Anaconda之间的关系非常密切。Anaconda是一个基于Python的发行版，它包含了Python解释器、大量的科学计算库和工具，以及一个包管理器conda。因此，Python是Anaconda的基础，而Anaconda则提供了Python在科学计算和数据分析领域中的强大支持。</p>
+<h2 id="Python与Anaconda的区别"><a href="#Python与Anaconda的区别" class="headerlink" title="Python与Anaconda的区别"></a>Python与Anaconda的区别</h2><p>Python与Anaconda在安装源、安装方式、环境管理和包管理方面有一些区别。Python的官方源是Python Package Index (PyPI)，而Anaconda的官方源是Anaconda Repository。PyPI上的包可能不是官方版本，而Anaconda Repository上的包通常是官方版本。Python的包管理器pip可以直接从PyPI安装包，而Anaconda的包管理器conda可以从Anaconda Repository和PyPI安装包。Python的环境管理相对复杂，需要手动创建虚拟环境，并使用pip安装包。而Anaconda的环境管理相对简单，可以直接使用conda创建虚拟环境，并使用conda安装包。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>Python与Anaconda之间的关系非常密切，它们在科学计算和数据分析领域中的使用受到了广泛的应用。Python是Anaconda的基础，而Anaconda则提供了Python在科学计算和数据分析领域中的强大支持。Python与Anaconda在安装源、安装方式、环境管理和包管理方面有一些区别，因此，在使用这两种工具时，需要根据具体需求进行选择。</p>
+<h2 id="参考内容"><a href="#参考内容" class="headerlink" title="参考内容"></a>参考内容</h2><p>[1] Anaconda官方文档: <a href="https://docs.conda.io/en/latest/">https://docs.conda.io/en/latest/</a><br>[2] pip官方文档: <a href="https://pip.pypa.io/en/stable/">https://pip.pypa.io/en/stable/</a><br>[3] conda vs pip: <a href="https://www.anaconda.com/products/distribution#conda-vs-pip">https://www.anaconda.com/products/distribution#conda-vs-pip</a></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>autorunsc工具获取计划任务</title>
+    <url>/2024/12/01/autorunsc%E5%B7%A5%E5%85%B7%E8%8E%B7%E5%8F%96%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/</url>
+    <content><![CDATA[<h2 id="解析autorunsc工具的Python调用流程"><a href="#解析autorunsc工具的Python调用流程" class="headerlink" title="解析autorunsc工具的Python调用流程"></a>解析autorunsc工具的Python调用流程</h2><p>本文将深入探讨一段Python取证代码，该代码用于调用<code>autorunsc</code>工具，这是一个用于列出当前系统上所有自启动程序。现在将按照代码的执行流程，分块解释每一部分的功能和实现方式。</p>
+<h3 id="环境变量检查和文件名选择"><a href="#环境变量检查和文件名选择" class="headerlink" title="环境变量检查和文件名选择"></a>环境变量检查和文件名选择</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">autorunsc_name = <span class="string">&quot;autorunsc64.exe&quot;</span> <span class="keyword">if</span> <span class="string">&quot;PROGRAMFILES(X86)&quot;</span> <span class="keyword">in</span> os.environ <span class="keyword">else</span> <span class="string">&quot;autorunsc32.exe&quot;</span></span><br></pre></td></tr></table></figure>
+<p>这一部分代码检查系统环境变量中是否存在<code>PROGRAMFILES(X86)</code>，以确定系统是32位还是64位，并据此选择相应的<code>autorunsc</code>工具版本。</p>
+<h3 id="路径拼接"><a href="#路径拼接" class="headerlink" title="路径拼接"></a>路径拼接</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">autoruns_path = os.path.join(setting.PROJ_PATH, autorunsc_name)</span><br><span class="line">result_temp_path = os.path.join(setting.PROJ_PATH, <span class="string">&#x27;res_h.csv&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>这里，我们使用<code>os.path.join</code>函数来拼接路径，获取<code>autorunsc</code>工具的完整路径和结果临时文件的路径。<code>setting.PROJ_PATH</code>是一个预定义的项目路径。</p>
+<h3 id="调用autorunsc工具"><a href="#调用autorunsc工具" class="headerlink" title="调用autorunsc工具"></a>调用autorunsc工具</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">os.system(</span><br><span class="line">    <span class="string">&quot;&#123;&#125; /accepteula -a t -s -h -ct &gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(</span><br><span class="line">        autoruns_path, result_temp_path)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>这一行代码通过<code>os.system</code>函数调用<code>autorunsc</code>工具，执行参数包括<code>/accepteula</code>（接受EULA），<code>-a t</code>（显示所有项目），<code>-s</code>（静默模式），<code>-h</code>（隐藏窗口），<code>-ct</code>（输出为CSV格式）。输出结果被重定向到<code>result_temp_path</code>指定的临时文件中。</p>
+<h3 id="读取和处理CSV文件"><a href="#读取和处理CSV文件" class="headerlink" title="读取和处理CSV文件"></a>读取和处理CSV文件</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(result_temp_path, <span class="string">&quot;rt&quot;</span>, encoding=<span class="string">&quot;UTF-16&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> csv.DictReader(f, delimiter=<span class="string">&quot;\t&quot;</span>):</span><br><span class="line">        clean_data = get_line(self, row, self.display_list)</span><br></pre></td></tr></table></figure>
+<p>这段代码打开临时CSV文件，并使用<code>csv.DictReader</code>以字典形式读取每一行。<code>delimiter=&quot;\t&quot;</code>指定了字段分隔符为制表符。对于每一行，调用<code>get_line</code>函数（未在代码中给出）进行数据清洗和处理。</p>
+<h3 id="数据序列化和写入文件"><a href="#数据序列化和写入文件" class="headerlink" title="数据序列化和写入文件"></a>数据序列化和写入文件</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">write_file(self.file, data)</span><br></pre></td></tr></table></figure>
+<p>这里，将清洗后的数据<code>clean_data</code>使用<code>json.dumps</code>函数序列化为JSON格式的字符串，<code>ensure_ascii=False</code>参数确保非ASCII字符被正确处理。然后，调用<code>write_file</code>函数（未在代码中给出）将序列化后的数据写入到某个文件中。</p>
+<h3 id="清理临时文件"><a href="#清理临时文件" class="headerlink" title="清理临时文件"></a>清理临时文件</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">os.remove(result_temp_path)</span><br></pre></td></tr></table></figure>
+<p>最后，代码使用<code>os.remove</code>函数删除临时CSV文件，以清理系统资源。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git推送443报错解决</title>
+    <url>/2024/12/01/git%E6%8E%A8%E9%80%81443%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>git报错：<code>Failed to connect to github.com port 443: Connection refused</code></p>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><h3 id="1-检查网络"><a href="#1-检查网络" class="headerlink" title="1. 检查网络"></a>1. 检查网络</h3><p>确保网络连接正常，可以访问github.com。</p>
+<h3 id="2-检查git配置"><a href="#2-检查git配置" class="headerlink" title="2. 检查git配置"></a>2. 检查git配置</h3><p>使用以下命令检查git配置：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global --list</span><br></pre></td></tr></table></figure>
+
+<p>如果配置中包含<code>http.proxy</code>或<code>https.proxy</code>，则删除它们：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global --<span class="built_in">unset</span> http.proxy</span><br><span class="line">git config --global --<span class="built_in">unset</span> https.proxy</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-检查防火墙"><a href="#3-检查防火墙" class="headerlink" title="3. 检查防火墙"></a>3. 检查防火墙</h3><p>确保防火墙没有阻止git的443端口。</p>
+<h3 id="4-检查代理"><a href="#4-检查代理" class="headerlink" title="4. 检查代理"></a>4. 检查代理</h3><p>确保没有设置代理，可以使用以下命令检查代理：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -I https://github.com</span><br></pre></td></tr></table></figure>
+
+<p>如果返回的<code>HTTP/1.1 200 OK</code>，则表示没有设置代理。如果设置了代理，在windows上可以在设置中关闭代理，在linux上可以使用以下命令关闭代理：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">unset</span> http_proxy</span><br><span class="line"><span class="built_in">unset</span> https_proxy</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-检查git版本"><a href="#5-检查git版本" class="headerlink" title="5. 检查git版本"></a>5. 检查git版本</h3><p>确保git版本在2.0以上，可以使用以下命令检查git版本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
+<p>如果版本低于2.0，则需要升级git。</p>
+<h3 id="6-检查DNS"><a href="#6-检查DNS" class="headerlink" title="6. 检查DNS"></a>6. 检查DNS</h3><p>如果以上方法都没有解决问题，可以尝试更换DNS，例如使用Google DNS（8.8.8.8和8.8.4.4）。</p>
+<h3 id="7-检查证书"><a href="#7-检查证书" class="headerlink" title="7. 检查证书"></a>7. 检查证书</h3><p>如果以上方法都没有解决问题，可以尝试更换证书，例如使用Let’s Encrypt证书。</p>
+<h3 id="8-检查SSH"><a href="#8-检查SSH" class="headerlink" title="8. 检查SSH"></a>8. 检查SSH</h3><p>如果以上方法都没有解决问题，可以尝试使用SSH方式推送代码，例如：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote set-url origin git@github.com:username/repo.git</span><br></pre></td></tr></table></figure>
+
+<p>然后使用以下命令推送代码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push origin master</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>fstapi后台任务</title>
+    <url>/2024/12/01/fstapi%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1/</url>
+    <content><![CDATA[<p>在现代的 Web 开发中，后台任务处理是一个常见的需求。FastAPI 提供了一个非常方便的功能，名为 <code>BackgroundTasks</code>，它允许在处理请求后执行一些后台任务。这些任务对于不需要即时返回结果的操作非常有用，比如发送电子邮件、日志记录、数据缓存等。</p>
+<h2 id="BackgroundTasks-的基本使用"><a href="#BackgroundTasks-的基本使用" class="headerlink" title="BackgroundTasks 的基本使用"></a>BackgroundTasks 的基本使用</h2><p>首先，看看如何在 FastAPI 中使用 <code>BackgroundTasks</code>。</p>
+<ol>
+<li><strong>导入 BackgroundTasks</strong>：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, BackgroundTasks</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>定义后台任务函数</strong>：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">some_background_task</span>(<span class="params">arg1, arg2</span>):</span><br><span class="line">    <span class="comment"># 后台任务的代码</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;后台任务执行，参数：<span class="subst">&#123;arg1&#125;</span>, <span class="subst">&#123;arg2&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><strong>在路径操作函数中添加后台任务</strong>：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&quot;/background_task/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">background_task</span>(<span class="params">background_tasks: BackgroundTasks</span>):</span><br><span class="line">    background_tasks.add_task(some_background_task, <span class="string">&quot;参数1&quot;</span>, <span class="string">&quot;参数2&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;后台任务添加成功&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，当客户端发送 POST 请求到 <code>/background_task/</code> 路径时，<code>some_background_task</code> 函数将作为一个后台任务被添加，并在主函数执行完毕后开始运行。</p>
+<h2 id="BackgroundTasks-是并行的吗？"><a href="#BackgroundTasks-是并行的吗？" class="headerlink" title="BackgroundTasks 是并行的吗？"></a>BackgroundTasks 是并行的吗？</h2><p>关于 <code>BackgroundTasks</code> 的并行性，这是一个常见的问题。答案是，<code>BackgroundTasks</code> 默认情况下是顺序执行的，而不是并行的。这意味着，即使你添加了多个后台任务，它们也会按照添加的顺序一个接一个地执行。</p>
+<p>然而，如果你需要并行执行后台任务，FastAPI 也支持这一点。你可以通过定义异步的后台任务函数来实现。</p>
+<h2 id="使用异步后台任务实现并行执行"><a href="#使用异步后台任务实现并行执行" class="headerlink" title="使用异步后台任务实现并行执行"></a>使用异步后台任务实现并行执行</h2><p>以下是如何使用异步后台任务的示例：</p>
+<ol>
+<li><strong>定义异步后台任务函数</strong>：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">some_background_task</span>(<span class="params">arg1, arg2</span>):</span><br><span class="line">    <span class="comment"># 异步后台任务的代码</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;异步后台任务执行，参数：<span class="subst">&#123;arg1&#125;</span>, <span class="subst">&#123;arg2&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(<span class="number">1</span>)  <span class="comment"># 模拟异步操作</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>在路径操作函数中添加异步后台任务</strong>：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&quot;/background_tasks_async/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">background_tasks_async</span>(<span class="params">background_tasks: BackgroundTasks</span>):</span><br><span class="line">    background_tasks.add_task(some_background_task, <span class="string">&quot;参数1&quot;</span>, <span class="string">&quot;参数2&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;异步后台任务添加成功&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>some_background_task</code> 是一个异步函数，它将被并行执行，前提是 FastAPI 应用是在支持异步的 ASGI 服务器上运行的（例如 Uvicorn）。</p>
+<p>请注意，即使任务是异步的，它们仍然会在单个进程或线程中按顺序添加到事件循环中，由事件循环来调度它们的执行。这意味着，尽管任务可以并发运行，但它们并不是在多个 CPU 核心上真正并行执行的。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>FastAPI 的 <code>BackgroundTasks</code> 提供了一种简单而有效的方式来处理后台任务。虽然它默认是顺序执行的，但通过使用异步函数，可以实现任务的并行执行。这使得 FastAPI 成为构建高效、可扩展的 Web 应用的理想选择。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>conda与pip</title>
+    <url>/2024/12/01/conda%E4%B8%8Epip/</url>
+    <content><![CDATA[<h2 id="conda与pip的区别"><a href="#conda与pip的区别" class="headerlink" title="conda与pip的区别"></a>conda与pip的区别</h2><p>conda install 和 pip install 是两种常用的Python包管理工具,它们都可以用来安装和管理Python库。但是,它们在安装源和安装方式上有一些区别。</p>
+<ol>
+<li>安装源</li>
+</ol>
+<p>conda install 使用的是Anaconda的官方源,而pip install 可以指定任意源来安装库。因此,conda install 安装的库通常都是官方版本的库,而pip install 安装的库可能是官方版本的库,也可能是其他版本的库。</p>
+<ol start="2">
+<li>安装方式</li>
+</ol>
+<p>conda install 使用的是Anaconda的包管理器,它会在安装库时自动处理依赖关系,并将其安装到Anaconda的虚拟环境中。因此,使用conda install 安装的库都是独立的,不会影响系统中的其他Python库。而pip install 安装的库则是直接安装到系统Python的site-packages目录中,可能会与其他库发生冲突。</p>
+<ol start="3">
+<li>影响或问题</li>
+</ol>
+<p>(1) 版本冲突</p>
+<p>由于pip install 安装的库是直接安装到系统Python的site-packages目录中,因此可能会与其他库发生版本冲突。例如,如果系统中已经安装了一个版本的库,而使用pip install 安装了另一个版本的库,可能会导致系统中的库出现兼容性问题。</p>
+<p>(2) 依赖问题</p>
+<p>pip install 安装的库不会自动处理依赖关系,因此可能会出现依赖问题。例如,如果安装的库依赖于其他库,而没有正确安装依赖库,可能会导致库无法正常使用。</p>
+<p>(3) 环境问题</p>
+<p>conda install 安装的库都是独立的,不会影响系统中的其他Python库。而pip install 安装的库则是直接安装到系统Python的site-packages目录中,可能会与其他库发生冲突。因此,如果需要使用不同的库,建议使用conda install 安装到不同的环境中。</p>
+<p>参考内容:</p>
+<p>[1] Anaconda官方文档: <a href="https://docs.conda.io/en/latest/">https://docs.conda.io/en/latest/</a><br>[2] pip官方文档: <a href="https://pip.pypa.io/en/stable/">https://pip.pypa.io/en/stable/</a><br>[3] conda vs pip: <a href="https://www.anaconda.com/products/distribution#conda-vs-pip">https://www.anaconda.com/products/distribution#conda-vs-pip</a></p>
+<p>conda install 和 pip install 在安装源和安装方式上有一些区别,可能会导致一些影响或问题。因此,在使用这两种工具时,需要根据具体需求进行选择。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>pipreqs的使用</title>
+    <url>/2024/12/01/pipreqs%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h1 id="pipreqs：自动化Python项目依赖管理的利器"><a href="#pipreqs：自动化Python项目依赖管理的利器" class="headerlink" title="pipreqs：自动化Python项目依赖管理的利器"></a>pipreqs：自动化Python项目依赖管理的利器</h1><p>在Python项目的开发过程中，依赖管理是一个不可或缺的步骤。一个清晰、准确的<code>requirements.txt</code>文件对于项目的共享、部署和维护至关重要。今天，我们要介绍的是一个名为<code>pipreqs</code>的神奇工具，它能够自动化地生成这个文件，从而简化你的项目依赖管理流程。</p>
+<h2 id="pipreqs是什么？"><a href="#pipreqs是什么？" class="headerlink" title="pipreqs是什么？"></a>pipreqs是什么？</h2><p><code>pipreqs</code>是一个Python工具，它通过分析你的项目源代码，自动检测项目中使用的第三方库，并生成一个包含这些库及其版本信息的<code>requirements.txt</code>文件。这个工具的出现，极大地方便了开发者在不同环境间迁移和部署项目，确保了依赖库的一致性。</p>
+<h2 id="pipreqs的主要功能"><a href="#pipreqs的主要功能" class="headerlink" title="pipreqs的主要功能"></a>pipreqs的主要功能</h2><p><code>pipreqs</code>具有以下几个显著的功能和特点：</p>
+<ul>
+<li><strong>自动分析</strong>：它能够扫描项目的源代码，自动识别<code>import</code>语句中引用的第三方库。</li>
+<li><strong>版本控制</strong>：<code>pipreqs</code>能够识别并记录这些库的版本信息，确保生成的依赖文件既全面又精确。</li>
+<li><strong>忽略机制</strong>：你可以通过配置文件或命令行参数指定需要忽略的文件或目录，以避免不必要的库被包含进来。</li>
+<li><strong>更新现有文件</strong>：如果你的项目已经有了一个<code>requirements.txt</code>文件，<code>pipreqs</code>可以帮助你更新这个文件，确保它反映了项目当前的依赖状态。</li>
+</ul>
+<h2 id="如何使用pipreqs"><a href="#如何使用pipreqs" class="headerlink" title="如何使用pipreqs"></a>如何使用pipreqs</h2><p>使用<code>pipreqs</code>非常简单。首先，你需要安装它，这可以通过pip命令轻松完成：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install pipreqs</span><br></pre></td></tr></table></figure>
+
+<p>然后，在你的项目根目录下运行以下命令来生成<code>requirements.txt</code>文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pipreqs ./</span><br></pre></td></tr></table></figure>
+
+<p>然而，由于<code>pipreqs</code>默认没有考虑路径编码和外网连接速度问题，我们通常推荐使用以下命令来避免潜在的问题：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pipreqs ./ --encoding=utf8 --force --use-local</span><br></pre></td></tr></table></figure>
+
+<p>这里的参数解释如下：</p>
+<ul>
+<li><code>./</code> 表示在当前目录下寻找Python项目的依赖。</li>
+<li><code>--encoding=utf8</code> 用于防止编码错误。</li>
+<li><code>--force</code> 用于强制覆盖现有的<code>requirements.txt</code>文件（如果目录中还没有该文件，则可以省略此参数）。</li>
+<li><code>--use-local</code> 指定使用本地库，避免因外网连接问题导致的速度慢或卡死现象。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>pipreqs</code>是一个简单而实用的工具，它可以帮助Python开发者自动化地生成和管理<code>requirements.txt</code>文件，从而解决项目依赖问题。使用时，注意一些技巧和参数，可以避免因网络问题导致的卡死现象。通过<code>pipreqs</code>，你可以更专注于代码开发，而不必过分担心依赖管理的繁琐事务。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python代码ast基础</title>
+    <url>/2024/12/01/python%E4%BB%A3%E7%A0%81ast%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<p>AST（Abstract Syntax Tree）是一种抽象语法树，它将源代码转换为一种树形结构，用于表示程序的语法结构。在Python中，AST库允许你将源代码转换为AST，然后遍历和操作这个树形结构。这使得你能够更好地理解和维护代码。</p>
+<p>Python的AST库提供了以下功能：</p>
+<ol>
+<li>将源代码转换为AST：使用<code>ast.parse</code>函数将源代码转换为AST。这个函数接受一个字符串参数，即要转换的源代码。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> ast</span><br><span class="line"></span><br><span class="line">source_code = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">def add(a, b):</span></span><br><span class="line"><span class="string">    return a + b</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">result = add(1, 2)</span></span><br><span class="line"><span class="string">print(result)</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">tree = ast.parse(source_code)</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>遍历AST：使用<code>ast.walk</code>函数遍历AST。这个函数接受一个AST节点作为参数，并返回一个包含所有子节点的列表。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> ast</span><br><span class="line"></span><br><span class="line">tree = ast.parse(source_code)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> node <span class="keyword">in</span> ast.walk(tree):</span><br><span class="line">    <span class="built_in">print</span>(node)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>操作AST：使用各种<code>ast</code>模块中的函数来操作AST。例如，你可以使用<code>ast.Assign</code>来创建一个赋值语句，或者使用<code>ast.Call</code>来创建一个函数调用。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> ast</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">return</span> a + b</span><br><span class="line"></span><br><span class="line">tree = ast.parse(source_code)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个赋值语句</span></span><br><span class="line">assign = ast.Assign(targets=[ast.Name(<span class="built_in">id</span>=<span class="string">&#x27;result&#x27;</span>, ctx=ast.Store())], value=ast.Call(func=ast.Name(<span class="built_in">id</span>=<span class="string">&#x27;add&#x27;</span>, ctx=ast.Load()), args=[ast.Num(n=<span class="number">1</span>), ast.Num(n=<span class="number">2</span>)], keywords=[]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将赋值语句添加到AST中</span></span><br><span class="line">tree.body.append(assign)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历AST并打印结果</span></span><br><span class="line"><span class="keyword">for</span> node <span class="keyword">in</span> ast.walk(tree):</span><br><span class="line">    <span class="built_in">print</span>(node)</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>编译和执行AST：使用<code>compile</code>函数将AST编译为字节码，然后使用<code>exec</code>或<code>eval</code>函数执行字节码。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> ast</span><br><span class="line"></span><br><span class="line">tree = ast.parse(source_code)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译AST为字节码</span></span><br><span class="line">code = <span class="built_in">compile</span>(tree, <span class="string">&#x27;&lt;string&gt;&#x27;</span>, <span class="string">&#x27;exec&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行字节码</span></span><br><span class="line"><span class="built_in">exec</span>(code)</span><br></pre></td></tr></table></figure>
+
+<p>总之，Python的AST库提供了一种强大的方法来处理和操作源代码，使得你能够更好地理解和维护代码。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python打包成exe后的路径在哪里？</title>
+    <url>/2024/12/01/python%E6%89%93%E5%8C%85%E6%88%90exe%E5%90%8E%E7%9A%84%E8%B7%AF%E5%BE%84%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F/</url>
+    <content><![CDATA[<h2 id="项目目录路径的获取"><a href="#项目目录路径的获取" class="headerlink" title="项目目录路径的获取"></a>项目目录路径的获取</h2><h3 id="代码解析"><a href="#代码解析" class="headerlink" title="代码解析"></a>代码解析</h3><p>这段Python代码的目的是确定项目目录的路径，它通过检查sys模块的frozen属性来判断当前脚本是被直接运行还是被打包成了可执行文件。这个属性在PyInstaller等打包工具中被设置为True。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="built_in">getattr</span>(sys, <span class="string">&quot;frozen&quot;</span>, <span class="literal">False</span>):</span><br><span class="line">    PROJ_PATH = os.path.normpath(os.path.join(</span><br><span class="line">        sys.executable,</span><br><span class="line">        os.pardir,  <span class="comment"># 上一级目录(..)</span></span><br><span class="line">    ))</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    PROJ_PATH = os.path.normpath(os.path.join(</span><br><span class="line">        os.path.abspath(__file__),  <span class="comment"># 当前文件的绝对路径</span></span><br><span class="line">        os.pardir,  <span class="comment"># 上一级目录(..)</span></span><br><span class="line">        os.pardir,  <span class="comment"># 上一级目录(..)</span></span><br><span class="line">    ))</span><br><span class="line"><span class="built_in">getattr</span>(sys, <span class="string">&quot;frozen&quot;</span>, <span class="literal">False</span>)：尝试获取sys模块的frozen属性，如果不存在则默认为<span class="literal">False</span>。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>sys.executable</code>：如果脚本被打包成了可执行文件，sys.executable是可执行文件的路径。</li>
+<li><code>os.path.normpath(path)</code>：规范化路径，去除路径中的冗余部分，如多余的分隔符和上级目录引用（..）。</li>
+<li><code>os.path.join(path, *paths)</code>：将多个路径组合成一个路径。</li>
+<li><code>os.pardir</code>：是一个常量，代表上级目录（..）。</li>
+<li><code>os.path.abspath(__file__)</code>：获取当前文件的绝对路径。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python实现range_map</title>
+    <url>/2024/12/01/python%E5%AE%9E%E7%8E%B0range-map/</url>
+    <content><![CDATA[<h1 id="自定义RangeBisection：实现Python中的高效Range-Map"><a href="#自定义RangeBisection：实现Python中的高效Range-Map" class="headerlink" title="自定义RangeBisection：实现Python中的高效Range Map"></a>自定义RangeBisection：实现Python中的高效Range Map</h1><p>在Python编程中，我们经常需要处理和存储一系列的范围数据，例如在文件处理、数据库索引或者任何需要范围查询的场景中。然而，Python标准库中并没有直接提供一个专门的“range map”数据结构来高效地处理这些需求。为了填补这一空白，我们可以自定义一个<code>RangeBisection</code>类，它不仅能够存储范围数据，还能在对数时间内完成查找操作，同时确保范围之间不会重叠。本文将详细介绍如何实现这样一个高效的<code>RangeBisection</code>类。</p>
+<h2 id="RangeBisection类的核心理念"><a href="#RangeBisection类的核心理念" class="headerlink" title="RangeBisection类的核心理念"></a>RangeBisection类的核心理念</h2><p><code>RangeBisection</code>类的设计初衷是为了提供一个能够快速索引和检索范围的映射（Map）。在这个类中，每个范围由一个下限和一个上限定义，并且每个范围都可以关联一个值。这个类的核心优势在于：</p>
+<ul>
+<li><strong>高效的查找性能</strong>：通过二分查找算法，可以在O(logN)时间内完成对范围的查找。</li>
+<li><strong>范围不重叠</strong>：在插入新范围时，会检查并防止范围重叠，确保数据的一致性。</li>
+<li><strong>动态的数据更新</strong>：支持动态地添加、删除和更新范围，适应不断变化的数据需求。</li>
+</ul>
+<h2 id="RangeBisection类的实现"><a href="#RangeBisection类的实现" class="headerlink" title="RangeBisection类的实现"></a>RangeBisection类的实现</h2><p>以下是<code>RangeBisection</code>类的实现代码，它展示了如何手动实现一个range map：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> bisect <span class="keyword">import</span> bisect_right</span><br><span class="line"><span class="keyword">from</span> collections.abc <span class="keyword">import</span> MutableMapping</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RangeBisection</span>(<span class="title class_ inherited__">MutableMapping</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;自定义的Range Map，用于存储和检索非重叠的范围。&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, <span class="built_in">map</span>=<span class="literal">None</span></span>):</span><br><span class="line">        self._upper = []</span><br><span class="line">        self._lower = []</span><br><span class="line">        self._values = []</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">map</span> <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">            self.update(<span class="built_in">map</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__len__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self._values)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__getitem__</span>(<span class="params">self, point_or_range</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(point_or_range, <span class="built_in">tuple</span>):</span><br><span class="line">            low, high = point_or_range</span><br><span class="line">            i = bisect_right(self._upper, high)</span><br><span class="line">            point = low</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            point = point_or_range</span><br><span class="line">            i = bisect_right(self._upper, point)</span><br><span class="line">        <span class="keyword">if</span> i &gt;= <span class="built_in">len</span>(self._values) <span class="keyword">or</span> self._lower[i] &gt; point:</span><br><span class="line">            <span class="keyword">raise</span> IndexError(point_or_range)</span><br><span class="line">        <span class="keyword">return</span> self._values[i]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__setitem__</span>(<span class="params">self, r, value</span>):</span><br><span class="line">        lower, upper = r</span><br><span class="line">        i = bisect_right(self._upper, upper)</span><br><span class="line">        <span class="keyword">if</span> i &lt; <span class="built_in">len</span>(self._values) <span class="keyword">and</span> self._lower[i] &lt; upper:</span><br><span class="line">            <span class="keyword">raise</span> IndexError(<span class="string">&#x27;No overlaps permitted&#x27;</span>)</span><br><span class="line">        self._upper.insert(i, upper)</span><br><span class="line">        self._lower.insert(i, lower)</span><br><span class="line">        self._values.insert(i, value)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__delitem__</span>(<span class="params">self, r</span>):</span><br><span class="line">        lower, upper = r</span><br><span class="line">        i = bisect_right(self._upper, upper)</span><br><span class="line">        <span class="keyword">if</span> self._upper[i] != upper <span class="keyword">or</span> self._lower[i] != lower:</span><br><span class="line">            <span class="keyword">raise</span> IndexError(<span class="string">&#x27;Range not in map&#x27;</span>)</span><br><span class="line">        <span class="keyword">del</span> self._upper[i]</span><br><span class="line">        <span class="keyword">del</span> self._lower[i]</span><br><span class="line">        <span class="keyword">del</span> self._values[i]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__iter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">yield</span> <span class="keyword">from</span> <span class="built_in">zip</span>(self._lower, self._upper)</span><br></pre></td></tr></table></figure>
+
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><ul>
+<li><code>__init__</code>方法初始化三个列表：<code>_upper</code>、<code>_lower</code>和<code>_values</code>，分别存储范围的上限、下限和关联的值。如果提供了初始映射，将使用<code>update</code>方法更新实例。</li>
+</ul>
+<h3 id="获取项"><a href="#获取项" class="headerlink" title="获取项"></a>获取项</h3><ul>
+<li><code>__getitem__</code>方法允许通过点或范围来检索值。如果传入的是范围，则找到该范围对应的值；如果是点，则找到包含该点的范围的值。</li>
+</ul>
+<h3 id="设置项"><a href="#设置项" class="headerlink" title="设置项"></a>设置项</h3><ul>
+<li><code>__setitem__</code>方法用于添加或更新范围。它首先检查是否有重叠的范围，如果没有，则将新范围插入到正确的位置。</li>
+</ul>
+<h3 id="删除项"><a href="#删除项" class="headerlink" title="删除项"></a>删除项</h3><ul>
+<li><code>__delitem__</code>方法用于删除指定的范围。如果指定的范围不存在于映射中，将引发<code>IndexError</code>。</li>
+</ul>
+<h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><ul>
+<li><code>__iter__</code>方法允许迭代<code>RangeBisection</code>实例中的所有范围，返回一个由范围下限和上限组成的元组。</li>
+</ul>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>通过自定义<code>RangeBisection</code>类，我们能够在Python中实现一个高效的range map，它不仅能够快速地存储和检索范围数据，还能确保范围之间不会重叠。这个类的应用场景非常广泛，特别是在需要处理大量范围数据的场合。希望本文能够帮助你理解<code>RangeBisection</code>类的实现原理，并在你的项目中有效地应用它。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python的match语法与海象语法</title>
+    <url>/2024/12/01/python%E7%9A%84match%E8%AF%AD%E6%B3%95%E4%B8%8E%E6%B5%B7%E8%B1%A1%E8%AF%AD%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="python的match语法与海象语法"><a href="#python的match语法与海象语法" class="headerlink" title="python的match语法与海象语法"></a>python的match语法与海象语法</h1><h2 id="match语法"><a href="#match语法" class="headerlink" title="match语法"></a>match语法</h2><p>match语法是python3.10引入的，用于替代if-elif-else的语法，使代码更加简洁易读。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">http_error</span>(<span class="params">status</span>):</span><br><span class="line">    match status:</span><br><span class="line">        case <span class="number">400</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;Bad request&quot;</span></span><br><span class="line">        case <span class="number">404</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;Not found&quot;</span></span><br><span class="line">        case <span class="number">418</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;I&#x27;m a teapot&quot;</span></span><br><span class="line">        case _:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;Something is wrong with the internet&quot;</span></span><br></pre></td></tr></table></figure>
+<p>等同于：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">http_error</span>(<span class="params">status</span>):</span><br><span class="line">    <span class="keyword">if</span> status == <span class="number">400</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Bad request&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> status == <span class="number">404</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Not found&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> status == <span class="number">418</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;I&#x27;m a teapot&quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Something is wrong with the internet&quot;</span></span><br></pre></td></tr></table></figure>
+<p>match语法的好处是可以在一个语句中匹配多个条件，而不需要使用多个if-elif-else语句。因此，match语法可以使代码更加简洁易读。</p>
+<h2 id="海象语法"><a href="#海象语法" class="headerlink" title="海象语法"></a>海象语法</h2><p>海象语法是python3.8引入的，用于在表达式中赋值，使代码更加简洁易读。可以在if、while、for等语句中使用。案例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (n := <span class="built_in">len</span>(a)) &gt; <span class="number">10</span>:</span><br><span class="line">    <span class="built_in">print</span>(n)</span><br></pre></td></tr></table></figure>
+<p>等同于：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">n = <span class="built_in">len</span>(a)</span><br><span class="line"><span class="keyword">if</span> n &gt; <span class="number">10</span>:</span><br><span class="line">    <span class="built_in">print</span>(n)</span><br></pre></td></tr></table></figure>
+
+<p>海象语法在循环中也可以使用，例如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (n := <span class="built_in">len</span>(a)) &gt; <span class="number">10</span>:</span><br><span class="line">    <span class="built_in">print</span>(n)</span><br></pre></td></tr></table></figure>
+<p>等同于：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">n = <span class="built_in">len</span>(a)</span><br><span class="line"><span class="keyword">while</span> n &gt; <span class="number">10</span>:</span><br><span class="line">    <span class="built_in">print</span>(n)</span><br><span class="line">    n = <span class="built_in">len</span>(a)</span><br></pre></td></tr></table></figure>
+<p>海象语法的好处是可以在表达式中直接赋值，而不需要先赋值再使用。因此，海象语法可以使代码更加简洁易读。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python注册windows服务</title>
+    <url>/2024/12/01/python%E6%B3%A8%E5%86%8Cwindows%E6%9C%8D%E5%8A%A1/</url>
+    <content><![CDATA[<h2 id="如何使用Python和instsrv-exe-srvany-exe创建Windows服务"><a href="#如何使用Python和instsrv-exe-srvany-exe创建Windows服务" class="headerlink" title="如何使用Python和instsrv.exe/srvany.exe创建Windows服务"></a>如何使用Python和instsrv.exe/srvany.exe创建Windows服务</h2><p>该博客将探讨如何使用Python脚本结合instsrv.exe和srvany.exe工具将任何程序转换为Windows服务。这不仅有助于程序以SYSTEM账户运行，还能实现随机器启动而自启动，并且可以隐藏不必要的窗口。以下是详细的步骤和代码示例。</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在Windows系统中，服务是一种特殊类型的程序，它在后台运行，通常没有用户界面。通过将程序转换为服务，我们可以确保程序在系统启动时自动运行，并且可以在后台持续运行，不受用户登录状态的影响。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>在开始之前，你需要确保你的系统中安装了以下工具：</p>
+<ol>
+<li><strong>instsrv.exe</strong> 和 <strong>srvany.exe</strong>：这两个工具是Microsoft Windows Resource Kits的一部分，用于安装和卸载服务。</li>
+<li><strong>Python</strong>：我们将使用Python编写脚本，因此需要确保Python环境已安装。</li>
+</ol>
+<h2 id="安装和配置服务"><a href="#安装和配置服务" class="headerlink" title="安装和配置服务"></a>安装和配置服务</h2><p>首先，我们需要将<code>instsrv.exe</code>和<code>srvany.exe</code>复制到<code>C:\Windows\System32\</code>目录下（对于64位系统，还需要复制到<code>C:\Windows\SysWow64\</code>目录）。接下来，我们将编写一个Python脚本来检查特定服务是否正在运行，并在未运行时启动该服务。</p>
+<h2 id="Python脚本详解"><a href="#Python脚本详解" class="headerlink" title="Python脚本详解"></a>Python脚本详解</h2><p>以下是Python脚本的详细解释：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> psutil</span><br><span class="line"><span class="keyword">import</span> wmi</span><br><span class="line"><span class="keyword">import</span> winreg</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">start</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    检查特定服务是否正在运行，如果没有，它会通过执行一些命令来启动该服务并退出程序。</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">getattr</span>(sys, <span class="string">&quot;frozen&quot;</span>, <span class="literal">False</span>):</span><br><span class="line">            pro_path = os.path.normpath(os.path.join(</span><br><span class="line">                sys.executable,</span><br><span class="line">                os.pardir,  <span class="comment"># 上一级目录(..)</span></span><br><span class="line">            ))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            pro_path = os.path.normpath(os.path.join(</span><br><span class="line">                os.path.abspath(__file__),</span><br><span class="line">                os.pardir,  <span class="comment"># 上一级目录(..)</span></span><br><span class="line">                os.pardir</span><br><span class="line">            ))</span><br><span class="line">        processes = []</span><br><span class="line">        <span class="keyword">for</span> proc <span class="keyword">in</span> psutil.process_iter():</span><br><span class="line">            processes.append(proc)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 检查系统上是否正在运行名为“ssguard”的服务。</span></span><br><span class="line">        <span class="comment"># 如果未找到该服务，它将继续使用“instsrv.exe”和“srvany.exe”实用程序安装和配置该服务。</span></span><br><span class="line">        <span class="comment"># 然后，它为该服务创建一个注册表项并设置一些参数，例如应用程序路径和目录。最后，它使用“sc start”命令启动服务</span></span><br><span class="line">        <span class="comment"># 并退出程序。</span></span><br><span class="line">        wmiobj = wmi.WMI()</span><br><span class="line">        services = wmiobj.Win32_Service()</span><br><span class="line">        server_name = <span class="string">&quot;ssguard&quot;</span></span><br><span class="line">        <span class="keyword">if</span> server_name <span class="keyword">not</span> <span class="keyword">in</span> [i.Name <span class="keyword">for</span> i <span class="keyword">in</span> services]:</span><br><span class="line">            instsrv_path = os.path.join(pro_path, <span class="string">&quot;utils&quot;</span>, <span class="string">&quot;instsrv.exe&quot;</span>)</span><br><span class="line">            srvany_path = os.path.join(pro_path, <span class="string">&quot;utils&quot;</span>, <span class="string">&quot;srvany.exe&quot;</span>)</span><br><span class="line">            <span class="keyword">if</span> <span class="string">&#x27; &#x27;</span> <span class="keyword">in</span> instsrv_path <span class="keyword">and</span> <span class="string">&#x27; &#x27;</span> <span class="keyword">in</span> srvany_path:</span><br><span class="line">                os.system(<span class="string">f&#x27;&quot;<span class="subst">&#123;instsrv_path&#125;</span>&quot; <span class="subst">&#123;server_name&#125;</span> &quot;<span class="subst">&#123;srvany_path&#125;</span>&quot;&#x27;</span>)</span><br><span class="line">            <span class="keyword">elif</span> <span class="string">&#x27; &#x27;</span> <span class="keyword">in</span> instsrv_path:</span><br><span class="line">                os.system(<span class="string">f&#x27;&quot;<span class="subst">&#123;instsrv_path&#125;</span>&quot; <span class="subst">&#123;server_name&#125;</span> <span class="subst">&#123;srvany_path&#125;</span>&#x27;</span>)</span><br><span class="line">            <span class="keyword">elif</span> <span class="string">&#x27; &#x27;</span> <span class="keyword">in</span> srvany_path:</span><br><span class="line">                os.system(<span class="string">f&#x27;<span class="subst">&#123;instsrv_path&#125;</span> <span class="subst">&#123;server_name&#125;</span> &quot;<span class="subst">&#123;srvany_path&#125;</span>&quot;&#x27;</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                os.system(<span class="string">f&#x27;<span class="subst">&#123;instsrv_path&#125;</span> <span class="subst">&#123;server_name&#125;</span> <span class="subst">&#123;srvany_path&#125;</span>&#x27;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;执行命令:&quot;</span>, <span class="string">f&#x27;<span class="subst">&#123;instsrv_path&#125;</span> <span class="subst">&#123;server_name&#125;</span> <span class="subst">&#123;srvany_path&#125;</span>&#x27;</span>)</span><br><span class="line">            root_key = winreg.OpenKey(</span><br><span class="line">                winreg.HKEY_LOCAL_MACHINE, <span class="string">r&quot;SYSTEM\CurrentControlSet\Services&quot;</span>)</span><br><span class="line">            server = winreg.CreateKey(root_key, server_name)</span><br><span class="line">            parameters = winreg.CreateKey(server, <span class="string">&quot;Parameters&quot;</span>)</span><br><span class="line">            winreg.SetValueEx(parameters, <span class="string">&quot;Application&quot;</span>, <span class="number">0</span>, winreg.REG_SZ,</span><br><span class="line">                              os.path.join(pro_path, <span class="string">&quot;deploymenttools.exe&quot;</span>))</span><br><span class="line">            winreg.SetValueEx(parameters, <span class="string">&quot;AppDirectory&quot;</span>,</span><br><span class="line">                              <span class="number">0</span>, winreg.REG_SZ, pro_path)</span><br><span class="line">            os.system(<span class="string">&quot;sc start ssguard&quot;</span>)</span><br><span class="line">            sys.exit()</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span>(traceback.format_exc())</span><br><span class="line">        sys.exit()</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码解释"><a href="#代码解释" class="headerlink" title="代码解释"></a>代码解释</h3><ol>
+<li><strong>路径获取</strong>：首先，我们获取当前Python脚本的路径，这将用于定位<code>instsrv.exe</code>和<code>srvany.exe</code>工具。</li>
+<li><strong>服务检查</strong>：使用<code>wmi</code>模块检查名为<code>ssguard</code>的服务是否正在运行。</li>
+<li><strong>服务安装</strong>：如果服务未运行，使用<code>instsrv.exe</code>安装服务，并指定<code>srvany.exe</code>作为服务外壳。</li>
+<li><strong>注册表配置</strong>：在注册表中设置服务的参数，包括应用程序路径和目录。</li>
+<li><strong>服务启动</strong>：使用<code>sc start</code>命令启动服务。</li>
+</ol>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>通过上述步骤和代码，可以轻松地将任何程序转换为Windows服务，实现自动启动和后台运行。这种方法不仅提高了程序的稳定性和可用性，还有助于隐藏不必要的用户界面，使系统更加整洁。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>windows软件安装记录</title>
+    <url>/2024/12/01/windows%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h2 id="注册表Uninstall"><a href="#注册表Uninstall" class="headerlink" title="注册表Uninstall"></a>注册表Uninstall</h2><p><code>Microsoft\Windows\CurrentVersion\Uninstall</code> 是 Windows 注册表中的一个键（key），它包含了用户通过“控制面板”中的“程序和功能”（以前称为“添加或删除程序”）安装的所有应用程序的列表。这个注册表键位于 <code>HKEY_LOCAL_MACHINE</code> 分支下。</p>
+<p>当你通过“程序和功能”卸载应用程序时，<code>Windows</code> 会在这个注册表键下为每个应用程序创建一个子键（<code>subkey</code>）。每个子键都包含了与该应用程序相关的卸载信息，包括：</p>
+<ul>
+<li>应用程序的显示名称</li>
+<li>发行者</li>
+<li>卸载字符串（Uninstall String），指向卸载程序的路径</li>
+<li>版本号</li>
+<li>安装源（安装介质的路径，如果是从网络或CD安装）</li>
+<li>估计大小</li>
+<li>安装日期</li>
+<li>状态（是否已安装、正在安装等）</li>
+<li>系统组件（是否是系统必需的应用程序）</li>
+<li>其他与卸载相关的信息</li>
+</ul>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>初始化列表和集合：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">key_list = []</span><br><span class="line">t = []  <span class="comment"># 去重列表</span></span><br></pre></td></tr></table></figure>
+<p>这部分代码初始化了两个列表：<code>key_list</code> 用于存储打开的注册表键，<code>t</code> 用于存储已处理数据的MD5哈希值，用于去重。</p>
+<p>尝试打开注册表键：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    sub_key = <span class="string">r&quot;SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall&quot;</span></span><br><span class="line">    setting.log.info(<span class="string">&quot;正在打开: HKEY_LOCAL_MACHINE\\%s&quot;</span> % sub_key)</span><br><span class="line">    key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, sub_key)</span><br><span class="line">    key_list.append(key)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    setting.log.error(<span class="string">&quot;打开失败, 原因: %s&quot;</span> % <span class="built_in">str</span>(e))</span><br></pre></td></tr></table></figure>
+<p>这部分代码尝试打开注册表中的 <code>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall</code> 键，并将打开的键添加到 <code>key_list</code> 中。如果打开失败，会记录错误日志。</p>
+<p>重复上述步骤，尝试打开其他注册表键：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    sub_key = <span class="string">r&quot;SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall&quot;</span></span><br><span class="line">    setting.log.info(<span class="string">&quot;正在打开: HKEY_LOCAL_MACHINE\\%s&quot;</span> % sub_key)</span><br><span class="line">    key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, sub_key)</span><br><span class="line">    key_list.append(key)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    setting.log.error(<span class="string">&quot;打开失败, 原因: %s&quot;</span> % <span class="built_in">str</span>(e))</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    sub_key = <span class="string">r&quot;SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall&quot;</span></span><br><span class="line">    setting.log.info(<span class="string">&quot;正在打开: HKEY_CURRENT_USER\\%s&quot;</span> % sub_key)</span><br><span class="line">    key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, sub_key)</span><br><span class="line">    key_list.append(key)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    setting.log.error(<span class="string">&quot;打开失败, 原因: %s&quot;</span> % <span class="built_in">str</span>(e))</span><br></pre></td></tr></table></figure>
+<p>这部分代码重复上述步骤，尝试打开 <code>HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall</code> 和 <code>HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall</code> 键，并将打开的键添加到 <code>key_list</code> 中。如果打开失败，会记录错误日志。</p>
+<p>遍历每个打开的注册表键：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> key_list:</span><br><span class="line">    sub_num, _, _ = winreg.QueryInfoKey(key)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(sub_num):</span><br><span class="line">        name = winreg.EnumKey(key, i)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            setting.log.info(<span class="string">&quot;正在打开: %s&quot;</span> % name)</span><br><span class="line">            key_1 = winreg.OpenKey(key, name)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            setting.log.error(<span class="string">&quot;打开失败, 原因: %s&quot;</span> % <span class="built_in">str</span>(e))</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            display_name = winreg.QueryValueEx(key_1, <span class="string">&quot;DisplayName&quot;</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            display_name = <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            display_version = winreg.QueryValueEx(</span><br><span class="line">                key_1, <span class="string">&quot;DisplayVersion&quot;</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            display_version = <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            _, _, timestamp = winreg.QueryInfoKey(key_1)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            timestamp = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>这部分代码遍历每个打开的注册表键，获取每个子键的名称，并尝试打开这些子键。然后，它尝试获取每个子键中的 <code>DisplayName</code>、<code>DisplayVersion</code> 和 <code>timestamp</code> 值。如果获取失败，会将相应的值设置为空字符串或0。</p>
+<p>处理获取到的软件信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> display_name:</span><br><span class="line">    source_data = &#123;</span><br><span class="line">        <span class="string">&quot;DisplayName&quot;</span>: display_name,</span><br><span class="line">        <span class="string">&quot;InstallTime&quot;</span>: timestamp,</span><br><span class="line">        <span class="string">&quot;DisplayVersion&quot;</span>: display_version</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    clean_data = get_line(self, source_data, self.display)</span><br><span class="line">    data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">    md5 = get_md5(data)</span><br><span class="line">    <span class="keyword">if</span> md5 <span class="keyword">not</span> <span class="keyword">in</span> t:</span><br><span class="line">        write_file(self.file, data)</span><br><span class="line">        t.append(md5)</span><br></pre></td></tr></table></figure>
+<p>这部分代码检查 <code>display_name</code> 是否存在，如果存在，则将获取到的软件信息封装成一个字典 <code>source_data</code>。然后，它调用 <code>get_line</code> 方法处理 <code>source_data</code>，并将处理后的数据转换为 <code>JSON</code> 格式。接着，它计算 <code>JSON</code> 数据的 <code>MD5</code> 哈希值，并检查该哈希值是否已存在于 <code>t</code> 中。如果不存在，它将 <code>JSON</code> 数据写入到输出文件中，并将 <code>MD5</code> 哈希值添加到 <code>t</code> 中。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>主机驱动提取</title>
+    <url>/2024/12/01/%E4%B8%BB%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%8F%90%E5%8F%96/</url>
+    <content><![CDATA[<h2 id="意义"><a href="#意义" class="headerlink" title="意义"></a>意义</h2><p>在网络取证中，获取主机驱动信息对于理解系统的配置和行为至关重要。可列举以下几点：</p>
+<ul>
+<li>确定系统组件：驱动程序是操作系统与硬件设备之间的桥梁，获取驱动信息可以帮助识别连接到系统的所有硬件设备，包括网络卡、存储设备、图形卡等 。</li>
+<li>分析潜在风险：某些驱动程序可能包含已知的安全漏洞，通过分析驱动信息，取证专家可以识别可能被利用的脆弱点 。</li>
+<li>检测恶意软件活动：攻击者有时会安装或修改驱动程序以隐藏其活动或获得对系统的更高权限。审查驱动程序可以帮助发现这些恶意更改 。</li>
+<li>系统行为分析：驱动程序影响系统的行为和性能。通过审查驱动程序，可以了解系统在正常和异常情况下的行为模式 。</li>
+<li>追踪网络活动：网络驱动程序特别重要，因为它们处理所有网络通信。取证专家可以通过分析网络驱动程序来追踪网络连接和数据流 。</li>
+<li>支持法律程序：在法律诉讼中，可能需要提供系统驱动程序的信息作为证据，以证明或反驳与案件相关的技术方面的论点 。</li>
+<li>系统恢复和重建：在事件响应中，获取驱动信息有助于重建受损系统的原始状态，这对于恢复服务和防止未来的攻击至关重要 。</li>
+<li>兼容性和性能优化：驱动程序信息有助于确定系统组件之间的兼容性问题，并进行必要的调整以优化系统性能 。</li>
+</ul>
+<h2 id="windows上实现"><a href="#windows上实现" class="headerlink" title="windows上实现"></a>windows上实现</h2><p>定义要查找的进程名称：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pe_name = <span class="string">&quot;WinDriver.exe&quot;</span></span><br></pre></td></tr></table></figure>
+<p>这行代码定义了一个字符串 <code>pe_name</code>，其值为 “WinDriver.exe”，即要查找的进程名称。</p>
+<p>遍历所有进程：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> process <span class="keyword">in</span> psutil.process_iter():</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        name = process.name()</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        name = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> name == pe_name:</span><br><span class="line">            setting.log.error(<span class="string">&quot;检测到%s已在运行, 正在终止重启&quot;</span> % name)</span><br><span class="line">            process.terminate()</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        setting.log.error(<span class="string">&quot;终止失败,原因: %s&quot;</span> % <span class="built_in">str</span>(e))</span><br><span class="line">        <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<p>这段代码使用 <code>psutil.process_iter()</code> 遍历所有正在运行的进程。对于每个进程，它尝试获取进程的名称，并检查该名称是否与 <code>pe_name</code> 相匹配。如果匹配，它会尝试终止该进程，并记录错误信息。</p>
+<p>获取驱动程序信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pe_path = os.path.join(setting.PROJ_PATH, pe_name)</span><br><span class="line">process = exe_cmd(pe_path)</span><br></pre></td></tr></table></figure>
+<p>这两行代码首先构建了 <code>WinDriver.exe</code> 的完整路径，然后使用 <code>exe_cmd</code> 函数执行该程序，以获取驱动程序的信息。</p>
+<p>处理驱动程序信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    item = process.stdout.readline().decode(<span class="string">&quot;gbk&quot;</span>)  <span class="comment"># type: ignore</span></span><br><span class="line">    <span class="keyword">if</span> item:</span><br><span class="line">        line = item.split(<span class="string">&quot;|&quot;</span>)</span><br><span class="line">        source_data = &#123;</span><br><span class="line">            <span class="string">&quot;Name&quot;</span>: line[<span class="number">0</span>],</span><br><span class="line">            <span class="string">&quot;Path&quot;</span>: line[<span class="number">1</span>],</span><br><span class="line">            <span class="string">&quot;Address&quot;</span>: line[<span class="number">2</span>],</span><br><span class="line">            <span class="string">&quot;Description&quot;</span>: line[<span class="number">3</span>],</span><br><span class="line">            <span class="string">&quot;Company&quot;</span>: line[<span class="number">4</span>],</span><br><span class="line">            <span class="string">&quot;Version&quot;</span>: line[<span class="number">5</span>],</span><br><span class="line">            <span class="string">&quot;Type&quot;</span>: line[<span class="number">6</span>],</span><br><span class="line">            <span class="string">&quot;Md5&quot;</span>: line[<span class="number">7</span>]</span><br><span class="line">        &#125;</span><br><span class="line">        clean_data = get_line(self, source_data, self.display)</span><br><span class="line">        data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">        write_file(self.file, data)</span><br><span class="line">    <span class="keyword">elif</span> process.poll() <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<p>这段代码使用一个无限循环来读取 <code>WinDriver.exe</code> 进程的标准输出。对于每一行输出，它将其分割成多个部分，并将这些部分存储在 <code>source_data</code> 字典中。然后，它调用 <code>get_line</code> 方法处理 <code>source_data</code>，并将处理后的数据转换为 <code>JSON</code> 格式，然后写入到输出文件中。如果 <code>process.poll()</code> 返回非空值，则表示进程已经结束，循环也随之结束。</p>
+<h2 id="Linux上实现"><a href="#Linux上实现" class="headerlink" title="Linux上实现"></a>Linux上实现</h2><p>执行 <code>lsmod</code> 命令：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">t = exe_cmd(<span class="string">&quot;lsmod&quot;</span>).split(<span class="string">&quot;\n&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>这行代码执行 <code>lsmod</code> 命令，该命令用于列出当前系统中已加载的内核模块。执行结果以字符串形式返回，并通过 <code>split(&quot;\n&quot;)</code> 方法分割成多行。</p>
+<p>遍历输出结果：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> t[<span class="number">1</span>:]:</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> line:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    module, size, depend = line.split(maxsplit=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>这段代码遍历 <code>lsmod</code> 命令的输出结果，跳过第一行（通常是标题行）。对于每一行，它使用 <code>split(maxsplit=2)</code> 方法将其分割成最多三个部分：模块名、大小和依赖项。</p>
+<p>构建源数据字典：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">source_data = &#123;</span><br><span class="line">    <span class="string">&quot;Module&quot;</span>: module,</span><br><span class="line">    <span class="string">&quot;Size&quot;</span>: size,</span><br><span class="line">    <span class="string">&quot;Depend&quot;</span>: depend</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这行代码将获取到的模块名、大小和依赖项封装成一个字典，其中键对应于 <code>display_list</code> 中的 <code>output</code> 字段。</p>
+<p>处理数据并写入文件：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">clean_data = get_line(self, source_data, self.display_list)</span><br><span class="line">data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">write_file(self.file, data)</span><br></pre></td></tr></table></figure>
+<p>这行代码调用 <code>get_line</code> 方法处理 <code>source_data</code>，并将处理后的数据转换为 <code>JSON</code> 格式，然后写入到输出文件中。</p>
+<h2 id="拓展-lsmod"><a href="#拓展-lsmod" class="headerlink" title="拓展-lsmod"></a>拓展-<code>lsmod</code></h2><p><code>lsmod</code> 是一个用于在 <code>Linux</code> 系统上列出已加载内核模块的命令。内核模块是可加载的代码块，它们可以在系统运行时动态地插入到内核中，以提供额外的功能，比如硬件驱动程序、文件系统支持、网络协议等。</p>
+<p><code>lsmod</code> 命令的输出通常包含以下列：</p>
+<ul>
+<li><code>Module</code>: 模块的名称。</li>
+<li><code>Size</code>: 模块占用的内存大小（以字节为单位）。</li>
+<li><code>Used by</code>: 依赖于该模块的其他模块数量。</li>
+</ul>
+<p>lsmod 命令的输出结果类似于以下示例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Module                  Size  Used by</span><br><span class="line">nls_iso8859_1           16384  1 </span><br><span class="line">vfat                   20480  1 </span><br><span class="line">fat                    73728  1 vfat</span><br></pre></td></tr></table></figure>
+<p>在这个示例中，<code>nls_iso8859_1</code>、<code>vfat</code> 和 <code>fat</code> <code>是已加载的内核模块名称，Size</code> 列显示了每个模块占用的内存大小，<code>Used by</code> 列显示了依赖于该模块的其他模块数量。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>优雅地废弃代码</title>
+    <url>/2024/12/01/%E4%BC%98%E9%9B%85%E5%9C%B0%E5%BA%9F%E5%BC%83%E4%BB%A3%E7%A0%81/</url>
+    <content><![CDATA[<p><a href="https://music.163.com/#/song?id=1867169785">https://music.163.com/#/song?id=1867169785</a></p>
+<h2 id="Python-中的-deprecated-装饰器：优雅地废弃代码"><a href="#Python-中的-deprecated-装饰器：优雅地废弃代码" class="headerlink" title="Python 中的 @deprecated 装饰器：优雅地废弃代码"></a>Python 中的 @deprecated 装饰器：优雅地废弃代码</h2><p>在软件开发过程中，我们经常会遇到需要废弃旧代码的情况。这可能是因为代码存在安全问题、性能问题，或者是因为有了更好的替代方案。Python 提供了一种优雅的方式来处理这种情况，那就是使用 <code>@deprecated</code> 装饰器。本文将详细介绍 <code>@deprecated</code> 装饰器的使用方法、实现原理以及最佳实践。</p>
+<h2 id="什么是-deprecated-装饰器？"><a href="#什么是-deprecated-装饰器？" class="headerlink" title="什么是 @deprecated 装饰器？"></a>什么是 <code>@deprecated</code> 装饰器？</h2><p><code>@deprecated</code> 装饰器是一个用于标记函数、方法或类为已废弃的工具。当被标记的代码被调用时，它会触发一个 <code>DeprecationWarning</code> 警告，提醒开发者该功能将在未来版本中被移除或更改。</p>
+<h2 id="如何使用-deprecated-装饰器？"><a href="#如何使用-deprecated-装饰器？" class="headerlink" title="如何使用 @deprecated 装饰器？"></a>如何使用 <code>@deprecated</code> 装饰器？</h2><p>Python 标准库中的 <code>warnings</code> 模块提供了 <code>warn</code> 函数，可以用来发出警告。结合 <code>functools</code> 模块中的 <code>wraps</code> 装饰器，我们可以创建一个自定义的 <code>@deprecated</code> 装饰器。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> wraps</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">deprecated</span>(<span class="params">func</span>):</span><br><span class="line"><span class="meta">    @wraps(<span class="params">func</span>)</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">*args, **kwargs</span>):</span><br><span class="line">        warnings.warn(</span><br><span class="line">            <span class="string">f&quot;<span class="subst">&#123;func.__name__&#125;</span> is deprecated and will be removed in future versions.&quot;</span>,</span><br><span class="line">            category=DeprecationWarning,</span><br><span class="line">            stacklevel=<span class="number">2</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> func(*args, **kwargs)</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br></pre></td></tr></table></figure>
+
+<p>使用这个装饰器非常简单，只需将其添加到你想要废弃的函数上方即可：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">@deprecated</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">old_function</span>(<span class="params">x, y</span>):</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br></pre></td></tr></table></figure>
+
+<h2 id="deprecated-装饰器的工作原理"><a href="#deprecated-装饰器的工作原理" class="headerlink" title="@deprecated 装饰器的工作原理"></a><code>@deprecated</code> 装饰器的工作原理</h2><p>当你调用被 <code>@deprecated</code> 装饰的函数时，装饰器内部的 <code>wrapper</code> 函数会被执行。这个 <code>wrapper</code> 函数首先使用 <code>warnings.warn</code> 发出一个 <code>DeprecationWarning</code>，然后调用原始函数。这样，即使函数被废弃，它仍然可以执行其原始功能，同时提醒使用者注意即将到来的更改。</p>
+<h2 id="为什么要使用-deprecated-装饰器？"><a href="#为什么要使用-deprecated-装饰器？" class="headerlink" title="为什么要使用 @deprecated 装饰器？"></a>为什么要使用 <code>@deprecated</code> 装饰器？</h2><ol>
+<li><strong>提前通知</strong>：通过 <code>DeprecationWarning</code> 提前通知用户，让他们有时间迁移到新的API。</li>
+<li><strong>代码兼容性</strong>：在完全移除旧代码之前，保持向后兼容性。</li>
+<li><strong>逐步迁移</strong>：允许开发者逐步迁移代码，而不是一次性大规模更改。</li>
+</ol>
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><ol>
+<li><strong>明确替代方案</strong>：在发出警告时，最好提供替代方案的信息，帮助用户平滑过渡。</li>
+<li><strong>设置警告级别</strong>：根据需要，可以设置警告的级别，例如 <code>DeprecationWarning</code> 或 <code>PendingDeprecationWarning</code>。</li>
+<li><strong>记录废弃日志</strong>：在发出警告的同时，可以考虑将废弃信息记录到日志文件中，方便追踪废弃代码的使用情况。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>使用 <code>@deprecated</code> 装饰器是处理代码废弃的一种优雅方式。它不仅提醒开发者注意即将到来的更改，还有助于保持代码的兼容性和可维护性。通过合理使用 <code>@deprecated</code> 装饰器，我们可以确保代码的平滑过渡和持续改进。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>为什么会是443端口</title>
+    <url>/2024/12/01/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%98%AF443%E7%AB%AF%E5%8F%A3/</url>
+    <content><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>在使用Nginx进行HTTPS服务配置时，我遇到一个问题：只有443端口可以访问HTTPS服务。我很好奇为什么会是443端口。</p>
+<h2 id="443端口的历史原因"><a href="#443端口的历史原因" class="headerlink" title="443端口的历史原因"></a>443端口的历史原因</h2><p>443端口是HTTP Secure（HTTPS）服务的默认端口，这个数字并非随意选择。在互联网的早期，端口号被分配给特定的服务，而443端口被指定为SSL（Secure Sockets Layer）服务的端口，这是HTTPS的前身。随着时间的推移，SSL被TLS（Transport Layer Security）取代，但443端口作为安全通信端口的传统得以保留。</p>
+<h3 id="SSL-TLS协议"><a href="#SSL-TLS协议" class="headerlink" title="SSL/TLS协议"></a>SSL/TLS协议</h3><p>SSL/TLS协议是用于在互联网上提供安全通信的加密协议。它通过加密数据、验证身份和确保数据完整性来保护通信的安全。在HTTPS中，SSL/TLS协议用于加密客户端和服务器之间的数据传输，确保数据在传输过程中不被窃听或篡改。SSL是Secure Sockets Layer的缩写，TLS是Transport Layer Security的缩写，SSL中文含义是“安全套接字层”。TLS是the Transport Layer Security的缩写，中文含义是“传输层安全协议”。SSL被TLS取代的原因是TLS在SSL的基础上进行了改进和增强，提供了更好的安全性和性能。</p>
+<h2 id="443端口的技术原因"><a href="#443端口的技术原因" class="headerlink" title="443端口的技术原因"></a>443端口的技术原因</h2><p>在技术层面，443端口的广泛使用有几个原因：</p>
+<ol>
+<li><strong>默认配置</strong>：大多数服务器和客户端软件默认使用443端口进行HTTPS通信，这使得配置和使用变得简单快捷。</li>
+<li><strong>安全性</strong>：443端口与SSL/TLS协议紧密关联，这些协议提供了数据加密、完整性校验和身份验证，增强了通信的安全性。</li>
+<li><strong>兼容性</strong>：由于443端口的广泛使用，几乎所有的网络设备和中间件都支持通过该端口的HTTPS流量，确保了广泛的兼容性。</li>
+</ol>
+<h2 id="Nginx配置与端口转发"><a href="#Nginx配置与端口转发" class="headerlink" title="Nginx配置与端口转发"></a>Nginx配置与端口转发</h2><p>在使用Nginx进行端口转发时，我们可能会遇到只有443端口可以访问的问题。这通常是由于以下几个原因：</p>
+<ol>
+<li><strong>配置错误</strong>：Nginx配置文件中可能存在错误，导致非443端口的HTTPS服务无法正确转发。例如，SSL证书可能只配置在443端口，而其他端口没有正确配置。</li>
+<li><strong>防火墙限制</strong>：服务器或网络的防火墙可能只允许443端口的流量通过，而阻止了其他端口的HTTPS流量。</li>
+<li><strong>浏览器行为</strong>：大多数浏览器默认只接受443端口的HTTPS连接，对于非标准端口的HTTPS连接可能会发出警告或拒绝连接。</li>
+</ol>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>要解决只有443端口可以访问HTTPS服务的问题，可以采取以下措施：</p>
+<ol>
+<li><strong>检查Nginx配置</strong>：确保Nginx配置文件中所有需要的端口都正确配置了SSL证书和监听指令。</li>
+<li><strong>调整防火墙规则</strong>：检查并调整服务器和网络的防火墙规则，允许除443端口外的其他端口的HTTPS流量。</li>
+<li><strong>浏览器设置</strong>：对于开发和测试目的，可以在浏览器中设置以接受非标准端口的HTTPS连接。</li>
+</ol>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>443端口作为HTTPS服务的默认端口，有着深厚的历史和技术背景。在使用Nginx进行HTTPS服务配置时，确保正确配置Nginx和防火墙规则，以允许非443端口的HTTPS流量，可以避免只有443端口可以访问的问题。通过这些措施，可以确保HTTPS服务的灵活性和安全性。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>剪切板取证</title>
+    <url>/2024/12/01/%E5%89%AA%E5%88%87%E6%9D%BF%E5%8F%96%E8%AF%81/</url>
+    <content><![CDATA[<h2 id="代码如下"><a href="#代码如下" class="headerlink" title="代码如下"></a>代码如下</h2><p>打开剪贴板：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">win32clipboard.OpenClipboard()</span><br></pre></td></tr></table></figure>
+<p>这行代码打开剪贴板，以便读取其中的数据。</p>
+<p>获取剪贴板中的文本数据：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">text = win32clipboard.GetClipboardData(win32clipboard.CF_UNICODETEXT)</span><br></pre></td></tr></table></figure>
+<p>这行代码从剪贴板中获取 Unicode 文本数据。</p>
+<p>构建源数据字典：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">source_data = &#123;</span><br><span class="line">    <span class="string">&quot;type&quot;</span>: <span class="string">&quot;txt&quot;</span>,</span><br><span class="line">    <span class="string">&quot;content&quot;</span>: text</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这行代码将获取到的文本数据封装成一个字典，其中 type 表示数据类型为文本，content 是文本的具体内容。</p>
+<p>处理数据并写入文件：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">clean_data = get_line(self, source_data, self.display)</span><br><span class="line">data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">write_file(self.file, data)</span><br></pre></td></tr></table></figure>
+<p>这行代码调用 get_line 方法处理 source_data，并将处理后的数据转换为 JSON 格式，然后写入到输出文件中。</p>
+<p>关闭剪贴板：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">win32clipboard.CloseClipboard()</span><br></pre></td></tr></table></figure>
+<p>这行代码关闭剪贴板，释放资源。</p>
+<p>处理异常：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">except</span> Exception:</span><br><span class="line">    setting.log.info(<span class="string">&quot;剪切板当中没有文本数据！&quot;</span>)</span><br><span class="line">    self.paste_pic()</span><br></pre></td></tr></table></figure>
+<p>这行代码捕获所有异常，并记录错误信息。如果剪贴板中没有文本数据，它会调用 self.paste_pic() 方法尝试获取图像数据并进行处理。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>后台终端的使用</title>
+    <url>/2024/12/01/%E5%90%8E%E5%8F%B0%E7%BB%88%E7%AB%AF%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="Screen命令使用指南"><a href="#Screen命令使用指南" class="headerlink" title="Screen命令使用指南"></a>Screen命令使用指南</h2><p><code>screen</code> 是一个非常强大的命令行工具，它允许用户在远程服务器上开启多个终端会话，并在它们之间自由切换。它特别适合于需要长时间运行的命令和断线后恢复的场景。</p>
+<h2 id="安装-Screen"><a href="#安装-Screen" class="headerlink" title="安装 Screen"></a>安装 Screen</h2><p>在大多数 Linux 发行版中，<code>screen</code> 可以通过包管理器安装。以下是在不同系统中安装 <code>screen</code> 的命令：</p>
+<ul>
+<li><strong>Ubuntu/Debian</strong>:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install screen</span><br></pre></td></tr></table></figure></li>
+<li><strong>CentOS/RHEL</strong>:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install screen</span><br></pre></td></tr></table></figure></li>
+<li><strong>Fedora</strong>:<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo dnf install screen</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><h3 id="创建新的-Screen-会话"><a href="#创建新的-Screen-会话" class="headerlink" title="创建新的 Screen 会话"></a>创建新的 Screen 会话</h3><p>要创建一个新的 <code>screen</code> 会话，可以使用以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">screen -S session_name</span><br></pre></td></tr></table></figure>
+
+<p>这里 <code>session_name</code> 是你为会话指定的名称，你可以用它来标识和管理不同的会话。</p>
+<h3 id="列出当前的-Screen-会话"><a href="#列出当前的-Screen-会话" class="headerlink" title="列出当前的 Screen 会话"></a>列出当前的 Screen 会话</h3><p>要查看当前所有的 <code>screen</code> 会话，可以使用：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">screen -<span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+
+<p>这将列出所有活动的会话以及它们的状态。</p>
+<h3 id="重新连接到-Screen-会话"><a href="#重新连接到-Screen-会话" class="headerlink" title="重新连接到 Screen 会话"></a>重新连接到 Screen 会话</h3><p>如果你之前创建了一个 <code>screen</code> 会话并且断开了连接，可以使用以下命令重新连接：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">screen -r session_name</span><br></pre></td></tr></table></figure>
+
+<p>如果会话是活动的，<code>-r</code> 选项将你附加到会话上。</p>
+<h3 id="退出-Screen-会话"><a href="#退出-Screen-会话" class="headerlink" title="退出 Screen 会话"></a>退出 Screen 会话</h3><p>要退出当前的 <code>screen</code> 会话，可以按 <code>Ctrl-A</code> 然后按 <code>D</code>。这将使你从会话中分离，但会话仍然在后台运行。</p>
+<p>如果你想要完全结束一个会话，可以在会话内部运行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<p>或者使用 <code>screen -X -S session_name quit</code> 从外部结束会话。</p>
+<h2 id="高级使用"><a href="#高级使用" class="headerlink" title="高级使用"></a>高级使用</h2><h3 id="分屏操作"><a href="#分屏操作" class="headerlink" title="分屏操作"></a>分屏操作</h3><p><code>screen</code> 支持在同一会话中垂直或水平分割窗口。按 <code>Ctrl-A</code> 然后按 <code>|</code> 可以垂直分割窗口，按 <code>Ctrl-A</code> 然后按 <code>S</code> 可以水平分割窗口。使用 <code>Ctrl-A</code> 然后按方向键可以在不同的窗口之间切换。</p>
+<h3 id="会话共享"><a href="#会话共享" class="headerlink" title="会话共享"></a>会话共享</h3><p><code>screen</code> 允许多个用户共享同一个会话。要共享一个会话，可以这样做：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">screen -x session_name</span><br></pre></td></tr></table></figure>
+
+<p>这将允许你和会话的所有者一起工作。</p>
+<h2 id="实用案例"><a href="#实用案例" class="headerlink" title="实用案例"></a>实用案例</h2><h3 id="1-远程工作"><a href="#1-远程工作" class="headerlink" title="1. 远程工作"></a>1. 远程工作</h3><p>当你需要在远程服务器上运行一个长时间任务时，可以使用 <code>screen</code> 启动任务，然后安全地断开连接。任务将在服务器上继续运行，你可以随时重新连接回去检查进度。</p>
+<h3 id="2-多任务处理"><a href="#2-多任务处理" class="headerlink" title="2. 多任务处理"></a>2. 多任务处理</h3><p>如果你需要同时在多个终端窗口工作，<code>screen</code> 的分屏功能可以让你在一个终端窗口中管理多个任务。</p>
+<h3 id="3-协作编程"><a href="#3-协作编程" class="headerlink" title="3. 协作编程"></a>3. 协作编程</h3><p><code>screen</code> 的会话共享功能允许多个开发者同时查看和编辑同一个项目，非常适合协作编程。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>screen</code> 是一个功能强大的工具，它提供了一种灵活的方式来管理和恢复远程会话。无论你是系统管理员、开发者还是普通用户，掌握 <code>screen</code> 的使用都能提高你的工作效率。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在windows中获取硬件信息</title>
+    <url>/2024/12/01/%E5%9C%A8windows%E4%B8%AD%E8%8E%B7%E5%8F%96%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF/</url>
+    <content><![CDATA[<p>遍历系统中的所有逻辑设备：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> device <span class="keyword">in</span> wmi.WMI().CIM_LogicalDevice():</span><br></pre></td></tr></table></figure>
+<p>这部分代码使用 wmi 模块遍历系统中的所有逻辑设备。</p>
+<p>提取每个逻辑设备的信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">item = &#123;</span><br><span class="line">    <span class="string">&quot;PNPDeviceID&quot;</span>: device.PNPDeviceID <span class="keyword">if</span> <span class="built_in">hasattr</span>(device, <span class="string">&quot;PNPDeviceID&quot;</span>) <span class="keyword">else</span> <span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Description&quot;</span>: device.Description <span class="keyword">if</span> <span class="built_in">hasattr</span>(device, <span class="string">&quot;Description&quot;</span>) <span class="keyword">else</span> <span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Caption&quot;</span>: device.Caption <span class="keyword">if</span> <span class="built_in">hasattr</span>(device, <span class="string">&quot;Caption&quot;</span>) <span class="keyword">else</span> <span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Manufacturer&quot;</span>: device.Manufacturer <span class="keyword">if</span> <span class="built_in">hasattr</span>(device, <span class="string">&quot;Manufacturer&quot;</span>) <span class="keyword">else</span> <span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="string">&quot;PNPClass&quot;</span>: device.PNPClass <span class="keyword">if</span> <span class="built_in">hasattr</span>(device, <span class="string">&quot;PNPClass&quot;</span>) <span class="keyword">else</span> <span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="string">&quot;ClassGuid&quot;</span>: device.ClassGuid <span class="keyword">if</span> <span class="built_in">hasattr</span>(device, <span class="string">&quot;ClassGuid&quot;</span>) <span class="keyword">else</span> <span class="string">&quot;&quot;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这部分代码将每个逻辑设备的信息提取出来，并存储在一个字典 item 中。如果某个属性不存在，它会将该属性的值设置为空字符串。</p>
+<p>处理获取到的逻辑设备信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">clean_data = get_line(self, item, self.display_list)</span><br><span class="line">data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">write_file(self.file, data)</span><br></pre></td></tr></table></figure>
+<p>这部分代码调用 get_line 方法处理 item，并将处理后的数据转换为 JSON 格式。然后，它将 JSON 数据写入到输出文件中。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>回忆是本乱码的书</title>
+    <url>/2024/12/01/%E5%9B%9E%E5%BF%86%E6%98%AF%E6%9C%AC%E4%B9%B1%E7%A0%81%E7%9A%84%E4%B9%A6/</url>
+    <content><![CDATA[<p>回忆是本乱码的书，你会时不时拼凑出一句完整的话，然后后知后觉。<br>等你懂了，也晚了。<br>虽然晚了，但总算懂了，所以祝大家珍惜身边每一个人，每一段关系。<br>我们无法判断此刻的价值，知道成为回忆。<br>但我们可以让此刻的价值加倍。<br>这样在回忆中见到当时那个错过同频的人，我们也可以笑着说：哦！～我懂你意思了。</p>
+]]></content>
+      <categories>
+        <category>思考</category>
+      </categories>
+      <tags>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>始化COM库</title>
+    <url>/2024/12/01/%E5%A7%8B%E5%8C%96COM%E5%BA%93/</url>
+    <content><![CDATA[<p>COM 是一种微软的软件组件技术，它允许不同的应用程序之间进行通信和交互。在 Windows 操作系统中，许多应用程序和服务都使用 COM 来实现其功能。</p>
+<p>pythoncom.CoInitialize() 在 Python 程序中的作用是初始化 COM（Component Object Model）库。</p>
+<p>当你在 Python 程序中使用 pythoncom.CoInitialize() 时，你是在告诉 Python 解释器需要初始化 COM 库，以便能够使用 COM 相关的功能。这通常在以下情况下需要：</p>
+<ul>
+<li><p>使用 COM 库：如果你需要在 Python 程序中使用 COM 库来与其他应用程序或服务进行交互，你需要首先初始化 COM 库。</p>
+</li>
+<li><p>多线程环境：在多线程环境中，每个线程都需要独立地初始化 COM 库。如果你在多线程程序中使用 COM，你需要在每个线程中调用 pythoncom.CoInitialize()。</p>
+</li>
+<li><p>避免冲突：COM 库的初始化是线程安全的，但在同一线程中多次初始化可能会导致问题。因此，通常建议在程序开始时调用一次 pythoncom.CoInitialize()，并在程序结束时调用 pythoncom.CoUninitialize() 来清理资源。</p>
+</li>
+</ul>
+<p>如果 pythoncom.CoInitialize() 是在一个循环中被调用，这可能是因为程序需要在每个循环迭代中处理 COM 相关的任务，或者是因为程序需要在多个线程中并行处理 COM 任务。然而，频繁地初始化和清理 COM 库可能会影响程序的性能，因此通常建议只在必要时初始化 COM 库，并在不再需要时及时清理。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>开机自启动</title>
+    <url>/2024/12/01/%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8/</url>
+    <content><![CDATA[<h2 id="开机自启动"><a href="#开机自启动" class="headerlink" title="开机自启动"></a>开机自启动</h2><p>自启动程序是指在系统启动时自动运行的程序。这些程序可能会影响系统的启动速度和性能，因此了解如何获取和管理这些程序是非常重要的。本文将介绍一种使用 Python 实现的方法，通过调用系统命令和处理 CSV 文件来获取自启动程序的信息。</p>
+<h2 id="windows代码实现"><a href="#windows代码实现" class="headerlink" title="windows代码实现"></a>windows代码实现</h2><p>确定 autorunsc 程序的名称：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">autorunsc_name = <span class="string">&quot;autorunsc64.exe&quot;</span> <span class="keyword">if</span> platform.architecture()[<span class="number">0</span>] == <span class="string">&quot;64bit&quot;</span> <span class="keyword">else</span> <span class="string">&quot;autorunsc32.exe&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这行代码根据当前系统的架构（64 位或 32 位）来确定 autorunsc 程序的文件名。<br>终止正在运行的 autorunsc 进程：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> process <span class="keyword">in</span> psutil.process_iter():</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        name = process.name()</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        name = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> name == autorunsc_name:</span><br><span class="line">            process.terminate()</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        setting.log.error(<span class="string">&quot;终止垃圾进程失败,原因: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(e)))</span><br><span class="line">        <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<p>这段代码遍历所有正在运行的进程，尝试终止名为 autorunsc 的进程，以确保没有其他实例在运行。</p>
+<p>执行 autorunsc 命令并保存结果到临时文件：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">autoruns_path = os.path.join(setting.PROJ_PATH, autorunsc_name)</span><br><span class="line">result_temp_path = os.path.join(setting.PROJ_PATH, <span class="string">&#x27;res_h.csv&#x27;</span>)</span><br><span class="line">os.system(<span class="string">&quot;&#123;&#125; /accepteula -a h -s -h -ct &gt; &#123;&#125;&quot;</span>.<span class="built_in">format</span>(autoruns_path, result_temp_path))</span><br></pre></td></tr></table></figure>
+<p>这行代码执行 autorunsc 命令，并将结果保存到一个临时的 CSV 文件中。</p>
+<p>处理 CSV 文件中的数据：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(result_temp_path, <span class="string">&quot;rt&quot;</span>, encoding=<span class="string">&quot;UTF-16&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> csv.DictReader(f, delimiter=<span class="string">&quot;\t&quot;</span>):</span><br><span class="line">        clean_data = get_line(self, row, self.display_list)</span><br><span class="line">        data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">        write_file(self.file, data)</span><br></pre></td></tr></table></figure>
+<p>这段代码打开临时 CSV 文件，逐行读取数据，并使用 get_line 函数处理每一行数据。处理后的数据被转换为 JSON 格式，并写入到输出文件中。</p>
+<p>删除临时文件：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">os.remove(result_temp_path)</span><br></pre></td></tr></table></figure>
+<p>最后，这行代码删除临时 CSV 文件，以保持文件系统的整洁。</p>
+<p>这个方法通过调用 autorunsc 命令获取 Windows 自启动程序的信息，并将这些信息处理后写入到指定的文件中。</p>
+<h2 id="Linux代码实现"><a href="#Linux代码实现" class="headerlink" title="Linux代码实现"></a>Linux代码实现</h2><p>下面是对代码的详细解释：<br>执行 systemctl list-unit-files 命令并获取结果：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">res_list = exe_cmd(<span class="string">&quot;systemctl list-unit-files&quot;</span>).split(<span class="string">&quot;\n&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>这行代码执行 systemctl list-unit-files 命令，并将结果按行分割成列表。</p>
+<p>遍历结果列表，处理每一行数据：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> res_list[<span class="number">1</span>:-<span class="number">2</span>:]:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        line = line.split()</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(line) == <span class="number">3</span>:</span><br><span class="line">            name, state, _ = line</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            name, state = line</span><br><span class="line"></span><br><span class="line">        source_data = &#123;</span><br><span class="line">            <span class="string">&quot;Name&quot;</span>: name,</span><br><span class="line">            <span class="string">&quot;State&quot;</span>: state</span><br><span class="line">        &#125;</span><br><span class="line">        clean_data = get_line(self, source_data, self.display)</span><br><span class="line">        data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">        write_file(self.file, data)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        setting.log.error(<span class="built_in">str</span>(e))</span><br></pre></td></tr></table></figure>
+
+<p>这段代码遍历结果列表，跳过第一行和最后两行，因为它们不包含服务信息。对于每一行数据，它尝试将其分割成两部分或三部分（取决于是否有额外的信息），然后将服务名和状态保存到 source_data 字典中。接着，它调用 get_line 函数处理 source_data，并将处理后的数据转换为 JSON 格式，最后写入到输出文件中。如果在处理过程中遇到异常，它会记录错误信息。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>工具LastActivityView获取历史运行记录</title>
+    <url>/2024/12/01/%E5%B7%A5%E5%85%B7LastActivityView%E8%8E%B7%E5%8F%96%E5%8E%86%E5%8F%B2%E8%BF%90%E8%A1%8C%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h2 id="LastActivityView"><a href="#LastActivityView" class="headerlink" title="LastActivityView"></a><code>LastActivityView</code></h2><p>查看电脑操作记录(<code>LastActivityView</code>)是一款简单而有用的软件，可以在列表中清清楚楚的看到你的电脑使用历史记录。该软件直接调用系统日志，能显示安装软件、系统启动、关机、网络连接、执行的程序等几乎所有的电脑使用日志，让你更熟悉电脑的行为。</p>
+<h2 id="代码演示"><a href="#代码演示" class="headerlink" title="代码演示"></a>代码演示</h2><p>终止指定进程：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pe_name = <span class="string">&quot;LastActivityView.exe&quot;</span></span><br><span class="line"><span class="keyword">for</span> process <span class="keyword">in</span> psutil.process_iter():</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        name = process.name()</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        name = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> name == pe_name:</span><br><span class="line">            process.terminate()</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        setting.log.error(<span class="string">&quot;终止垃圾进程失败,原因: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(e)))</span><br><span class="line">        <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<p>这部分代码首先定义了一个要检查的进程名 <code>pe_name</code>，然后遍历所有正在运行的进程。如果发现进程名为 <code>LastActivityView.exe</code>，则尝试终止该进程，并记录日志。如果终止失败，也会记录日志并返回。</p>
+<p>执行外部程序获取软件运行历史记录：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tool_path = os.path.join(setting.PROJ_PATH, pe_name)</span><br><span class="line">csv_path = os.path.join(setting.PROJ_PATH, <span class="string">&quot;LastActivityView.csv&quot;</span>)</span><br><span class="line">os.system(<span class="string">&quot;&#123;&#125; /scomma &#123;&#125;&quot;</span>.<span class="built_in">format</span>(tool_path, csv_path))</span><br></pre></td></tr></table></figure>
+<p>这部分代码拼接了外部程序 <code>LastActivityView.exe</code> 的路径和保存<code>CSV</code>文件的路径，然后执行命令行命令，使用 <code>LastActivityView.exe</code> 生成软件运行历史记录的<code>CSV</code>文件。</p>
+<p>解析CSV文件：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(csv_path, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&quot;GB2312&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> csv.DictReader(file, delimiter=<span class="string">&quot;,&quot;</span>):</span><br><span class="line">        clean_data = get_line(self, row, self.display_list)</span><br><span class="line">        data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">        write_file(self.file, data)</span><br></pre></td></tr></table></figure>
+<p>这部分代码打开<code>CSV</code>文件，使用 <code>csv.DictReader</code> 读取每一行数据，并将其转换为字典。然后，它调用 <code>get_line</code> 方法处理每一行数据，并将处理后的数据转换为 <code>JSON</code> 格式，最后写入到输出文件中。</p>
+<p>删除临时<code>CSV</code>文件：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">os.remove(csv_path)</span><br></pre></td></tr></table></figure>
+<p>这部分代码在处理完成后删除临时生成的<code>CSV</code>文件</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>查询windows电脑当中的可移动设备</title>
+    <url>/2024/12/01/%E6%9F%A5%E8%AF%A2windows%E7%94%B5%E8%84%91%E5%BD%93%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87/</url>
+    <content><![CDATA[<h2 id="Win32-DiskDrive"><a href="#Win32-DiskDrive" class="headerlink" title="Win32_DiskDrive"></a><code>Win32_DiskDrive</code></h2><p>在<code>WMI（Windows Management Instrumentation）</code>中，<code>Win32_DiskDrive</code> 类的 <code>MediaType</code> 属性用于描述磁盘驱动器的媒体类型。根据微软的文档，<code>MediaType</code> 属性可以取以下值：</p>
+<ul>
+<li><code>Unknown</code>：未知的媒体类型</li>
+<li><code>Fixed hard disk media</code>：固定硬盘媒体</li>
+<li><code>Removable media</code>：可移动媒体，如<code>USB</code>闪存驱动器、软盘等</li>
+<li><code>CD-ROM media</code>：<code>CD-ROM</code>媒体</li>
+<li><code>RAM disk</code>：<code>RAM</code>磁盘</li>
+<li><code>Flash memory</code>：闪存</li>
+<li><code>Network disk</code>：网络磁盘</li>
+<li><code>Virtual disk</code>：虚拟磁盘</li>
+<li><code>Optical disk</code>：光盘</li>
+<li><code>Magnetic disk</code>：磁盘</li>
+<li><code>Other</code>：其他类型的媒体</li>
+</ul>
+<h2 id="代码逻辑"><a href="#代码逻辑" class="headerlink" title="代码逻辑"></a>代码逻辑</h2><p>当前代码的主要功能是通过<code>WMI（Windows Management Instrumentation）</code>查询<code>Windows</code>系统中的磁盘驱动器信息，并将结果存储在一个字典中。然后，它遍历这个字典，查找媒体类型为“可移动媒体”或“外部硬盘媒体”的逻辑磁盘<code>设备ID</code>，并打印这些<code>设备ID</code>。</p>
+<p>导入wmi模块：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> wmi</span><br></pre></td></tr></table></figure>
+<p>这行代码导入了<code>Python</code>的<code>wmi</code>模块，该模块允许<code>Python</code>程序访问<code>Windows Management Instrumentation API</code>，从而可以查询和管理<code>Windows</code>系统的各种信息。</p>
+<p>创建<code>WMI</code>对象：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">c = wmi.WMI()</span><br></pre></td></tr></table></figure>
+<p>这行代码创建了一个<code>WMI</code>对象<code>c</code>，用于后续的<code>WMI</code>查询。</p>
+<p>查询磁盘驱动器信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">drives = c.Win32_DiskDrive()</span><br></pre></td></tr></table></figure>
+<p>这行代码查询系统中的所有磁盘驱动器信息，并将结果存储在<code>drives</code>变量中。</p>
+<p>初始化字典：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">drives_dict = &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>这行代码创建了一个空字典<code>drives_dict</code>，用于存储后续查询到的磁盘驱动器和逻辑磁盘的关联信息。</p>
+<p>遍历磁盘驱动器：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> drive <span class="keyword">in</span> drives:</span><br><span class="line">    partitions = drive.associators(<span class="string">&quot;Win32_DiskDriveToDiskPartition&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> partition <span class="keyword">in</span> partitions:</span><br><span class="line">        logical_disks = partition.associators(<span class="string">&quot;Win32_LogicalDiskToPartition&quot;</span>)</span><br><span class="line">        <span class="keyword">for</span> logical_disk <span class="keyword">in</span> logical_disks:</span><br><span class="line">            drives_dict[logical_disk.DeviceID] = drive.MediaType</span><br></pre></td></tr></table></figure>
+<p>这段代码遍历每个磁盘驱动器，通过<code>WMI</code>的关联查询获取每个磁盘驱动器对应的磁盘分区，然后再获取每个磁盘分区对应的逻辑磁盘。最后，它将逻辑磁盘的设备<code>ID</code>和磁盘驱动器的媒体类型存储在<code>drives_dict</code>字典中。</p>
+<p>遍历字典，查找特定媒体类型的逻辑磁盘：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> key, value <span class="keyword">in</span> drives_dict.items():</span><br><span class="line">    <span class="keyword">if</span> value <span class="keyword">in</span> [<span class="string">&#x27;Removable Media&#x27;</span>, <span class="string">&#x27;External hard disk media&#x27;</span>]:</span><br><span class="line">        <span class="built_in">print</span>(key)</span><br></pre></td></tr></table></figure>
+<p>这段代码遍历<code>drives_dict</code>字典中的每个键值对，检查媒体类型是否为“可移动媒体”或“外部硬盘媒体”。如果是，它打印出逻辑磁盘的<code>设备ID</code>。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>流式返回</title>
+    <url>/2024/12/01/%E6%B5%81%E5%BC%8F%E8%BF%94%E5%9B%9E/</url>
+    <content><![CDATA[<h2 id="什么是web流式返回"><a href="#什么是web流式返回" class="headerlink" title="什么是web流式返回"></a>什么是web流式返回</h2><p>流式返回，顾名思义，就是将返回的数据流式返回给客户端，而不是等待所有数据都准备好再返回给客户端。这样做的优点是，客户端可以在数据传输的过程中就开始处理数据，而不需要等待所有数据都传输完成。</p>
+<h2 id="如何实现web流式返回"><a href="#如何实现web流式返回" class="headerlink" title="如何实现web流式返回"></a>如何实现web流式返回</h2><p>实现web流式返回的方式有很多种，下面介绍几种常见的方式：</p>
+<h3 id="使用HTTP-2协议"><a href="#使用HTTP-2协议" class="headerlink" title="使用HTTP/2协议"></a>使用HTTP/2协议</h3><p>HTTP/2协议支持多路复用，可以同时传输多个请求和响应，从而实现流式返回。使用HTTP/2协议可以实现更高效的流式返回。</p>
+<h3 id="使用WebSocket协议"><a href="#使用WebSocket协议" class="headerlink" title="使用WebSocket协议"></a>使用WebSocket协议</h3><p>WebSocket协议可以实现全双工通信，可以实时地将数据从服务器推送到客户端。使用WebSocket协议可以实现实时的流式返回。以python websocket为例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">import</span> websockets</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">echo</span>(<span class="params">websocket, path</span>):</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">for</span> message <span class="keyword">in</span> websocket:</span><br><span class="line">        <span class="keyword">await</span> websocket.send(message)</span><br><span class="line"></span><br><span class="line">start_server = websockets.serve(echo, <span class="string">&quot;localhost&quot;</span>, <span class="number">8765</span>)</span><br><span class="line"></span><br><span class="line">asyncio.get_event_loop().run_until_complete(start_server)</span><br><span class="line">asyncio.get_event_loop().run_forever()</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用Server-Sent-Events（SSE）"><a href="#使用Server-Sent-Events（SSE）" class="headerlink" title="使用Server-Sent Events（SSE）"></a>使用Server-Sent Events（SSE）</h3><p>SSE是一种基于HTTP的协议，可以实现服务器向客户端推送数据。使用SSE可以实现流式返回。用python举例：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sse_starlette.sse <span class="keyword">import</span> EventSourceResponse</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">stream_data</span>():</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">        <span class="keyword">yield</span> <span class="string">f&quot;data: <span class="subst">&#123;i&#125;</span>\n\n&quot;</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="string">&quot;event: end\ndata: end\n\n&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/stream&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">stream</span>(<span class="params">request</span>):</span><br><span class="line">    <span class="keyword">return</span> EventSourceResponse(stream_data())</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用流式框架"><a href="#使用流式框架" class="headerlink" title="使用流式框架"></a>使用流式框架</h3><p>一些流式框架，如Spring WebFlux，可以实现流式返回。这些框架提供了流式返回的支持，可以方便地实现流式返回。在fastapi当中也提供流式返回：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> StreamingResponse</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/stream&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">stream</span>():</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">event_stream</span>():</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">            <span class="keyword">yield</span> <span class="string">f&quot;data: <span class="subst">&#123;i&#125;</span>\n\n&quot;</span></span><br><span class="line">    <span class="keyword">return</span> StreamingResponse(event_stream())</span><br></pre></td></tr></table></figure>
+
+<h2 id="web流式返回的应用场景"><a href="#web流式返回的应用场景" class="headerlink" title="web流式返回的应用场景"></a>web流式返回的应用场景</h2><p>web流式返回的应用场景非常广泛，以下是一些常见的应用场景：</p>
+<ol>
+<li>实时数据推送：如股票行情、新闻推送等，需要实时地将数据推送给客户端。</li>
+<li>文件下载：如视频、音频、大文件下载等，需要将文件流式返回给客户端。</li>
+<li>游戏开发：如多人在线游戏，需要实时地将游戏数据推送给客户端。</li>
+<li>实时聊天：如在线聊天、实时消息推送等，需要实时地将消息推送给客户端。常见的如大模型对话等。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>web流式返回是一种高效的数据传输方式，可以实现实时、高效的数据传输。在实际应用中，可以根据具体的需求选择合适的方式来实现web流式返回。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>浏览器历史记录</title>
+    <url>/2024/12/01/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h2 id="浏览器历史记录"><a href="#浏览器历史记录" class="headerlink" title="浏览器历史记录"></a>浏览器历史记录</h2><p>浏览器历史记录会以db后缀文件的形式，以明文存放在本地目录，用户可以通过解析这个文件查看浏览器最近访问，包括访问时间，网站图标等等。chrome内核的浏览器跟Firefox浏览器虽然都是保存在db文件中，但是数据结构完全不一样，需要做区分处理。</p>
+<h2 id="chrome浏览器"><a href="#chrome浏览器" class="headerlink" title="chrome浏览器"></a>chrome浏览器</h2><p>获取所有用户信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> user <span class="keyword">in</span> wmi.WMI().Win32_UserAccount():</span><br><span class="line">    user_name = user.Name</span><br></pre></td></tr></table></figure>
+<p>这行代码使用 wmi 模块获取所有用户账户信息，并遍历这些信息，提取每个用户的用户名。</p>
+<p>初始化 MD5 列表：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">md5_list = []</span><br></pre></td></tr></table></figure>
+<p>这行代码创建了一个空列表，用于存储已经处理过的历史记录文件的 MD5 值，以避免重复处理。</p>
+<p>获取每个用户的历史记录文件路径：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> path <span class="keyword">in</span> self.get_path(user_name):</span><br><span class="line">    <span class="keyword">if</span> os.path.isdir(path):</span><br><span class="line">        <span class="keyword">continue</span></span><br></pre></td></tr></table></figure>
+<p>这行代码调用 self.get_path(user_name) 方法获取指定用户的历史记录文件路径，并遍历这些路径。如果路径是一个目录，则跳过。</p>
+<p>计算文件的 MD5 值：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">md5_str = get_md5(path=path)</span><br><span class="line"><span class="keyword">if</span> md5_str <span class="keyword">in</span> md5_list:</span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    md5_list.append(md5_str)</span><br></pre></td></tr></table></figure>
+<p>这行代码计算文件的 MD5 值，并检查这个值是否已经在 md5_list 中。如果是，则跳过这个文件；如果不是，则将这个值添加到 md5_list 中。</p>
+<p>复制文件并连接到数据库：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">setting.log.info(<span class="string">&quot;正在处理: %s&quot;</span> % path)</span><br><span class="line">tmp_path = path + <span class="string">&quot;.backup&quot;</span></span><br><span class="line">shutil.copyfile(path, tmp_path)</span><br><span class="line">conn = sqlite3.connect(tmp_path)</span><br><span class="line">cur = conn.cursor()</span><br></pre></td></tr></table></figure>
+<p>这行代码将历史记录文件复制到一个临时文件，并连接到这个临时文件的 SQLite 数据库。</p>
+<p>查询历史记录数据：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> time, url, title <span class="keyword">in</span> cur.execute(</span><br><span class="line">        (<span class="string">&#x27;SELECT visits.visit_time,urls.url, urls.title FROM urls, visits WHERE urls.id = visits.url&#x27;</span>)):</span><br><span class="line">    source_data = &#123;</span><br><span class="line">        <span class="string">&quot;Time&quot;</span>: time,</span><br><span class="line">        <span class="string">&quot;URL&quot;</span>: url,</span><br><span class="line">        <span class="string">&quot;Title&quot;</span>: title</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这行代码执行一个 SQL 查询，从数据库中获取历史记录的时间、URL 和标题，并将这些信息存储在 source_data 字典中。</p>
+<p>处理数据并写入文件：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">clean_data = get_line(self,source_data, self.display)</span><br><span class="line">data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">write_file(self.file,data)</span><br></pre></td></tr></table></figure>
+<p>这行代码调用 get_line 方法处理 source_data，并将处理后的数据转换为 JSON 格式，然后写入到输出文件中。</p>
+<p>关闭数据库连接：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">conn.close()</span><br></pre></td></tr></table></figure>
+<p>这行代码关闭数据库连接。</p>
+<p>处理异常：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    setting.log.error(<span class="string">&quot;处理失败, 原因: %s&quot;</span> % <span class="built_in">str</span>(e))</span><br></pre></td></tr></table></figure>
+<p>这行代码捕获所有异常，并记录错误信息。</p>
+<h2 id="Firefox浏览器"><a href="#Firefox浏览器" class="headerlink" title="Firefox浏览器"></a>Firefox浏览器</h2><p>获取所有用户信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> user <span class="keyword">in</span> wmi.WMI().Win32_UserAccount():</span><br><span class="line">    user_name = user.Name</span><br></pre></td></tr></table></figure>
+<p>这行代码使用 wmi 模块获取所有用户账户信息，并遍历这些信息，提取每个用户的用户名。</p>
+<p>初始化 MD5 列表：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">md5_list = []</span><br></pre></td></tr></table></figure>
+<p>这行代码创建了一个空列表，用于存储已经处理过的历史记录文件的 MD5 值，以避免重复处理。</p>
+<p>获取每个用户的历史记录文件路径：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> path <span class="keyword">in</span> self.get_path(user_name):</span><br><span class="line">    <span class="keyword">if</span> os.path.isdir(path):</span><br><span class="line">        <span class="keyword">continue</span></span><br></pre></td></tr></table></figure>
+<p>这行代码调用 self.get_path(user_name) 方法获取指定用户的历史记录文件路径，并遍历这些路径。如果路径是一个目录，则跳过。</p>
+<p>计算文件的 MD5 值：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">md5_str = get_md5(path=path)</span><br><span class="line"><span class="keyword">if</span> md5_str <span class="keyword">in</span> md5_list:</span><br><span class="line">    <span class="keyword">continue</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    md5_list.append(md5_str)</span><br></pre></td></tr></table></figure>
+<p>这行代码计算文件的 MD5 值，并检查这个值是否已经在 md5_list 中。如果是，则跳过这个文件；如果不是，则将这个值添加到 md5_list 中。</p>
+<p>复制文件并连接到数据库：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">setting.log.info(<span class="string">&quot;正在处理: %s&quot;</span> % path)</span><br><span class="line">tmp_path = path + <span class="string">&quot;.backup&quot;</span></span><br><span class="line">shutil.copyfile(path, tmp_path)</span><br><span class="line">conn = sqlite3.connect(tmp_path)</span><br><span class="line">cur = conn.cursor()</span><br></pre></td></tr></table></figure>
+<p>这行代码将历史记录文件复制到一个临时文件，并连接到这个临时文件的 SQLite 数据库。</p>
+<p>查询历史记录数据：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> time, url, title <span class="keyword">in</span> cur.execute(</span><br><span class="line">        (<span class="string">&#x27;SELECT moz_historyvisits.visit_date, moz_places.url, moz_places.title FROM moz_places, moz_historyvisits WHERE moz_places.id = moz_historyvisits.place_id&#x27;</span>)):</span><br><span class="line">    source_data = &#123;</span><br><span class="line">        <span class="string">&quot;Time&quot;</span>: time,</span><br><span class="line">        <span class="string">&quot;URL&quot;</span>: url,</span><br><span class="line">        <span class="string">&quot;Title&quot;</span>: title</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这行代码执行一个 SQL 查询，从数据库中获取历史记录的时间、URL 和标题，并将这些信息存储在 source_data 字典中。</p>
+<p>处理数据并写入文件：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">clean_data = get_line(self,source_data, self.display)</span><br><span class="line">data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">write_file(self.file,data)</span><br></pre></td></tr></table></figure>
+<p>这行代码调用 get_line 方法处理 source_data，并将处理后的数据转换为 JSON 格式，然后写入到输出文件中。</p>
+<p>关闭数据库连接：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">conn.close()</span><br></pre></td></tr></table></figure>
+<p>这行代码关闭数据库连接。</p>
+<p>处理异常：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    setting.log.error(<span class="string">&quot;处理失败, 原因: %s&quot;</span> % <span class="built_in">str</span>(e))</span><br></pre></td></tr></table></figure>
+<p>这行代码捕获所有异常，并记录错误信息。</p>
+<h2 id="引申"><a href="#引申" class="headerlink" title="引申"></a>引申</h2><p><code>glob.glob(path, recursive=True)</code> 是 <code>Python</code> 中 <code>glob</code> 模块的一个函数，用于根据指定的路径模式搜索文件和目录。这个函数的主要作用是匹配符合特定模式的文件路径，并返回一个列表，其中包含所有匹配的文件和目录的路径。</p>
+<p>参数解释：</p>
+<ul>
+<li><code>path</code>: 一个字符串，表示要搜索的路径模式。这个模式可以包含通配符，如 *、? 和 []，用于匹配文件名或目录名的一部分。</li>
+<li><code>recursive=True</code>: 一个布尔值，表示是否递归搜索子目录。如果设置为 <code>True</code>，则函数会搜索指定目录及其所有子目录中的文件；如果设置为 <code>False</code>，则只搜索指定目录中的文件。</li>
+</ul>
+<p>使用示例：</p>
+<p>假设我们有一个目录结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">C:\Users\username\Documents\</span><br><span class="line">├── file1.txt</span><br><span class="line">├── file2.txt</span><br><span class="line">└── subfolder\</span><br><span class="line">    ├── file3.txt</span><br><span class="line">    └── file4.txt</span><br></pre></td></tr></table></figure>
+<p>如果我们使用 <code>glob.glob(path, recursive=True)</code> 来搜索这个目录，其中 <code>path</code> 是 <code>&quot;C:\\Users\\username\\Documents\\**\\*.txt&quot;</code>，那么它将返回以下列表：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[<span class="string">&quot;C:\\Users\\username\\Documents\\file1.txt&quot;</span>,</span><br><span class="line"> <span class="string">&quot;C:\\Users\\username\\Documents\\file2.txt&quot;</span>,</span><br><span class="line"> <span class="string">&quot;C:\\Users\\username\\Documents\\subfolder\\file3.txt&quot;</span>,</span><br><span class="line"> <span class="string">&quot;C:\\Users\\username\\Documents\\subfolder\\file4.txt&quot;</span>]</span><br></pre></td></tr></table></figure>
+<p>这个列表包含了所有以 .txt 结尾的文件的路径，包括在子目录 <code>subfolder</code> 中的文件。</p>
+<p>注意事项：</p>
+<blockquote>
+<ul>
+<li><code>glob.glob</code> 函数返回的路径是字符串形式，并且是绝对路径（如果 <code>path</code> 是绝对路径）或相对于当前工作目录的路径（如果 <code>path</code> 是相对路径）。</li>
+<li>如果 <code>path</code> 中的模式包含特殊字符，如 *、? 和 []，它们将被解释为通配符，用于匹配文件名或目录名的一部分。</li>
+<li>如果 <code>recursive</code> 参数设置为 <code>True</code>，则搜索是递归的，这可能会导致性能问题，特别是在处理大型目录结构时。</li>
+</ul>
+</blockquote>
+<p>我的代码中，<code>glob.glob(path, recursive=True)</code> 用于在指定的用户目录下搜索所有包含 <code>Chrome</code> 关键字的目录，并查找其中名为 <code>History</code> 的文件。如果找到了这样的文件，它的路径将被添加到 <code>files</code> 列表中。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>百度网盘windows取证</title>
+    <url>/2024/12/01/%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98windows%E5%8F%96%E8%AF%81/</url>
+    <content><![CDATA[<h2 id="百度网盘"><a href="#百度网盘" class="headerlink" title="百度网盘"></a>百度网盘</h2><p>在windows操作系统当中，当安装了百度网盘之后，BaiduYunCacheFileV0当中会保存百度网盘的所有文件信息以及文件下载上传记录，即时没办法登录百度网盘也能够通过BaiduYunCacheFileV0获取全部信息。以下将展示基于python实现的百度网盘信息获取。</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><p>下面是对代码的详细解释</p>
+<p>获取百度网盘安装目录：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">users_path = os.path.join(self.get_baidu_pan_install_dir(), <span class="string">&quot;users&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>这行代码调用 get_baidu_pan_install_dir 方法获取百度网盘的安装目录，并拼接上 “users” 文件夹的路径，得到用户文件夹的路径。</p>
+<p>遍历用户文件夹：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> md5 <span class="keyword">in</span> os.listdir(users_path):</span><br><span class="line">    md5_path = os.path.join(users_path, md5)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.isdir(md5_path):</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> os.listdir(md5_path):</span><br></pre></td></tr></table></figure>
+<p>这段代码遍历用户文件夹中的每个子文件夹（以 MD5 值命名），并进一步遍历每个子文件夹中的文件和文件夹。</p>
+<p>处理用户文件夹：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> i!= <span class="string">&quot;AutoBackupFileList&quot;</span> <span class="keyword">and</span> os.path.isdir(os.path.join(md5_path, i)):</span><br><span class="line">    source_data = &#123;</span><br><span class="line">        <span class="string">&quot;Name&quot;</span>: i,</span><br><span class="line">        <span class="string">&quot;FilePath&quot;</span>: <span class="string">&quot;/&#123;&#125;&quot;</span>.<span class="built_in">format</span>(i),</span><br><span class="line">        <span class="string">&quot;ParentPath&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Size&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Md5&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="string">&quot;iconMd5&quot;</span>: <span class="string">&quot;folder&quot;</span>,</span><br><span class="line">        <span class="string">&quot;UpdateTime&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="string">&quot;User&quot;</span>: i</span><br><span class="line">    &#125;</span><br><span class="line">    user_path = <span class="string">&quot;/&#123;&#125;&quot;</span>.<span class="built_in">format</span>(i)</span><br><span class="line">    clean_data = get_line(self, source_data, self.display)</span><br><span class="line">    data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">    write_file(self.file, data)</span><br></pre></td></tr></table></figure>
+<p>这段代码处理用户文件夹，如果文件夹名不是 “AutoBackupFileList”，则创建一个包含文件夹信息的 source_data 字典，并将其写入到输出文件中。</p>
+<p>判断数据库文件是否存在：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">all_file_db = os.path.join(md5_path, <span class="string">&quot;BaiduYunCacheFileV0.db&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(all_file_db):</span><br><span class="line">    <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<p>这段代码检查每个用户文件夹中是否存在名为 “BaiduYunCacheFileV0.db” 的数据库文件，如果不存在，则跳过该用户文件夹。</p>
+<p>读取数据库文件：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    conn = sqlite3.connect(all_file_db)</span><br><span class="line">    conn.row_factory = self.dict_factory</span><br><span class="line">    cursor = conn.cursor()</span><br><span class="line">    <span class="comment"># 同理，上传下载分别是download_history_file、upload_history_file</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> cursor.execute(<span class="string">&quot;select * from cache_file&quot;</span>):</span><br><span class="line">        parent_path = item.get(<span class="string">&quot;parent_path&quot;</span>)</span><br><span class="line">        server_filename = item.get(<span class="string">&quot;server_filename&quot;</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            iconMd5 = server_filename.split(<span class="string">&quot;.&quot;</span>, maxsplit=<span class="number">1</span>)[<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            iconMd5 = <span class="string">&quot;folder&quot;</span></span><br><span class="line">        source_data = &#123;</span><br><span class="line">            <span class="string">&quot;Name&quot;</span>: server_filename,</span><br><span class="line">            <span class="string">&quot;FilePath&quot;</span>: user_path + os.path.join(parent_path, server_filename),</span><br><span class="line">            <span class="string">&quot;ParentPath&quot;</span>: user_path + parent_path[:-<span class="number">1</span>:],</span><br><span class="line">            <span class="string">&quot;Size&quot;</span>: item.get(<span class="string">&quot;file_size&quot;</span>),</span><br><span class="line">            <span class="string">&quot;Md5&quot;</span>: item.get(<span class="string">&quot;md5&quot;</span>),</span><br><span class="line">            <span class="string">&quot;iconMd5&quot;</span>: iconMd5,</span><br><span class="line">            <span class="string">&quot;ServerMtime&quot;</span>: item.get(<span class="string">&quot;server_mtime&quot;</span>),</span><br><span class="line">            <span class="string">&quot;LocalMtime&quot;</span>: item.get(<span class="string">&quot;local_mtime&quot;</span>),</span><br><span class="line">            <span class="string">&quot;User&quot;</span>: i</span><br><span class="line">        &#125;</span><br><span class="line">        clean_data = get_line(self, source_data, self.display)</span><br><span class="line">        data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">        write_file(self.file, data)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    setting.log.error(e)</span><br><span class="line">    <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<p>这段代码尝试连接到数据库文件，并读取其中的 “cache_file” 表中的所有数据。对于每一条数据，它创建一个包含文件信息的 source_data 字典，并将其写入到输出文件中。如果在处理过程中遇到异常，它会记录错误信息并跳过当前用户文件夹。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>获取windows的USB记录</title>
+    <url>/2024/12/01/%E8%8E%B7%E5%8F%96windows%E7%9A%84USB%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h2 id="USBDeview"><a href="#USBDeview" class="headerlink" title="USBDeview"></a>USBDeview</h2><p>某个刑侦专家说过，走过必定留下痕迹，所以在一台电脑上，存在过的USB记录也是可以获取的。当然想法去解析记录可以，也可以直接使用<code>USBDeview</code>，解析软件最终结果。<code>USBDeview</code> 是一款可以列出当前连接到你的计算机上或者曾经连接到你的计算机上的所有 <code>USB</code> 设备的小型实用工具。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>检查并终止指定进程：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pe_name = <span class="string">&quot;USBDeview.exe&quot;</span></span><br><span class="line"><span class="keyword">for</span> process <span class="keyword">in</span> psutil.process_iter():</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        name = process.name()</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        name = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> name == pe_name:</span><br><span class="line">            setting.log.error(<span class="string">&quot;检测到%s已在运行, 正在终止重启&quot;</span> % name)</span><br><span class="line">            process.terminate()</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        setting.log.error(<span class="string">&quot;终止失败,原因: %s&quot;</span> % <span class="built_in">str</span>(e))</span><br><span class="line">        <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<p>这部分代码首先定义了一个要检查的进程名 <code>pe_name</code>，然后遍历所有正在运行的进程。如果发现进程名为 <code>USBDeview.exe</code>，则尝试终止该进程，并记录日志。如果终止失败，也会记录日志并返回。</p>
+<p>执行外部程序获取<code>USB</code>设备信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pe_path = os.path.join(setting.PROJ_PATH, pe_name)</span><br><span class="line">save_path = os.path.join(setting.PROJ_PATH, <span class="string">&quot;tmp.xml&quot;</span>)</span><br><span class="line">os.system(<span class="string">&quot;%s /sxml %s&quot;</span> % (pe_path, save_path))</span><br></pre></td></tr></table></figure>
+<p>这部分代码拼接了外部程序 <code>USBDeview.exe</code> 的路径和保存<code>XML</code>文件的路径，然后执行命令行命令，使用 <code>USBDeview.exe</code> 生成<code>USB</code>设备信息的<code>XML</code>文件。</p>
+<p>解析<code>XML</code>文件：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(save_path):</span><br><span class="line">    setting.log.error(<span class="string">&quot;获取usb信息失败&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">tree = ET.parse(save_path)</span><br><span class="line">root = tree.getroot()</span><br></pre></td></tr></table></figure>
+<p>这部分代码检查<code>XML</code>文件是否存在，如果不存在则记录日志并返回。如果存在，则使用 <code>ElementTree</code> 模块解析<code>XML</code>文件，获取根节点。</p>
+<p>遍历<code>XML</code>文件中的每个 <code>item</code> 节点：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> root.<span class="built_in">iter</span>(<span class="string">&#x27;item&#x27;</span>):</span><br><span class="line">    <span class="comment"># 解析每个item节点中的各个子节点，获取相应的信息</span></span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>这部分代码遍历<code>XML</code>文件中的每个 <code>item</code> 节点，解析每个节点中的各个子节点，获取相应的信息。如果某个子节点不存在，则将相应的变量设置为空字符串。</p>
+<p>构建源数据字典：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">source_data = &#123;</span><br><span class="line">    <span class="string">&quot;DeviceName&quot;</span>: device_name,</span><br><span class="line">    <span class="string">&quot;Description&quot;</span>: description,</span><br><span class="line">    <span class="string">&quot;DeviceType&quot;</span>: device_type,</span><br><span class="line">    <span class="string">&quot;Connected&quot;</span>: connected,</span><br><span class="line">    <span class="string">&quot;Disabled&quot;</span>: disabled,</span><br><span class="line">    <span class="string">&quot;ConnectTime&quot;</span>: connect_time,</span><br><span class="line">    <span class="string">&quot;DisconnectTime&quot;</span>: disconnect_time,</span><br><span class="line">    <span class="string">&quot;ServiceDescription&quot;</span>: service_description,</span><br><span class="line">    <span class="string">&quot;DriveLetter&quot;</span>: drive_letter,</span><br><span class="line">    <span class="string">&quot;RegisterTime1&quot;</span>: registry_time_1,</span><br><span class="line">    <span class="string">&quot;RegisterTime2&quot;</span>: registry_time_2,</span><br><span class="line">    <span class="string">&quot;InstallTime&quot;</span>: install_time,</span><br><span class="line">    <span class="string">&quot;FirstInstallTime&quot;</span>: first_install_time</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这部分代码将获取到的<code>USB</code>设备信息封装成一个字典。</p>
+<p>处理数据并写入文件：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">clean_data = get_line(self, source_data, self.display)</span><br><span class="line">data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">write_file(self.file, data)</span><br></pre></td></tr></table></figure>
+<p>这部分代码调用 <code>get_line</code> 方法处理 <code>source_data</code>，并将处理后的数据转换为 <code>JSON</code> 格式，然后写入到输出文件中。</p>
+<p>删除临时<code>XML</code>文件：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">os.remove(save_path)</span><br></pre></td></tr></table></figure>
+<p>这部分代码在处理完成后删除临时生成的<code>XML</code>文件。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>获取windows的环境变量</title>
+    <url>/2024/12/01/%E8%8E%B7%E5%8F%96windows%E7%9A%84%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<p>遍历系统环境变量：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> path <span class="keyword">in</span> wmi.WMI().Win32_Environment():</span><br></pre></td></tr></table></figure>
+<p>这部分代码使用 wmi 模块遍历系统中的所有环境变量。</p>
+<p>提取每个环境变量的信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">item = &#123;</span><br><span class="line">    <span class="string">&quot;Name&quot;</span>: <span class="built_in">getattr</span>(path, <span class="string">&quot;Name&quot;</span>),</span><br><span class="line">    <span class="string">&quot;SystemVariable&quot;</span>: <span class="built_in">getattr</span>(path, <span class="string">&quot;SystemVariable&quot;</span>),</span><br><span class="line">    <span class="string">&quot;UserName&quot;</span>: <span class="built_in">getattr</span>(path, <span class="string">&quot;UserName&quot;</span>),</span><br><span class="line">    <span class="string">&quot;Description&quot;</span>: <span class="built_in">getattr</span>(path, <span class="string">&quot;Description&quot;</span>),</span><br><span class="line">    <span class="string">&quot;Caption&quot;</span>: <span class="built_in">getattr</span>(path, <span class="string">&quot;Caption&quot;</span>),</span><br><span class="line">    <span class="string">&quot;VariableValue&quot;</span>: <span class="built_in">getattr</span>(path, <span class="string">&quot;VariableValue&quot;</span>),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这部分代码将每个环境变量的信息提取出来，并存储在一个字典 item 中。</p>
+<p>处理获取到的环境变量信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">clean_data = get_line(self, item, self.display_list)</span><br><span class="line">data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">write_file(self.file, data)</span><br></pre></td></tr></table></figure>
+<p>这部分代码调用 get_line 方法处理 item，并将处理后的数据转换为 JSON 格式。然后，它将 JSON 数据写入到输出文件中。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
 </search>
