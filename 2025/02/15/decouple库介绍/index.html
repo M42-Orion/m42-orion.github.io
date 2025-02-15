@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>decouple库介绍 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,python-decouple：简化配置管理的利器在现代软件开发中，合理地管理配置文件是确保项目安全性和可维护性的关键。python-decouple是一个强大的库，它帮助开发者将配置信息从代码中分,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="decouple库介绍 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,python-decouple：简化配置管理的利器在现代软件开发中，合理地管理配置文件是确保项目安全性和可维护性的关键。python-decouple是一个强大的库，它帮助开发者将配置信息从代码中分,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="decouple库介绍 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,python-decouple：简化配置管理的利器在现代软件开发中，合理地管理配置文件是确保项目安全性和可维护性的关键。python-decouple是一个强大的库，它帮助开发者将配置信息从代码中分,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">decouple库介绍</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">decouple库介绍</h1>
+        <div class="stuff">
+            <span>二月 15, 2025</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%9D%82%E8%B0%88/" rel="tag">杂谈</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="python-decouple：简化配置管理的利器"><a href="#python-decouple：简化配置管理的利器" class="headerlink" title="python-decouple：简化配置管理的利器"></a>python-decouple：简化配置管理的利器</h2><p>在现代软件开发中，合理地管理配置文件是确保项目安全性和可维护性的关键。<code>python-decouple</code>是一个强大的库，它帮助开发者将配置信息从代码中分离出来，使得项目更加灵活和安全。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>安装<code>python-decouple</code>非常简单，只需一条pip命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install python-decouple</span><br></pre></td></tr></table></figure>
+
+<h2 id="核心特性"><a href="#核心特性" class="headerlink" title="核心特性"></a>核心特性</h2><ul>
+<li><strong>简化配置管理</strong>：通过简单易用的API，方便开发者管理配置信息。</li>
+<li><strong>解耦配置与代码</strong>：避免硬编码配置，提高代码的可维护性。</li>
+<li><strong>支持多种文件格式</strong>：支持读取和解析多种配置文件格式，如<code>.env</code>、<code>.ini</code>、<code>.yaml</code>等。</li>
+<li><strong>增强安全性</strong>：安全地存储敏感信息，如密码、API密钥等。</li>
+</ul>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><h3 id="创建配置文件"><a href="#创建配置文件" class="headerlink" title="创建配置文件"></a>创建配置文件</h3><p>在项目根目录下创建一个<code>.env</code>文件，示例如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># .env文件内容示例</span><br><span class="line">DEBUG=True</span><br><span class="line">SECRET_KEY=supersecretkey</span><br><span class="line">DATABASE_URL=postgresql://user:pass@localhost/mydb</span><br></pre></td></tr></table></figure>
+
+<h3 id="读取配置信息"><a href="#读取配置信息" class="headerlink" title="读取配置信息"></a>读取配置信息</h3><p>使用<code>python-decouple</code>读取配置文件中的信息：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> decouple <span class="keyword">import</span> config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取配置信息</span></span><br><span class="line">debug_mode = config(<span class="string">&#x27;DEBUG&#x27;</span>, cast=<span class="built_in">bool</span>)</span><br><span class="line">secret_key = config(<span class="string">&#x27;SECRET_KEY&#x27;</span>)</span><br><span class="line">db_url = config(<span class="string">&#x27;DATABASE_URL&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在这里，我们使用<code>config</code>函数读取<code>.env</code>文件中的配置信息，并通过<code>cast=bool</code>将<code>DEBUG</code>的值转换为布尔类型。</p>
+<h2 id="高级功能"><a href="#高级功能" class="headerlink" title="高级功能"></a>高级功能</h2><h3 id="支持不同配置文件格式"><a href="#支持不同配置文件格式" class="headerlink" title="支持不同配置文件格式"></a>支持不同配置文件格式</h3><p><code>python-decouple</code>不仅限于<code>.env</code>文件，它还支持<code>.ini</code>和<code>.yaml</code>等格式。例如，使用<code>.ini</code>文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> decouple <span class="keyword">import</span> Config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建Config对象并读取.ini格式配置文件</span></span><br><span class="line">config = Config(<span class="string">&#x27;settings.ini&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取配置信息</span></span><br><span class="line">debug_mode = config(<span class="string">&#x27;DEBUG&#x27;</span>, cast=<span class="built_in">bool</span>)</span><br><span class="line">secret_key = config(<span class="string">&#x27;SECRET_KEY&#x27;</span>)</span><br><span class="line">db_url = config(<span class="string">&#x27;DATABASE_URL&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="环境变量覆盖"><a href="#环境变量覆盖" class="headerlink" title="环境变量覆盖"></a>环境变量覆盖</h3><p><code>python-decouple</code>允许环境变量覆盖配置文件中的值，这在不同环境（如开发、测试、生产）中非常有用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> decouple <span class="keyword">import</span> config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取环境变量或配置文件中的值</span></span><br><span class="line">debug_mode = config(<span class="string">&#x27;DEBUG&#x27;</span>, default=<span class="literal">False</span>, cast=<span class="built_in">bool</span>)</span><br></pre></td></tr></table></figure>
+
+<p>如果环境变量<code>DEBUG</code>存在，它将覆盖<code>.env</code>文件中的值。</p>
+<h3 id="安全存储敏感信息"><a href="#安全存储敏感信息" class="headerlink" title="安全存储敏感信息"></a>安全存储敏感信息</h3><p>对于敏感信息，<code>python-decouple</code>提供了安全存储的解决方案：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> decouple <span class="keyword">import</span> Config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建Config对象并读取加密配置信息</span></span><br><span class="line">config = Config(<span class="string">&#x27;secrets.enc&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解密并读取配置信息</span></span><br><span class="line">secret_key = config(<span class="string">&#x27;SECRET_KEY&#x27;</span>, default=<span class="string">&#x27;defaultkey&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>通过加密配置文件，敏感信息得到保护。</p>
+<h2 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h2><h3 id="Django项目配置"><a href="#Django项目配置" class="headerlink" title="Django项目配置"></a>Django项目配置</h3><p>在Django项目中，使用<code>python-decouple</code>管理数据库连接、调试模式等配置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> decouple <span class="keyword">import</span> config</span><br><span class="line"><span class="keyword">from</span> django.core.wsgi <span class="keyword">import</span> get_wsgi_application</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取配置信息</span></span><br><span class="line">db_url = config(<span class="string">&#x27;DATABASE_URL&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置Django环境变量</span></span><br><span class="line">os.environ.setdefault(<span class="string">&#x27;DJANGO_SETTINGS_MODULE&#x27;</span>, <span class="string">&#x27;myproject.settings&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取WSGI应用</span></span><br><span class="line">application = get_wsgi_application()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Flask应用配置"><a href="#Flask应用配置" class="headerlink" title="Flask应用配置"></a>Flask应用配置</h3><p>在Flask应用中，配置密钥、API地址等：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> decouple <span class="keyword">import</span> config</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取配置信息</span></span><br><span class="line">app.config[<span class="string">&#x27;SECRET_KEY&#x27;</span>] = config(<span class="string">&#x27;SECRET_KEY&#x27;</span>)</span><br><span class="line">app.config[<span class="string">&#x27;API_URL&#x27;</span>] = config(<span class="string">&#x27;API_URL&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(debug=config(<span class="string">&#x27;DEBUG&#x27;</span>, default=<span class="literal">True</span>, cast=<span class="built_in">bool</span>))</span><br></pre></td></tr></table></figure>
+
+<h3 id="DevOps环境配置"><a href="#DevOps环境配置" class="headerlink" title="DevOps环境配置"></a>DevOps环境配置</h3><p>在DevOps环境中，配置服务器地址、API密钥等：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> decouple <span class="keyword">import</span> config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取配置信息</span></span><br><span class="line">server_url = config(<span class="string">&#x27;SERVER_URL&#x27;</span>)</span><br><span class="line">api_key = config(<span class="string">&#x27;API_KEY&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据环境配置部署</span></span><br><span class="line">env = config(<span class="string">&#x27;ENV&#x27;</span>, default=<span class="string">&#x27;development&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> env == <span class="string">&#x27;production&#x27;</span>:</span><br><span class="line">    deploy_to_production(server_url, api_key)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    deploy_to_staging(server_url, api_key)</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>python-decouple</code>是一个功能强大的配置管理工具，它通过解耦配置信息和代码，提高了项目的可维护性和安全性。支持多种配置文件格式和环境变量管理，使得它在Django、Flask等项目中非常有用。通过<code>python-decouple</code>，开发者可以轻松管理敏感信息，并在不同环境下灵活配置项目。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/1985705551.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#python-decouple%EF%BC%9A%E7%AE%80%E5%8C%96%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86%E7%9A%84%E5%88%A9%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text">python-decouple：简化配置管理的利器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E7%89%B9%E6%80%A7"><span class="toc-number">3.</span> <span class="toc-text">核心特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">基本用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">创建配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF"><span class="toc-number">4.2.</span> <span class="toc-text">读取配置信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E5%8A%9F%E8%83%BD"><span class="toc-number">5.</span> <span class="toc-text">高级功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E4%B8%8D%E5%90%8C%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-number">5.1.</span> <span class="toc-text">支持不同配置文件格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96"><span class="toc-number">5.2.</span> <span class="toc-text">环境变量覆盖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E5%AD%98%E5%82%A8%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF"><span class="toc-number">5.3.</span> <span class="toc-text">安全存储敏感信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">6.</span> <span class="toc-text">实际应用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Django%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE"><span class="toc-number">6.1.</span> <span class="toc-text">Django项目配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flask%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">6.2.</span> <span class="toc-text">Flask应用配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DevOps%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">6.3.</span> <span class="toc-text">DevOps环境配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">7.</span> <span class="toc-text">总结</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

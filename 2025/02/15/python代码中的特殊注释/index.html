@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>python代码中的特殊注释 - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,python代码中的特殊注释
+**# noqa**：
+
+用法：some_code = &amp;quot;example&amp;quot;  # noqa
+功能：告诉flake8等工具忽略当前行的所有警告。
+
+
+,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="python代码中的特殊注释 - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,python代码中的特殊注释
+**# noqa**：
+
+用法：some_code = &amp;quot;example&amp;quot;  # noqa
+功能：告诉flake8等工具忽略当前行的所有警告。
+
+
+,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="python代码中的特殊注释 - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,python代码中的特殊注释
+**# noqa**：
+
+用法：some_code = &amp;quot;example&amp;quot;  # noqa
+功能：告诉flake8等工具忽略当前行的所有警告。
+
+
+,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">python代码中的特殊注释</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">python代码中的特殊注释</h1>
+        <div class="stuff">
+            <span>二月 15, 2025</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%9D%82%E8%B0%88/" rel="tag">杂谈</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h2 id="python代码中的特殊注释"><a href="#python代码中的特殊注释" class="headerlink" title="python代码中的特殊注释"></a>python代码中的特殊注释</h2><ol>
+<li><p>**<code># noqa</code>**：</p>
+<ul>
+<li>用法：<code>some_code = &quot;example&quot;  # noqa</code></li>
+<li>功能：告诉<code>flake8</code>等工具忽略当前行的所有警告。</li>
+</ul>
+</li>
+<li><p>**<code># type: ignore</code>**：</p>
+<ul>
+<li>用法：<code>import some_module  # type: ignore</code></li>
+<li>功能：告诉<code>mypy</code>等类型检查器忽略当前行的类型检查警告。</li>
+</ul>
+</li>
+<li><p>**<code># pylint: disable=some-message</code>**：</p>
+<ul>
+<li>用法：<code>some_code = &quot;example&quot;  # pylint: disable=unused-variable</code></li>
+<li>功能：告诉<code>pylint</code>工具忽略特定的警告消息（例如未使用的变量）。</li>
+</ul>
+</li>
+<li><p>**<code># isort: skip</code>**：</p>
+<ul>
+<li>用法：<code>import some_module  # isort: skip</code></li>
+<li>功能：告诉<code>isort</code>工具在自动排序导入语句时跳过当前行。</li>
+</ul>
+</li>
+<li><p><strong><code># fmt: off</code></strong> 和 **<code># fmt: on</code>**：</p>
+<ul>
+<li>用法：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fmt: off</span></span><br><span class="line">some_code = <span class="string">&quot;example&quot;</span></span><br><span class="line"><span class="comment"># fmt: on</span></span><br></pre></td></tr></table></figure></li>
+<li>功能：告诉<code>black</code>等代码格式化工具在<code># fmt: off</code>和<code># fmt: on</code>之间的代码不要进行格式化。</li>
+</ul>
+</li>
+<li><p>**<code># todo</code>**：</p>
+<ul>
+<li>用法：<code># todo: implement this function</code></li>
+<li>功能：标记待办事项，一些编辑器或工具可能会识别它以列出待办事项。</li>
+</ul>
+</li>
+<li><p>**<code># fixme</code>**：</p>
+<ul>
+<li>用法：<code># fixme: handle this exception properly</code></li>
+<li>功能：标记需要修复的问题。</li>
+</ul>
+</li>
+<li><p>**<code># ruff: ignore</code>**：</p>
+<ul>
+<li>用法：<code>some_code = &quot;example&quot;  # ruff: ignore</code></li>
+<li>功能：告诉<code>ruff</code>工具忽略当前行的警告。</li>
+</ul>
+</li>
+<li><p><strong><code># type: Any</code></strong> 或其他类型注释：</p>
+<ul>
+<li>用法：<code>def my_function(param: Any) -&gt; None: pass  # type: (Any) -&gt; None</code></li>
+<li>功能：用于类型注释，告诉类型检查器某个变量或函数的返回类型。</li>
+</ul>
+</li>
+<li><p><strong><code># coding: utf-8</code></strong> 或其他编码声明：</p>
+<ul>
+<li>用法：<code># coding: utf-8</code></li>
+<li>功能：指定文件的编码格式，通常放在文件的第一行或第二行。</li>
+</ul>
+</li>
+<li><p>**<code># mypy: ignore-errors</code>**：</p>
+<ul>
+<li>用法：<code># mypy: ignore-errors</code></li>
+<li>功能：告诉<code>mypy</code>忽略文件中的所有类型错误。</li>
+</ul>
+</li>
+<li><p>**<code># mypy: strict</code>**：</p>
+<ul>
+<li>用法：<code># mypy: strict</code></li>
+<li>功能：告诉<code>mypy</code>对文件进行严格类型检查。</li>
+</ul>
+</li>
+<li><p>**<code># pragma: no cover</code>**：</p>
+<ul>
+<li>用法：<code>def my_function():  # pragma: no cover</code></li>
+<li>功能：告诉代码覆盖率工具（如<code>coverage.py</code>）忽略这一行代码。</li>
+</ul>
+</li>
+<li><p>**<code># jshint ignore:line</code>**：</p>
+<ul>
+<li>用法：<code>var myVar = &#39;value&#39;;  // jshint ignore:line</code></li>
+<li>功能：告诉<code>JSHint</code>工具忽略当前行的警告（虽然这是针对JavaScript的，但一些Python工具可能也有类似的约定）。</li>
+</ul>
+</li>
+<li><p><strong><code># isort: off</code></strong> 和 **<code># isort: on</code>**：</p>
+<ul>
+<li>用法：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># isort: off</span></span><br><span class="line"><span class="keyword">import</span> some_module</span><br><span class="line"><span class="comment"># isort: on</span></span><br></pre></td></tr></table></figure></li>
+<li>功能：告诉<code>isort</code>工具在<code># isort: off</code>和<code># isort: on</code>之间的代码不要进行导入排序。</li>
+</ul>
+</li>
+<li><p>**<code># type: ignore[attr-defined]</code>**：</p>
+<ul>
+<li>用法：<code>obj.attr  # type: ignore[attr-defined]</code></li>
+<li>功能：告诉<code>mypy</code>等类型检查器忽略特定的属性定义警告。</li>
+</ul>
+</li>
+<li><p>**<code># type: ignore[misc]</code>**：</p>
+<ul>
+<li>用法：<code>some_code  # type: ignore[misc]</code></li>
+<li>功能：告诉<code>mypy</code>等类型检查器忽略特定的杂项警告。</li>
+</ul>
+</li>
+<li><p>**<code># cython: language_level=3</code>**：</p>
+<ul>
+<li>用法：<code># cython: language_level=3</code></li>
+<li>功能：告诉Cython编译器使用Python 3的语言级别。</li>
+</ul>
+</li>
+<li><p>**<code># flake8: noqa</code>**：</p>
+<ul>
+<li>用法：<code># flake8: noqa</code></li>
+<li>功能：告诉<code>flake8</code>工具忽略当前文件的所有警告（通常放在文件的顶部）。</li>
+</ul>
+</li>
+<li><p>**<code># check-arg-names: false</code>**：</p>
+<ul>
+<li>用法：<code>def my_function(a, b):  # check-arg-names: false</code></li>
+<li>功能：告诉某些代码分析工具忽略参数名称检查。</li>
+</ul>
+</li>
+</ol>
+<p>这些注释通常用于控制代码分析工具的行为，帮助开发者在特定情况下避免不必要的警告或错误。使用这些注释时，应确保它们的目的是明确的，并且不会隐藏代码中的实际问题。</p>
+<h2 id="哪些跟编辑器绑定的特殊注释"><a href="#哪些跟编辑器绑定的特殊注释" class="headerlink" title="哪些跟编辑器绑定的特殊注释"></a>哪些跟编辑器绑定的特殊注释</h2><p>有一些注释或标记是与特定编辑器或IDE绑定的，用于控制编辑器的行为，如代码折叠、任务列表、代码分析等。以下是一些常见的与编辑器绑定的注释：</p>
+<ol>
+<li><p>**<code># region</code> 和 <code># endregion</code>**：</p>
+<ul>
+<li>用于定义代码折叠区域。</li>
+<li>示例：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># region My Region</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Hello, World!&quot;</span>)</span><br><span class="line"><span class="comment"># endregion</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>**<code># todo</code><strong>、</strong><code># fixme</code><strong>、</strong><code># note</code><strong>、</strong><code># hack</code>**：</p>
+<ul>
+<li>这些注释用于标记待办事项、需要修复的问题、重要说明或临时解决方案，一些编辑器会自动识别这些标记并提供任务列表视图。</li>
+<li>示例：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># todo: implement this function</span></span><br><span class="line"><span class="comment"># fixme: handle this exception properly</span></span><br><span class="line"><span class="comment"># note: this is a workaround for a known issue</span></span><br><span class="line"><span class="comment"># hack: temporary solution until a better approach is found</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong><code># pylint: disable</code></strong> 和 **<code># pylint: enable</code>**：</p>
+<ul>
+<li>用于在特定代码块中禁用或启用<code>pylint</code>的特定警告。</li>
+<li>示例：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pylint: disable=unused-variable</span></span><br><span class="line">some_unused_variable = <span class="number">42</span></span><br><span class="line"><span class="comment"># pylint: enable=unused-variable</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>**<code># type: ignore</code>**：</p>
+<ul>
+<li>用于告诉类型检查器（如<code>mypy</code>）忽略特定行的类型错误。</li>
+<li>示例：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> some_module  <span class="comment"># type: ignore</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>**<code># isort: skip_file</code>**：</p>
+<ul>
+<li>用于告诉<code>isort</code>工具忽略整个文件的导入排序。</li>
+<li>示例：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># isort: skip_file</span></span><br><span class="line"><span class="keyword">import</span> b</span><br><span class="line"><span class="keyword">import</span> a</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong><code># fmt: off</code></strong> 和 **<code># fmt: on</code>**：</p>
+<ul>
+<li>用于告诉代码格式化工具（如<code>black</code>）在特定代码块中禁用格式化。</li>
+<li>示例：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fmt: off</span></span><br><span class="line">some_code = <span class="string">&quot;example&quot;</span></span><br><span class="line"><span class="comment"># fmt: on</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>**<code># noinspection</code>**：</p>
+<ul>
+<li>用于告诉IDE（如PyCharm）忽略特定的代码检查。</li>
+<li>示例：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># noinspection PyUnresolvedReferences</span></span><br><span class="line"><span class="keyword">import</span> some_module</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>**<code># mypy: ignore-errors</code>**：</p>
+<ul>
+<li>用于告诉<code>mypy</code>忽略整个文件的类型错误。</li>
+<li>示例：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mypy: ignore-errors</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<p>这些注释通常由特定的编辑器或IDE解释，并用于控制编辑器的行为或提供额外的信息。使用这些注释时，应确保了解它们的用途和影响，并且不会隐藏代码中的实际问题。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/2655850235.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#python%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E7%89%B9%E6%AE%8A%E6%B3%A8%E9%87%8A"><span class="toc-number">1.</span> <span class="toc-text">python代码中的特殊注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%AA%E4%BA%9B%E8%B7%9F%E7%BC%96%E8%BE%91%E5%99%A8%E7%BB%91%E5%AE%9A%E7%9A%84%E7%89%B9%E6%AE%8A%E6%B3%A8%E9%87%8A"><span class="toc-number">2.</span> <span class="toc-text">哪些跟编辑器绑定的特殊注释</span></a></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

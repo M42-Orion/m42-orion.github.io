@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RAG-什么是chunking - 念念不忘，必有回响</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="望,"> 
+    <meta name="description" content="望的个人博客,什么是 Chunking？在自然语言处理（NLP）和文本分析领域，Chunking（分块）是一种将文本分割成有意义的、可管理的片段的技术。这些片段通常被称为“块”（chunks），可以是短语、句子、,"> 
+    <meta name="author" content="望"> 
+    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="RAG-什么是chunking - 念念不忘，必有回响"/>
+    <meta name="twitter:description" content="望的个人博客,什么是 Chunking？在自然语言处理（NLP）和文本分析领域，Chunking（分块）是一种将文本分割成有意义的、可管理的片段的技术。这些片段通常被称为“块”（chunks），可以是短语、句子、,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="念念不忘，必有回响"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="RAG-什么是chunking - 念念不忘，必有回响"/>
+    <meta property="og:description" content="望的个人博客,什么是 Chunking？在自然语言处理（NLP）和文本分析领域，Chunking（分块）是一种将文本分割成有意义的、可管理的片段的技术。这些片段通常被称为“块”（chunks），可以是短语、句子、,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">念念不忘，必有回响</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">RAG-什么是chunking</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">RAG-什么是chunking</h1>
+        <div class="stuff">
+            <span>二月 15, 2025</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/RAG/" rel="tag">RAG</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E6%9D%82%E8%B0%88/" rel="tag">杂谈</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h3 id="什么是-Chunking？"><a href="#什么是-Chunking？" class="headerlink" title="什么是 Chunking？"></a>什么是 Chunking？</h3><p>在自然语言处理（NLP）和文本分析领域，<strong>Chunking</strong>（分块）是一种将文本分割成有意义的、可管理的片段的技术。这些片段通常被称为“块”（chunks），可以是短语、句子、段落或其他有意义的语言单元。Chunking 的目标是从文本中提取出结构化的信息，以便更好地理解和处理语言数据。</p>
+<h4 id="Chunking-的基本概念"><a href="#Chunking-的基本概念" class="headerlink" title="Chunking 的基本概念"></a>Chunking 的基本概念</h4><p>Chunking 的核心思想是将连续的文本分割成更小的、有意义的单元。与简单的分词（tokenization）不同，Chunking 不仅仅是把文本拆分成单词，而是将这些单词组合成更大的语义单元。例如，在句子“The quick brown fox jumps over the lazy dog”中，Chunking 可能会将“The quick brown fox”识别为一个名词短语（NP），而“jumps over the lazy dog”识别为一个动词短语（VP）。</p>
+<h4 id="Chunking-的应用场景"><a href="#Chunking-的应用场景" class="headerlink" title="Chunking 的应用场景"></a>Chunking 的应用场景</h4><ol>
+<li><p><strong>信息提取</strong>：<br>Chunking 可以帮助从文本中提取出关键信息，如人名、地名、日期、组织机构等。例如，在新闻文章中，Chunking 可以用于识别出事件的主角、地点和时间。</p>
+</li>
+<li><p><strong>语法分析</strong>：<br>在句法分析中，Chunking 是构建句法树的重要步骤。通过将句子分割成短语，可以更好地理解句子的结构和语法关系。</p>
+</li>
+<li><p><strong>机器翻译</strong>：<br>在机器翻译中，Chunking 可以帮助识别出源语言中的短语结构，从而生成更准确的目标语言翻译。</p>
+</li>
+<li><p><strong>问答系统</strong>：<br>在问答系统中，Chunking 可以用于识别问题中的关键短语，从而更准确地匹配答案。</p>
+</li>
+<li><p><strong>文本摘要</strong>：<br>Chunking 可以帮助识别文本中的重要信息，从而生成简洁的摘要。</p>
+</li>
+</ol>
+<h4 id="Chunking-的技术实现"><a href="#Chunking-的技术实现" class="headerlink" title="Chunking 的技术实现"></a>Chunking 的技术实现</h4><p>Chunking 的实现通常依赖于自然语言处理工具和算法。以下是一些常用的方法：</p>
+<ol>
+<li><p><strong>规则-based 方法</strong>：<br>这种方法依赖于预定义的语法规则和模式来识别文本中的块。例如，可以使用正则表达式来匹配名词短语或动词短语。</p>
+</li>
+<li><p><strong>统计-based 方法</strong>：<br>这种方法使用机器学习算法来训练模型，以识别文本中的块。常用的算法包括隐马尔可夫模型（HMM）、条件随机场（CRF）等。</p>
+</li>
+<li><p><strong>深度学习-based 方法</strong>：<br>近年来，深度学习技术在 Chunking 中也得到了广泛应用。例如，可以使用循环神经网络（RNN）或 Transformer 模型来识别文本中的块。</p>
+</li>
+</ol>
+<h4 id="Chunking-的挑战"><a href="#Chunking-的挑战" class="headerlink" title="Chunking 的挑战"></a>Chunking 的挑战</h4><p>尽管 Chunking 在文本处理中具有广泛的应用，但它也面临一些挑战：</p>
+<ol>
+<li><p><strong>语言的多样性</strong>：<br>不同语言的语法结构和表达方式差异很大，这使得 Chunking 在多语言环境中的实现变得复杂。</p>
+</li>
+<li><p><strong>歧义性</strong>：<br>自然语言中存在大量的歧义，同一个词或短语在不同的上下文中可能具有不同的含义。这使得 Chunking 的准确性受到影响。</p>
+</li>
+<li><p><strong>长距离依赖</strong>：<br>在某些情况下，文本中的块可能跨越多个句子或段落，这使得 Chunking 的识别变得更加困难。</p>
+</li>
+</ol>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>Chunking 是自然语言处理中的一项重要技术，它通过将文本分割成有意义的块，帮助我们从文本中提取出结构化的信息。无论是在信息提取、语法分析、机器翻译还是问答系统中，Chunking 都发挥着关键作用。尽管面临一些挑战，但随着技术的不断进步，Chunking 的准确性和应用范围将会进一步提升。</p>
+<p>通过理解和掌握 Chunking 技术，我们可以更好地处理和分析文本数据，从而为各种 NLP 应用提供强有力的支持。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="http://link.hhtjim.com/163/2620108348.mp3">
+            </audio>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="true"
+        data-ci="b8b94e0e57e0acc46202"
+        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Chunking%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什么是 Chunking？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Chunking-%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.</span> <span class="toc-text">Chunking 的基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Chunking-%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.2.</span> <span class="toc-text">Chunking 的应用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Chunking-%E7%9A%84%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.</span> <span class="toc-text">Chunking 的技术实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Chunking-%E7%9A%84%E6%8C%91%E6%88%98"><span class="toc-number">1.4.</span> <span class="toc-text">Chunking 的挑战</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.5.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>	
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+
+</html>

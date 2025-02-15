@@ -5438,8 +5438,8 @@
     <title>回忆是本乱码的书</title>
     <url>/2024/12/01/%E5%9B%9E%E5%BF%86%E6%98%AF%E6%9C%AC%E4%B9%B1%E7%A0%81%E7%9A%84%E4%B9%A6/</url>
     <content><![CDATA[<p>回忆是本乱码的书，你会时不时拼凑出一句完整的话，然后后知后觉</p>
-<p>等你懂了，也晚了</p>
-<p>虽然晚了，但总算懂了，所以祝大家珍惜身边每一个人，每一段关系</p>
+<p>等你懂了，但也晚了</p>
+<p>虽然晚了，但总算懂了，祝大家珍惜身边每一个人，每一段关系</p>
 <p>我们无法判断此刻的价值，直到成为回忆</p>
 <p>但我们可以让此刻的价值加倍</p>
 <p>这样在回忆中见到当时那个错过同频的人，我们也可以笑着说：哦！～我懂你意思了</p>
@@ -5784,6 +5784,486 @@
       <tags>
         <tag>python</tag>
         <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RAG-什么是chunking</title>
+    <url>/2025/02/15/RAG-%E4%BB%80%E4%B9%88%E6%98%AFchunking/</url>
+    <content><![CDATA[<h3 id="什么是-Chunking？"><a href="#什么是-Chunking？" class="headerlink" title="什么是 Chunking？"></a>什么是 Chunking？</h3><p>在自然语言处理（NLP）和文本分析领域，<strong>Chunking</strong>（分块）是一种将文本分割成有意义的、可管理的片段的技术。这些片段通常被称为“块”（chunks），可以是短语、句子、段落或其他有意义的语言单元。Chunking 的目标是从文本中提取出结构化的信息，以便更好地理解和处理语言数据。</p>
+<h4 id="Chunking-的基本概念"><a href="#Chunking-的基本概念" class="headerlink" title="Chunking 的基本概念"></a>Chunking 的基本概念</h4><p>Chunking 的核心思想是将连续的文本分割成更小的、有意义的单元。与简单的分词（tokenization）不同，Chunking 不仅仅是把文本拆分成单词，而是将这些单词组合成更大的语义单元。例如，在句子“The quick brown fox jumps over the lazy dog”中，Chunking 可能会将“The quick brown fox”识别为一个名词短语（NP），而“jumps over the lazy dog”识别为一个动词短语（VP）。</p>
+<h4 id="Chunking-的应用场景"><a href="#Chunking-的应用场景" class="headerlink" title="Chunking 的应用场景"></a>Chunking 的应用场景</h4><ol>
+<li><p><strong>信息提取</strong>：<br>Chunking 可以帮助从文本中提取出关键信息，如人名、地名、日期、组织机构等。例如，在新闻文章中，Chunking 可以用于识别出事件的主角、地点和时间。</p>
+</li>
+<li><p><strong>语法分析</strong>：<br>在句法分析中，Chunking 是构建句法树的重要步骤。通过将句子分割成短语，可以更好地理解句子的结构和语法关系。</p>
+</li>
+<li><p><strong>机器翻译</strong>：<br>在机器翻译中，Chunking 可以帮助识别出源语言中的短语结构，从而生成更准确的目标语言翻译。</p>
+</li>
+<li><p><strong>问答系统</strong>：<br>在问答系统中，Chunking 可以用于识别问题中的关键短语，从而更准确地匹配答案。</p>
+</li>
+<li><p><strong>文本摘要</strong>：<br>Chunking 可以帮助识别文本中的重要信息，从而生成简洁的摘要。</p>
+</li>
+</ol>
+<h4 id="Chunking-的技术实现"><a href="#Chunking-的技术实现" class="headerlink" title="Chunking 的技术实现"></a>Chunking 的技术实现</h4><p>Chunking 的实现通常依赖于自然语言处理工具和算法。以下是一些常用的方法：</p>
+<ol>
+<li><p><strong>规则-based 方法</strong>：<br>这种方法依赖于预定义的语法规则和模式来识别文本中的块。例如，可以使用正则表达式来匹配名词短语或动词短语。</p>
+</li>
+<li><p><strong>统计-based 方法</strong>：<br>这种方法使用机器学习算法来训练模型，以识别文本中的块。常用的算法包括隐马尔可夫模型（HMM）、条件随机场（CRF）等。</p>
+</li>
+<li><p><strong>深度学习-based 方法</strong>：<br>近年来，深度学习技术在 Chunking 中也得到了广泛应用。例如，可以使用循环神经网络（RNN）或 Transformer 模型来识别文本中的块。</p>
+</li>
+</ol>
+<h4 id="Chunking-的挑战"><a href="#Chunking-的挑战" class="headerlink" title="Chunking 的挑战"></a>Chunking 的挑战</h4><p>尽管 Chunking 在文本处理中具有广泛的应用，但它也面临一些挑战：</p>
+<ol>
+<li><p><strong>语言的多样性</strong>：<br>不同语言的语法结构和表达方式差异很大，这使得 Chunking 在多语言环境中的实现变得复杂。</p>
+</li>
+<li><p><strong>歧义性</strong>：<br>自然语言中存在大量的歧义，同一个词或短语在不同的上下文中可能具有不同的含义。这使得 Chunking 的准确性受到影响。</p>
+</li>
+<li><p><strong>长距离依赖</strong>：<br>在某些情况下，文本中的块可能跨越多个句子或段落，这使得 Chunking 的识别变得更加困难。</p>
+</li>
+</ol>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>Chunking 是自然语言处理中的一项重要技术，它通过将文本分割成有意义的块，帮助我们从文本中提取出结构化的信息。无论是在信息提取、语法分析、机器翻译还是问答系统中，Chunking 都发挥着关键作用。尽管面临一些挑战，但随着技术的不断进步，Chunking 的准确性和应用范围将会进一步提升。</p>
+<p>通过理解和掌握 Chunking 技术，我们可以更好地处理和分析文本数据，从而为各种 NLP 应用提供强有力的支持。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>杂谈</tag>
+        <tag>RAG</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Monokai色彩方案</title>
+    <url>/2025/02/15/Monokai%E8%89%B2%E5%BD%A9%E6%96%B9%E6%A1%88/</url>
+    <content><![CDATA[<h2 id="Monokai色彩方案"><a href="#Monokai色彩方案" class="headerlink" title="Monokai色彩方案"></a>Monokai色彩方案</h2><p>在编程的早期，开发者一直在寻找一个能够使工作更轻松、更吸引人的环境。Monokai，以其鲜艳的色彩方案，成为了编辑器、IDE和终端中的热门选择。这篇文章深入探讨了这一标志性色彩方案的起源、发展和持久的吸引力。</p>
+<h2 id="Monokai的诞生"><a href="#Monokai的诞生" class="headerlink" title="Monokai的诞生"></a>Monokai的诞生</h2><p>Monokai的旅程始于2006年，由荷兰设计师兼开发者Wimer Hazenberg发起。Wimer对现有的缺乏灵感、过于饱和的编辑器主题感到沮丧，决定创造一些新鲜且实用的东西——一个优先考虑可读性和美学的色彩方案。他的工具选择是macOS上的TextMate，在那里他尝试了一个深色背景和明亮、精心挑选的颜色：用于关键字的粉色，用于字符串的香草黄色，以及微妙的对比来突出代码结构，同时降低不太重要的元素（如注释）的亮度。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">fibonacci</span> = (<span class="params">n: number</span>) =&gt; &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Called fibonacci(<span class="subst">$&#123;n&#125;</span>)`</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Base case: return n if 0 or 1</span></span><br><span class="line">	<span class="keyword">if</span> (n &lt;= <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> n;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Recursive calls</span></span><br><span class="line">	<span class="keyword">return</span> <span class="title function_">fibonacci</span>(n - <span class="number">1</span>) + <span class="title function_">fibonacci</span>(n - <span class="number">2</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>原始Monokai颜色的示例代码</p>
+<p>Wimer在TextMate的wiki上分享了他的主题，以他自己的互联网别名命名，没有多想。令他惊讶的是，Monokai迅速在编程社区中流行开来，与寻求新鲜替代品的开发者产生共鸣。从那时起，Monokai作为开发者友好、视觉上吸引人的方案的声誉传播开来。</p>
+<h2 id="Monokai：一个有自己生命的名称"><a href="#Monokai：一个有自己生命的名称" class="headerlink" title="Monokai：一个有自己生命的名称"></a>Monokai：一个有自己生命的名称</h2><p>“Monokai”这个名字常常引起好奇，因为它听起来有点日本味，导致许多人将其与极简主义或禅宗美学联系起来。然而，它的真实起源更多是基于感觉。</p>
+<p>“Monokai”是在2003年左右作为Wimer的互联网别名和公司名称创建的，它没有特定的含义，主要是“感觉对了”。然而，它也代表了一种个人化的项目方法。“Mono”部分表示专注于个人共鸣的想法，反映了设计和开发中的个人努力。与此同时，“kai”部分有一个有趣的声音和愉快的响声，“AI”微妙地暗示了他在人工智能方面的背景。</p>
+<p>从一个个人项目名称开始，现在意外地与一个色彩方案联系在一起。要了解更多关于Wimer在他的Monokai别名下的个人项目，请访问monokai.com。</p>
+<h2 id="混音和非官方移植"><a href="#混音和非官方移植" class="headerlink" title="混音和非官方移植"></a>混音和非官方移植</h2><p>随着Monokai在开发世界中的传播，它激发了无数混音和改编，产生了市场上几乎每个编辑器的非官方“Monokai启发”主题。Textmate主题的开放性质使其易于开发人员适应和定制以满足其特定需求，在各种编辑器中创造独特的衍生产品。虽然这些改编并非由Wimer创建，但它们的多样性突出了该方案对全球开发人员的影响和影响力。</p>
+<h2 id="Sublime-Text的一个决定性时刻"><a href="#Sublime-Text的一个决定性时刻" class="headerlink" title="Sublime Text的一个决定性时刻"></a>Sublime Text的一个决定性时刻</h2><p>当Monokai成为<strong>Sublime Text</strong>的默认主题时，Monokai的受欢迎程度又跃升了一个台阶，Sublime Text是一个以其时尚设计和速度而闻名的编辑器。这一合作使Monokai面向更广泛的受众，将其确立为全球开发人员的首选主题。对许多人来说，Sublime和Monokai成为了新流线型代码编辑方法的不可分割的象征。</p>
+<h2 id="Monokai-Pro：最终的现代版本"><a href="#Monokai-Pro：最终的现代版本" class="headerlink" title="Monokai Pro：最终的现代版本"></a>Monokai Pro：最终的现代版本</h2><p>随着Monokai的持续受欢迎，Wimer看到了完善和扩展他原始主题的机会。2017年，他推出了<strong>Monokai Pro</strong>——原始Monokai的现代、功能丰富的演变。</p>
+<p>Monokai Pro不仅仅是一个简单的更新；它包括一系列增强功能，以满足当代开发人员的需求，包括用户界面设计和定制图标包。Monokai Pro提供几种颜色过滤器，如“Spectrum”、“Ristretto”和经典的“Monokai”，现在重新命名为<strong>Monokai Classic</strong>。这些选项允许开发人员选择最适合其工作空间的外观和感觉。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">fetchJson</span>(<span class="params">url: string</span>): <span class="title class_">Promise</span>&lt;any&gt; &#123;</span><br><span class="line">	<span class="keyword">const</span> response = <span class="keyword">await</span> <span class="title function_">fetch</span>(url);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!response.<span class="property">ok</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Invalid response&#x27;</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">await</span> response.<span class="title function_">json</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">fetchJson</span>(<span class="string">`<span class="subst">$&#123;API&#125;</span>/data.json`</span>)</span><br><span class="line">	.<span class="title function_">then</span>(<span class="function"><span class="params">data</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(data))</span><br><span class="line">	.<span class="title function_">catch</span>(<span class="function"><span class="params">error</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;Fetch error:&#x27;</span>, error));</span><br></pre></td></tr></table></figure>
+
+<p>Monokai Pro颜色的示例代码</p>
+<p>Monokai Pro包括70多个定制图标包</p>
+<p>与许多将UI和语法高亮分离的主题不同，Monokai Pro遵循<strong>集成设计方法</strong>，其中界面的每个元素都是协调一致且视觉上统一的。Wimer亲自使用并微调Monokai Pro，随着每次迭代对其进行演变，以保持其美学和功能吸引力。这种亲力亲为的方法使Monokai Pro保持其起源的真实性，同时适应现代编码的需求。</p>
+<h2 id="关于设计色彩方案的注释"><a href="#关于设计色彩方案的注释" class="headerlink" title="关于设计色彩方案的注释"></a>关于设计色彩方案的注释</h2><p>选择正确的颜色是一项复杂的任务。在文本编辑器中，您希望颜色具有相同的亮度，以便代码可以轻松阅读。然而，并没有一个确定的数学公式来确定颜色的感知“亮度”，即使是像CIELAB和OKLAB这样的既定色彩空间也有其局限性。虽然可以建议使用对比度比率工具来提高可读性，但它们并不普遍适用于所有颜色组合。</p>
+<p>在数学模型中捕捉颜色，以精确匹配我们的感知是一种幻觉。我们对颜色的感知是复杂和主观的，即使是最复杂的方法也无法完全在算法中捕捉到它。这使得选择色彩方案更多是一种艺术而不是科学，设计师依靠直觉、经验和反馈来创造和谐且功能性的组合。</p>
+<h2 id="Monokai在流行文化中的地位"><a href="#Monokai在流行文化中的地位" class="headerlink" title="Monokai在流行文化中的地位"></a>Monokai在流行文化中的地位</h2><p>Monokai的影响力甚至扩展到了科技世界之外。它出现在《硅谷》、《黑客军团》等节目中，其可识别的颜色为屏幕上的开发人员环境增添了真实性。</p>
+<p>它的色彩方案已被插画家、生成艺术家和各种领域的设计师使用。</p>
+<h2 id="Monokai-Pro扩展：引入浅色主题"><a href="#Monokai-Pro扩展：引入浅色主题" class="headerlink" title="Monokai Pro扩展：引入浅色主题"></a>Monokai Pro扩展：引入浅色主题</h2><p>多年来，开发人员一直在请求Monokai Pro的浅色主题。接受这一挑战意味着不仅仅是亮化颜色——在浅色背景上对比度表现不同，大胆的色调很容易变得压倒性。</p>
+<p>经过广泛的测试，Wimer在2024年引入了<strong>Monokai Pro Light</strong>及其新的“Sun”过滤器，旨在在明亮的环境中保持Monokai的清晰度和可读性。Monokai Pro Light提供温暖、平衡的色调，既易于眼睛又充满活力，使其非常适合自然光线的空间。浅色主题扩展了Monokai的吸引力，同时保持其深思熟虑的功能性设计，为开发人员提供了他们熟悉的经验，以一个清新、浅色的调色板。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">isPalindrome</span>(<span class="params">str: string</span>): boolean &#123;</span><br><span class="line">	<span class="keyword">const</span> sanitized = str.<span class="title function_">replace</span>(<span class="regexp">/[W_]/g</span>, <span class="string">&#x27;&#x27;</span>).<span class="title function_">toLowerCase</span>();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> sanitized === sanitized.<span class="title function_">split</span>(<span class="string">&#x27;&#x27;</span>).<span class="title function_">reverse</span>().<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">isPalindrome</span>(<span class="string">&#x27;never odd or even&#x27;</span>)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>Monokai Pro Light颜色的示例代码</p>
+<h2 id="展望未来"><a href="#展望未来" class="headerlink" title="展望未来"></a>展望未来</h2><p>从一个简单的TextMate主题到一个标志性工具，Monokai的旅程突出了编码中深思熟虑的设计力量。Monokai Pro仍然是Wimer愿景的真实演变，不断适应现代软件需求，同时忠于其在清晰度和简洁性方面的根源。随着代码的演变，Monokai也在演变——这是如何精心设计可以增强开发人员工作空间中功能和流程的持久提醒。</p>
+<p>文章来源：<a href="https://monokai.pro/history">https://www.monokai.pro/monokai/</a></p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RAG-python库Chonkie的使用</title>
+    <url>/2025/02/15/RAG-python%E5%BA%93Chonkie%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="使用-Python-库-Chonkie-快速上手"><a href="#使用-Python-库-Chonkie-快速上手" class="headerlink" title="使用 Python 库 Chonkie 快速上手"></a>使用 Python 库 Chonkie 快速上手</h2><p>在自然语言处理（NLP）领域，文本分块（chunking）是一种常见的任务，它将长文本分割成更小的块，以便于后续处理和分析。无论是构建 RAG（Retrieve-Augment-Generate）模型，还是进行大规模文本处理，分块都是一项基础且关键的步骤。然而，现有的许多分块工具要么功能过于复杂，要么过于简陋，难以满足开发者的实际需求。<br>幸运的是，现在有了 Chonkie —— 一个简单易用的 Python 库，它专注于提供高效且灵活的文本分块解决方案。本文将详细介绍如何使用 Chonkie 快速上手文本分块，并通过几个实际示例展示其强大的功能。</p>
+<h2 id="什么是-Chonkie？"><a href="#什么是-Chonkie？" class="headerlink" title="什么是 Chonkie？"></a>什么是 Chonkie？</h2><p>Chonkie 是一个轻量级的 Python 库，旨在简化文本分块的过程。它提供了多种分块策略，包括基于句子的分块、递归分块、语义分块和双通道合并分块等，能够满足不同场景下的需求。Chonkie 的设计目标是简单、高效且易于扩展，让开发者能够专注于核心业务逻辑，而不是被复杂的分块逻辑所困扰。<br>安装 Chonkie<br>在开始之前，您需要先安装 Chonkie。可以通过以下命令快速安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install chonkie</span><br></pre></td></tr></table></figure>
+<p>示例文本<br>为了更好地展示 Chonkie 的功能，我们将使用以下示例文本：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">text = <span class="string">&#x27;&#x27;&#x27;团圆年｜且行且思谋新篇</span></span><br><span class="line"><span class="string">编者按：春节，是中华民族传统节日，是万家团圆、辞旧迎新的日子。新时代以来，每到年味渐浓之时，习近平总书记都会深入到群众当中，问冷暖送祝福、听民声解民忧。值此辞旧迎新之际，央视网推出系列特稿，与您一起循着总书记新春足迹，感悟深厚的人民情怀。</span></span><br><span class="line"><span class="string">在中国传统文化中，春节是一年之始，也是万象更新的时刻。每年春节前夕走基层，习近平总书记总是一路调研、一路思索，为各地发展部署谋划。</span></span><br><span class="line"><span class="string">为乡村振兴谋新篇&#x27;&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="句子分块器（SentenceChunker）"><a href="#句子分块器（SentenceChunker）" class="headerlink" title="句子分块器（SentenceChunker）"></a>句子分块器（SentenceChunker）</h2><p>句子分块器将文本拆分为多个块，同时保留完整的句子边界。这对于需要保持句子完整性的任务非常有用。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> chonkie <span class="keyword">import</span> SentenceChunker</span><br><span class="line"></span><br><span class="line">chunker = SentenceChunker(</span><br><span class="line">    tokenizer=<span class="string">&quot;gpt2&quot;</span>,  <span class="comment"># 使用 GPT-2 分词器</span></span><br><span class="line">    chunk_size=<span class="number">512</span>,    <span class="comment"># 每个块的最大字符数</span></span><br><span class="line">    chunk_overlap=<span class="number">128</span>, <span class="comment"># 块之间的重叠字符数</span></span><br><span class="line">    min_sentences_per_chunk=<span class="number">1</span>  <span class="comment"># 每个块最少包含的句子数</span></span><br><span class="line">)</span><br><span class="line">chunks = chunker.chunk(text)</span><br><span class="line"><span class="keyword">for</span> chunk <span class="keyword">in</span> chunks:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;文本块内容: <span class="subst">&#123;chunk.text&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;令牌数量: <span class="subst">&#123;chunk.token_count&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;句子数量: <span class="subst">&#123;<span class="built_in">len</span>(chunk.sentences)&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="递归分块器（RecursiveChunker）"><a href="#递归分块器（RecursiveChunker）" class="headerlink" title="递归分块器（RecursiveChunker）"></a>递归分块器（RecursiveChunker）</h2><p>递归分块器以递归方式将文档分块为较小的块，适用于结构良好的长文档。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> chonkie <span class="keyword">import</span> RecursiveChunker, RecursiveRules</span><br><span class="line"></span><br><span class="line">chunker = RecursiveChunker(</span><br><span class="line">    tokenizer=<span class="string">&quot;gpt2&quot;</span>,  <span class="comment"># 使用 GPT-2 分词器</span></span><br><span class="line">    chunk_size=<span class="number">512</span>,    <span class="comment"># 每个块的最大令牌数</span></span><br><span class="line">    rules=RecursiveRules(),  <span class="comment"># 使用默认的递归规则</span></span><br><span class="line">    min_characters_per_chunk=<span class="number">12</span>  <span class="comment"># 每个块最少包含的字符数</span></span><br><span class="line">)</span><br><span class="line">chunks = chunker.chunk(text)</span><br><span class="line"><span class="keyword">for</span> chunk <span class="keyword">in</span> chunks:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;文本块内容: <span class="subst">&#123;chunk.text&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;令牌数量: <span class="subst">&#123;chunk.token_count&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="语义分块器（SemanticChunker）"><a href="#语义分块器（SemanticChunker）" class="headerlink" title="语义分块器（SemanticChunker）"></a>语义分块器（SemanticChunker）</h2><p>语义分块器根据语义相似性将文本拆分为块，确保相关内容位于同一块中。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> chonkie <span class="keyword">import</span> SemanticChunker</span><br><span class="line"></span><br><span class="line">chunker = SemanticChunker(</span><br><span class="line">    embedding_model=<span class="string">&quot;minishlab/potion-base-8M&quot;</span>,  <span class="comment"># 使用嵌入模型</span></span><br><span class="line">    threshold=<span class="number">0.5</span>,  <span class="comment"># 分块的阈值</span></span><br><span class="line">    chunk_size=<span class="number">512</span>,  <span class="comment"># 每个分块的最大令牌数</span></span><br><span class="line">    min_sentences=<span class="number">1</span>  <span class="comment"># 每个分块最少包含的句子数</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">chunks = chunker.chunk(text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> chunk <span class="keyword">in</span> chunks:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;文本块内容: <span class="subst">&#123;chunk.text&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;令牌数量: <span class="subst">&#123;chunk.token_count&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;分块中的句子数量: <span class="subst">&#123;<span class="built_in">len</span>(chunk.sentences)&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="双通道合并分块器（SDPMChunker）"><a href="#双通道合并分块器（SDPMChunker）" class="headerlink" title="双通道合并分块器（SDPMChunker）"></a>双通道合并分块器（SDPMChunker）</h2><p>双通道合并分块器通过语义相似性分组，然后在跳过窗口中合并相似的组，适用于具有重复主题的文档。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> chonkie <span class="keyword">import</span> SDPMChunker</span><br><span class="line"></span><br><span class="line">chunker = SDPMChunker(</span><br><span class="line">    embedding_model=<span class="string">&quot;minishlab/potion-base-8M&quot;</span>,  <span class="comment"># 使用嵌入模型</span></span><br><span class="line">    threshold=<span class="number">0.5</span>,  <span class="comment"># 分块的阈值</span></span><br><span class="line">    chunk_size=<span class="number">512</span>,  <span class="comment"># 每个分块的最大令牌数</span></span><br><span class="line">    min_sentences=<span class="number">1</span>,  <span class="comment"># 每个分块最少包含的句子数</span></span><br><span class="line">    skip_window=<span class="number">1</span>  <span class="comment"># 跳过窗口大小</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">chunks = chunker.chunk(text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> chunk <span class="keyword">in</span> chunks:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;分块内容: <span class="subst">&#123;chunk.text&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;令牌数量: <span class="subst">&#123;chunk.token_count&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;分块句子数量: <span class="subst">&#123;<span class="built_in">len</span>(chunk.sentences)&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Chonkie 提供了多种灵活的分块策略，能够满足不同场景下的需求。无论是基于句子的分块、递归分块，还是语义分块和双通道合并分块，Chonkie 都能以简单高效的方式完成任务。通过本文的介绍，您应该已经掌握了如何使用 Chonkie 进行文本分块。更多详细信息和高级功能，可以参考 Chonkie 官方文档。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>杂谈</tag>
+        <tag>RAG</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python库parse的使用</title>
+    <url>/2025/02/15/python%E5%BA%93parse%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h3 id="深入浅出解析-Python-parse-库的使用"><a href="#深入浅出解析-Python-parse-库的使用" class="headerlink" title="深入浅出解析 Python parse 库的使用"></a>深入浅出解析 Python <code>parse</code> 库的使用</h3><p><code>parse</code> 是 Python 中一个强大的字符串解析库，它能够根据指定的格式从字符串中提取出所需的数据。与 Python 内置的字符串格式化功能（如 <code>str.format()</code>）相反，<code>parse</code> 库的作用是从格式化字符串中反向提取数据。</p>
+<hr>
+<h3 id="1-安装-parse-库"><a href="#1-安装-parse-库" class="headerlink" title="1. 安装 parse 库"></a>1. <strong>安装 <code>parse</code> 库</strong></h3><p>在开始使用 <code>parse</code> 库之前，需要先安装它。可以通过以下命令安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install parse</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="2-基本用法"><a href="#2-基本用法" class="headerlink" title="2. 基本用法"></a>2. <strong>基本用法</strong></h3><p><code>parse</code> 库的核心功能是通过 <code>parse()</code> 函数从字符串中提取数据。其基本语法如下：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> parse <span class="keyword">import</span> parse</span><br><span class="line"></span><br><span class="line">result = parse(format_string, input_string)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>format_string</code>：格式化字符串，用于定义提取数据的模式。</li>
+<li><code>input_string</code>：需要解析的输入字符串。</li>
+<li><code>result</code>：解析结果，返回一个 <code>Result</code> 对象。如果解析失败，返回 <code>None</code>。</li>
+</ul>
+<h4 id="示例-1：提取简单数据"><a href="#示例-1：提取简单数据" class="headerlink" title="示例 1：提取简单数据"></a>示例 1：提取简单数据</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> parse <span class="keyword">import</span> parse</span><br><span class="line"></span><br><span class="line">result = parse(<span class="string">&quot;My name is &#123;&#125;&quot;</span>, <span class="string">&quot;My name is Alice&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(result[<span class="number">0</span>])  <span class="comment"># 输出: Alice</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>format_string</code> 是 <code>&quot;My name is &#123;&#125;&quot;</code>，<code>input_string</code> 是 <code>&quot;My name is Alice&quot;</code>。<code>parse()</code> 函数从输入字符串中提取出 <code>Alice</code>，并将其存储在 <code>result[0]</code> 中。</p>
+<hr>
+<h3 id="3-提取命名数据"><a href="#3-提取命名数据" class="headerlink" title="3. 提取命名数据"></a>3. <strong>提取命名数据</strong></h3><p><code>parse</code> 库支持通过命名占位符提取数据，提取的结果会以字典形式返回。</p>
+<h4 id="示例-2：提取命名数据"><a href="#示例-2：提取命名数据" class="headerlink" title="示例 2：提取命名数据"></a>示例 2：提取命名数据</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> parse <span class="keyword">import</span> parse</span><br><span class="line"></span><br><span class="line">result = parse(<span class="string">&quot;My name is &#123;name&#125;&quot;</span>, <span class="string">&quot;My name is Alice&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(result[<span class="string">&quot;name&quot;</span>])  <span class="comment"># 输出: Alice</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>format_string</code> 中的 <code>&#123;name&#125;</code> 是一个命名占位符。<code>parse()</code> 函数会将提取的数据存储在 <code>result[&quot;name&quot;]</code> 中。</p>
+<hr>
+<h3 id="4-提取类型化数据"><a href="#4-提取类型化数据" class="headerlink" title="4. 提取类型化数据"></a>4. <strong>提取类型化数据</strong></h3><p><code>parse</code> 库支持通过类型化占位符提取特定类型的数据。常用的类型包括：</p>
+<ul>
+<li><code>&#123;name:d&#125;</code>：提取整数。</li>
+<li><code>&#123;name:f&#125;</code>：提取浮点数。</li>
+<li><code>&#123;name:w&#125;</code>：提取单词（以空格分隔的字符串）。</li>
+</ul>
+<h4 id="示例-3：提取整数和浮点数"><a href="#示例-3：提取整数和浮点数" class="headerlink" title="示例 3：提取整数和浮点数"></a>示例 3：提取整数和浮点数</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> parse <span class="keyword">import</span> parse</span><br><span class="line"></span><br><span class="line">result = parse(<span class="string">&quot;I am &#123;age:d&#125; years old and weigh &#123;weight:f&#125; kg&quot;</span>, </span><br><span class="line">               <span class="string">&quot;I am 25 years old and weigh 68.5 kg&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(result[<span class="string">&quot;age&quot;</span>])    <span class="comment"># 输出: 25</span></span><br><span class="line"><span class="built_in">print</span>(result[<span class="string">&quot;weight&quot;</span>]) <span class="comment"># 输出: 68.5</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>&#123;age:d&#125;</code> 提取整数，<code>&#123;weight:f&#125;</code> 提取浮点数。</p>
+<hr>
+<h3 id="5-提取复杂数据"><a href="#5-提取复杂数据" class="headerlink" title="5. 提取复杂数据"></a>5. <strong>提取复杂数据</strong></h3><p><code>parse</code> 库支持更复杂的模式匹配，例如提取日期、时间等。</p>
+<h4 id="示例-4：提取日期"><a href="#示例-4：提取日期" class="headerlink" title="示例 4：提取日期"></a>示例 4：提取日期</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> parse <span class="keyword">import</span> parse</span><br><span class="line"></span><br><span class="line">result = parse(<span class="string">&quot;Today is &#123;date:%Y-%m-%d&#125;&quot;</span>, <span class="string">&quot;Today is 2023-10-05&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(result[<span class="string">&quot;date&quot;</span>])  <span class="comment"># 输出: datetime.date(2023, 10, 5)</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>&#123;date:%Y-%m-%d&#125;</code> 提取日期，并将其转换为 <code>datetime.date</code> 对象。</p>
+<hr>
+<h3 id="6-自定义提取模式"><a href="#6-自定义提取模式" class="headerlink" title="6. 自定义提取模式"></a>6. <strong>自定义提取模式</strong></h3><p><code>parse</code> 库允许用户通过正则表达式自定义提取模式。</p>
+<h4 id="示例-5：自定义提取模式"><a href="#示例-5：自定义提取模式" class="headerlink" title="示例 5：自定义提取模式"></a>示例 5：自定义提取模式</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> parse <span class="keyword">import</span> parse, with_pattern</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line"><span class="meta">@with_pattern(<span class="params"><span class="string">r&quot;\d+&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">parse_number</span>(<span class="params">text</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">int</span>(text)</span><br><span class="line"></span><br><span class="line">result = parse(<span class="string">&quot;The number is &#123;number:Number&#125;&quot;</span>, </span><br><span class="line">               <span class="string">&quot;The number is 42&quot;</span>, &#123;<span class="string">&quot;Number&quot;</span>: parse_number&#125;)</span><br><span class="line"><span class="built_in">print</span>(result[<span class="string">&quot;number&quot;</span>])  <span class="comment"># 输出: 42</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>parse_number</code> 是一个自定义的解析函数，用于提取整数。通过 <code>with_pattern</code> 装饰器将其注册为 <code>Number</code> 类型。</p>
+<hr>
+<h3 id="7-处理解析失败"><a href="#7-处理解析失败" class="headerlink" title="7. 处理解析失败"></a>7. <strong>处理解析失败</strong></h3><p>如果 <code>parse()</code> 函数无法解析输入字符串，会返回 <code>None</code>。可以通过检查返回值来处理解析失败的情况。</p>
+<h4 id="示例-6：处理解析失败"><a href="#示例-6：处理解析失败" class="headerlink" title="示例 6：处理解析失败"></a>示例 6：处理解析失败</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> parse <span class="keyword">import</span> parse</span><br><span class="line"></span><br><span class="line">result = parse(<span class="string">&quot;My name is &#123;&#125;&quot;</span>, <span class="string">&quot;Hello, world!&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> result <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;解析失败&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(result[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+
+<hr>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>decouple库介绍</title>
+    <url>/2025/02/15/decouple%E5%BA%93%E4%BB%8B%E7%BB%8D/</url>
+    <content><![CDATA[<h2 id="python-decouple：简化配置管理的利器"><a href="#python-decouple：简化配置管理的利器" class="headerlink" title="python-decouple：简化配置管理的利器"></a>python-decouple：简化配置管理的利器</h2><p>在现代软件开发中，合理地管理配置文件是确保项目安全性和可维护性的关键。<code>python-decouple</code>是一个强大的库，它帮助开发者将配置信息从代码中分离出来，使得项目更加灵活和安全。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>安装<code>python-decouple</code>非常简单，只需一条pip命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install python-decouple</span><br></pre></td></tr></table></figure>
+
+<h2 id="核心特性"><a href="#核心特性" class="headerlink" title="核心特性"></a>核心特性</h2><ul>
+<li><strong>简化配置管理</strong>：通过简单易用的API，方便开发者管理配置信息。</li>
+<li><strong>解耦配置与代码</strong>：避免硬编码配置，提高代码的可维护性。</li>
+<li><strong>支持多种文件格式</strong>：支持读取和解析多种配置文件格式，如<code>.env</code>、<code>.ini</code>、<code>.yaml</code>等。</li>
+<li><strong>增强安全性</strong>：安全地存储敏感信息，如密码、API密钥等。</li>
+</ul>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><h3 id="创建配置文件"><a href="#创建配置文件" class="headerlink" title="创建配置文件"></a>创建配置文件</h3><p>在项目根目录下创建一个<code>.env</code>文件，示例如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># .env文件内容示例</span><br><span class="line">DEBUG=True</span><br><span class="line">SECRET_KEY=supersecretkey</span><br><span class="line">DATABASE_URL=postgresql://user:pass@localhost/mydb</span><br></pre></td></tr></table></figure>
+
+<h3 id="读取配置信息"><a href="#读取配置信息" class="headerlink" title="读取配置信息"></a>读取配置信息</h3><p>使用<code>python-decouple</code>读取配置文件中的信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> decouple <span class="keyword">import</span> config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取配置信息</span></span><br><span class="line">debug_mode = config(<span class="string">&#x27;DEBUG&#x27;</span>, cast=<span class="built_in">bool</span>)</span><br><span class="line">secret_key = config(<span class="string">&#x27;SECRET_KEY&#x27;</span>)</span><br><span class="line">db_url = config(<span class="string">&#x27;DATABASE_URL&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在这里，我们使用<code>config</code>函数读取<code>.env</code>文件中的配置信息，并通过<code>cast=bool</code>将<code>DEBUG</code>的值转换为布尔类型。</p>
+<h2 id="高级功能"><a href="#高级功能" class="headerlink" title="高级功能"></a>高级功能</h2><h3 id="支持不同配置文件格式"><a href="#支持不同配置文件格式" class="headerlink" title="支持不同配置文件格式"></a>支持不同配置文件格式</h3><p><code>python-decouple</code>不仅限于<code>.env</code>文件，它还支持<code>.ini</code>和<code>.yaml</code>等格式。例如，使用<code>.ini</code>文件：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> decouple <span class="keyword">import</span> Config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建Config对象并读取.ini格式配置文件</span></span><br><span class="line">config = Config(<span class="string">&#x27;settings.ini&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取配置信息</span></span><br><span class="line">debug_mode = config(<span class="string">&#x27;DEBUG&#x27;</span>, cast=<span class="built_in">bool</span>)</span><br><span class="line">secret_key = config(<span class="string">&#x27;SECRET_KEY&#x27;</span>)</span><br><span class="line">db_url = config(<span class="string">&#x27;DATABASE_URL&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="环境变量覆盖"><a href="#环境变量覆盖" class="headerlink" title="环境变量覆盖"></a>环境变量覆盖</h3><p><code>python-decouple</code>允许环境变量覆盖配置文件中的值，这在不同环境（如开发、测试、生产）中非常有用：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> decouple <span class="keyword">import</span> config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取环境变量或配置文件中的值</span></span><br><span class="line">debug_mode = config(<span class="string">&#x27;DEBUG&#x27;</span>, default=<span class="literal">False</span>, cast=<span class="built_in">bool</span>)</span><br></pre></td></tr></table></figure>
+
+<p>如果环境变量<code>DEBUG</code>存在，它将覆盖<code>.env</code>文件中的值。</p>
+<h3 id="安全存储敏感信息"><a href="#安全存储敏感信息" class="headerlink" title="安全存储敏感信息"></a>安全存储敏感信息</h3><p>对于敏感信息，<code>python-decouple</code>提供了安全存储的解决方案：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> decouple <span class="keyword">import</span> Config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建Config对象并读取加密配置信息</span></span><br><span class="line">config = Config(<span class="string">&#x27;secrets.enc&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解密并读取配置信息</span></span><br><span class="line">secret_key = config(<span class="string">&#x27;SECRET_KEY&#x27;</span>, default=<span class="string">&#x27;defaultkey&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>通过加密配置文件，敏感信息得到保护。</p>
+<h2 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h2><h3 id="Django项目配置"><a href="#Django项目配置" class="headerlink" title="Django项目配置"></a>Django项目配置</h3><p>在Django项目中，使用<code>python-decouple</code>管理数据库连接、调试模式等配置：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> decouple <span class="keyword">import</span> config</span><br><span class="line"><span class="keyword">from</span> django.core.wsgi <span class="keyword">import</span> get_wsgi_application</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取配置信息</span></span><br><span class="line">db_url = config(<span class="string">&#x27;DATABASE_URL&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置Django环境变量</span></span><br><span class="line">os.environ.setdefault(<span class="string">&#x27;DJANGO_SETTINGS_MODULE&#x27;</span>, <span class="string">&#x27;myproject.settings&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取WSGI应用</span></span><br><span class="line">application = get_wsgi_application()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Flask应用配置"><a href="#Flask应用配置" class="headerlink" title="Flask应用配置"></a>Flask应用配置</h3><p>在Flask应用中，配置密钥、API地址等：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">from</span> decouple <span class="keyword">import</span> config</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取配置信息</span></span><br><span class="line">app.config[<span class="string">&#x27;SECRET_KEY&#x27;</span>] = config(<span class="string">&#x27;SECRET_KEY&#x27;</span>)</span><br><span class="line">app.config[<span class="string">&#x27;API_URL&#x27;</span>] = config(<span class="string">&#x27;API_URL&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(debug=config(<span class="string">&#x27;DEBUG&#x27;</span>, default=<span class="literal">True</span>, cast=<span class="built_in">bool</span>))</span><br></pre></td></tr></table></figure>
+
+<h3 id="DevOps环境配置"><a href="#DevOps环境配置" class="headerlink" title="DevOps环境配置"></a>DevOps环境配置</h3><p>在DevOps环境中，配置服务器地址、API密钥等：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> decouple <span class="keyword">import</span> config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取配置信息</span></span><br><span class="line">server_url = config(<span class="string">&#x27;SERVER_URL&#x27;</span>)</span><br><span class="line">api_key = config(<span class="string">&#x27;API_KEY&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据环境配置部署</span></span><br><span class="line">env = config(<span class="string">&#x27;ENV&#x27;</span>, default=<span class="string">&#x27;development&#x27;</span>)</span><br><span class="line"><span class="keyword">if</span> env == <span class="string">&#x27;production&#x27;</span>:</span><br><span class="line">    deploy_to_production(server_url, api_key)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    deploy_to_staging(server_url, api_key)</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>python-decouple</code>是一个功能强大的配置管理工具，它通过解耦配置信息和代码，提高了项目的可维护性和安全性。支持多种配置文件格式和环境变量管理，使得它在Django、Flask等项目中非常有用。通过<code>python-decouple</code>，开发者可以轻松管理敏感信息，并在不同环境下灵活配置项目。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python代码中的特殊注释</title>
+    <url>/2025/02/15/python%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E7%89%B9%E6%AE%8A%E6%B3%A8%E9%87%8A/</url>
+    <content><![CDATA[<h2 id="python代码中的特殊注释"><a href="#python代码中的特殊注释" class="headerlink" title="python代码中的特殊注释"></a>python代码中的特殊注释</h2><ol>
+<li><p>**<code># noqa</code>**：</p>
+<ul>
+<li>用法：<code>some_code = &quot;example&quot;  # noqa</code></li>
+<li>功能：告诉<code>flake8</code>等工具忽略当前行的所有警告。</li>
+</ul>
+</li>
+<li><p>**<code># type: ignore</code>**：</p>
+<ul>
+<li>用法：<code>import some_module  # type: ignore</code></li>
+<li>功能：告诉<code>mypy</code>等类型检查器忽略当前行的类型检查警告。</li>
+</ul>
+</li>
+<li><p>**<code># pylint: disable=some-message</code>**：</p>
+<ul>
+<li>用法：<code>some_code = &quot;example&quot;  # pylint: disable=unused-variable</code></li>
+<li>功能：告诉<code>pylint</code>工具忽略特定的警告消息（例如未使用的变量）。</li>
+</ul>
+</li>
+<li><p>**<code># isort: skip</code>**：</p>
+<ul>
+<li>用法：<code>import some_module  # isort: skip</code></li>
+<li>功能：告诉<code>isort</code>工具在自动排序导入语句时跳过当前行。</li>
+</ul>
+</li>
+<li><p><strong><code># fmt: off</code></strong> 和 **<code># fmt: on</code>**：</p>
+<ul>
+<li>用法：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># fmt: off</span></span><br><span class="line">some_code = <span class="string">&quot;example&quot;</span></span><br><span class="line"><span class="comment"># fmt: on</span></span><br></pre></td></tr></table></figure></li>
+<li>功能：告诉<code>black</code>等代码格式化工具在<code># fmt: off</code>和<code># fmt: on</code>之间的代码不要进行格式化。</li>
+</ul>
+</li>
+<li><p>**<code># todo</code>**：</p>
+<ul>
+<li>用法：<code># todo: implement this function</code></li>
+<li>功能：标记待办事项，一些编辑器或工具可能会识别它以列出待办事项。</li>
+</ul>
+</li>
+<li><p>**<code># fixme</code>**：</p>
+<ul>
+<li>用法：<code># fixme: handle this exception properly</code></li>
+<li>功能：标记需要修复的问题。</li>
+</ul>
+</li>
+<li><p>**<code># ruff: ignore</code>**：</p>
+<ul>
+<li>用法：<code>some_code = &quot;example&quot;  # ruff: ignore</code></li>
+<li>功能：告诉<code>ruff</code>工具忽略当前行的警告。</li>
+</ul>
+</li>
+<li><p><strong><code># type: Any</code></strong> 或其他类型注释：</p>
+<ul>
+<li>用法：<code>def my_function(param: Any) -&gt; None: pass  # type: (Any) -&gt; None</code></li>
+<li>功能：用于类型注释，告诉类型检查器某个变量或函数的返回类型。</li>
+</ul>
+</li>
+<li><p><strong><code># coding: utf-8</code></strong> 或其他编码声明：</p>
+<ul>
+<li>用法：<code># coding: utf-8</code></li>
+<li>功能：指定文件的编码格式，通常放在文件的第一行或第二行。</li>
+</ul>
+</li>
+<li><p>**<code># mypy: ignore-errors</code>**：</p>
+<ul>
+<li>用法：<code># mypy: ignore-errors</code></li>
+<li>功能：告诉<code>mypy</code>忽略文件中的所有类型错误。</li>
+</ul>
+</li>
+<li><p>**<code># mypy: strict</code>**：</p>
+<ul>
+<li>用法：<code># mypy: strict</code></li>
+<li>功能：告诉<code>mypy</code>对文件进行严格类型检查。</li>
+</ul>
+</li>
+<li><p>**<code># pragma: no cover</code>**：</p>
+<ul>
+<li>用法：<code>def my_function():  # pragma: no cover</code></li>
+<li>功能：告诉代码覆盖率工具（如<code>coverage.py</code>）忽略这一行代码。</li>
+</ul>
+</li>
+<li><p>**<code># jshint ignore:line</code>**：</p>
+<ul>
+<li>用法：<code>var myVar = &#39;value&#39;;  // jshint ignore:line</code></li>
+<li>功能：告诉<code>JSHint</code>工具忽略当前行的警告（虽然这是针对JavaScript的，但一些Python工具可能也有类似的约定）。</li>
+</ul>
+</li>
+<li><p><strong><code># isort: off</code></strong> 和 **<code># isort: on</code>**：</p>
+<ul>
+<li>用法：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># isort: off</span></span><br><span class="line"><span class="keyword">import</span> some_module</span><br><span class="line"><span class="comment"># isort: on</span></span><br></pre></td></tr></table></figure></li>
+<li>功能：告诉<code>isort</code>工具在<code># isort: off</code>和<code># isort: on</code>之间的代码不要进行导入排序。</li>
+</ul>
+</li>
+<li><p>**<code># type: ignore[attr-defined]</code>**：</p>
+<ul>
+<li>用法：<code>obj.attr  # type: ignore[attr-defined]</code></li>
+<li>功能：告诉<code>mypy</code>等类型检查器忽略特定的属性定义警告。</li>
+</ul>
+</li>
+<li><p>**<code># type: ignore[misc]</code>**：</p>
+<ul>
+<li>用法：<code>some_code  # type: ignore[misc]</code></li>
+<li>功能：告诉<code>mypy</code>等类型检查器忽略特定的杂项警告。</li>
+</ul>
+</li>
+<li><p>**<code># cython: language_level=3</code>**：</p>
+<ul>
+<li>用法：<code># cython: language_level=3</code></li>
+<li>功能：告诉Cython编译器使用Python 3的语言级别。</li>
+</ul>
+</li>
+<li><p>**<code># flake8: noqa</code>**：</p>
+<ul>
+<li>用法：<code># flake8: noqa</code></li>
+<li>功能：告诉<code>flake8</code>工具忽略当前文件的所有警告（通常放在文件的顶部）。</li>
+</ul>
+</li>
+<li><p>**<code># check-arg-names: false</code>**：</p>
+<ul>
+<li>用法：<code>def my_function(a, b):  # check-arg-names: false</code></li>
+<li>功能：告诉某些代码分析工具忽略参数名称检查。</li>
+</ul>
+</li>
+</ol>
+<p>这些注释通常用于控制代码分析工具的行为，帮助开发者在特定情况下避免不必要的警告或错误。使用这些注释时，应确保它们的目的是明确的，并且不会隐藏代码中的实际问题。</p>
+<h2 id="哪些跟编辑器绑定的特殊注释"><a href="#哪些跟编辑器绑定的特殊注释" class="headerlink" title="哪些跟编辑器绑定的特殊注释"></a>哪些跟编辑器绑定的特殊注释</h2><p>有一些注释或标记是与特定编辑器或IDE绑定的，用于控制编辑器的行为，如代码折叠、任务列表、代码分析等。以下是一些常见的与编辑器绑定的注释：</p>
+<ol>
+<li><p>**<code># region</code> 和 <code># endregion</code>**：</p>
+<ul>
+<li>用于定义代码折叠区域。</li>
+<li>示例：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># region My Region</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">my_function</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Hello, World!&quot;</span>)</span><br><span class="line"><span class="comment"># endregion</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>**<code># todo</code><strong>、</strong><code># fixme</code><strong>、</strong><code># note</code><strong>、</strong><code># hack</code>**：</p>
+<ul>
+<li>这些注释用于标记待办事项、需要修复的问题、重要说明或临时解决方案，一些编辑器会自动识别这些标记并提供任务列表视图。</li>
+<li>示例：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># todo: implement this function</span></span><br><span class="line"><span class="comment"># fixme: handle this exception properly</span></span><br><span class="line"><span class="comment"># note: this is a workaround for a known issue</span></span><br><span class="line"><span class="comment"># hack: temporary solution until a better approach is found</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong><code># pylint: disable</code></strong> 和 **<code># pylint: enable</code>**：</p>
+<ul>
+<li>用于在特定代码块中禁用或启用<code>pylint</code>的特定警告。</li>
+<li>示例：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># pylint: disable=unused-variable</span></span><br><span class="line">some_unused_variable = <span class="number">42</span></span><br><span class="line"><span class="comment"># pylint: enable=unused-variable</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>**<code># type: ignore</code>**：</p>
+<ul>
+<li>用于告诉类型检查器（如<code>mypy</code>）忽略特定行的类型错误。</li>
+<li>示例：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> some_module  <span class="comment"># type: ignore</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>**<code># isort: skip_file</code>**：</p>
+<ul>
+<li>用于告诉<code>isort</code>工具忽略整个文件的导入排序。</li>
+<li>示例：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># isort: skip_file</span></span><br><span class="line"><span class="keyword">import</span> b</span><br><span class="line"><span class="keyword">import</span> a</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong><code># fmt: off</code></strong> 和 **<code># fmt: on</code>**：</p>
+<ul>
+<li>用于告诉代码格式化工具（如<code>black</code>）在特定代码块中禁用格式化。</li>
+<li>示例：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># fmt: off</span></span><br><span class="line">some_code = <span class="string">&quot;example&quot;</span></span><br><span class="line"><span class="comment"># fmt: on</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>**<code># noinspection</code>**：</p>
+<ul>
+<li>用于告诉IDE（如PyCharm）忽略特定的代码检查。</li>
+<li>示例：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># noinspection PyUnresolvedReferences</span></span><br><span class="line"><span class="keyword">import</span> some_module</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>**<code># mypy: ignore-errors</code>**：</p>
+<ul>
+<li>用于告诉<code>mypy</code>忽略整个文件的类型错误。</li>
+<li>示例：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># mypy: ignore-errors</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<p>这些注释通常由特定的编辑器或IDE解释，并用于控制编辑器的行为或提供额外的信息。使用这些注释时，应确保了解它们的用途和影响，并且不会隐藏代码中的实际问题。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>离线安装MongoDB教程</title>
+    <url>/2025/02/15/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85MongoDB%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="离线安装MongoDB教程"><a href="#离线安装MongoDB教程" class="headerlink" title="离线安装MongoDB教程"></a>离线安装MongoDB教程</h2><p>在CentOS 7环境下离线安装MongoDB，您可以按照以下步骤进行操作。本教程涵盖了从安装包下载到服务启动的全过程。</p>
+<h2 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1. 环境准备"></a>1. 环境准备</h2><ul>
+<li><strong>操作系统</strong>：Linux CentOS 7</li>
+<li><strong>安装包</strong>：<code>mongodb-linux-x86_64-rhel70-4.0.27.tgz</code></li>
+</ul>
+<h2 id="2-安装包下载"><a href="#2-安装包下载" class="headerlink" title="2. 安装包下载"></a>2. 安装包下载</h2><p>从MongoDB官网下载安装包：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-4.0.27.tgz</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-软件安装和启动"><a href="#3-软件安装和启动" class="headerlink" title="3. 软件安装和启动"></a>3. 软件安装和启动</h2><h3 id="3-1-解压安装包"><a href="#3-1-解压安装包" class="headerlink" title="3.1 解压安装包"></a>3.1 解压安装包</h3><p>将下载好的安装包上传到Linux服务器某个目录下，并使用以下命令解压：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -zxvf mongodb-linux-x86_64-rhel70-4.0.27.tgz</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-移动目录"><a href="#3-2-移动目录" class="headerlink" title="3.2 移动目录"></a>3.2 移动目录</h3><p>将解压后的目录移动到<code>/usr/local</code>目录下，并改名为<code>mongodb</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mv</span> mongodb-linux-x86_64-rhel70-4.0.27 /usr/local/mongodb</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-创建数据和日志目录"><a href="#3-3-创建数据和日志目录" class="headerlink" title="3.3 创建数据和日志目录"></a>3.3 创建数据和日志目录</h3><p>进入<code>mongodb</code>目录，创建<code>data</code>目录及其子目录<code>db</code>和<code>log</code>，并设置权限：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/local/mongodb/</span><br><span class="line"><span class="built_in">mkdir</span> -p data/db data/log</span><br><span class="line">sudo <span class="built_in">chmod</span> 666 data/db data/log/</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-创建配置文件"><a href="#3-4-创建配置文件" class="headerlink" title="3.4 创建配置文件"></a>3.4 创建配置文件</h3><p>在<code>mongodb</code>目录下新建配置文件<code>mongodb.conf</code>，并输入以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dbpath=/usr/local/mongodb/data/db</span><br><span class="line">logpath=/usr/local/mongodb/data/log/mongodb.log</span><br><span class="line">logappend=<span class="literal">true</span></span><br><span class="line">port=27017</span><br><span class="line">auth=<span class="literal">true</span></span><br><span class="line">fork=<span class="literal">true</span></span><br><span class="line">bind_ip=0.0.0.0</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-配置环境变量"><a href="#3-5-配置环境变量" class="headerlink" title="3.5 配置环境变量"></a>3.5 配置环境变量</h3><p>编辑<code>/etc/profile</code>文件，添加MongoDB到环境变量：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> MONGODB_HOME=/usr/local/mongodb</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$MONGODB_HOME</span>/bin</span><br></pre></td></tr></table></figure>
+
+<p>然后，执行<code>source /etc/profile</code>使配置生效。</p>
+<h3 id="3-6-启动MongoDB服务"><a href="#3-6-启动MongoDB服务" class="headerlink" title="3.6 启动MongoDB服务"></a>3.6 启动MongoDB服务</h3><p>使用以下命令启动MongoDB服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mongod -f /usr/local/mongodb/mongodb.conf</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-7-验证安装"><a href="#3-7-验证安装" class="headerlink" title="3.7 验证安装"></a>3.7 验证安装</h3><p>使用<code>mongo</code>命令连接MongoDB：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mongo</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-其他配置"><a href="#4-其他配置" class="headerlink" title="4. 其他配置"></a>4. 其他配置</h2><h3 id="4-1-开放端口"><a href="#4-1-开放端口" class="headerlink" title="4.1 开放端口"></a>4.1 开放端口</h3><p>开放MongoDB的27017端口：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=27017/tcp --permanent</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-检查服务状态"><a href="#4-2-检查服务状态" class="headerlink" title="4.2 检查服务状态"></a>4.2 检查服务状态</h3><p>检查MongoDB进程状态：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps aux | grep mongo</span><br></pre></td></tr></table></figure>
+
+<p>检查端口是否启动：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">netstat -lanp | grep 27017</span><br></pre></td></tr></table></figure>
+
+<p>如果<code>netstat</code>命令未找到，先进行安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y net-tools</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-停止服务"><a href="#4-3-停止服务" class="headerlink" title="4.3 停止服务"></a>4.3 停止服务</h3><p>通过进程ID杀死MongoDB服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">kill</span> -9 PID</span><br></pre></td></tr></table></figure>
+
+<p>或者使用<code>mongod</code>命令关闭服务：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mongod -f /usr/local/mongodb/mongodb.conf --shutdown</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-4-开机自启动"><a href="#4-4-开机自启动" class="headerlink" title="4.4 开机自启动"></a>4.4 开机自启动</h3><p>创建开机启动配置文件<code>/lib/systemd/system/mongodb.service</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=mongodb</span><br><span class="line">After=network.target remote-fs.target nss-lookup.target</span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">ExecStart=/usr/local/mongodb/bin/mongod -f /usr/local/mongodb/mongodb.conf</span><br><span class="line">ExecReload=/bin/kill -s HUP <span class="variable">$MAINPID</span></span><br><span class="line">ExecStop=/usr/local/mongodb/bin/mongod -f /usr/local/mongodb/mongodb.conf --shutdown</span><br><span class="line">PrivateTmp=<span class="literal">true</span></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>使配置生效：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">systemctl start mongodb.service</span><br><span class="line">systemctl <span class="built_in">enable</span> mongodb.service</span><br><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+
+<p>按照以上步骤，您可以在CentOS 7环境下成功离线安装并启动MongoDB服务。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>杂谈</tag>
       </tags>
   </entry>
 </search>
