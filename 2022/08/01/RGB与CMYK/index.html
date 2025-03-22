@@ -1,76 +1,166 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>RGB与CMYK | 念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在最近的工作中经常遇到图像处理相关知识，因此做一个记录： RGB模式RGB模式是以色光三原色为基础建立的色彩模式，RGB图像只使用三种颜色，当不等量的三种色光进行叠加混合时，即会在屏幕上重现自然界各种各样的颜色。红、绿、蓝每一种颜色各有256级亮度，用数字表示为从0、1、2…..直到255，256级的RGB色彩总共能组合出约1678万种色彩。RGB模式是电脑、手机、投影仪、电视等屏幕显示的最佳颜色">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RGB与CMYK">
+<meta property="og:url" content="https://m42-orion.github.io/2022/08/01/RGB%E4%B8%8ECMYK/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="在最近的工作中经常遇到图像处理相关知识，因此做一个记录： RGB模式RGB模式是以色光三原色为基础建立的色彩模式，RGB图像只使用三种颜色，当不等量的三种色光进行叠加混合时，即会在屏幕上重现自然界各种各样的颜色。红、绿、蓝每一种颜色各有256级亮度，用数字表示为从0、1、2…..直到255，256级的RGB色彩总共能组合出约1678万种色彩。RGB模式是电脑、手机、投影仪、电视等屏幕显示的最佳颜色">
+<meta property="og:locale">
+<meta property="og:image" content="http://liu__tao.gitee.io/drawing-bed/blog_img/RGB与CMYK/封面.jpg">
+<meta property="article:published_time" content="2022-08-01T14:44:49.000Z">
+<meta property="article:modified_time" content="2022-08-01T14:59:01.081Z">
+<meta property="article:author" content="望">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="图像">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://liu__tao.gitee.io/drawing-bed/blog_img/RGB与CMYK/封面.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "RGB与CMYK",
+  "url": "https://m42-orion.github.io/2022/08/01/RGB%E4%B8%8ECMYK/",
+  "image": "http://liu__tao.gitee.io/drawing-bed/blog_img/RGB与CMYK/封面.jpg",
+  "datePublished": "2022-08-01T14:44:49.000Z",
+  "dateModified": "2022-08-01T14:59:01.081Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "望",
+      "url": "https://m42-orion.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://m42-orion.github.io/2022/08/01/RGB%E4%B8%8ECMYK/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
 
-<!DOCTYPE html>
-<html lang="zh" class="loading">
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RGB与CMYK - 念念不忘，必有回响</title>
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="google" content="notranslate" />
-    <meta name="keywords" content="望,"> 
-    <meta name="description" content="望的个人博客,在最近的工作中经常遇到图像处理相关知识，因此做一个记录：
-RGB模式RGB模式是以色光三原色为基础建立的色彩模式，RGB图像只使用三种颜色，当不等量的三种色光进行叠加混合时，即会在屏幕上重现自然界各,"> 
-    <meta name="author" content="望"> 
-    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
-    <link rel="icon" href="/img/favicon.png"> 
-    
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
 
-    
-    
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="RGB与CMYK - 念念不忘，必有回响"/>
-    <meta name="twitter:description" content="望的个人博客,在最近的工作中经常遇到图像处理相关知识，因此做一个记录：
-RGB模式RGB模式是以色光三原色为基础建立的色彩模式，RGB图像只使用三种颜色，当不等量的三种色光进行叠加混合时，即会在屏幕上重现自然界各,"/>
-    
-    
-    
-    
-    <meta property="og:site_name" content="念念不忘，必有回响"/>
-    <meta property="og:type" content="object"/>
-    <meta property="og:title" content="RGB与CMYK - 念念不忘，必有回响"/>
-    <meta property="og:description" content="望的个人博客,在最近的工作中经常遇到图像处理相关知识，因此做一个记录：
-RGB模式RGB模式是以色光三原色为基础建立的色彩模式，RGB图像只使用三种颜色，当不等量的三种色光进行叠加混合时，即会在屏幕上重现自然界各,"/>
-    
-<link rel="stylesheet" href="/css/diaspora.css">
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
 
-<meta name="generator" content="Hexo 5.4.2"></head>
-
-<body class="loading">
-    <span id="config-title" style="display:none">念念不忘，必有回响</span>
-    <div id="loader"></div>
-    <div id="single">
-    <div id="top" style="display: block;">
-    <div class="bar" style="width: 0;"></div>
-    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
-    <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">RGB与CMYK</h3>
-    <div class="social">
-        <div>
-            <div class="share">
-                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
-            </div>
-            <div id="qr"></div>
-        </div>
-    </div>
-    <div class="scrollbar"></div>
-</div>
-
-    <div class="section">
-        <div class="article">
-    <div class='main'>
-        <h1 class="title">RGB与CMYK</h1>
-        <div class="stuff">
-            <span>八月 01, 2022</span>
-            
-  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/python/" rel="tag">python</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E5%9B%BE%E5%83%8F/" rel="tag">图像</a></li></ul>
-
-
-        </div>
-        <div class="content markdown">
-            <p>在最近的工作中经常遇到图像处理相关知识，因此做一个记录：</p>
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'RGB与CMYK',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 5.4.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(http://liu__tao.gitee.io/drawing-bed/blog_img/RGB与CMYK/封面.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">RGB与CMYK</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">RGB与CMYK</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-08-01T14:44:49.000Z" title="Created 2022-08-01 22:44:49">2022-08-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-08-01T14:59:01.081Z" title="Updated 2022-08-01 22:59:01">2022-08-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%85%B6%E4%BB%96/">其他</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>在最近的工作中经常遇到图像处理相关知识，因此做一个记录：</p>
 <h3 id="RGB模式"><a href="#RGB模式" class="headerlink" title="RGB模式"></a>RGB模式</h3><p>RGB模式是以色光三原色为基础建立的色彩模式，RGB图像只使用三种颜色，当不等量的三种色光进行叠加混合时，即会在屏幕上重现自然界各种各样的颜色。红、绿、蓝每一种颜色各有256级亮度，用数字表示为从0、1、2…..直到255，256级的RGB色彩总共能组合出约1678万种色彩。RGB模式是电脑、手机、投影仪、电视等屏幕显示的最佳颜色模式。</p>
 <h3 id="CMYK模式"><a href="#CMYK模式" class="headerlink" title="CMYK模式"></a>CMYK模式</h3><p>CMYK是4种印刷油墨名称的首字母：青色Cyan、洋红色Magenta、黄色Yellow和黑色Black。之所以没有缩写成B（Black），是为了和RGB的B区分开，此外表示K印版是起关键作用的印版，在图像中能起到一种”骨架”的作用。CMYK主要应用于印刷，它的颜色由四个通道组成。印刷时，C、M、Y、K各出一张菲林。</p>
 <blockquote>
@@ -81,126 +171,4 @@ RGB模式RGB模式是以色光三原色为基础建立的色彩模式，RGB图�
 </blockquote>
 <h3 id="灰度"><a href="#灰度" class="headerlink" title="灰度"></a>灰度</h3><p>RGB 是以三原色为基础的图像，因此被成为三通道图，而灰度图就是单通道图，只有一个颜色阶级，因此图像总体呈现灰色。在一些算法或者特征提取的时候，总是要将图片转化为灰度图，这是因为相比于三通道，单通道能够减少运算量，利于梯度计算等优势。</p>
 <h3 id="图像二值化"><a href="#图像二值化" class="headerlink" title="图像二值化"></a>图像二值化</h3><p>二值化就是将图像像素的灰度值设置成只有最大值和最小值两种取值，使整个图像呈现出 “非黑即白” 的效果，是最简单的图像分割的方法。相比于灰度图，图像二值化为了更加凸显图像的边缘、线条、轮廓，会将图像转变为仅有黑白两色的图像，使得图像更加利于计算。</p>
-
-            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
-            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
-                <source type="audio/mpeg" src="http://link.hhtjim.com/163/1449678888.mp3">
-            </audio>
-            
-        </div>
-        
-    <div id="gitalk-container" class="comment link"
-		data-enable="true"
-        data-ae="true"
-        data-ci="b8b94e0e57e0acc46202"
-        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
-        data-r=""
-        data-o=""
-        data-a=""
-        data-d="false"
-    >查看评论</div>
-
-
-    </div>
-    
-        <div class="side">
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#RGB%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">RGB模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CMYK%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">CMYK模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%81%B0%E5%BA%A6"><span class="toc-number">3.</span> <span class="toc-text">灰度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F%E4%BA%8C%E5%80%BC%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text">图像二值化</span></a></li></ol>	
-        </div>
-    
-</div>
-
-
-    </div>
-</div>
-</body>
-
-<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-
-
-<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
-<script src="/js/plugin.js"></script>
-<script src="/js/typed.js"></script>
-<script src="/js/diaspora.js"></script>
-
-
-<link rel="stylesheet" href="/photoswipe/photoswipe.css">
-<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
-
-
-<script src="/photoswipe/photoswipe.min.js"></script>
-<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
-
-
-<!-- Root element of PhotoSwipe. Must have class pswp. -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-    <!-- Background of PhotoSwipe. 
-         It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-        <!-- Container that holds slides. 
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-        <div class="pswp__ui pswp__ui--hidden">
-            <div class="pswp__top-bar">
-                <!--  Controls are self-explanatory. Order can be changed. -->
-                <div class="pswp__counter"></div>
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                <!-- element will get class pswp__preloader--active when preloader is running -->
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                      <div class="pswp__preloader__cut">
-                        <div class="pswp__preloader__donut"></div>
-                      </div>
-                    </div>
-                </div>
-            </div>
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div> 
-            </div>
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    });
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-
-
-</html>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2022/08/01/RGB%E4%B8%8ECMYK/">https://m42-orion.github.io/2022/08/01/RGB%E4%B8%8ECMYK/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/%E5%9B%BE%E5%83%8F/">图像</a></div><div class="post-share"><div class="social-share" data-image="http://liu__tao.gitee.io/drawing-bed/blog_img/RGB与CMYK/封面.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2022/08/01/%E4%B8%89%E5%B1%82%E6%9E%B6%E6%9E%84-MVC-MTV/" title="三层架构/MVC/MTV"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/三层架构_MVC_MTV/封面.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">三层架构/MVC/MTV</div></div><div class="info-2"><div class="info-item-1">在以前的时候，我总是把这三者混为一谈，总以为是不同语言或者不同环境条件下的称呼或者变种，后来我逐渐明白这是不一样的。 三层架构web开发其实并不一定需要遵循某一个框架进行开发，其实上能够实现web服务就行，但是在长期的摸索跟探究过程中，前人根据自己的经验进行总结，得出依据某个框架或者某个模式进行开发是一个较为高效的过程。  界面层（表示层）:用户看的界面。用户可以通过界面上的组件和服务器进行交互 业务处理逻辑:处理业务逻辑的 数据访问层:操作数据存储文件  本质上这是一个线性结构，从上往下：  表示层请求数据，发送给业务逻辑层 业务逻辑层根据情况去数据访问层进行数据查询  从下往上：  数据访问层提交原始数据给业务逻辑层 业务逻辑层将处理后的数据提交给表示层  整个过程是一个线性结构从上至下的请求数据，数据从下往上进行返回 三层架构的优缺点优点:1、高内聚，低耦合2、方便维护，易于扩展3、开发人员可以只关注某一层，有利于分工协作，加快开发速度 ...</div></div></div></a><a class="pagination-related" href="/2022/08/08/python%E8%BF%9B%E7%A8%8B%E9%94%81%E4%B8%8E%E8%BF%9B%E7%A8%8B%E6%B1%A0/" title="进程锁与进程池"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/进程锁/封面.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">进程锁与进程池</div></div><div class="info-2"><div class="info-item-1">如果多个进程抢占去对某一个共同的对象的操作的时候，为了防止操作产生冲突，这个时候就可以通过锁的操作来避免。 案例展示以下展示没有使用锁的案例： 123456789101112131415import timefrom multiprocessing import Process,Value,Arraydef test_func(n,):    n.value = n.value + 1if __name__ == &quot;__main__&quot;:    num = Value(&#x27;i&#x27;,0)    for i in range(20):        p = Process(target=test_func,args=(num,))        p.start()    time.sleep(1)   ...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2022/04/23/hello-world/" title="hello world"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/hello%20world/%E5%B0%81%E9%9D%A2.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-23</div><div class="info-item-2">hello world</div></div><div class="info-2"><div class="info-item-1">hello world12345678910#FileName: HelloWorld.java  public class HelloWorld   #如果有 public 类的话，类名必须和文件同名，注意大小写  &#123;    #Java 入口程序，程序从此入口    public static void main(String[] args)    &#123;    #向控制台打印一条语句      System.out.println(&quot;Hello,World!&quot;);    &#125;  &#125;   123456#include &lt;stdio.h&gt;  int main()                #main 入口函数  &#123;    printf(&quot;Hello,World!&quot;); #printf 函数打印    return 1;               #函数返回值  &#125;    1234567891011#include &lt;iostream&gt;           ...</div></div></div></a><a class="pagination-related" href="/2022/05/08/python%E7%B1%BB%E5%9E%8B%E6%B3%A8%E9%87%8A/" title="python类型注释"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/python类型注释/封面.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-08</div><div class="info-item-2">python类型注释</div></div><div class="info-2"><div class="info-item-1">我找到一些来自于官方的关于python类型注释的资源，我将其复制下来，用于个人收藏。良好的类型注释习惯能让代码的可读性大大增强，同时也能够保证后续加入的人员能够快速理解与使用。 变量Python 3.6 在 PEP 526 中引入了用于注释变量的语法，我们在大多数示例中都使用它。 123456789101112# This is how you declare the type of a variable type in Python 3.6age: int = 1# You don&#x27;t need to initialize a variable to annotate ita: int  # Ok (no value at runtime until assigned)# The latter is useful in conditional brancheschild: boolif age &lt; 18:    child = Trueelse:    child =...</div></div></div></a><a class="pagination-related" href="/2022/05/10/%E7%89%B9%E6%AE%8A%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%A3%B0%E6%98%8E/" title="特殊类型的声明"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/特殊类型的声明/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-10</div><div class="info-item-2">特殊类型的声明</div></div><div class="info-2"><div class="info-item-1">在类型声明的部分，提供的类型声明大多都是官方给定的类型，如:int,float,str,list,dict,set等等，但是某些时候当我们使用一些特殊的变量的时候，类型并不存在于官方给定的选项中。比如某些python的库创造的变量是具有自定义的类型的，这个时候该怎么操作呢？以下给出两个例子： 库当中的类型先看案例： 1234567891011121314151617html_doc = &quot;&quot;&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse&#x27;s story&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;p class=&quot;title&quot;&gt;&lt;b&gt;The Dormouse&#x27;s story&lt;/b&gt;&lt;/p&gt;&lt;p class=&quot;story&quot;&gt;Once upon a time there were three little sisters; and their...</div></div></div></a><a class="pagination-related" href="/2022/05/12/fastapi%E5%90%AF%E5%8A%A8%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E9%97%AE%E9%A2%98/" title="fastapi启动的初始化问题"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/fastapi启动的初始化问题/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-12</div><div class="info-item-2">fastapi启动的初始化问题</div></div><div class="info-2"><div class="info-item-1">在我最开始学习总结fastapi的时候，我就知道了fastapi可以通过命令行启动与调试模式启动，这里有一个巨大的坑需要注意，因为踩过，所以记录一下。 问题首先展示一段调试启动的代码： 1234567891011121314from fastapi import FastAPIapp = FastAPI(    title=&quot;My Super Project&quot;,    description=&quot;This is a very fancy project, with auto docs for the API and everything&quot;,    version=&quot;2.5.0&quot;,)@app.get(&quot;/items/&quot;)async def read_items():    return [&#123;&quot;name&quot;: &quot;Foo&quot;&#125;]if __name__ == &quot;__main__&quot;:    uvicorn.run(app,...</div></div></div></a><a class="pagination-related" href="/2022/05/12/ElasticSearch%E4%B9%8Bpython%E6%80%BB%E7%BB%93/" title="ElasticSearch之python总结"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/ElasticSearch之python总结/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-12</div><div class="info-item-2">ElasticSearch之python总结</div></div><div class="info-2"><div class="info-item-1">对于ESES数据库本身作为一种分布式的、查询优势、拓展优势、容错优势…..等等众多优点的数据库。更多的特点还是自行百度吧 python操作安装： 1pip3 install elasticsearch  安装也就那样吧。 简单使用过热推荐，如果需要学习一个新的库的使用的时候，看源码与看官方文档是一个好习惯，因此本文仅列出少数操作，以使用入门讲解为主要核心。首先附上官方文档：https://elasticsearch-py.readthedocs.io/  点击链接会直接跳转到最新版本的官方文档。 操作在使用python进行操作的时候，首先需要连接数据库，在启动数据库之后采用以下代码进行数据库连接： 1234from elasticsearch import Elasticsearch# 实例化一个ip为localhost，端口为9200，允许超时一小时的es对象client = Elasticsearch(&quot;http://IP:9200&quot;) #...</div></div></div></a><a class="pagination-related" href="/2022/05/22/python%E6%B5%B7%E8%B1%A1%E8%AF%AD%E6%B3%95/" title="python海象语法"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/python海象语法/封面.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-22</div><div class="info-item-2">python海象语法</div></div><div class="info-2"><div class="info-item-1">在我的工作当中，无意间接触到了一个别人写的一段代码,像这样：if (n := len(a)) &gt; 10:，凭借我的直觉，我能够轻易的读懂这段代码，但是我却从来没见过，于是我搜了一下，才知道这是python3.8的新语法，叫做海象语法，因为冒号像眼睛，等号像牙齿，所以被成为海象语法。 海象语法官方给出了几个案例： 12345678910111213141516# 赋值表达式有助于避免调用 len（） 两次if (n := len(a)) &gt; 10:    print(f&quot;List is too long (&#123;n&#125; elements, expected &lt;= 10)&quot;)# 一次用于测试是否发生了匹配，另一次用于提取子组discount = 0.0if (mo := re.search(r&#x27;(\d+)% discount&#x27;, advertisement)):    discount = float(mo.group(1)) / 100.0# Loop over fixed length...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">151</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">51</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#RGB%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">RGB模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CMYK%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">CMYK模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%81%B0%E5%BA%A6"><span class="toc-number">3.</span> <span class="toc-text">灰度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F%E4%BA%8C%E5%80%BC%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text">图像二值化</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85MongoDB%E6%95%99%E7%A8%8B/" title="离线安装MongoDB教程"><img src="https://c-ssl.duitang.com/uploads/blog/202502/07/WXSzeOOvfQ2J4aY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="离线安装MongoDB教程"/></a><div class="content"><a class="title" href="/2025/02/15/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85MongoDB%E6%95%99%E7%A8%8B/" title="离线安装MongoDB教程">离线安装MongoDB教程</a><time datetime="2025-02-15T13:44:47.000Z" title="Created 2025-02-15 21:44:47">2025-02-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/Monokai%E8%89%B2%E5%BD%A9%E6%96%B9%E6%A1%88/" title="Monokai色彩方案"><img src="https://c-ssl.duitang.com/uploads/blog/202502/12/6zS4oXXwiqVZel6.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Monokai色彩方案"/></a><div class="content"><a class="title" href="/2025/02/15/Monokai%E8%89%B2%E5%BD%A9%E6%96%B9%E6%A1%88/" title="Monokai色彩方案">Monokai色彩方案</a><time datetime="2025-02-15T13:44:08.000Z" title="Created 2025-02-15 21:44:08">2025-02-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/RAG-%E4%BB%80%E4%B9%88%E6%98%AFchunking/" title="RAG-什么是chunking"><img src="https://c-ssl.duitang.com/uploads/blog/202502/09/q4S8BddjIxJX3oQ.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAG-什么是chunking"/></a><div class="content"><a class="title" href="/2025/02/15/RAG-%E4%BB%80%E4%B9%88%E6%98%AFchunking/" title="RAG-什么是chunking">RAG-什么是chunking</a><time datetime="2025-02-15T13:41:08.000Z" title="Created 2025-02-15 21:41:08">2025-02-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/python%E5%BA%93parse%E7%9A%84%E4%BD%BF%E7%94%A8/" title="python库parse的使用"><img src="https://c-ssl.duitang.com/uploads/blog/202502/12/pGSm4WWdTBx5ZZY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python库parse的使用"/></a><div class="content"><a class="title" href="/2025/02/15/python%E5%BA%93parse%E7%9A%84%E4%BD%BF%E7%94%A8/" title="python库parse的使用">python库parse的使用</a><time datetime="2025-02-15T13:39:22.000Z" title="Created 2025-02-15 21:39:22">2025-02-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/RAG-python%E5%BA%93Chonkie%E7%9A%84%E4%BD%BF%E7%94%A8/" title="RAG-python库Chonkie的使用"><img src="https://c-ssl.duitang.com/uploads/blog/202502/13/pGSm4WWdTBx3vE3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAG-python库Chonkie的使用"/></a><div class="content"><a class="title" href="/2025/02/15/RAG-python%E5%BA%93Chonkie%E7%9A%84%E4%BD%BF%E7%94%A8/" title="RAG-python库Chonkie的使用">RAG-python库Chonkie的使用</a><time datetime="2025-02-15T13:37:28.000Z" title="Created 2025-02-15 21:37:28">2025-02-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By 望</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 5.4.2</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

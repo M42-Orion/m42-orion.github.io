@@ -1,200 +1,167 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>sqlalchemy库的2.0版本问题 | 念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在更新项目的python库的时候，更新完毕后使用sqlalchemy执行engine.execute语句的时候报错，然后发现新的sqlalchemy中根本没有这个方法。 1AttributeError: &amp;#x27;Engine&amp;#x27; object has no attribute &amp;#x27;execute&amp;#x27;  找了半天原因发现sqlalchemy2.0后取消了engine.ex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sqlalchemy库的2.0版本问题">
+<meta property="og:url" content="https://m42-orion.github.io/2024/04/07/sqlalchemy%E5%BA%93%E7%9A%842-0%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="在更新项目的python库的时候，更新完毕后使用sqlalchemy执行engine.execute语句的时候报错，然后发现新的sqlalchemy中根本没有这个方法。 1AttributeError: &amp;#x27;Engine&amp;#x27; object has no attribute &amp;#x27;execute&amp;#x27;  找了半天原因发现sqlalchemy2.0后取消了engine.ex">
+<meta property="og:locale">
+<meta property="og:image" content="http://liu__tao.gitee.io/drawing-bed/blog_img/sqlalchemy库的2.0版本问题/封面.png">
+<meta property="article:published_time" content="2024-04-07T07:03:09.000Z">
+<meta property="article:modified_time" content="2024-04-07T07:08:19.746Z">
+<meta property="article:author" content="望">
+<meta property="article:tag" content="错误">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://liu__tao.gitee.io/drawing-bed/blog_img/sqlalchemy库的2.0版本问题/封面.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "sqlalchemy库的2.0版本问题",
+  "url": "https://m42-orion.github.io/2024/04/07/sqlalchemy%E5%BA%93%E7%9A%842-0%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98/",
+  "image": "http://liu__tao.gitee.io/drawing-bed/blog_img/sqlalchemy库的2.0版本问题/封面.png",
+  "datePublished": "2024-04-07T07:03:09.000Z",
+  "dateModified": "2024-04-07T07:08:19.746Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "望",
+      "url": "https://m42-orion.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://m42-orion.github.io/2024/04/07/sqlalchemy%E5%BA%93%E7%9A%842-0%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
 
-<!DOCTYPE html>
-<html lang="zh" class="loading">
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>sqlalchemy库的2.0版本问题 - 念念不忘，必有回响</title>
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="google" content="notranslate" />
-    <meta name="keywords" content="望,"> 
-    <meta name="description" content="望的个人博客,在更新项目的python库的时候，更新完毕后使用sqlalchemy执行engine.execute语句的时候报错，然后发现新的sqlalchemy中根本没有这个方法。
-1AttributeErro,"> 
-    <meta name="author" content="望"> 
-    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
-    <link rel="icon" href="/img/favicon.png"> 
-    
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
 
-    
-    
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="sqlalchemy库的2.0版本问题 - 念念不忘，必有回响"/>
-    <meta name="twitter:description" content="望的个人博客,在更新项目的python库的时候，更新完毕后使用sqlalchemy执行engine.execute语句的时候报错，然后发现新的sqlalchemy中根本没有这个方法。
-1AttributeErro,"/>
-    
-    
-    
-    
-    <meta property="og:site_name" content="念念不忘，必有回响"/>
-    <meta property="og:type" content="object"/>
-    <meta property="og:title" content="sqlalchemy库的2.0版本问题 - 念念不忘，必有回响"/>
-    <meta property="og:description" content="望的个人博客,在更新项目的python库的时候，更新完毕后使用sqlalchemy执行engine.execute语句的时候报错，然后发现新的sqlalchemy中根本没有这个方法。
-1AttributeErro,"/>
-    
-<link rel="stylesheet" href="/css/diaspora.css">
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
 
-<meta name="generator" content="Hexo 5.4.2"></head>
-
-<body class="loading">
-    <span id="config-title" style="display:none">念念不忘，必有回响</span>
-    <div id="loader"></div>
-    <div id="single">
-    <div id="top" style="display: block;">
-    <div class="bar" style="width: 0;"></div>
-    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
-    <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">sqlalchemy库的2.0版本问题</h3>
-    <div class="social">
-        <div>
-            <div class="share">
-                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
-            </div>
-            <div id="qr"></div>
-        </div>
-    </div>
-    <div class="scrollbar"></div>
-</div>
-
-    <div class="section">
-        <div class="article">
-    <div class='main'>
-        <h1 class="title">sqlalchemy库的2.0版本问题</h1>
-        <div class="stuff">
-            <span>四月 07, 2024</span>
-            
-  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E9%94%99%E8%AF%AF/" rel="tag">错误</a></li></ul>
-
-
-        </div>
-        <div class="content markdown">
-            <p>在更新项目的python库的时候，更新完毕后使用sqlalchemy执行engine.execute语句的时候报错，然后发现新的sqlalchemy中根本没有这个方法。</p>
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'sqlalchemy库的2.0版本问题',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 5.4.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(http://liu__tao.gitee.io/drawing-bed/blog_img/sqlalchemy库的2.0版本问题/封面.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">sqlalchemy库的2.0版本问题</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">sqlalchemy库的2.0版本问题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-04-07T07:03:09.000Z" title="Created 2024-04-07 15:03:09">2024-04-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-04-07T07:08:19.746Z" title="Updated 2024-04-07 15:08:19">2024-04-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>在更新项目的python库的时候，更新完毕后使用sqlalchemy执行engine.execute语句的时候报错，然后发现新的sqlalchemy中根本没有这个方法。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AttributeError: <span class="string">&#x27;Engine&#x27;</span> object has no attribute <span class="string">&#x27;execute&#x27;</span></span><br></pre></td></tr></table></figure>
 
 <p>找了半天原因发现sqlalchemy2.0后取消了engine.execute方法。需要通过Connection中的execute方法去执行sql语句，而且需要通过sqlalchemy.text对象去传递sql语句。好消息是1.0其实并没有放弃更新，这个实际上已经是两个库了，不能算一个东西，就像是python2跟python3的差距一样大。</p>
 <p>2.0版本写法如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy import create_engine, text</span><br><span class="line"></span><br><span class="line">engine = create_engine(<span class="string">&quot;配置信息&quot;</span>)</span><br><span class="line"></span><br><span class="line">sqltext = text(<span class="string">&quot;select * from ...;&quot;</span>)</span><br><span class="line">conn = engine.connect()</span><br><span class="line">conn.execute(sqltext)</span><br></pre></td></tr></table></figure>
-            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
-            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
-                <source type="audio/mpeg" src="http://link.hhtjim.com/163/2123230314.mp3">
-            </audio>
-            
-        </div>
-        
-    <div id="gitalk-container" class="comment link"
-		data-enable="true"
-        data-ae="true"
-        data-ci="b8b94e0e57e0acc46202"
-        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
-        data-r=""
-        data-o=""
-        data-a=""
-        data-d="false"
-    >查看评论</div>
-
-
-    </div>
-    
-        <div class="side">
-				
-        </div>
-    
-</div>
-
-
-    </div>
-</div>
-</body>
-
-<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-
-
-<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
-<script src="/js/plugin.js"></script>
-<script src="/js/typed.js"></script>
-<script src="/js/diaspora.js"></script>
-
-
-<link rel="stylesheet" href="/photoswipe/photoswipe.css">
-<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
-
-
-<script src="/photoswipe/photoswipe.min.js"></script>
-<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
-
-
-<!-- Root element of PhotoSwipe. Must have class pswp. -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-    <!-- Background of PhotoSwipe. 
-         It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-        <!-- Container that holds slides. 
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-        <div class="pswp__ui pswp__ui--hidden">
-            <div class="pswp__top-bar">
-                <!--  Controls are self-explanatory. Order can be changed. -->
-                <div class="pswp__counter"></div>
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                <!-- element will get class pswp__preloader--active when preloader is running -->
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                      <div class="pswp__preloader__cut">
-                        <div class="pswp__preloader__donut"></div>
-                      </div>
-                    </div>
-                </div>
-            </div>
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div> 
-            </div>
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    });
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-
-
-</html>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy import create_engine, text</span><br><span class="line"></span><br><span class="line">engine = create_engine(<span class="string">&quot;配置信息&quot;</span>)</span><br><span class="line"></span><br><span class="line">sqltext = text(<span class="string">&quot;select * from ...;&quot;</span>)</span><br><span class="line">conn = engine.connect()</span><br><span class="line">conn.execute(sqltext)</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2024/04/07/sqlalchemy%E5%BA%93%E7%9A%842-0%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98/">https://m42-orion.github.io/2024/04/07/sqlalchemy%E5%BA%93%E7%9A%842-0%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%94%99%E8%AF%AF/">错误</a></div><div class="post-share"><div class="social-share" data-image="http://liu__tao.gitee.io/drawing-bed/blog_img/sqlalchemy库的2.0版本问题/封面.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/04/07/%E6%97%A0%E8%81%94%E7%BD%91%E4%B8%8B%E8%BD%BD%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8/" title="无联网下载谷歌浏览器"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/无联网下载谷歌浏览器/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">无联网下载谷歌浏览器</div></div><div class="info-2"><div class="info-item-1">最近因为swagger的更新，需要在内网更新谷歌浏览器，但是真到下载的时候发现官网下载的安装包都是需要联网安装的，一下子拔我搞蒙了。翻了一下，也没有翻到下载完整安装包的地址，又不想去一些奇怪的网站下载，因此通过自己搜索找到了一个地址：https://www.google.cn/chrome/index.html?standalone=1  Standalone这个单词，它本身的意思就是脱机的，单独的意思，即不依赖网络而存在的本地安装版本。不仅是在IE 8浏览器中，在其他浏览器中我们想要下载本地安装包时也都可以采用这个方法。这个真的是一个很小的问题，但是耽误了我十多分钟，因此记录一下，避免以后更新的时候又要来找一遍。 </div></div></div></a><a class="pagination-related" href="/2024/04/07/%E5%85%B3%E4%BA%8Eopencv%E7%9A%84libGL%E6%8A%A5%E9%94%99/" title="关于opencv的libGL报错"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/关于opencv的libGL报错/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">关于opencv的libGL报错</div></div><div class="info-2"><div class="info-item-1">错误在配云端GPU服务器时，出现这个错误 123File &quot;/usr/local/lib/python3.6/dist-packages/cv2/__init__.py&quot;, line 8, in &lt;module&gt;    from .cv2 import *ImportError: libGL.so.1: cannot open shared object file: No such file or directory  解决方法（easy） setup 에서 cv2 설치 오류가 발생합니다. · Issue #78 · Korea-Health-Datathon/KHD2020 · GitHub  卸载 pip uninstall opencv-python 安装 pip install opencv-python-headless  在Stack Overflow上有其他回答 Ubuntu系统在docker中出错,将以下行添加到您的 Dockerfile： 123# ubuntu系统RUN apt-get updateRUN apt-get...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2023/10/25/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3robo3t%E6%97%A0%E6%B3%95%E7%BF%BB%E9%A1%B5%E7%9A%84%E9%94%99%E8%AF%AF/" title="如何解决robo3t无法翻页的错误"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/如何解决robo3t无法翻页的错误/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-25</div><div class="info-item-2">如何解决robo3t无法翻页的错误</div></div><div class="info-2"><div class="info-item-1">问题: robo3t mongo工具 windows 版本连接mongo，翻页提示如下报错: 1The ntoreturn find command parameter is not supported when FCV &gt;= 5.1  解决方案: 1db.adminCommand(&#123;setFeatureCompatibilityVersion: &quot;5.0&quot;,&#125;)</div></div></div></a><a class="pagination-related" href="/2024/04/07/%E5%85%B3%E4%BA%8Eopencv%E7%9A%84libGL%E6%8A%A5%E9%94%99/" title="关于opencv的libGL报错"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/关于opencv的libGL报错/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-07</div><div class="info-item-2">关于opencv的libGL报错</div></div><div class="info-2"><div class="info-item-1">错误在配云端GPU服务器时，出现这个错误 123File &quot;/usr/local/lib/python3.6/dist-packages/cv2/__init__.py&quot;, line 8, in &lt;module&gt;    from .cv2 import *ImportError: libGL.so.1: cannot open shared object file: No such file or directory  解决方法（easy） setup 에서 cv2 설치 오류가 발생합니다. · Issue #78 · Korea-Health-Datathon/KHD2020 · GitHub  卸载 pip uninstall opencv-python 安装 pip install opencv-python-headless  在Stack Overflow上有其他回答 Ubuntu系统在docker中出错,将以下行添加到您的 Dockerfile： 123# ubuntu系统RUN apt-get updateRUN apt-get...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">151</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">51</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85MongoDB%E6%95%99%E7%A8%8B/" title="离线安装MongoDB教程"><img src="https://c-ssl.duitang.com/uploads/blog/202502/07/WXSzeOOvfQ2J4aY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="离线安装MongoDB教程"/></a><div class="content"><a class="title" href="/2025/02/15/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85MongoDB%E6%95%99%E7%A8%8B/" title="离线安装MongoDB教程">离线安装MongoDB教程</a><time datetime="2025-02-15T13:44:47.000Z" title="Created 2025-02-15 21:44:47">2025-02-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/Monokai%E8%89%B2%E5%BD%A9%E6%96%B9%E6%A1%88/" title="Monokai色彩方案"><img src="https://c-ssl.duitang.com/uploads/blog/202502/12/6zS4oXXwiqVZel6.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Monokai色彩方案"/></a><div class="content"><a class="title" href="/2025/02/15/Monokai%E8%89%B2%E5%BD%A9%E6%96%B9%E6%A1%88/" title="Monokai色彩方案">Monokai色彩方案</a><time datetime="2025-02-15T13:44:08.000Z" title="Created 2025-02-15 21:44:08">2025-02-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/RAG-%E4%BB%80%E4%B9%88%E6%98%AFchunking/" title="RAG-什么是chunking"><img src="https://c-ssl.duitang.com/uploads/blog/202502/09/q4S8BddjIxJX3oQ.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAG-什么是chunking"/></a><div class="content"><a class="title" href="/2025/02/15/RAG-%E4%BB%80%E4%B9%88%E6%98%AFchunking/" title="RAG-什么是chunking">RAG-什么是chunking</a><time datetime="2025-02-15T13:41:08.000Z" title="Created 2025-02-15 21:41:08">2025-02-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/python%E5%BA%93parse%E7%9A%84%E4%BD%BF%E7%94%A8/" title="python库parse的使用"><img src="https://c-ssl.duitang.com/uploads/blog/202502/12/pGSm4WWdTBx5ZZY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python库parse的使用"/></a><div class="content"><a class="title" href="/2025/02/15/python%E5%BA%93parse%E7%9A%84%E4%BD%BF%E7%94%A8/" title="python库parse的使用">python库parse的使用</a><time datetime="2025-02-15T13:39:22.000Z" title="Created 2025-02-15 21:39:22">2025-02-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/RAG-python%E5%BA%93Chonkie%E7%9A%84%E4%BD%BF%E7%94%A8/" title="RAG-python库Chonkie的使用"><img src="https://c-ssl.duitang.com/uploads/blog/202502/13/pGSm4WWdTBx3vE3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAG-python库Chonkie的使用"/></a><div class="content"><a class="title" href="/2025/02/15/RAG-python%E5%BA%93Chonkie%E7%9A%84%E4%BD%BF%E7%94%A8/" title="RAG-python库Chonkie的使用">RAG-python库Chonkie的使用</a><time datetime="2025-02-15T13:37:28.000Z" title="Created 2025-02-15 21:37:28">2025-02-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By 望</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 5.4.2</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

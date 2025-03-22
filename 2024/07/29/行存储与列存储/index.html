@@ -1,71 +1,164 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>行存储与列存储 | 念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在数据库领域，数据存储的方式主要有两种：行存储（Row Storage）和列存储（Column Storage）。这两种存储方式各有优缺点，适用于不同的场景。本文将详细介绍行存储与列存储的区别、优缺点及适用场景。 行存储与列存储的区别存储方式行存储是将一行数据存储在一起，列存储是将一列数据存储在一起。 数据访问方式行存储通常以行为单位进行数据访问，列存储通常以列为单位进行数据访问。 数据压缩行存储">
+<meta property="og:type" content="article">
+<meta property="og:title" content="行存储与列存储">
+<meta property="og:url" content="https://m42-orion.github.io/2024/07/29/%E8%A1%8C%E5%AD%98%E5%82%A8%E4%B8%8E%E5%88%97%E5%AD%98%E5%82%A8/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="在数据库领域，数据存储的方式主要有两种：行存储（Row Storage）和列存储（Column Storage）。这两种存储方式各有优缺点，适用于不同的场景。本文将详细介绍行存储与列存储的区别、优缺点及适用场景。 行存储与列存储的区别存储方式行存储是将一行数据存储在一起，列存储是将一列数据存储在一起。 数据访问方式行存储通常以行为单位进行数据访问，列存储通常以列为单位进行数据访问。 数据压缩行存储">
+<meta property="og:locale">
+<meta property="og:image" content="https://m42-orion.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2024-07-29T02:27:53.000Z">
+<meta property="article:modified_time" content="2024-07-29T02:34:07.881Z">
+<meta property="article:author" content="望">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://m42-orion.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "行存储与列存储",
+  "url": "https://m42-orion.github.io/2024/07/29/%E8%A1%8C%E5%AD%98%E5%82%A8%E4%B8%8E%E5%88%97%E5%AD%98%E5%82%A8/",
+  "image": "https://m42-orion.github.io/img/butterfly-icon.png",
+  "datePublished": "2024-07-29T02:27:53.000Z",
+  "dateModified": "2024-07-29T02:34:07.881Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "望",
+      "url": "https://m42-orion.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://m42-orion.github.io/2024/07/29/%E8%A1%8C%E5%AD%98%E5%82%A8%E4%B8%8E%E5%88%97%E5%AD%98%E5%82%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
 
-<!DOCTYPE html>
-<html lang="zh" class="loading">
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>行存储与列存储 - 念念不忘，必有回响</title>
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="google" content="notranslate" />
-    <meta name="keywords" content="望,"> 
-    <meta name="description" content="望的个人博客,在数据库领域，数据存储的方式主要有两种：行存储（Row Storage）和列存储（Column Storage）。这两种存储方式各有优缺点，适用于不同的场景。本文将详细介绍行存储与列存储的区别、优缺,"> 
-    <meta name="author" content="望"> 
-    <link rel="alternative" href="atom.xml" title="念念不忘，必有回响" type="application/atom+xml"> 
-    <link rel="icon" href="/img/favicon.png"> 
-    
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
 
-    
-    
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="行存储与列存储 - 念念不忘，必有回响"/>
-    <meta name="twitter:description" content="望的个人博客,在数据库领域，数据存储的方式主要有两种：行存储（Row Storage）和列存储（Column Storage）。这两种存储方式各有优缺点，适用于不同的场景。本文将详细介绍行存储与列存储的区别、优缺,"/>
-    
-    
-    
-    
-    <meta property="og:site_name" content="念念不忘，必有回响"/>
-    <meta property="og:type" content="object"/>
-    <meta property="og:title" content="行存储与列存储 - 念念不忘，必有回响"/>
-    <meta property="og:description" content="望的个人博客,在数据库领域，数据存储的方式主要有两种：行存储（Row Storage）和列存储（Column Storage）。这两种存储方式各有优缺点，适用于不同的场景。本文将详细介绍行存储与列存储的区别、优缺,"/>
-    
-<link rel="stylesheet" href="/css/diaspora.css">
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
 
-<meta name="generator" content="Hexo 5.4.2"></head>
-
-<body class="loading">
-    <span id="config-title" style="display:none">念念不忘，必有回响</span>
-    <div id="loader"></div>
-    <div id="single">
-    <div id="top" style="display: block;">
-    <div class="bar" style="width: 0;"></div>
-    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://m42-orion.github.io"></a>
-    <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">行存储与列存储</h3>
-    <div class="social">
-        <div>
-            <div class="share">
-                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
-            </div>
-            <div id="qr"></div>
-        </div>
-    </div>
-    <div class="scrollbar"></div>
-</div>
-
-    <div class="section">
-        <div class="article">
-    <div class='main'>
-        <h1 class="title">行存储与列存储</h1>
-        <div class="stuff">
-            <span>七月 29, 2024</span>
-            
-
-        </div>
-        <div class="content markdown">
-            <p>在数据库领域，数据存储的方式主要有两种：行存储（Row Storage）和列存储（Column Storage）。这两种存储方式各有优缺点，适用于不同的场景。本文将详细介绍行存储与列存储的区别、优缺点及适用场景。</p>
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '行存储与列存储',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 5.4.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">行存储与列存储</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">行存储与列存储</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-07-29T02:27:53.000Z" title="Created 2024-07-29 10:27:53">2024-07-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-07-29T02:34:07.881Z" title="Updated 2024-07-29 10:34:07">2024-07-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>在数据库领域，数据存储的方式主要有两种：行存储（Row Storage）和列存储（Column Storage）。这两种存储方式各有优缺点，适用于不同的场景。本文将详细介绍行存储与列存储的区别、优缺点及适用场景。</p>
 <h2 id="行存储与列存储的区别"><a href="#行存储与列存储的区别" class="headerlink" title="行存储与列存储的区别"></a>行存储与列存储的区别</h2><h3 id="存储方式"><a href="#存储方式" class="headerlink" title="存储方式"></a>存储方式</h3><p>行存储是将一行数据存储在一起，列存储是将一列数据存储在一起。</p>
 <h3 id="数据访问方式"><a href="#数据访问方式" class="headerlink" title="数据访问方式"></a>数据访问方式</h3><p>行存储通常以行为单位进行数据访问，列存储通常以列为单位进行数据访问。</p>
 <h3 id="数据压缩"><a href="#数据压缩" class="headerlink" title="数据压缩"></a>数据压缩</h3><p>行存储通常使用行级别的压缩算法，列存储通常使用列级别的压缩算法。</p>
@@ -99,138 +192,4 @@
 <li>数据仓库：列存储在数据仓库中，可以存储大量历史数据，并进行高效的数据分析和报表生成。</li>
 </ol>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>行存储和列存储各有优缺点，适用于不同的场景。在实际应用中，可以根据具体的需求和场景，选择合适的存储方式。</p>
-
-            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
-            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
-                <source type="audio/mpeg" src="">
-            </audio>
-            
-                <ul id="audio-list" style="display:none">
-                    
-                        
-                            <li title="0" data-url="http://link.hhtjim.com/163/507502138.mp3"></li>
-                        
-                    
-                        
-                            <li title="1" data-url="http://link.hhtjim.com/163/1423014472.mp3"></li>
-                        
-                    
-                </ul>
-            
-        </div>
-        
-    <div id="gitalk-container" class="comment link"
-		data-enable="true"
-        data-ae="true"
-        data-ci="b8b94e0e57e0acc46202"
-        data-cs="3c8a260493b4c271ee7ad2c5a6aa82b5539ba734"
-        data-r=""
-        data-o=""
-        data-a=""
-        data-d="false"
-    >查看评论</div>
-
-
-    </div>
-    
-        <div class="side">
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C%E5%AD%98%E5%82%A8%E4%B8%8E%E5%88%97%E5%AD%98%E5%82%A8%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.</span> <span class="toc-text">行存储与列存储的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text">存储方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">数据访问方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9"><span class="toc-number">1.3.</span> <span class="toc-text">数据压缩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0"><span class="toc-number">1.4.</span> <span class="toc-text">数据更新</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C%E5%AD%98%E5%82%A8%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">行存储的优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">2.1.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9"><span class="toc-number">2.2.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">2.3.</span> <span class="toc-text">适用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E5%AD%98%E5%82%A8%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text">列存储的优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9-1"><span class="toc-number">3.1.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9-1"><span class="toc-number">3.2.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF-1"><span class="toc-number">3.3.</span> <span class="toc-text">适用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>	
-        </div>
-    
-</div>
-
-
-    </div>
-</div>
-</body>
-
-<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-
-
-<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
-<script src="/js/plugin.js"></script>
-<script src="/js/typed.js"></script>
-<script src="/js/diaspora.js"></script>
-
-
-<link rel="stylesheet" href="/photoswipe/photoswipe.css">
-<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
-
-
-<script src="/photoswipe/photoswipe.min.js"></script>
-<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
-
-
-<!-- Root element of PhotoSwipe. Must have class pswp. -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-    <!-- Background of PhotoSwipe. 
-         It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-        <!-- Container that holds slides. 
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-        <div class="pswp__ui pswp__ui--hidden">
-            <div class="pswp__top-bar">
-                <!--  Controls are self-explanatory. Order can be changed. -->
-                <div class="pswp__counter"></div>
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                <!-- element will get class pswp__preloader--active when preloader is running -->
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                      <div class="pswp__preloader__cut">
-                        <div class="pswp__preloader__donut"></div>
-                      </div>
-                    </div>
-                </div>
-            </div>
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div> 
-            </div>
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    });
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-
-
-</html>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2024/07/29/%E8%A1%8C%E5%AD%98%E5%82%A8%E4%B8%8E%E5%88%97%E5%AD%98%E5%82%A8/">https://m42-orion.github.io/2024/07/29/%E8%A1%8C%E5%AD%98%E5%82%A8%E4%B8%8E%E5%88%97%E5%AD%98%E5%82%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/07/25/python%E5%87%BD%E6%95%B0%E7%BC%93%E5%AD%98%E4%B9%8Blru-cache/" title="python函数缓存之lru_cache"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/29/0GSPADDgi0p7QJ5.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">python函数缓存之lru_cache</div></div><div class="info-2"><div class="info-item-1">lru_cachelru_cache 是 Python 标准库 functools 模块中的一个装饰器，用于实现缓存功能。它通过缓存函数的返回值来提高函数的执行效率，特别是对于计算密集型函数或具有大量重复输入的函数。 lru_cache 的全称是 “Least Recently Used Cache”，即最近最少使用缓存。它使用一个字典来存储函数的返回值，字典的键是函数的参数，值是函数的返回值。当函数被调用时，lru_cache 会首先检查参数是否已经在缓存中，如果在，则直接返回缓存中的值；如果不在，则计算函数的返回值，并将结果存入缓存。 lru_cache 有一些可选参数，可以用来控制缓存的大小和过期时间。 1234567from functools import lru_cache@lru_cache(maxsize=128) def fibonacci(n):    if n &lt; 2:        return n    return fibonacci(n-1) + fibonacci(n-2)  在上面的例子中，lru_cache 装饰器将 fibonacci...</div></div></div></a><a class="pagination-related" href="/2024/12/01/32%E4%BD%8D%E4%B8%8E64%E4%BD%8D%E7%9A%84%E5%8C%BA%E5%88%AB/" title="32位与64位的区别"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/28/pGSm4WWdTBxAJBV.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">32位与64位的区别</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">151</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">51</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C%E5%AD%98%E5%82%A8%E4%B8%8E%E5%88%97%E5%AD%98%E5%82%A8%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.</span> <span class="toc-text">行存储与列存储的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.</span> <span class="toc-text">存储方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">数据访问方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9"><span class="toc-number">1.3.</span> <span class="toc-text">数据压缩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0"><span class="toc-number">1.4.</span> <span class="toc-text">数据更新</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C%E5%AD%98%E5%82%A8%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">行存储的优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">2.1.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9"><span class="toc-number">2.2.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">2.3.</span> <span class="toc-text">适用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E5%AD%98%E5%82%A8%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text">列存储的优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9-1"><span class="toc-number">3.1.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9-1"><span class="toc-number">3.2.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF-1"><span class="toc-number">3.3.</span> <span class="toc-text">适用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85MongoDB%E6%95%99%E7%A8%8B/" title="离线安装MongoDB教程"><img src="https://c-ssl.duitang.com/uploads/blog/202502/07/WXSzeOOvfQ2J4aY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="离线安装MongoDB教程"/></a><div class="content"><a class="title" href="/2025/02/15/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85MongoDB%E6%95%99%E7%A8%8B/" title="离线安装MongoDB教程">离线安装MongoDB教程</a><time datetime="2025-02-15T13:44:47.000Z" title="Created 2025-02-15 21:44:47">2025-02-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/Monokai%E8%89%B2%E5%BD%A9%E6%96%B9%E6%A1%88/" title="Monokai色彩方案"><img src="https://c-ssl.duitang.com/uploads/blog/202502/12/6zS4oXXwiqVZel6.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Monokai色彩方案"/></a><div class="content"><a class="title" href="/2025/02/15/Monokai%E8%89%B2%E5%BD%A9%E6%96%B9%E6%A1%88/" title="Monokai色彩方案">Monokai色彩方案</a><time datetime="2025-02-15T13:44:08.000Z" title="Created 2025-02-15 21:44:08">2025-02-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/RAG-%E4%BB%80%E4%B9%88%E6%98%AFchunking/" title="RAG-什么是chunking"><img src="https://c-ssl.duitang.com/uploads/blog/202502/09/q4S8BddjIxJX3oQ.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAG-什么是chunking"/></a><div class="content"><a class="title" href="/2025/02/15/RAG-%E4%BB%80%E4%B9%88%E6%98%AFchunking/" title="RAG-什么是chunking">RAG-什么是chunking</a><time datetime="2025-02-15T13:41:08.000Z" title="Created 2025-02-15 21:41:08">2025-02-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/python%E5%BA%93parse%E7%9A%84%E4%BD%BF%E7%94%A8/" title="python库parse的使用"><img src="https://c-ssl.duitang.com/uploads/blog/202502/12/pGSm4WWdTBx5ZZY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python库parse的使用"/></a><div class="content"><a class="title" href="/2025/02/15/python%E5%BA%93parse%E7%9A%84%E4%BD%BF%E7%94%A8/" title="python库parse的使用">python库parse的使用</a><time datetime="2025-02-15T13:39:22.000Z" title="Created 2025-02-15 21:39:22">2025-02-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/02/15/RAG-python%E5%BA%93Chonkie%E7%9A%84%E4%BD%BF%E7%94%A8/" title="RAG-python库Chonkie的使用"><img src="https://c-ssl.duitang.com/uploads/blog/202502/13/pGSm4WWdTBx3vE3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAG-python库Chonkie的使用"/></a><div class="content"><a class="title" href="/2025/02/15/RAG-python%E5%BA%93Chonkie%E7%9A%84%E4%BD%BF%E7%94%A8/" title="RAG-python库Chonkie的使用">RAG-python库Chonkie的使用</a><time datetime="2025-02-15T13:37:28.000Z" title="Created 2025-02-15 21:37:28">2025-02-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By 望</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 5.4.2</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
