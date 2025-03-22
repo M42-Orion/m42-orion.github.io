@@ -2855,10 +2855,10 @@ var _getItemAt,
 			img = null;
 		};
 		img.onload = onComplete;
-		img.onerror = function() {
-			item.loadError = true;
-			onComplete();
-		};		
+		// img.onerror = function() {
+		// 	item.loadError = true;
+		// 	onComplete();
+		// };		
 
 		img.src = item.src;// + '?a=' + Math.random();
 
