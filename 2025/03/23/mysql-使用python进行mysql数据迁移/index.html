@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>使用python进行mysql数据迁移 | 念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Alembic是一个数据库管理工具，用于管理数据库迁移。它允许你创建、应用和撤销数据库迁移，以便在数据库结构发生变化时保持版本控制。任何有关数据库变动都需要使用这个库来进行操作。这是一个python库，版本已经记录在项目下的requirements.txt文件当中。 新增字段操作如下在使用 Alembic 进行数据库迁移时，你需要通过 Alembic 的迁移脚本来实现对表结构的修改，同时确保原始数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用python进行mysql数据迁移">
+<meta property="og:url" content="https://m42-orion.github.io/2025/03/23/mysql-%E4%BD%BF%E7%94%A8python%E8%BF%9B%E8%A1%8Cmysql%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="Alembic是一个数据库管理工具，用于管理数据库迁移。它允许你创建、应用和撤销数据库迁移，以便在数据库结构发生变化时保持版本控制。任何有关数据库变动都需要使用这个库来进行操作。这是一个python库，版本已经记录在项目下的requirements.txt文件当中。 新增字段操作如下在使用 Alembic 进行数据库迁移时，你需要通过 Alembic 的迁移脚本来实现对表结构的修改，同时确保原始数">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c-ssl.duitang.com/uploads/item/202002/18/20200218150945_pgkqj.jpg">
+<meta property="article:published_time" content="2025-03-23T05:51:08.000Z">
+<meta property="article:modified_time" content="2025-03-23T05:53:24.701Z">
+<meta property="article:author" content="望">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="mysql">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="数据迁移">
+<meta property="article:tag" content="Alembic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c-ssl.duitang.com/uploads/item/202002/18/20200218150945_pgkqj.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "使用python进行mysql数据迁移",
+  "url": "https://m42-orion.github.io/2025/03/23/mysql-%E4%BD%BF%E7%94%A8python%E8%BF%9B%E8%A1%8Cmysql%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/",
+  "image": "https://c-ssl.duitang.com/uploads/item/202002/18/20200218150945_pgkqj.jpg",
+  "datePublished": "2025-03-23T05:51:08.000Z",
+  "dateModified": "2025-03-23T05:53:24.701Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "望",
+      "url": "https://m42-orion.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://m42-orion.github.io/2025/03/23/mysql-%E4%BD%BF%E7%94%A8python%E8%BF%9B%E8%A1%8Cmysql%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '使用python进行mysql数据迁移',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 5.4.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://c-ssl.duitang.com/uploads/item/202002/18/20200218150945_pgkqj.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">使用python进行mysql数据迁移</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">使用python进行mysql数据迁移</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-23T05:51:08.000Z" title="发表于 2025-03-23 13:51:08">2025-03-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-23T05:53:24.701Z" title="更新于 2025-03-23 13:53:24">2025-03-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/mysql/">mysql</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>Alembic是一个数据库管理工具，用于管理数据库迁移。它允许你创建、应用和撤销数据库迁移，以便在数据库结构发生变化时保持版本控制。任何有关数据库变动都需要使用这个库来进行操作。这是一个python库，版本已经记录在项目下的requirements.txt文件当中。</p>
+<h2 id="新增字段操作如下"><a href="#新增字段操作如下" class="headerlink" title="新增字段操作如下"></a>新增字段操作如下</h2><p>在使用 Alembic 进行数据库迁移时，你需要通过 Alembic 的迁移脚本来实现对表结构的修改，同时确保原始数据不会被删除。以下是基于你的需求，使用 Alembic 添加一个新字段 <code>usr_id</code> 并设置默认值为 <code>0</code> 的详细步骤：</p>
+<h3 id="1-初始化-Alembic-环"><a href="#1-初始化-Alembic-环" class="headerlink" title="1. 初始化 Alembic 环"></a>1. 初始化 Alembic 环</h3><p>境如果你还没有初始化 Alembic，需要先在项目中初始化它：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alembic init alembic</span><br></pre></td></tr></table></figure>
+<p>这会在项目中创建一个 <code>alembic</code> 文件夹，其中包含 Alembic 的配置文件和迁移脚本模板。</p>
+<h3 id="2-配置-Alembic"><a href="#2-配置-Alembic" class="headerlink" title="2. 配置 Alembic"></a>2. 配置 Alembic</h3><p>编辑 <code>alembic.ini</code> 文件，确保其中的 <code>sqlalchemy.url</code> 配置正确指向你的数据库：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sqlalchemy.url</span> = mysql+pymysql://username:password@host:port/dbname</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如：sqlalchemy.url = mysql+pymysql://root:<a href="mailto:&#49;&#50;&#x33;&#x34;&#53;&#x36;&#x40;&#49;&#50;&#x37;&#x2e;&#48;&#x2e;&#x30;&#46;&#49;">&#49;&#50;&#x33;&#x34;&#53;&#x36;&#x40;&#49;&#50;&#x37;&#x2e;&#48;&#x2e;&#x30;&#46;&#49;</a>:3306/BAIZHAN_DEV</p>
+</blockquote>
+<p>将 <code>username</code>、<code>password</code>、<code>host</code>、<code>port</code> 和 <code>dbname</code> 替换为你的数据库连接信息。</p>
+<h3 id="3-编辑-env-py"><a href="#3-编辑-env-py" class="headerlink" title="3. 编辑 env.py"></a>3. 编辑 <code>env.py</code></h3><p>在 <code>alembic/env.py</code> 文件中，确保 <code>target_metadata</code> 指向你的 SQLAlchemy Base 元数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> logging.config <span class="keyword">import</span> fileConfig</span><br><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> engine_from_config, pool</span><br><span class="line"><span class="keyword">from</span> alembic <span class="keyword">import</span> context</span><br><span class="line"><span class="keyword">from</span> db.mysql_db <span class="keyword">import</span> Base  <span class="comment"># 替换为你的 Base 模型的导入路径</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># this is the Alembic Config object, which provides</span></span><br><span class="line"><span class="comment"># access to the values within the .ini file in use.</span></span><br><span class="line">config = context.config</span><br><span class="line"></span><br><span class="line"><span class="comment"># Interpret the config file for Python logging.</span></span><br><span class="line"><span class="comment"># This line sets up loggers basically.</span></span><br><span class="line">fileConfig(config.config_file_name)</span><br><span class="line"></span><br><span class="line"><span class="comment"># add your model&#x27;s MetaData object here</span></span><br><span class="line"><span class="comment"># for &#x27;autogenerate&#x27; support</span></span><br><span class="line">target_metadata = Base.metadata</span><br><span class="line"></span><br><span class="line"><span class="comment"># other values from the config, defined by the needs of env.py,</span></span><br><span class="line"><span class="comment"># can be acquired:</span></span><br><span class="line"><span class="comment"># my_important_option = config.get_main_option(&quot;my_important_option&quot;)</span></span><br><span class="line"><span class="comment"># ... etc.</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run_migrations_offline</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Run migrations in &#x27;offline&#x27; mode.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    This configures the context with just a URL</span></span><br><span class="line"><span class="string">    and not an Engine, though an Engine is acceptable</span></span><br><span class="line"><span class="string">    here as well.  By skipping the Engine creation</span></span><br><span class="line"><span class="string">    we don&#x27;t even need a DBAPI to be available.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Calls to.execute context() here emit the given string to the</span></span><br><span class="line"><span class="string">    script output.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    url = config.get_main_option(<span class="string">&quot;sqlalchemy.url&quot;</span>)</span><br><span class="line">    context.configure(</span><br><span class="line">        url=url,</span><br><span class="line">        target_metadata=target_metadata,</span><br><span class="line">        literal_binds=<span class="literal">True</span>,</span><br><span class="line">        dialect_opts=&#123;<span class="string">&quot;paramstyle&quot;</span>: <span class="string">&quot;named&quot;</span>&#125;,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> context.begin_transaction():</span><br><span class="line">        context.run_migrations()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run_migrations_online</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Run migrations in &#x27;online&#x27; mode.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    In this scenario we need to create an Engine</span></span><br><span class="line"><span class="string">    and associate a connection with the context.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    connectable = engine_from_config(</span><br><span class="line">        config.get_section(config.config_ini_section),</span><br><span class="line">        prefix=<span class="string">&quot;sqlalchemy.&quot;</span>,</span><br><span class="line">        poolclass=pool.NullPool,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> connectable.connect() <span class="keyword">as</span> connection:</span><br><span class="line">        context.configure(connection=connection, target_metadata=target_metadata)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> context.begin_transaction():</span><br><span class="line">            context.run_migrations()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> context.is_offline_mode():</span><br><span class="line">    run_migrations_offline()</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    run_migrations_online()</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-更新模型定义"><a href="#4-更新模型定义" class="headerlink" title="4. 更新模型定义"></a>4. 更新模型定义</h3><p>在你的 SQLAlchemy 模型中，新的添加字段 <code>usr_id</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> Column, Integer</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">YourModel</span>(<span class="title class_ inherited__">Base</span>):  <span class="comment"># 替换为你的模型类</span></span><br><span class="line">    __tablename__ = <span class="string">&quot;your_table_name&quot;</span>  <span class="comment"># 替换为你的表名</span></span><br><span class="line">    <span class="built_in">id</span> = Column(Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    <span class="comment"># 其他字段</span></span><br><span class="line">    usr_id = Column(Integer, default=<span class="number">0</span>)  <span class="comment"># 新增字段</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-生成迁移脚本"><a href="#5-生成迁移脚本" class="headerlink" title="5. 生成迁移脚本"></a>5. 生成迁移脚本</h3><p>运行以下命令生成迁移脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alembic revision --autogenerate -m <span class="string">&quot;Add usr_id field&quot;</span></span><br></pre></td></tr></table></figure>
+<p>这会根据模型的变化自动生成一个迁移脚本。</p>
+<h3 id="6-检查迁移脚本"><a href="#6-检查迁移脚本" class="headerlink" title="6. 检查迁移脚本"></a>6. 检查迁移脚本</h3><p>Alembic 生成的迁移脚本位于 <code>alembic/versions</code> 文件夹中。打开生成的脚本文件，确保内容如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;Add usr_id field</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Revision ID: &lt;revision_id&gt;</span></span><br><span class="line"><span class="string">Revises: &lt;previous_revision_id&gt;</span></span><br><span class="line"><span class="string">Create Date: &lt;create_date&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> alembic <span class="keyword">import</span> op</span><br><span class="line"><span class="keyword">import</span> sqlalchemy <span class="keyword">as</span> sa</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># revision identifiers, used by Alembic.</span></span><br><span class="line">revision = <span class="string">&#x27;&lt;revision_id&gt;&#x27;</span></span><br><span class="line">down_revision = <span class="string">&#x27;&lt;previous_revision_id&gt;&#x27;</span></span><br><span class="line">branch_labels = <span class="literal">None</span></span><br><span class="line">depends_on = <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">upgrade</span>():</span><br><span class="line">    <span class="comment"># ### commands auto generated by Alembic - please adjust! ###</span></span><br><span class="line">    op.add_column(<span class="string">&#x27;your_table_name&#x27;</span>, sa.Column(<span class="string">&#x27;usr_id&#x27;</span>, sa.Integer(), server_default=<span class="string">&#x27;0&#x27;</span>, nullable=<span class="literal">False</span>))</span><br><span class="line">    <span class="comment"># ### end Alembic commands ###</span></span><br><span class="line">    <span class="comment"># 如果有默认值server_default=&#x27;0&#x27;需要自己手动添加</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">downgrade</span>():</span><br><span class="line">    <span class="comment"># ### commands auto generated by Alembic - please adjust! ###</span></span><br><span class="line">    op.drop_column(<span class="string">&#x27;your_table_name&#x27;</span>, <span class="string">&#x27;usr_id&#x27;</span>)</span><br><span class="line">    <span class="comment"># ### end Alembic commands ###</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="7-应用迁移"><a href="#7-应用迁移" class="headerlink" title="7. 应用迁移"></a>7. 应用迁移</h3><p>运行以下命令将迁移应用到数据库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alembic upgrade <span class="built_in">head</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="8-验证结果"><a href="#8-验证结果" class="headerlink" title="8. 验证结果"></a>8. 验证结果</h3><ul>
+<li>检查数据库表结构，确认 <code>usr_id</code> 字段已添加。</li>
+<li>确保表中的现有数据未被删除。</li>
+</ul>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
+<li><strong>备份数据库</strong>：在执行迁移之前，建议备份数据库，以防万一出现问题。</li>
+<li><strong>测试迁移</strong>：在开发环境或测试环境中测试迁移脚本，确保一切正常后再应用到生产环境。</li>
+<li><strong>默认值处理</strong>：在迁移脚本中，<code>server_default=&#39;0&#39;</code> 确保新字段在现有数据中填充默认值 <code>0</code>。</li>
+</ol>
+<h2 id="删除字段"><a href="#删除字段" class="headerlink" title="删除字段"></a>删除字段</h2><p>删除字段只需要简单修改命令即可，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alembic revision --autogenerate -m <span class="string">&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<p>这段命令会自动生成一个空白脚本，然后手动加入删除代码,示例代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">upgrade</span>():</span><br><span class="line">    op.drop_column(<span class="string">&#x27;modeltest&#x27;</span>, <span class="string">&#x27;content2&#x27;</span>)  <span class="comment"># 删除字段</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">downgrade</span>():</span><br><span class="line">    op.add_column(<span class="string">&#x27;modeltest&#x27;</span>, sa.Column(<span class="string">&#x27;content2&#x27;</span>, sa.Text(), nullable=<span class="literal">True</span>))  <span class="comment"># 如果需要回滚，重新添加字段</span></span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2025/03/23/mysql-%E4%BD%BF%E7%94%A8python%E8%BF%9B%E8%A1%8Cmysql%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/">https://m42-orion.github.io/2025/03/23/mysql-%E4%BD%BF%E7%94%A8python%E8%BF%9B%E8%A1%8Cmysql%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/mysql/">mysql</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/">数据迁移</a><a class="post-meta__tags" href="/tags/Alembic/">Alembic</a></div><div class="post-share"><div class="social-share" data-image="https://c-ssl.duitang.com/uploads/item/202002/18/20200218150945_pgkqj.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/03/23/pyhon%E5%8C%85%E7%9A%84%E7%A6%BB%E7%BA%BF%E6%9B%B4%E6%96%B0%E4%B8%8E%E8%BF%81%E7%A7%BB/" title="pyhon包的离线更新与迁移"><img class="cover" src="https://c-ssl.duitang.com/uploads/item/202002/18/20200218150946_xwikc.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">pyhon包的离线更新与迁移</div></div><div class="info-2"><div class="info-item-1">如何使用 Conda 和 Pip 离线下载 Python 包在某些情况下，可能需要在没有网络连接的环境中安装 Python 包，例如在公司内网或安全环境中。为了实现这一目标，可以使用 Conda 和 Pip 提供的离线下载功能，提前将所需的包下载到本地，然后在目标环境中进行安装。以下是一个简单的指南，帮助你在离线环境中高效地管理 Python 包。  第一步：离线下载包使用 Pip 下载Pip 提供了一个非常方便的选项来离线下载包及其依赖。你可以使用以下命令下载指定的包及其依赖： 1pip download package_name  如果你有一个 requirements.txt 文件，包含多个包的依赖，可以使用以下命令一次性下载所有包： 1pip download -r requirements.txt  这会将所有包及其依赖下载到当前目录。你也可以指定下载路径，例如： 1pip download -r requirements.txt -d /path/to/download  这样，所有下载的 .whl 文件和 .tar.gz 文件都会保存到指定的目录中。  使用...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/12/01/32%E4%BD%8D%E4%B8%8E64%E4%BD%8D%E7%9A%84%E5%8C%BA%E5%88%AB/" title="32位与64位的区别"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/28/pGSm4WWdTBxAJBV.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">32位与64位的区别</div></div><div class="info-2"><div class="info-item-1">...</div></div></div></a><a class="pagination-related" href="/2022/05/12/ElasticSearch%E4%B9%8Bpython%E6%80%BB%E7%BB%93/" title="ElasticSearch之python总结"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/ElasticSearch之python总结/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-12</div><div class="info-item-2">ElasticSearch之python总结</div></div><div class="info-2"><div class="info-item-1">对于ESES数据库本身作为一种分布式的、查询优势、拓展优势、容错优势…..等等众多优点的数据库。更多的特点还是自行百度吧 python操作安装： 1pip3 install elasticsearch  安装也就那样吧。 简单使用过热推荐，如果需要学习一个新的库的使用的时候，看源码与看官方文档是一个好习惯，因此本文仅列出少数操作，以使用入门讲解为主要核心。首先附上官方文档：https://elasticsearch-py.readthedocs.io/  点击链接会直接跳转到最新版本的官方文档。 操作在使用python进行操作的时候，首先需要连接数据库，在启动数据库之后采用以下代码进行数据库连接： 1234from elasticsearch import Elasticsearch# 实例化一个ip为localhost，端口为9200，允许超时一小时的es对象client = Elasticsearch(&quot;http://IP:9200&quot;) #...</div></div></div></a><a class="pagination-related" href="/2024/12/01/Gradio%E5%9F%BA%E7%A1%80%E5%B0%9D%E8%AF%95/" title="Gradio基础尝试"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/01/WXSzeOOvfQD7p1B.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">Gradio基础尝试</div></div><div class="info-2"><div class="info-item-1">Gradio库：快速构建机器学习应用界面简介Gradio是一个Python库，它允许我们快速构建机器学习模型的Web界面。通过简单的代码，我们可以将复杂的机器学习模型转变为易于使用的Web应用。本文将带你了解Gradio的基本用法，包括Interface、ChatInterface和TabbedInterface三种界面的构建方法。 Gradio Interface基础什么是Interface？Interface是Gradio中最基础的界面类型，它允许我们围绕一个函数构建一个Web界面。这个函数可以是一个机器学习模型的预测函数，每个参数对应一个输入组件，函数返回值对应输出组件。 基本使用Gradio Interface案例：由浅入深案例一：简单的文本反转这是最简单的Gradio Interface案例，我们将创建一个Web界面，用户输入文本后，界面返回文本的反转。 123456789101112import gradio as gr# 定义一个函数，接受一个字符串并返回其反转def reverse_text(text):    return text[::-1]#...</div></div></div></a><a class="pagination-related" href="/2023/09/07/None%E3%80%81nan%E3%80%81null%E3%80%81%E2%80%9C%E2%80%9D/" title="None、nan、null、&quot;&quot;"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/None/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-07</div><div class="info-item-2">None、nan、null、&quot;&quot;</div></div><div class="info-2"><div class="info-item-1">在python语言当中经常会遇到None、nan、null、””还有与之相关的0与False。这几个之间有着明显的区别同时又在特定的时候能够表达一个含义。 None在Python中，None是一个特殊的对象，表示空或无值。它用于表示一个变量或返回值没有被赋予任何值。 None在Python中被用作默认参数值、函数返回值或变量初始化时的占位符。当一个函数没有显式地返回任何值时，默认返回None。例如： 12345678910111213def do_something():    # 执行一些操作，但没有返回值result = do_something()print(result)  # 输出 None在条件语句中，None被视为False。例如：pythonvalue = Noneif value:    print(&quot;value is not None&quot;)  # 不会执行else:    print(&quot;value is None&quot;)  # 输出 value is...</div></div></div></a><a class="pagination-related" href="/2025/02/15/RAG-%E4%BB%80%E4%B9%88%E6%98%AFchunking/" title="RAG-什么是chunking"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202502/09/q4S8BddjIxJX3oQ.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-15</div><div class="info-item-2">RAG-什么是chunking</div></div><div class="info-2"><div class="info-item-1">什么是 Chunking？在自然语言处理（NLP）和文本分析领域，Chunking（分块）是一种将文本分割成有意义的、可管理的片段的技术。这些片段通常被称为“块”（chunks），可以是短语、句子、段落或其他有意义的语言单元。Chunking 的目标是从文本中提取出结构化的信息，以便更好地理解和处理语言数据。 Chunking 的基本概念Chunking 的核心思想是将连续的文本分割成更小的、有意义的单元。与简单的分词（tokenization）不同，Chunking 不仅仅是把文本拆分成单词，而是将这些单词组合成更大的语义单元。例如，在句子“The quick brown fox jumps over the lazy dog”中，Chunking 可能会将“The quick brown fox”识别为一个名词短语（NP），而“jumps over the lazy dog”识别为一个动词短语（VP）。 Chunking 的应用场景 信息提取：Chunking 可以帮助从文本中提取出关键信息，如人名、地名、日期、组织机构等。例如，在新闻文章中，Chunking...</div></div></div></a><a class="pagination-related" href="/2025/02/15/RAG-python%E5%BA%93Chonkie%E7%9A%84%E4%BD%BF%E7%94%A8/" title="RAG-python库Chonkie的使用"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202502/13/pGSm4WWdTBx3vE3.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-15</div><div class="info-item-2">RAG-python库Chonkie的使用</div></div><div class="info-2"><div class="info-item-1">使用 Python 库 Chonkie 快速上手在自然语言处理（NLP）领域，文本分块（chunking）是一种常见的任务，它将长文本分割成更小的块，以便于后续处理和分析。无论是构建 RAG（Retrieve-Augment-Generate）模型，还是进行大规模文本处理，分块都是一项基础且关键的步骤。然而，现有的许多分块工具要么功能过于复杂，要么过于简陋，难以满足开发者的实际需求。幸运的是，现在有了 Chonkie —— 一个简单易用的 Python 库，它专注于提供高效且灵活的文本分块解决方案。本文将详细介绍如何使用 Chonkie 快速上手文本分块，并通过几个实际示例展示其强大的功能。 什么是 Chonkie？Chonkie 是一个轻量级的 Python 库，旨在简化文本分块的过程。它提供了多种分块策略，包括基于句子的分块、递归分块、语义分块和双通道合并分块等，能够满足不同场景下的需求。Chonkie 的设计目标是简单、高效且易于扩展，让开发者能够专注于核心业务逻辑，而不是被复杂的分块逻辑所困扰。安装 Chonkie在开始之前，您需要先安装...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">158</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">61</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">21</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E5%A2%9E%E5%AD%97%E6%AE%B5%E6%93%8D%E4%BD%9C%E5%A6%82%E4%B8%8B"><span class="toc-number">1.</span> <span class="toc-text">新增字段操作如下</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%9D%E5%A7%8B%E5%8C%96-Alembic-%E7%8E%AF"><span class="toc-number">1.1.</span> <span class="toc-text">1. 初始化 Alembic 环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AE-Alembic"><span class="toc-number">1.2.</span> <span class="toc-text">2. 配置 Alembic</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BC%96%E8%BE%91-env-py"><span class="toc-number">1.3.</span> <span class="toc-text">3. 编辑 env.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%9B%B4%E6%96%B0%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%B9%89"><span class="toc-number">1.4.</span> <span class="toc-text">4. 更新模型定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%94%9F%E6%88%90%E8%BF%81%E7%A7%BB%E8%84%9A%E6%9C%AC"><span class="toc-number">1.5.</span> <span class="toc-text">5. 生成迁移脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%A3%80%E6%9F%A5%E8%BF%81%E7%A7%BB%E8%84%9A%E6%9C%AC"><span class="toc-number">1.6.</span> <span class="toc-text">6. 检查迁移脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%BA%94%E7%94%A8%E8%BF%81%E7%A7%BB"><span class="toc-number">1.7.</span> <span class="toc-text">7. 应用迁移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E9%AA%8C%E8%AF%81%E7%BB%93%E6%9E%9C"><span class="toc-number">1.8.</span> <span class="toc-text">8. 验证结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.9.</span> <span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E5%AD%97%E6%AE%B5"><span class="toc-number">2.</span> <span class="toc-text">删除字段</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/03/23/mysql-%E4%BD%BF%E7%94%A8python%E8%BF%9B%E8%A1%8Cmysql%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/" title="使用python进行mysql数据迁移"><img src="https://c-ssl.duitang.com/uploads/item/202002/18/20200218150945_pgkqj.jpg" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="使用python进行mysql数据迁移"/></a><div class="content"><a class="title" href="/2025/03/23/mysql-%E4%BD%BF%E7%94%A8python%E8%BF%9B%E8%A1%8Cmysql%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/" title="使用python进行mysql数据迁移">使用python进行mysql数据迁移</a><time datetime="2025-03-23T05:51:08.000Z" title="发表于 2025-03-23 13:51:08">2025-03-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/23/pyhon%E5%8C%85%E7%9A%84%E7%A6%BB%E7%BA%BF%E6%9B%B4%E6%96%B0%E4%B8%8E%E8%BF%81%E7%A7%BB/" title="pyhon包的离线更新与迁移"><img src="https://c-ssl.duitang.com/uploads/item/202002/18/20200218150946_xwikc.jpg" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="pyhon包的离线更新与迁移"/></a><div class="content"><a class="title" href="/2025/03/23/pyhon%E5%8C%85%E7%9A%84%E7%A6%BB%E7%BA%BF%E6%9B%B4%E6%96%B0%E4%B8%8E%E8%BF%81%E7%A7%BB/" title="pyhon包的离线更新与迁移">pyhon包的离线更新与迁移</a><time datetime="2025-03-23T05:48:13.000Z" title="发表于 2025-03-23 13:48:13">2025-03-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/23/vLLM-%E5%A4%9A%E6%9C%BA%E5%A4%9A%E5%8D%A1%E6%8E%A8%E7%90%86%E9%83%A8%E7%BD%B2/" title="vLLM-多机多卡推理部署"><img src="https://c-ssl.duitang.com/uploads/blog/202211/10/20221110104951_3a4e6.jpg" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vLLM-多机多卡推理部署"/></a><div class="content"><a class="title" href="/2025/03/23/vLLM-%E5%A4%9A%E6%9C%BA%E5%A4%9A%E5%8D%A1%E6%8E%A8%E7%90%86%E9%83%A8%E7%BD%B2/" title="vLLM-多机多卡推理部署">vLLM-多机多卡推理部署</a><time datetime="2025-03-23T05:44:52.000Z" title="发表于 2025-03-23 13:44:52">2025-03-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/23/RAG-%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%AF%BB%E5%8F%96%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/" title="RAG-更好的读取文本文件"><img src="https://c-ssl.duitang.com/uploads/blog/202211/10/20221110104951_3d152.jpg" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAG-更好的读取文本文件"/></a><div class="content"><a class="title" href="/2025/03/23/RAG-%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%AF%BB%E5%8F%96%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/" title="RAG-更好的读取文本文件">RAG-更好的读取文本文件</a><time datetime="2025-03-23T05:40:56.000Z" title="发表于 2025-03-23 13:40:56">2025-03-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/23/docker-%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E9%97%AE%E9%A2%98/" title="docker-容器网络通信问题"><img src="https://c-ssl.duitang.com/uploads/blog/202211/10/20221110104951_ad8a0.jpg" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="docker-容器网络通信问题"/></a><div class="content"><a class="title" href="/2025/03/23/docker-%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E9%97%AE%E9%A2%98/" title="docker-容器网络通信问题">docker-容器网络通信问题</a><time datetime="2025-03-23T05:36:56.000Z" title="发表于 2025-03-23 13:36:56">2025-03-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By 望</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 5.4.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(function() {
+  const abcjsInit = function() {
+    const abcjsFn = function() {
+      setTimeout(function() {
+        const sheets = document.querySelectorAll(".abc-music-sheet")
+        for (let i = 0; i < sheets.length; i++) {
+          const ele = sheets[i]
+          if (ele.children.length > 0) continue
+
+          // Parse parameters from data-params attribute
+          let params = {}
+          const dp = ele.getAttribute("data-params")
+          if (dp) {
+            try {
+              params = JSON.parse(dp)
+            } catch (e) {
+              console.error("Failed to parse data-params:", e)
+            }
+          }
+
+          // Merge parsed parameters with the responsive option
+          // Ensures params content appears before responsive
+          const options = { ...params, responsive: "resize" }
+
+          // Render the music score using ABCJS.renderAbc
+          ABCJS.renderAbc(ele, ele.innerHTML, options)
+        }
+      }, 100)
+    }
+
+    if (typeof ABCJS === "object") {
+      abcjsFn()
+    } else {
+      btf.getScript("https://cdn.jsdelivr.net/npm/abcjs/dist/abcjs-basic-min.min.js").then(abcjsFn)
+    }
+  }
+
+  if (window.pjax) {
+    abcjsInit()
+  } else {
+    window.addEventListener("load", abcjsInit)
+  }
+
+  btf.addGlobalFn("encrypt", abcjsInit, "abcjs")
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="null" data-text="I,LOVE,YOU,木一" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
