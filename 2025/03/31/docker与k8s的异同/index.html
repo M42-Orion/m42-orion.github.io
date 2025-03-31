@@ -1,0 +1,412 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>docker与k8s的异同 | 念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="容器化技术已经成为现代云计算和DevOps的核心组成部分，而 Docker 和 Kubernetes（K8S） 是其中最重要的两个工具。很多人对它们的定位和关系感到困惑：    Docker 负责什么？   Kubernetes 又负责什么？   它们的网络模型有何不同？    本文将从 架构定位、核心功能、网络模型 三个方面深入对比，帮助你彻底理解二者的关系与差异。  1. Docker 与 K">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker与k8s的异同">
+<meta property="og:url" content="https://m42-orion.github.io/2025/03/31/docker%E4%B8%8Ek8s%E7%9A%84%E5%BC%82%E5%90%8C/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="容器化技术已经成为现代云计算和DevOps的核心组成部分，而 Docker 和 Kubernetes（K8S） 是其中最重要的两个工具。很多人对它们的定位和关系感到困惑：    Docker 负责什么？   Kubernetes 又负责什么？   它们的网络模型有何不同？    本文将从 架构定位、核心功能、网络模型 三个方面深入对比，帮助你彻底理解二者的关系与差异。  1. Docker 与 K">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c-ssl.duitang.com/uploads/blog/202205/20/20220520205919_c0f45.jpg">
+<meta property="article:published_time" content="2025-03-31T13:43:57.000Z">
+<meta property="article:modified_time" content="2025-03-31T13:45:36.464Z">
+<meta property="article:author" content="望">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="k8s">
+<meta property="article:tag" content="运维">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c-ssl.duitang.com/uploads/blog/202205/20/20220520205919_c0f45.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "docker与k8s的异同",
+  "url": "https://m42-orion.github.io/2025/03/31/docker%E4%B8%8Ek8s%E7%9A%84%E5%BC%82%E5%90%8C/",
+  "image": "https://c-ssl.duitang.com/uploads/blog/202205/20/20220520205919_c0f45.jpg",
+  "datePublished": "2025-03-31T13:43:57.000Z",
+  "dateModified": "2025-03-31T13:45:36.464Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "望",
+      "url": "https://m42-orion.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://m42-orion.github.io/2025/03/31/docker%E4%B8%8Ek8s%E7%9A%84%E5%BC%82%E5%90%8C/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'docker与k8s的异同',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 5.4.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://c-ssl.duitang.com/uploads/blog/202205/20/20220520205919_c0f45.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">docker与k8s的异同</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">docker与k8s的异同</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-03-31T13:43:57.000Z" title="发表于 2025-03-31 21:43:57">2025-03-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-03-31T13:45:36.464Z" title="更新于 2025-03-31 21:45:36">2025-03-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/k8s/">k8s</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/k8s/docker/">docker</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>容器化技术已经成为现代云计算和DevOps的核心组成部分，而 <strong>Docker</strong> 和 <strong>Kubernetes（K8S）</strong> 是其中最重要的两个工具。很多人对它们的定位和关系感到困惑：  </p>
+<ul>
+<li><strong>Docker 负责什么？</strong>  </li>
+<li><strong>Kubernetes 又负责什么？</strong>  </li>
+<li><strong>它们的网络模型有何不同？</strong>  </li>
+</ul>
+<p>本文将从 <strong>架构定位、核心功能、网络模型</strong> 三个方面深入对比，帮助你彻底理解二者的关系与差异。</p>
+<hr>
+<h2 id="1-Docker-与-Kubernetes-的定位与关系"><a href="#1-Docker-与-Kubernetes-的定位与关系" class="headerlink" title="1. Docker 与 Kubernetes 的定位与关系"></a><strong>1. Docker 与 Kubernetes 的定位与关系</strong></h2><h3 id="1-Docker：单机容器运行时"><a href="#1-Docker：单机容器运行时" class="headerlink" title="(1) Docker：单机容器运行时"></a><strong>(1) Docker：单机容器运行时</strong></h3><ul>
+<li><strong>核心功能</strong>：  <ul>
+<li>创建、运行和管理<strong>单个容器</strong>（应用打包与隔离）。  </li>
+<li>提供镜像构建（<code>Dockerfile</code>）和分发（Docker Hub）。  </li>
+</ul>
+</li>
+<li><strong>适用场景</strong>：  <ul>
+<li>本地开发、测试环境。  </li>
+<li>单机部署简单应用。  </li>
+</ul>
+</li>
+</ul>
+<h3 id="2-Kubernetes：容器编排系统"><a href="#2-Kubernetes：容器编排系统" class="headerlink" title="(2) Kubernetes：容器编排系统"></a><strong>(2) Kubernetes：容器编排系统</strong></h3><ul>
+<li><strong>核心功能</strong>：  <ul>
+<li>管理<strong>多个容器化应用</strong>的部署、伸缩、负载均衡。  </li>
+<li>自动化运维（自愈、滚动更新、服务发现）。  </li>
+</ul>
+</li>
+<li><strong>适用场景</strong>：  <ul>
+<li>生产环境的大规模集群管理。  </li>
+<li>微服务架构（数百个容器的协同）。  </li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>类比理解</strong>：  </p>
+<ul>
+<li><strong>Docker</strong> 像是一台“集装箱卡车”，负责单个容器的运输。  </li>
+<li><strong>Kubernetes</strong> 像是“全球物流系统”，调度成千上万的卡车和集装箱。  </li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="2-核心区别对比"><a href="#2-核心区别对比" class="headerlink" title="2. 核心区别对比"></a><strong>2. 核心区别对比</strong></h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Docker</th>
+<th>Kubernetes (K8S)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>核心目标</strong></td>
+<td>创建和运行容器</td>
+<td>编排和管理多个容器</td>
+</tr>
+<tr>
+<td><strong>集群支持</strong></td>
+<td>单机（需 Swarm 扩展集群能力）</td>
+<td>原生支持多节点集群</td>
+</tr>
+<tr>
+<td><strong>伸缩性</strong></td>
+<td>手动</td>
+<td>自动扩缩容（HPA）</td>
+</tr>
+<tr>
+<td><strong>服务发现</strong></td>
+<td>需手动配置或依赖第三方工具</td>
+<td>内置 DNS 和服务发现（Service）</td>
+</tr>
+<tr>
+<td><strong>存储管理</strong></td>
+<td>本地卷或插件</td>
+<td>支持 PV/PVC（动态存储）</td>
+</tr>
+<tr>
+<td><strong>网络模型</strong></td>
+<td>单机网络（bridge/host/none）</td>
+<td>集群级网络（CNI 插件）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-网络模型详解"><a href="#3-网络模型详解" class="headerlink" title="3. 网络模型详解"></a><strong>3. 网络模型详解</strong></h2><h3 id="1-Docker-网络"><a href="#1-Docker-网络" class="headerlink" title="(1) Docker 网络"></a><strong>(1) Docker 网络</strong></h3><p>Docker 的网络是<strong>单机级别</strong>的，主要模式包括：</p>
+<ul>
+<li><strong><code>bridge</code>（默认）</strong>：  <ul>
+<li>容器通过虚拟网桥（<code>docker0</code>）通信，分配私有 IP。  </li>
+<li>外部访问需端口映射（<code>-p 8080:80</code>）。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 8080:80 nginx  <span class="comment"># 映射主机端口</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>**<code>host</code>**：  <ul>
+<li>容器直接使用主机网络栈（无隔离，性能高）。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --network=host nginx</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>**<code>none</code>**：  <ul>
+<li>无网络（仅用于特殊场景）。  </li>
+</ul>
+</li>
+</ul>
+<p><strong>局限性</strong>：  </p>
+<ul>
+<li>跨主机通信需手动配置（如 Overlay 网络或第三方工具）。  </li>
+</ul>
+<hr>
+<h3 id="2-Kubernetes-网络"><a href="#2-Kubernetes-网络" class="headerlink" title="(2) Kubernetes 网络"></a><strong>(2) Kubernetes 网络</strong></h3><p>K8S 的网络是<strong>集群级别</strong>的，核心要求：  </p>
+<blockquote>
+<p><strong>所有 Pod 之间可以直接通信</strong>（无论是否在同一节点）。</p>
+</blockquote>
+<h4 id="关键组件："><a href="#关键组件：" class="headerlink" title="关键组件："></a><strong>关键组件</strong>：</h4><ol>
+<li><p><strong>Pod 网络</strong>：  </p>
+<ul>
+<li>每个 Pod 拥有唯一 IP（容器共享网络命名空间）。  </li>
+<li>通过 <strong>CNI（Container Network Interface）插件</strong>实现：  <ul>
+<li><strong>Calico</strong>（BGP 路由）  </li>
+<li><strong>Flannel</strong>（Overlay 网络）  </li>
+<li><strong>Cilium</strong>（eBPF 高性能）  </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Service 网络</strong>：  </p>
+<ul>
+<li>为 Pod 提供稳定的虚拟 IP（VIP）和负载均衡。  </li>
+<li>类型包括：  <ul>
+<li><code>ClusterIP</code>（集群内访问）  </li>
+<li><code>NodePort</code>（主机端口暴露）  </li>
+<li><code>LoadBalancer</code>（云厂商 LB 集成）  </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Ingress</strong>：  </p>
+<ul>
+<li>管理外部 HTTP/S 流量路由（如 Nginx Ingress Controller）。  </li>
+</ul>
+</li>
+</ol>
+<h4 id="示例流量路径："><a href="#示例流量路径：" class="headerlink" title="示例流量路径："></a><strong>示例流量路径</strong>：</h4><pre class="mermaid">graph LR
+    A[外部用户] --> B[Ingress]
+    B --> C[Service]
+    C --> D[Pod 1]
+    C --> E[Pod 2]</pre>
+
+<hr>
+<h2 id="4-如何选择？"><a href="#4-如何选择？" class="headerlink" title="4. 如何选择？"></a><strong>4. 如何选择？</strong></h2><ul>
+<li><p><strong>只用 Docker</strong>：  </p>
+<ul>
+<li>适合本地开发、单机应用。  </li>
+<li>例子：快速运行一个 PostgreSQL 容器。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name postgres -e POSTGRES_PASSWORD=123456 postgres</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>使用 Kubernetes</strong>：  </p>
+<ul>
+<li>适合生产环境、微服务架构。  </li>
+<li>例子：部署一个高可用的 Web 应用：  <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># deployment.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">web-app</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx:latest</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="5-常见问题解答"><a href="#5-常见问题解答" class="headerlink" title="5. 常见问题解答"></a><strong>5. 常见问题解答</strong></h2><p><strong>Q1：Docker 和 Kubernetes 必须一起用吗？</strong>  </p>
+<ul>
+<li>不是。Docker 可以单独使用，但 K8S 需要容器运行时（如 Docker、containerd）。  </li>
+</ul>
+<p><strong>Q2：K8S 替代 Docker 了吗？</strong>  </p>
+<ul>
+<li>不是替代关系，而是互补。Docker 负责“容器化”，K8S 负责“编排”。  </li>
+</ul>
+<p><strong>Q3：K8S 网络为什么比 Docker 复杂？</strong>  </p>
+<ul>
+<li>Docker 只需处理单机，K8S 需解决跨主机通信、服务发现、安全策略等分布式问题。  </li>
+</ul>
+<hr>
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a><strong>6. 总结</strong></h2><table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>Docker</strong></th>
+<th><strong>Kubernetes</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>定位</strong></td>
+<td>容器运行时</td>
+<td>容器编排平台</td>
+</tr>
+<tr>
+<td><strong>网络范围</strong></td>
+<td>单机</td>
+<td>跨主机集群</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>开发/测试</td>
+<td>生产/大规模部署</td>
+</tr>
+<tr>
+<td><strong>学习曲线</strong></td>
+<td>低</td>
+<td>高</td>
+</tr>
+</tbody></table>
+<p><strong>推荐学习路径</strong>：  </p>
+<ol>
+<li>先掌握 Docker（容器化基础）。  </li>
+<li>再学习 Kubernetes（编排与生产实践）。  </li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2025/03/31/docker%E4%B8%8Ek8s%E7%9A%84%E5%BC%82%E5%90%8C/">https://m42-orion.github.io/2025/03/31/docker%E4%B8%8Ek8s%E7%9A%84%E5%BC%82%E5%90%8C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80/">基础</a><a class="post-meta__tags" href="/tags/docker/">docker</a><a class="post-meta__tags" href="/tags/k8s/">k8s</a><a class="post-meta__tags" href="/tags/%E8%BF%90%E7%BB%B4/">运维</a></div><div class="post-share"><div class="social-share" data-image="https://c-ssl.duitang.com/uploads/blog/202205/20/20220520205919_c0f45.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/03/31/%E5%B7%A5%E5%85%B7-doc%E4%B8%8Edocx%E7%9A%84%E5%8E%86%E5%8F%B2/" title="doc与docx的历史"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202204/10/20220410222021_6fe2c.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">doc与docx的历史</div></div><div class="info-2"><div class="info-item-1">在 Linux 系统上处理 Microsoft Word 文档时，我们经常会遇到两种格式：.doc 和 .docx。由于兼容性问题，有时需要将旧版 .doc 转换为 .docx 才能正常编辑。本文将详细介绍这两种格式的历史、区别，并讲解如何使用 LibreOffice 进行转换。  1. DOC 与 DOCX 的历史与区别(1) DOC 格式（1990s–2007） 诞生：DOC 是 Microsoft Word 的专有二进制格式，最早随 Word 1.0（1983）推出，并在 Word 97–2003 成为主流。 特点： 二进制存储（不可直接阅读）。 文件体积较大（未优化压缩）。 兼容性问题较多（不同 Word 版本可能显示不同）。   现状： 已淘汰，但仍有一些旧文档使用。    (2) DOCX 格式（2007–至今） 诞生：DOCX 是 Microsoft Office 2007 引入的 Office Open XML (OOXML) 格式，现为 Word 默认格式。 特点： 基于 XML（结构化文本，可解压查看内容）。 采用 ZIP...</div></div></div></a><a class="pagination-related" href="/2025/03/31/docker-%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85docker%E8%84%9A%E6%9C%AC/" title="docker-在线安装docker脚本"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202204/03/20220403205339_03e01.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">docker-在线安装docker脚本</div></div><div class="info-2"><div class="info-item-1">这里直接给出脚本内容，脚本内容中已经包含了添加阿里云镜像源的步骤，直接运行即可。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162#!/bin/bash# 在线安装 Docker 脚本（使用阿里云镜像源）# 适用于 Ubuntu 系统# 检查脚本是否以 root 用户运行if [[ $EUID -ne 0 ]]; then    echo &quot;该脚本需要以 root 用户运行！&quot;    exit 1fiecho &quot;正在确认安装curl命令&quot;apt-get install curl -y# 检查是否已安装 Dockerif command -v docker &amp;&gt;/dev/null; then    echo &quot;检测到系统中已安装 Docker。&quot;    read -p &quot;是否需要卸载并重新安装 Docker?...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/03/31/docker-compose%E4%B8%8Ek8s%E5%AF%B9%E6%AF%94/" title="docker-compose与k8s对比"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202209/01/20220901112959_2649f.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-31</div><div class="info-item-2">docker-compose与k8s对比</div></div><div class="info-2"><div class="info-item-1">在现代容器化生态中，Docker Compose 和 Kubernetes（K8S） 是两个最常用的编排工具，但它们的设计目标和适用场景截然不同。本文将深入分析它们的异同、优劣势及互补关系，帮助你做出合理的技术选型。  1. 核心定位对比Docker Compose：轻量级单机编排 定位：定义和运行多个关联容器（如 Web + DB + Cache）。   适用场景：   本地开发环境   单机测试部署   快速原型验证      Kubernetes：企业级分布式编排 定位：管理跨多节点的大规模容器集群。   适用场景：   生产环境微服务架构   高可用、自动伸缩需求   混合云/多云部署       类比：    Docker Compose 像“乐高说明书”，指导如何组装一组容器。   Kubernetes 像“智能机器人流水线”，自动管理全球工厂的乐高生产。      2. 功能对比   功能 Docker Compose Kubernetes    部署单元 容器组（Services） Pod（1个或多个容器）   伸缩能力 手动（docker-compose up...</div></div></div></a><a class="pagination-related" href="/2024/12/01/Gradio%E5%9F%BA%E7%A1%80%E5%B0%9D%E8%AF%95/" title="Gradio基础尝试"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/01/WXSzeOOvfQD7p1B.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">Gradio基础尝试</div></div><div class="info-2"><div class="info-item-1">Gradio库：快速构建机器学习应用界面简介Gradio是一个Python库，它允许我们快速构建机器学习模型的Web界面。通过简单的代码，我们可以将复杂的机器学习模型转变为易于使用的Web应用。本文将带你了解Gradio的基本用法，包括Interface、ChatInterface和TabbedInterface三种界面的构建方法。 Gradio Interface基础什么是Interface？Interface是Gradio中最基础的界面类型，它允许我们围绕一个函数构建一个Web界面。这个函数可以是一个机器学习模型的预测函数，每个参数对应一个输入组件，函数返回值对应输出组件。 基本使用Gradio Interface案例：由浅入深案例一：简单的文本反转这是最简单的Gradio Interface案例，我们将创建一个Web界面，用户输入文本后，界面返回文本的反转。 123456789101112import gradio as gr# 定义一个函数，接受一个字符串并返回其反转def reverse_text(text):    return text[::-1]#...</div></div></div></a><a class="pagination-related" href="/2024/12/01/anaconda%E4%B8%8Epython/" title="anaconda与python"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/05/6zS4oXXwiqwvxN0.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">anaconda与python</div></div><div class="info-2"><div class="info-item-1">是什么Python是一种广泛使用的编程语言，它以其简洁的语法和强大的库支持而闻名。然而，Python在科学计算和数据分析领域中的使用受到了一些限制。为了解决这个问题，Anaconda应运而生，它是一个用于科学计算的Python发行版，它包含了Python解释器、大量的科学计算库和工具，以及一个包管理器conda。 Python与Anaconda的关系Python与Anaconda之间的关系非常密切。Anaconda是一个基于Python的发行版，它包含了Python解释器、大量的科学计算库和工具，以及一个包管理器conda。因此，Python是Anaconda的基础，而Anaconda则提供了Python在科学计算和数据分析领域中的强大支持。 Python与Anaconda的区别Python与Anaconda在安装源、安装方式、环境管理和包管理方面有一些区别。Python的官方源是Python Package Index (PyPI)，而Anaconda的官方源是Anaconda Repository。PyPI上的包可能不是官方版本，而Anaconda...</div></div></div></a><a class="pagination-related" href="/2024/12/01/autorunsc%E5%B7%A5%E5%85%B7%E8%8E%B7%E5%8F%96%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/" title="autorunsc工具获取计划任务"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/04/2YSzqGG4f64eMqZ.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">autorunsc工具获取计划任务</div></div><div class="info-2"><div class="info-item-1">解析autorunsc工具的Python调用流程本文将深入探讨一段Python取证代码，该代码用于调用autorunsc工具，这是一个用于列出当前系统上所有自启动程序。现在将按照代码的执行流程，分块解释每一部分的功能和实现方式。 环境变量检查和文件名选择1autorunsc_name = &quot;autorunsc64.exe&quot; if &quot;PROGRAMFILES(X86)&quot; in os.environ else &quot;autorunsc32.exe&quot; 这一部分代码检查系统环境变量中是否存在PROGRAMFILES(X86)，以确定系统是32位还是64位，并据此选择相应的autorunsc工具版本。 路径拼接12autoruns_path = os.path.join(setting.PROJ_PATH, autorunsc_name)result_temp_path = os.path.join(setting.PROJ_PATH,...</div></div></div></a><a class="pagination-related" href="/2024/12/01/conda%E4%B8%8Epip/" title="conda与pip"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/02/V2Soejj0Tmwn4le.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">conda与pip</div></div><div class="info-2"><div class="info-item-1">conda与pip的区别conda install 和 pip install 是两种常用的Python包管理工具,它们都可以用来安装和管理Python库。但是,它们在安装源和安装方式上有一些区别。  安装源  conda install 使用的是Anaconda的官方源,而pip install 可以指定任意源来安装库。因此,conda install 安装的库通常都是官方版本的库,而pip install 安装的库可能是官方版本的库,也可能是其他版本的库。  安装方式  conda install 使用的是Anaconda的包管理器,它会在安装库时自动处理依赖关系,并将其安装到Anaconda的虚拟环境中。因此,使用conda install 安装的库都是独立的,不会影响系统中的其他Python库。而pip install 安装的库则是直接安装到系统Python的site-packages目录中,可能会与其他库发生冲突。  影响或问题  (1) 版本冲突 由于pip install...</div></div></div></a><a class="pagination-related" href="/2024/12/01/SQLAlchemy%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98%E5%AF%BC%E8%87%B4%E4%B8%8D%E5%8F%AF%E7%94%A8/" title="SQLAlchemy版本问题导致不可用"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202410/23/3BSD1QQoCzE7QY1.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">SQLAlchemy版本问题导致不可用</div></div><div class="info-2"><div class="info-item-1">问题最近，我遇到了一个关于SQLAlchemy版本的问题。我尝试使用SQLAlchemy与关系型数据库进行交互，但在某些情况下，它似乎与我的当前环境不兼容。经过一番研究，我发现了SQLAlchemy的两个主要版本——SQLAlchemy 1.x和SQLAlchemy 2.x，并了解了它们之间的区别以及如何解决兼容性问题。 原因SQLAlchemy是一个Python库，用于与关系型数据库进行交互。它提供了两个主要版本：SQLAlchemy 1.x和SQLAlchemy 2.x。在这两个版本之间有一些关键区别：  主要功能变化：SQLAlchemy 2.x引入了一些新的主要功能，例如支持关系、更高级的ORM功能和更好的性能。  兼容性问题：虽然SQLAlchemy 2.x在大多数情况下与SQLAlchemy 1.x兼容，但在某些情况下，例如使用特定数据库引擎或特定ORM功能时，可能会遇到兼容性问题。在这种情况下，您可能需要升级或降级您的SQLAlchemy版本以解决兼容性问题。   要了解更多信息，请查看SQLAlchemy的官方文档，特别是SQLAlchemy...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">166</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">73</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">25</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Docker-%E4%B8%8E-Kubernetes-%E7%9A%84%E5%AE%9A%E4%BD%8D%E4%B8%8E%E5%85%B3%E7%B3%BB"><span class="toc-number">1.</span> <span class="toc-text">1. Docker 与 Kubernetes 的定位与关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Docker%EF%BC%9A%E5%8D%95%E6%9C%BA%E5%AE%B9%E5%99%A8%E8%BF%90%E8%A1%8C%E6%97%B6"><span class="toc-number">1.1.</span> <span class="toc-text">(1) Docker：单机容器运行时</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Kubernetes%EF%BC%9A%E5%AE%B9%E5%99%A8%E7%BC%96%E6%8E%92%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.2.</span> <span class="toc-text">(2) Kubernetes：容器编排系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%88%AB%E5%AF%B9%E6%AF%94"><span class="toc-number">2.</span> <span class="toc-text">2. 核心区别对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E8%AF%A6%E8%A7%A3"><span class="toc-number">3.</span> <span class="toc-text">3. 网络模型详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Docker-%E7%BD%91%E7%BB%9C"><span class="toc-number">3.1.</span> <span class="toc-text">(1) Docker 网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Kubernetes-%E7%BD%91%E7%BB%9C"><span class="toc-number">3.2.</span> <span class="toc-text">(2) Kubernetes 网络</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6%EF%BC%9A"><span class="toc-number">3.2.1.</span> <span class="toc-text">关键组件：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E6%B5%81%E9%87%8F%E8%B7%AF%E5%BE%84%EF%BC%9A"><span class="toc-number">3.2.2.</span> <span class="toc-text">示例流量路径：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">4. 如何选择？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94"><span class="toc-number">5.</span> <span class="toc-text">5. 常见问题解答</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">6. 总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/03/31/RAG-Chonkie%E5%AE%9E%E8%B7%B5%E7%90%86%E8%A7%A3%E5%88%86%E5%9D%97/" title="RAG-Chonkie实践理解分块"><img src="https://c-ssl.duitang.com/uploads/blog/202205/25/20220525152607_36e08.jpg" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RAG-Chonkie实践理解分块"/></a><div class="content"><a class="title" href="/2025/03/31/RAG-Chonkie%E5%AE%9E%E8%B7%B5%E7%90%86%E8%A7%A3%E5%88%86%E5%9D%97/" title="RAG-Chonkie实践理解分块">RAG-Chonkie实践理解分块</a><time datetime="2025-03-31T14:19:20.000Z" title="发表于 2025-03-31 22:19:20">2025-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/31/docker-compose%E4%B8%8Ek8s%E5%AF%B9%E6%AF%94/" title="docker-compose与k8s对比"><img src="https://c-ssl.duitang.com/uploads/blog/202209/01/20220901112959_2649f.jpg" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="docker-compose与k8s对比"/></a><div class="content"><a class="title" href="/2025/03/31/docker-compose%E4%B8%8Ek8s%E5%AF%B9%E6%AF%94/" title="docker-compose与k8s对比">docker-compose与k8s对比</a><time datetime="2025-03-31T14:03:38.000Z" title="发表于 2025-03-31 22:03:38">2025-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/31/docker-%E5%A6%82%E4%BD%95%E5%9C%A8%E5%AE%B9%E5%99%A8%E5%86%85%E4%BD%BF%E7%94%A8%E6%98%BE%E5%8D%A1%E8%B5%84%E6%BA%90/" title="docker-如何在容器内使用显卡资源"><img src="https://c-ssl.duitang.com/uploads/blog/202209/03/20220903225737_e7fdf.jpeg" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="docker-如何在容器内使用显卡资源"/></a><div class="content"><a class="title" href="/2025/03/31/docker-%E5%A6%82%E4%BD%95%E5%9C%A8%E5%AE%B9%E5%99%A8%E5%86%85%E4%BD%BF%E7%94%A8%E6%98%BE%E5%8D%A1%E8%B5%84%E6%BA%90/" title="docker-如何在容器内使用显卡资源">docker-如何在容器内使用显卡资源</a><time datetime="2025-03-31T13:52:13.000Z" title="发表于 2025-03-31 21:52:13">2025-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/31/docker-%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85docker%E8%84%9A%E6%9C%AC/" title="docker-在线安装docker脚本"><img src="https://c-ssl.duitang.com/uploads/blog/202204/03/20220403205339_03e01.jpg" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="docker-在线安装docker脚本"/></a><div class="content"><a class="title" href="/2025/03/31/docker-%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85docker%E8%84%9A%E6%9C%AC/" title="docker-在线安装docker脚本">docker-在线安装docker脚本</a><time datetime="2025-03-31T13:46:29.000Z" title="发表于 2025-03-31 21:46:29">2025-03-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/31/docker%E4%B8%8Ek8s%E7%9A%84%E5%BC%82%E5%90%8C/" title="docker与k8s的异同"><img src="https://c-ssl.duitang.com/uploads/blog/202205/20/20220520205919_c0f45.jpg" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="docker与k8s的异同"/></a><div class="content"><a class="title" href="/2025/03/31/docker%E4%B8%8Ek8s%E7%9A%84%E5%BC%82%E5%90%8C/" title="docker与k8s的异同">docker与k8s的异同</a><time datetime="2025-03-31T13:43:57.000Z" title="发表于 2025-03-31 21:43:57">2025-03-31</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By 望</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 5.4.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(function() {
+  const abcjsInit = function() {
+    const abcjsFn = function() {
+      setTimeout(function() {
+        const sheets = document.querySelectorAll(".abc-music-sheet")
+        for (let i = 0; i < sheets.length; i++) {
+          const ele = sheets[i]
+          if (ele.children.length > 0) continue
+
+          // Parse parameters from data-params attribute
+          let params = {}
+          const dp = ele.getAttribute("data-params")
+          if (dp) {
+            try {
+              params = JSON.parse(dp)
+            } catch (e) {
+              console.error("Failed to parse data-params:", e)
+            }
+          }
+
+          // Merge parsed parameters with the responsive option
+          // Ensures params content appears before responsive
+          const options = { ...params, responsive: "resize" }
+
+          // Render the music score using ABCJS.renderAbc
+          ABCJS.renderAbc(ele, ele.innerHTML, options)
+        }
+      }, 100)
+    }
+
+    if (typeof ABCJS === "object") {
+      abcjsFn()
+    } else {
+      btf.getScript("https://cdn.jsdelivr.net/npm/abcjs/dist/abcjs-basic-min.min.js").then(abcjsFn)
+    }
+  }
+
+  if (window.pjax) {
+    abcjsInit()
+  } else {
+    window.addEventListener("load", abcjsInit)
+  }
+
+  btf.addGlobalFn("encrypt", abcjsInit, "abcjs")
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="null" data-text="I,LOVE,YOU,木一" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

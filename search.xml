@@ -31,52 +31,6 @@
       </tags>
   </entry>
   <entry>
-    <title>32位与64位的区别</title>
-    <url>/2024/12/01/32%E4%BD%8D%E4%B8%8E64%E4%BD%8D%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<h2 id="32位与64位的区别"><a href="#32位与64位的区别" class="headerlink" title="32位与64位的区别"></a>32位与64位的区别</h2><p>首先，我们需要了解计算机中的位数的概念。计算机中的位数指的是计算机中用于表示数据的最大二进制数。例如，32位计算机可以处理最大为2^32-1的整数，而64位计算机可以处理最大为2^64-1的整数。</p>
-<p>接下来，我们来详细解释32位程序与64位程序的区别。</p>
-<ol>
-<li>程序的地址空间不同</li>
-</ol>
-<p>32位程序的地址空间为4GB，而64位程序的地址空间为16GB。这意味着32位程序可以访问的内存地址范围比64位程序要小得多。</p>
-<ol start="2">
-<li>程序的寻址能力不同</li>
-</ol>
-<p>32位程序的寻址能力为4GB，而64位程序的寻址能力为16GB。这意味着32位程序可以访问的内存地址范围比64位程序要小得多。</p>
-<ol start="3">
-<li>程序的寄存器不同</li>
-</ol>
-<p>32位程序使用32位寄存器，而64位程序使用64位寄存器。这意味着32位程序可以处理的数据范围比64位程序要小得多。</p>
-<ol start="4">
-<li>程序的指令集不同</li>
-</ol>
-<p>32位程序使用32位指令集，而64位程序使用64位指令集。这意味着32位程序可以执行的指令比64位程序要少得多。</p>
-<ol start="5">
-<li>程序的兼容性问题</li>
-</ol>
-<p>由于32位程序和64位程序的地址空间和寄存器不同，因此它们之间可能存在兼容性问题。例如，某些32位程序可能无法在64位计算机上运行，或者在运行时出现错误。</p>
-<h2 id="两者之间的兼容"><a href="#两者之间的兼容" class="headerlink" title="两者之间的兼容"></a>两者之间的兼容</h2><ol>
-<li>操作系统兼容性</li>
-</ol>
-<p>由于32位程序在64位计算机上运行时可能存在兼容性问题，因此需要操作系统提供兼容性支持。例如，Windows操作系统提供了兼容性模式，允许32位程序在64位计算机上运行。</p>
-<ol start="2">
-<li>程序兼容性</li>
-</ol>
-<p>某些32位程序可能已经针对64位计算机进行了优化，因此可以在64位计算机上运行。但是，这种兼容性可能并不完全，可能会导致程序在运行时出现错误。</p>
-<ol start="3">
-<li>硬件兼容性</li>
-</ol>
-<p>某些硬件设备可能仅支持32位程序，因此无法在64位计算机上运行。<br>32位程序可以在64位计算机上运行的原因是操作系统提供了兼容性支持，以及某些程序针对64位计算机进行了优化。但是，这种兼容性可能并不完全，可能会导致程序在运行时出现错误。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>基础</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ElasticSearch之python总结</title>
     <url>/2022/05/12/ElasticSearch%E4%B9%8Bpython%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h2 id="对于ES"><a href="#对于ES" class="headerlink" title="对于ES"></a>对于ES</h2><p>ES数据库本身作为一种分布式的、查询优势、拓展优势、容错优势…..等等众多优点的数据库。更多的特点还是自行百度吧</p>
@@ -4023,7 +3977,7 @@
 <p>当然很多情况下，生成器往往只需要 yield 内容就够了，我们是不需要 SendType 和 ReturnType 的，可以将其设置为空，如：</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> Generator</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">infinite_stream</span>(<span class="params">start: <span class="built_in">int</span></span>) -&gt; Generator[<span class="built_in">int</span>, <span class="literal">None</span>, <span class="literal">None</span>]:</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">yield</span> start</span><br><span class="line">        start += <span class="number">1</span></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-        <category>学习</category>
+        <category>python</category>
       </categories>
       <tags>
         <tag>杂谈</tag>
@@ -4725,31 +4679,6 @@
       </tags>
   </entry>
   <entry>
-    <title>工具LastActivityView获取历史运行记录</title>
-    <url>/2024/12/01/%E5%B7%A5%E5%85%B7LastActivityView%E8%8E%B7%E5%8F%96%E5%8E%86%E5%8F%B2%E8%BF%90%E8%A1%8C%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h2 id="LastActivityView"><a href="#LastActivityView" class="headerlink" title="LastActivityView"></a><code>LastActivityView</code></h2><p>查看电脑操作记录(<code>LastActivityView</code>)是一款简单而有用的软件，可以在列表中清清楚楚的看到你的电脑使用历史记录。该软件直接调用系统日志，能显示安装软件、系统启动、关机、网络连接、执行的程序等几乎所有的电脑使用日志，让你更熟悉电脑的行为。</p>
-<h2 id="代码演示"><a href="#代码演示" class="headerlink" title="代码演示"></a>代码演示</h2><p>终止指定进程：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pe_name = <span class="string">&quot;LastActivityView.exe&quot;</span></span><br><span class="line"><span class="keyword">for</span> process <span class="keyword">in</span> psutil.process_iter():</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        name = process.name()</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        name = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> name == pe_name:</span><br><span class="line">            process.terminate()</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        setting.log.error(<span class="string">&quot;终止垃圾进程失败,原因: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(e)))</span><br><span class="line">        <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
-<p>这部分代码首先定义了一个要检查的进程名 <code>pe_name</code>，然后遍历所有正在运行的进程。如果发现进程名为 <code>LastActivityView.exe</code>，则尝试终止该进程，并记录日志。如果终止失败，也会记录日志并返回。</p>
-<p>执行外部程序获取软件运行历史记录：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tool_path = os.path.join(setting.PROJ_PATH, pe_name)</span><br><span class="line">csv_path = os.path.join(setting.PROJ_PATH, <span class="string">&quot;LastActivityView.csv&quot;</span>)</span><br><span class="line">os.system(<span class="string">&quot;&#123;&#125; /scomma &#123;&#125;&quot;</span>.<span class="built_in">format</span>(tool_path, csv_path))</span><br></pre></td></tr></table></figure>
-<p>这部分代码拼接了外部程序 <code>LastActivityView.exe</code> 的路径和保存<code>CSV</code>文件的路径，然后执行命令行命令，使用 <code>LastActivityView.exe</code> 生成软件运行历史记录的<code>CSV</code>文件。</p>
-<p>解析CSV文件：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(csv_path, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&quot;GB2312&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> csv.DictReader(file, delimiter=<span class="string">&quot;,&quot;</span>):</span><br><span class="line">        clean_data = get_line(self, row, self.display_list)</span><br><span class="line">        data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">        write_file(self.file, data)</span><br></pre></td></tr></table></figure>
-<p>这部分代码打开<code>CSV</code>文件，使用 <code>csv.DictReader</code> 读取每一行数据，并将其转换为字典。然后，它调用 <code>get_line</code> 方法处理每一行数据，并将处理后的数据转换为 <code>JSON</code> 格式，最后写入到输出文件中。</p>
-<p>删除临时<code>CSV</code>文件：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">os.remove(csv_path)</span><br></pre></td></tr></table></figure>
-<p>这部分代码在处理完成后删除临时生成的<code>CSV</code>文件</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>基础</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>小心螃蟹</title>
     <url>/2022/10/07/%E5%B0%8F%E5%BF%83%E8%9E%83%E8%9F%B9/</url>
     <content><![CDATA[<p>很多人都有一个常识：当我们往一个不高的容器中放进一只螃蟹时，它总会努力想尽办法逃出来。但如果放进去的是很多只螃蟹时，结果通常就是你拉我，我拽他，叠罗汉，最终谁也出不来。而在螃蟹群体中出现的这个特殊现象，竟然在人类群体中也同样适用。</p>
@@ -5017,51 +4946,6 @@
         <tag>python</tag>
         <tag>机器学习</tag>
         <tag>简单线性回归</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>查询windows电脑当中的可移动设备</title>
-    <url>/2024/12/01/%E6%9F%A5%E8%AF%A2windows%E7%94%B5%E8%84%91%E5%BD%93%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87/</url>
-    <content><![CDATA[<h2 id="Win32-DiskDrive"><a href="#Win32-DiskDrive" class="headerlink" title="Win32_DiskDrive"></a><code>Win32_DiskDrive</code></h2><p>在<code>WMI（Windows Management Instrumentation）</code>中，<code>Win32_DiskDrive</code> 类的 <code>MediaType</code> 属性用于描述磁盘驱动器的媒体类型。根据微软的文档，<code>MediaType</code> 属性可以取以下值：</p>
-<ul>
-<li><code>Unknown</code>：未知的媒体类型</li>
-<li><code>Fixed hard disk media</code>：固定硬盘媒体</li>
-<li><code>Removable media</code>：可移动媒体，如<code>USB</code>闪存驱动器、软盘等</li>
-<li><code>CD-ROM media</code>：<code>CD-ROM</code>媒体</li>
-<li><code>RAM disk</code>：<code>RAM</code>磁盘</li>
-<li><code>Flash memory</code>：闪存</li>
-<li><code>Network disk</code>：网络磁盘</li>
-<li><code>Virtual disk</code>：虚拟磁盘</li>
-<li><code>Optical disk</code>：光盘</li>
-<li><code>Magnetic disk</code>：磁盘</li>
-<li><code>Other</code>：其他类型的媒体</li>
-</ul>
-<h2 id="代码逻辑"><a href="#代码逻辑" class="headerlink" title="代码逻辑"></a>代码逻辑</h2><p>当前代码的主要功能是通过<code>WMI（Windows Management Instrumentation）</code>查询<code>Windows</code>系统中的磁盘驱动器信息，并将结果存储在一个字典中。然后，它遍历这个字典，查找媒体类型为“可移动媒体”或“外部硬盘媒体”的逻辑磁盘<code>设备ID</code>，并打印这些<code>设备ID</code>。</p>
-<p>导入wmi模块：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> wmi</span><br></pre></td></tr></table></figure>
-<p>这行代码导入了<code>Python</code>的<code>wmi</code>模块，该模块允许<code>Python</code>程序访问<code>Windows Management Instrumentation API</code>，从而可以查询和管理<code>Windows</code>系统的各种信息。</p>
-<p>创建<code>WMI</code>对象：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">c = wmi.WMI()</span><br></pre></td></tr></table></figure>
-<p>这行代码创建了一个<code>WMI</code>对象<code>c</code>，用于后续的<code>WMI</code>查询。</p>
-<p>查询磁盘驱动器信息：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">drives = c.Win32_DiskDrive()</span><br></pre></td></tr></table></figure>
-<p>这行代码查询系统中的所有磁盘驱动器信息，并将结果存储在<code>drives</code>变量中。</p>
-<p>初始化字典：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">drives_dict = &#123;&#125;</span><br></pre></td></tr></table></figure>
-<p>这行代码创建了一个空字典<code>drives_dict</code>，用于存储后续查询到的磁盘驱动器和逻辑磁盘的关联信息。</p>
-<p>遍历磁盘驱动器：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> drive <span class="keyword">in</span> drives:</span><br><span class="line">    partitions = drive.associators(<span class="string">&quot;Win32_DiskDriveToDiskPartition&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> partition <span class="keyword">in</span> partitions:</span><br><span class="line">        logical_disks = partition.associators(<span class="string">&quot;Win32_LogicalDiskToPartition&quot;</span>)</span><br><span class="line">        <span class="keyword">for</span> logical_disk <span class="keyword">in</span> logical_disks:</span><br><span class="line">            drives_dict[logical_disk.DeviceID] = drive.MediaType</span><br></pre></td></tr></table></figure>
-<p>这段代码遍历每个磁盘驱动器，通过<code>WMI</code>的关联查询获取每个磁盘驱动器对应的磁盘分区，然后再获取每个磁盘分区对应的逻辑磁盘。最后，它将逻辑磁盘的设备<code>ID</code>和磁盘驱动器的媒体类型存储在<code>drives_dict</code>字典中。</p>
-<p>遍历字典，查找特定媒体类型的逻辑磁盘：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> key, value <span class="keyword">in</span> drives_dict.items():</span><br><span class="line">    <span class="keyword">if</span> value <span class="keyword">in</span> [<span class="string">&#x27;Removable Media&#x27;</span>, <span class="string">&#x27;External hard disk media&#x27;</span>]:</span><br><span class="line">        <span class="built_in">print</span>(key)</span><br></pre></td></tr></table></figure>
-<p>这段代码遍历<code>drives_dict</code>字典中的每个键值对，检查媒体类型是否为“可移动媒体”或“外部硬盘媒体”。如果是，它打印出逻辑磁盘的<code>设备ID</code>。</p>
-]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>基础</tag>
       </tags>
   </entry>
   <entry>
@@ -6963,5 +6847,1159 @@
 <li><strong>代码可读性</strong>：保留函数的原始元信息可以提高代码的可读性，让其他开发者更容易理解代码的意图。</li>
 </ol>
 ]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>装饰器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RAG-Chonkie实践理解分块</title>
+    <url>/2025/03/31/RAG-Chonkie%E5%AE%9E%E8%B7%B5%E7%90%86%E8%A7%A3%E5%88%86%E5%9D%97/</url>
+    <content><![CDATA[<p>在构建高效的检索增强生成（RAG）系统时，<strong>文本分块（Chunking）</strong>是决定系统性能的关键预处理步骤。今天我们将深入探讨文本分块的重要性，并详细解析Chonkie库提供的五种分块方法，帮助开发者选择最适合自己场景的分块策略。</p>
+<hr>
+<h2 id="一-为什么文本分块如此重要？"><a href="#一-为什么文本分块如此重要？" class="headerlink" title="一. 为什么文本分块如此重要？"></a><strong>一. 为什么文本分块如此重要？</strong></h2><p>在RAG流程中，分块是数据预处理的核心环节，直接影响：</p>
+<ul>
+<li><strong>检索精度</strong>：过大的块会引入噪声，过小的块丢失上下文。</li>
+<li><strong>生成质量</strong>：LLM需要连贯的上下文理解用户查询。</li>
+<li><strong>计算效率</strong>：合理分块减少无效计算。</li>
+</ul>
+<h3 id="错误分块的典型问题"><a href="#错误分块的典型问题" class="headerlink" title="错误分块的典型问题"></a><strong>错误分块的典型问题</strong></h3><ul>
+<li><strong>案例1</strong>：将“巴黎是法国的首都。柏林是德国的首都”切分为：<ul>
+<li>Chunk1: “巴黎是法国的首都。柏林”</li>
+<li>Chunk2: “是德国的首都”  </li>
+</ul>
+<em>→ 检索“德国首都”时可能漏检Chunk1。</em></li>
+<li><strong>案例2</strong>：将一篇学术论文的“方法论”和“结论”合并为一个块<br><em>→ 检索具体方法细节时引入无关信息。</em></li>
+</ul>
+<hr>
+<h2 id="二、Chonkie的五种分块方法详解"><a href="#二、Chonkie的五种分块方法详解" class="headerlink" title="二、Chonkie的五种分块方法详解"></a>二、Chonkie的五种分块方法详解</h2><h3 id="1-TokenChunker：基于token的分块"><a href="#1-TokenChunker：基于token的分块" class="headerlink" title="1. TokenChunker：基于token的分块"></a>1. TokenChunker：基于token的分块</h3><p><strong>原理</strong>：按照固定的token数量分割文本</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>与LLM的token处理方式直接对应</li>
+<li>保持每个块的token长度一致</li>
+<li>可能破坏句子完整性</li>
+</ul>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>需要严格控制输入token长度的应用</li>
+<li>处理token限制严格的LLM API</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> chonkie <span class="keyword">import</span> TokenChunker</span><br><span class="line"></span><br><span class="line">chunker = TokenChunker(max_tokens=<span class="number">512</span>)</span><br><span class="line">chunks = chunker.chunk(long_text)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-WordChunker：基于词的分块"><a href="#2-WordChunker：基于词的分块" class="headerlink" title="2. WordChunker：基于词的分块"></a>2. WordChunker：基于词的分块</h3><p><strong>原理</strong>：按照单词数量分割文本</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>比token分块更符合人类阅读习惯</li>
+<li>保持单词完整性</li>
+<li>可能拆分复合词或专有名词</li>
+</ul>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>需要自然语言处理的传统NLP任务</li>
+<li>对词边界敏感的应用</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> chonkie <span class="keyword">import</span> WordChunker</span><br><span class="line"></span><br><span class="line">chunker = WordChunker(max_words=<span class="number">200</span>)</span><br><span class="line">chunks = chunker.chunk(long_text)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-SentenceChunker：基于句子的分块"><a href="#3-SentenceChunker：基于句子的分块" class="headerlink" title="3. SentenceChunker：基于句子的分块"></a>3. SentenceChunker：基于句子的分块</h3><p><strong>原理</strong>：按照句子边界分割文本</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>保持句子完整性</li>
+<li>块大小可能不均匀</li>
+<li>依赖句子分割的准确性</li>
+</ul>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>处理正式文档或新闻文章</li>
+<li>需要保持语法结构的应用</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> chonkie <span class="keyword">import</span> SentenceChunker</span><br><span class="line"></span><br><span class="line">chunker = SentenceChunker(max_sentences=<span class="number">5</span>)</span><br><span class="line">chunks = chunker.chunk(long_text)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-SemanticChunker：基于语义的分块"><a href="#4-SemanticChunker：基于语义的分块" class="headerlink" title="4. SemanticChunker：基于语义的分块"></a>4. SemanticChunker：基于语义的分块</h3><p><strong>原理</strong>：使用嵌入模型计算语义相似度动态分块</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>保持语义连贯性</li>
+<li>自动适应不同文本类型</li>
+<li>计算开销较大</li>
+</ul>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>处理复杂或非结构化文本</li>
+<li>需要最高检索精度的RAG系统</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> chonkie <span class="keyword">import</span> SemanticChunker</span><br><span class="line"></span><br><span class="line">chunker = SemanticChunker(</span><br><span class="line">    embedding_model=<span class="string">&quot;all-MiniLM-L6-v2&quot;</span>,</span><br><span class="line">    threshold=<span class="number">0.85</span></span><br><span class="line">)</span><br><span class="line">chunks = chunker.chunk(long_text)</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-SPDMChunker：结构化模式感知分块"><a href="#5-SPDMChunker：结构化模式感知分块" class="headerlink" title="5. SPDMChunker：结构化模式感知分块"></a>5. SPDMChunker：结构化模式感知分块</h3><p><strong>原理</strong>：识别特定领域模式（如代码、Markdown）进行分块</p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>保持领域特定结构</li>
+<li>需要预定义模式规则</li>
+<li>对特定类型文本效果极佳</li>
+</ul>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>处理技术文档、代码或格式化文本</li>
+<li>需要保留原始结构的应用</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> chonkie <span class="keyword">import</span> SPDMChunker</span><br><span class="line"></span><br><span class="line">chunker = SPDMChunker(mode=<span class="string">&quot;markdown&quot;</span>)</span><br><span class="line">chunks = chunker.chunk(markdown_text)</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、如何选择合适的分块方法？"><a href="#三、如何选择合适的分块方法？" class="headerlink" title="三、如何选择合适的分块方法？"></a>三、如何选择合适的分块方法？</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>优点</th>
+<th>缺点</th>
+<th>最佳适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TokenChunker</td>
+<td>长度精确控制</td>
+<td>可能破坏语义</td>
+<td>严格token限制环境</td>
+</tr>
+<tr>
+<td>WordChunker</td>
+<td>自然词边界</td>
+<td>忽略语义关系</td>
+<td>传统NLP处理</td>
+</tr>
+<tr>
+<td>SentenceChunker</td>
+<td>保持句子完整</td>
+<td>块大小不均</td>
+<td>正式文档处理</td>
+</tr>
+<tr>
+<td>SemanticChunker</td>
+<td>最佳语义保持</td>
+<td>计算成本高</td>
+<td>高质量RAG系统</td>
+</tr>
+<tr>
+<td>SPDMChunker</td>
+<td>保留领域结构</td>
+<td>需要配置规则</td>
+<td>技术文档/代码</td>
+</tr>
+</tbody></table>
+<h2 id="四、Chonkie的高级功能"><a href="#四、Chonkie的高级功能" class="headerlink" title="四、Chonkie的高级功能"></a>四、Chonkie的高级功能</h2><ol>
+<li><p><strong>混合分块</strong>：组合多种分块方法</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> chonkie <span class="keyword">import</span> HybridChunker</span><br><span class="line"></span><br><span class="line">chunker = HybridChunker(</span><br><span class="line">    primary_chunker=<span class="string">&quot;semantic&quot;</span>,</span><br><span class="line">    fallback_chunker=<span class="string">&quot;token&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>动态重叠</strong>：在块间添加重叠区域保持上下文连贯</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">chunker = SemanticChunker(</span><br><span class="line">    overlap=<span class="number">0.2</span>  <span class="comment"># 20%的重叠</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>自适应分块</strong>：根据内容自动选择最佳分块策略</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> chonkie <span class="keyword">import</span> AutoChunker</span><br><span class="line"></span><br><span class="line">chunker = AutoChunker()</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>文本分块是RAG系统中看似简单实则关键的一环。通过Chonkie提供的多样化分块方法，大家可以根据具体需求选择最适合的策略。记住，没有放之四海而皆准的最佳分块方法，只有最适合当前文本类型和使用场景的选择。可以从SemanticChunker开始实验，再根据实际效果进行调整，逐步构建出最适合自己RAG系统的文本处理流水线。</p>
+]]></content>
+      <categories>
+        <category>RAG</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>RAG</tag>
+        <tag>大模型</tag>
+        <tag>文本分块</tag>
+        <tag>chonkie</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker-在线安装docker脚本</title>
+    <url>/2025/03/31/docker-%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85docker%E8%84%9A%E6%9C%AC/</url>
+    <content><![CDATA[<p>这里直接给出脚本内容，脚本内容中已经包含了添加阿里云镜像源的步骤，直接运行即可。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在线安装 Docker 脚本（使用阿里云镜像源）</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">适用于 Ubuntu 系统</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查脚本是否以 root 用户运行</span></span><br><span class="line">if [[ $EUID -ne 0 ]]; then</span><br><span class="line">    echo &quot;该脚本需要以 root 用户运行！&quot;</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;正在确认安装curl命令&quot;</span><br><span class="line">apt-get install curl -y</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查是否已安装 Docker</span></span><br><span class="line">if command -v docker &amp;&gt;/dev/null; then</span><br><span class="line">    echo &quot;检测到系统中已安装 Docker。&quot;</span><br><span class="line">    read -p &quot;是否需要卸载并重新安装 Docker? [y/N]: &quot; reinstall_docker</span><br><span class="line">    if [[ $reinstall_docker =~ ^[Yy]$ ]]; then</span><br><span class="line">        echo &quot;停止并卸载现有 Docker...&quot;</span><br><span class="line">        systemctl stop docker</span><br><span class="line">        apt-get remove -y docker docker-engine docker.io containerd runc</span><br><span class="line">        rm -rf /var/lib/docker</span><br><span class="line">        echo &quot;现有 Docker 已卸载。&quot;</span><br><span class="line">    else</span><br><span class="line">        echo &quot;用户选择保留现有 Docker，脚本退出。&quot;</span><br><span class="line">        exit 0</span><br><span class="line">    fi</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加阿里云 Docker 镜像源</span></span><br><span class="line">echo &quot;添加阿里云 Docker 镜像源...&quot;</span><br><span class="line">curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg</span><br><span class="line">echo &quot;deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://mirrors.aliyun.com/docker-ce/linux/ubuntu \</span><br><span class="line"><span class="meta prompt_">  $</span><span class="language-bash">(lsb_release -cs) stable<span class="string">&quot; | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">更新软件包列表</span></span></span><br><span class="line">echo &quot;更新软件包列表...&quot;</span><br><span class="line">apt-get update</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">安装 Docker</span></span></span><br><span class="line">echo &quot;安装 Docker...&quot;</span><br><span class="line">apt-get install -y docker-ce docker-ce-cli containerd.io</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">检查 Docker 是否安装成功</span></span></span><br><span class="line">if command -v docker &amp;&gt;/dev/null; then</span><br><span class="line">    echo &quot;Docker 安装成功！&quot;</span><br><span class="line">    echo &quot;启动 Docker 服务...&quot;</span><br><span class="line">    systemctl start docker</span><br><span class="line">    systemctl enable docker</span><br><span class="line">    echo &quot;Docker 服务已启动。&quot;</span><br><span class="line">else</span><br><span class="line">    echo &quot;Docker 安装失败，请检查日志！&quot;</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">添加当前用户到 docker 组（可选）</span></span></span><br><span class="line">usermod -aG docker $USER</span><br><span class="line">echo &quot;已将用户 $USER 添加到 docker 组。&quot;</span><br><span class="line"></span><br><span class="line">echo &quot;Docker 安装完成！&quot;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>脚本</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker-如何在容器内使用显卡资源</title>
+    <url>/2025/03/31/docker-%E5%A6%82%E4%BD%95%E5%9C%A8%E5%AE%B9%E5%99%A8%E5%86%85%E4%BD%BF%E7%94%A8%E6%98%BE%E5%8D%A1%E8%B5%84%E6%BA%90/</url>
+    <content><![CDATA[<h2 id="1-为什么需要-NVIDIA-Container-Toolkit？"><a href="#1-为什么需要-NVIDIA-Container-Toolkit？" class="headerlink" title="1. 为什么需要 NVIDIA Container Toolkit？"></a><strong>1. 为什么需要 NVIDIA Container Toolkit？</strong></h2><p>在 Docker 中运行深度学习、AI 计算或图形渲染应用时，通常需要调用 GPU 加速。但默认情况下，Docker 容器无法直接访问宿主机的 NVIDIA 显卡，这时就需要 <strong>NVIDIA Container Toolkit</strong>（原名 <code>nvidia-docker</code>）来打通容器与 GPU 之间的桥梁。</p>
+<h3 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a><strong>核心功能</strong></h3><ul>
+<li>允许 Docker 容器直接访问宿主机上的 NVIDIA GPU。</li>
+<li>自动挂载 GPU 驱动和 CUDA 库到容器内。</li>
+<li>兼容主流容器运行时（Docker、containerd、Podman）。</li>
+</ul>
+<hr>
+<h2 id="2-NVIDIA-Container-Toolkit-组件解析"><a href="#2-NVIDIA-Container-Toolkit-组件解析" class="headerlink" title="2. NVIDIA Container Toolkit 组件解析"></a><strong>2. NVIDIA Container Toolkit 组件解析</strong></h2><p>该工具包主要由以下组件构成：</p>
+<table>
+<thead>
+<tr>
+<th>组件名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>nvidia-container-toolkit</code></td>
+<td>核心组件，负责在容器启动时注入 GPU 相关设备与驱动。</td>
+</tr>
+<tr>
+<td><code>libnvidia-container</code></td>
+<td>底层库，处理容器与 GPU 的交互逻辑。</td>
+</tr>
+<tr>
+<td><code>nvidia-container-runtime</code></td>
+<td>替换 Docker 默认的 <code>runc</code>，支持 GPU 设备的动态绑定。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-手动安装步骤（附脚本解析）"><a href="#3-手动安装步骤（附脚本解析）" class="headerlink" title="3. 手动安装步骤（附脚本解析）"></a><strong>3. 手动安装步骤（附脚本解析）</strong></h2><p>以下是你的脚本逐行解析，已优化为完整安装流程：</p>
+<h3 id="步骤-1：添加-GPG-密钥"><a href="#步骤-1：添加-GPG-密钥" class="headerlink" title="步骤 1：添加 GPG 密钥"></a><strong>步骤 1：添加 GPG 密钥</strong></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg ./gpgkey</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>./gpgkey是我下载到本地的gpgkey文件</p>
+</blockquote>
+<ul>
+<li><strong>作用</strong>：将 NVIDIA 的 GPG 密钥转换为二进制格式，确保软件包来源可信。</li>
+</ul>
+<h3 id="步骤-2：配置镜像源（国内加速）"><a href="#步骤-2：配置镜像源（国内加速）" class="headerlink" title="步骤 2：配置镜像源（国内加速）"></a><strong>步骤 2：配置镜像源（国内加速）</strong></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -s -L https://mirrors.ustc.edu.cn/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \</span><br><span class="line">sudo sed <span class="string">&#x27;s#deb https://nvidia.github.io#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://mirrors.ustc.edu.cn#g&#x27;</span> | \</span><br><span class="line">sudo <span class="built_in">tee</span> /etc/apt/sources.list.d/nvidia-container-toolkit.list</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>关键点</strong>：  <ul>
+<li>使用中科大镜像源（<code>mirrors.ustc.edu.cn</code>）替代官方源，加速下载。  </li>
+<li><code>[signed-by]</code> 指定密钥路径，避免安全警告。</li>
+</ul>
+</li>
+</ul>
+<h3 id="步骤-3：安装工具包"><a href="#步骤-3：安装工具包" class="headerlink" title="步骤 3：安装工具包"></a><strong>步骤 3：安装工具包</strong></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y nvidia-container-toolkit</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>注意</strong>：安装时会自动依赖 <code>libnvidia-container</code> 和 <code>nvidia-container-runtime</code>。</li>
+</ul>
+<h3 id="步骤-4：配置-Docker-运行时"><a href="#步骤-4：配置-Docker-运行时" class="headerlink" title="步骤 4：配置 Docker 运行时"></a><strong>步骤 4：配置 Docker 运行时</strong></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo nvidia-ctk runtime configure --runtime=docker</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>作用</strong>：  <ul>
+<li><code>nvidia-ctk</code> 命令生成 <code>/etc/docker/daemon.json</code>，将默认运行时替换为 <code>nvidia-container-runtime</code>。  </li>
+<li>重启 Docker 使配置生效。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="4-验证安装是否成功"><a href="#4-验证安装是否成功" class="headerlink" title="4. 验证安装是否成功"></a><strong>4. 验证安装是否成功</strong></h2><p>运行一个测试容器，检查 GPU 是否可见：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run --<span class="built_in">rm</span> --gpus all nvidia/cuda:12.2-base nvidia-smi</span><br></pre></td></tr></table></figure>
+<p><strong>预期输出</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+-----------------------------------------------------------------------------+</span><br><span class="line">| NVIDIA-SMI 535.86.05    Driver Version: 535.86.05    CUDA Version: 12.2     |</span><br><span class="line">|-------------------------------+----------------------+----------------------+</span><br><span class="line">| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |</span><br><span class="line">| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |</span><br><span class="line">|===============================+======================+======================|</span><br><span class="line">|   0  NVIDIA GeForce ...  On   | 00000000:01:00.0 Off |                  N/A |</span><br><span class="line">| 30%   45C    P0    25W / 180W |      0MiB / 12288MiB |      0%      Default |</span><br><span class="line">+-------------------------------+----------------------+----------------------+</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>--gpus all</code>：允许容器使用所有 GPU。  </li>
+<li>若看到 GPU 信息，则配置成功！</li>
+</ul>
+<hr>
+<h2 id="5-常见问题与解决方案"><a href="#5-常见问题与解决方案" class="headerlink" title="5. 常见问题与解决方案"></a><strong>5. 常见问题与解决方案</strong></h2><h3 id="Q1：安装后-Docker-无法启动"><a href="#Q1：安装后-Docker-无法启动" class="headerlink" title="Q1：安装后 Docker 无法启动"></a><strong>Q1：安装后 Docker 无法启动</strong></h3><ul>
+<li><strong>原因</strong>：<code>daemon.json</code> 配置错误。  </li>
+<li><strong>修复</strong>：  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">rm</span> /etc/docker/daemon.json</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="Q2：容器内无法找到-GPU"><a href="#Q2：容器内无法找到-GPU" class="headerlink" title="Q2：容器内无法找到 GPU"></a><strong>Q2：容器内无法找到 GPU</strong></h3><ul>
+<li><strong>检查项</strong>：  <ol>
+<li>宿主机驱动是否正常（<code>nvidia-smi</code> 能否运行）。  </li>
+<li>Docker 运行时是否为 <code>nvidia</code>（<code>docker info | grep Runtime</code>）。  </li>
+</ol>
+</li>
+</ul>
+<h3 id="Q3：如何指定使用特定-GPU？"><a href="#Q3：如何指定使用特定-GPU？" class="headerlink" title="Q3：如何指定使用特定 GPU？"></a><strong>Q3：如何指定使用特定 GPU？</strong></h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run --gpus <span class="string">&#x27;&quot;device=0,1&quot;&#x27;</span> nvidia/cuda:11.0-base nvidia-smi  <span class="comment"># 仅使用 GPU 0 和 1</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-提一嘴：Kubernetes-中的-GPU-支持"><a href="#6-提一嘴：Kubernetes-中的-GPU-支持" class="headerlink" title="6. 提一嘴：Kubernetes 中的 GPU 支持"></a><strong>6. 提一嘴：Kubernetes 中的 GPU 支持</strong></h2><p>若需在 K8S 中使用 GPU，需额外配置：  </p>
+<ol>
+<li>安装 NVIDIA Device Plugin：  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/v0.14.1/nvidia-device-plugin.yml</span><br></pre></td></tr></table></figure></li>
+<li>在 Pod 中声明资源：  <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">resources:</span></span><br><span class="line">  <span class="attr">limits:</span></span><br><span class="line">    <span class="attr">nvidia.com/gpu:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a><strong>7. 总结</strong></h2><ul>
+<li><strong>NVIDIA Container Toolkit</strong> 是 Docker 调用 GPU 的必备工具。  </li>
+<li>通过 <code>--gpus</code> 参数控制容器对 GPU 的访问权限。  </li>
+<li>生产环境中建议结合 Kubernetes Device Plugin 管理集群 GPU 资源。  </li>
+</ul>
+<p>你的安装脚本已完美覆盖关键步骤，建议保存为 <code>install-nvidia-docker.sh</code> 方便复用！  </p>
+<p><strong>附完整脚本</strong>：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 一键安装 NVIDIA Container Toolkit</span></span><br><span class="line"><span class="built_in">set</span> -e</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;[1/4] 添加 GPG 密钥...&quot;</span></span><br><span class="line">sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg ./gpgkey</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;[2/4] 配置镜像源...&quot;</span></span><br><span class="line">curl -s -L https://mirrors.ustc.edu.cn/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \</span><br><span class="line">  sudo sed <span class="string">&#x27;s#deb https://nvidia.github.io#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://mirrors.ustc.edu.cn#g&#x27;</span> | \</span><br><span class="line">  sudo <span class="built_in">tee</span> /etc/apt/sources.list.d/nvidia-container-toolkit.list &gt;/dev/null</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;[3/4] 安装工具包...&quot;</span></span><br><span class="line">sudo apt-get update &amp;&amp; sudo apt-get install -y nvidia-container-toolkit</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;[4/4] 配置 Docker...&quot;</span></span><br><span class="line">sudo nvidia-ctk runtime configure --runtime=docker</span><br><span class="line">sudo systemctl restart docker</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;验证安装：&quot;</span></span><br><span class="line">docker run --<span class="built_in">rm</span> --gpus all nvidia/cuda:12.2-base nvidia-smi</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>docker</category>
+        <category>GPU</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>GPU</tag>
+        <tag>NVIDIA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker与k8s的异同</title>
+    <url>/2025/03/31/docker%E4%B8%8Ek8s%E7%9A%84%E5%BC%82%E5%90%8C/</url>
+    <content><![CDATA[<p>容器化技术已经成为现代云计算和DevOps的核心组成部分，而 <strong>Docker</strong> 和 <strong>Kubernetes（K8S）</strong> 是其中最重要的两个工具。很多人对它们的定位和关系感到困惑：  </p>
+<ul>
+<li><strong>Docker 负责什么？</strong>  </li>
+<li><strong>Kubernetes 又负责什么？</strong>  </li>
+<li><strong>它们的网络模型有何不同？</strong>  </li>
+</ul>
+<p>本文将从 <strong>架构定位、核心功能、网络模型</strong> 三个方面深入对比，帮助你彻底理解二者的关系与差异。</p>
+<hr>
+<h2 id="1-Docker-与-Kubernetes-的定位与关系"><a href="#1-Docker-与-Kubernetes-的定位与关系" class="headerlink" title="1. Docker 与 Kubernetes 的定位与关系"></a><strong>1. Docker 与 Kubernetes 的定位与关系</strong></h2><h3 id="1-Docker：单机容器运行时"><a href="#1-Docker：单机容器运行时" class="headerlink" title="(1) Docker：单机容器运行时"></a><strong>(1) Docker：单机容器运行时</strong></h3><ul>
+<li><strong>核心功能</strong>：  <ul>
+<li>创建、运行和管理<strong>单个容器</strong>（应用打包与隔离）。  </li>
+<li>提供镜像构建（<code>Dockerfile</code>）和分发（Docker Hub）。  </li>
+</ul>
+</li>
+<li><strong>适用场景</strong>：  <ul>
+<li>本地开发、测试环境。  </li>
+<li>单机部署简单应用。  </li>
+</ul>
+</li>
+</ul>
+<h3 id="2-Kubernetes：容器编排系统"><a href="#2-Kubernetes：容器编排系统" class="headerlink" title="(2) Kubernetes：容器编排系统"></a><strong>(2) Kubernetes：容器编排系统</strong></h3><ul>
+<li><strong>核心功能</strong>：  <ul>
+<li>管理<strong>多个容器化应用</strong>的部署、伸缩、负载均衡。  </li>
+<li>自动化运维（自愈、滚动更新、服务发现）。  </li>
+</ul>
+</li>
+<li><strong>适用场景</strong>：  <ul>
+<li>生产环境的大规模集群管理。  </li>
+<li>微服务架构（数百个容器的协同）。  </li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>类比理解</strong>：  </p>
+<ul>
+<li><strong>Docker</strong> 像是一台“集装箱卡车”，负责单个容器的运输。  </li>
+<li><strong>Kubernetes</strong> 像是“全球物流系统”，调度成千上万的卡车和集装箱。  </li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="2-核心区别对比"><a href="#2-核心区别对比" class="headerlink" title="2. 核心区别对比"></a><strong>2. 核心区别对比</strong></h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Docker</th>
+<th>Kubernetes (K8S)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>核心目标</strong></td>
+<td>创建和运行容器</td>
+<td>编排和管理多个容器</td>
+</tr>
+<tr>
+<td><strong>集群支持</strong></td>
+<td>单机（需 Swarm 扩展集群能力）</td>
+<td>原生支持多节点集群</td>
+</tr>
+<tr>
+<td><strong>伸缩性</strong></td>
+<td>手动</td>
+<td>自动扩缩容（HPA）</td>
+</tr>
+<tr>
+<td><strong>服务发现</strong></td>
+<td>需手动配置或依赖第三方工具</td>
+<td>内置 DNS 和服务发现（Service）</td>
+</tr>
+<tr>
+<td><strong>存储管理</strong></td>
+<td>本地卷或插件</td>
+<td>支持 PV/PVC（动态存储）</td>
+</tr>
+<tr>
+<td><strong>网络模型</strong></td>
+<td>单机网络（bridge/host/none）</td>
+<td>集群级网络（CNI 插件）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-网络模型详解"><a href="#3-网络模型详解" class="headerlink" title="3. 网络模型详解"></a><strong>3. 网络模型详解</strong></h2><h3 id="1-Docker-网络"><a href="#1-Docker-网络" class="headerlink" title="(1) Docker 网络"></a><strong>(1) Docker 网络</strong></h3><p>Docker 的网络是<strong>单机级别</strong>的，主要模式包括：</p>
+<ul>
+<li><strong><code>bridge</code>（默认）</strong>：  <ul>
+<li>容器通过虚拟网桥（<code>docker0</code>）通信，分配私有 IP。  </li>
+<li>外部访问需端口映射（<code>-p 8080:80</code>）。  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -p 8080:80 nginx  <span class="comment"># 映射主机端口</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>**<code>host</code>**：  <ul>
+<li>容器直接使用主机网络栈（无隔离，性能高）。  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run --network=host nginx</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>**<code>none</code>**：  <ul>
+<li>无网络（仅用于特殊场景）。  </li>
+</ul>
+</li>
+</ul>
+<p><strong>局限性</strong>：  </p>
+<ul>
+<li>跨主机通信需手动配置（如 Overlay 网络或第三方工具）。  </li>
+</ul>
+<hr>
+<h3 id="2-Kubernetes-网络"><a href="#2-Kubernetes-网络" class="headerlink" title="(2) Kubernetes 网络"></a><strong>(2) Kubernetes 网络</strong></h3><p>K8S 的网络是<strong>集群级别</strong>的，核心要求：  </p>
+<blockquote>
+<p><strong>所有 Pod 之间可以直接通信</strong>（无论是否在同一节点）。</p>
+</blockquote>
+<h4 id="关键组件："><a href="#关键组件：" class="headerlink" title="关键组件："></a><strong>关键组件</strong>：</h4><ol>
+<li><p><strong>Pod 网络</strong>：  </p>
+<ul>
+<li>每个 Pod 拥有唯一 IP（容器共享网络命名空间）。  </li>
+<li>通过 <strong>CNI（Container Network Interface）插件</strong>实现：  <ul>
+<li><strong>Calico</strong>（BGP 路由）  </li>
+<li><strong>Flannel</strong>（Overlay 网络）  </li>
+<li><strong>Cilium</strong>（eBPF 高性能）  </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Service 网络</strong>：  </p>
+<ul>
+<li>为 Pod 提供稳定的虚拟 IP（VIP）和负载均衡。  </li>
+<li>类型包括：  <ul>
+<li><code>ClusterIP</code>（集群内访问）  </li>
+<li><code>NodePort</code>（主机端口暴露）  </li>
+<li><code>LoadBalancer</code>（云厂商 LB 集成）  </li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Ingress</strong>：  </p>
+<ul>
+<li>管理外部 HTTP/S 流量路由（如 Nginx Ingress Controller）。  </li>
+</ul>
+</li>
+</ol>
+<h4 id="示例流量路径："><a href="#示例流量路径：" class="headerlink" title="示例流量路径："></a><strong>示例流量路径</strong>：</h4><pre class="mermaid">graph LR
+    A[外部用户] --> B[Ingress]
+    B --> C[Service]
+    C --> D[Pod 1]
+    C --> E[Pod 2]</pre>
+
+<hr>
+<h2 id="4-如何选择？"><a href="#4-如何选择？" class="headerlink" title="4. 如何选择？"></a><strong>4. 如何选择？</strong></h2><ul>
+<li><p><strong>只用 Docker</strong>：  </p>
+<ul>
+<li>适合本地开发、单机应用。  </li>
+<li>例子：快速运行一个 PostgreSQL 容器。  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker run -d --name postgres -e POSTGRES_PASSWORD=123456 postgres</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>使用 Kubernetes</strong>：  </p>
+<ul>
+<li>适合生产环境、微服务架构。  </li>
+<li>例子：部署一个高可用的 Web 应用：  <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># deployment.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">web-app</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">containers:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">nginx:latest</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="5-常见问题解答"><a href="#5-常见问题解答" class="headerlink" title="5. 常见问题解答"></a><strong>5. 常见问题解答</strong></h2><p><strong>Q1：Docker 和 Kubernetes 必须一起用吗？</strong>  </p>
+<ul>
+<li>不是。Docker 可以单独使用，但 K8S 需要容器运行时（如 Docker、containerd）。  </li>
+</ul>
+<p><strong>Q2：K8S 替代 Docker 了吗？</strong>  </p>
+<ul>
+<li>不是替代关系，而是互补。Docker 负责“容器化”，K8S 负责“编排”。  </li>
+</ul>
+<p><strong>Q3：K8S 网络为什么比 Docker 复杂？</strong>  </p>
+<ul>
+<li>Docker 只需处理单机，K8S 需解决跨主机通信、服务发现、安全策略等分布式问题。  </li>
+</ul>
+<hr>
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a><strong>6. 总结</strong></h2><table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>Docker</strong></th>
+<th><strong>Kubernetes</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>定位</strong></td>
+<td>容器运行时</td>
+<td>容器编排平台</td>
+</tr>
+<tr>
+<td><strong>网络范围</strong></td>
+<td>单机</td>
+<td>跨主机集群</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>开发/测试</td>
+<td>生产/大规模部署</td>
+</tr>
+<tr>
+<td><strong>学习曲线</strong></td>
+<td>低</td>
+<td>高</td>
+</tr>
+</tbody></table>
+<p><strong>推荐学习路径</strong>：  </p>
+<ol>
+<li>先掌握 Docker（容器化基础）。  </li>
+<li>再学习 Kubernetes（编排与生产实践）。  </li>
+</ol>
+]]></content>
+      <categories>
+        <category>k8s</category>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>docker</tag>
+        <tag>k8s</tag>
+        <tag>运维</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>查询windows电脑当中的可移动设备</title>
+    <url>/2024/12/01/windows-%E6%9F%A5%E8%AF%A2windows%E7%94%B5%E8%84%91%E5%BD%93%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87/</url>
+    <content><![CDATA[<h2 id="Win32-DiskDrive"><a href="#Win32-DiskDrive" class="headerlink" title="Win32_DiskDrive"></a><code>Win32_DiskDrive</code></h2><p>在<code>WMI（Windows Management Instrumentation）</code>中，<code>Win32_DiskDrive</code> 类的 <code>MediaType</code> 属性用于描述磁盘驱动器的媒体类型。根据微软的文档，<code>MediaType</code> 属性可以取以下值：</p>
+<ul>
+<li><code>Unknown</code>：未知的媒体类型</li>
+<li><code>Fixed hard disk media</code>：固定硬盘媒体</li>
+<li><code>Removable media</code>：可移动媒体，如<code>USB</code>闪存驱动器、软盘等</li>
+<li><code>CD-ROM media</code>：<code>CD-ROM</code>媒体</li>
+<li><code>RAM disk</code>：<code>RAM</code>磁盘</li>
+<li><code>Flash memory</code>：闪存</li>
+<li><code>Network disk</code>：网络磁盘</li>
+<li><code>Virtual disk</code>：虚拟磁盘</li>
+<li><code>Optical disk</code>：光盘</li>
+<li><code>Magnetic disk</code>：磁盘</li>
+<li><code>Other</code>：其他类型的媒体</li>
+</ul>
+<h2 id="代码逻辑"><a href="#代码逻辑" class="headerlink" title="代码逻辑"></a>代码逻辑</h2><p>当前代码的主要功能是通过<code>WMI（Windows Management Instrumentation）</code>查询<code>Windows</code>系统中的磁盘驱动器信息，并将结果存储在一个字典中。然后，它遍历这个字典，查找媒体类型为“可移动媒体”或“外部硬盘媒体”的逻辑磁盘<code>设备ID</code>，并打印这些<code>设备ID</code>。</p>
+<p>导入wmi模块：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> wmi</span><br></pre></td></tr></table></figure>
+<p>这行代码导入了<code>Python</code>的<code>wmi</code>模块，该模块允许<code>Python</code>程序访问<code>Windows Management Instrumentation API</code>，从而可以查询和管理<code>Windows</code>系统的各种信息。</p>
+<p>创建<code>WMI</code>对象：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">c = wmi.WMI()</span><br></pre></td></tr></table></figure>
+<p>这行代码创建了一个<code>WMI</code>对象<code>c</code>，用于后续的<code>WMI</code>查询。</p>
+<p>查询磁盘驱动器信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">drives = c.Win32_DiskDrive()</span><br></pre></td></tr></table></figure>
+<p>这行代码查询系统中的所有磁盘驱动器信息，并将结果存储在<code>drives</code>变量中。</p>
+<p>初始化字典：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">drives_dict = &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>这行代码创建了一个空字典<code>drives_dict</code>，用于存储后续查询到的磁盘驱动器和逻辑磁盘的关联信息。</p>
+<p>遍历磁盘驱动器：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> drive <span class="keyword">in</span> drives:</span><br><span class="line">    partitions = drive.associators(<span class="string">&quot;Win32_DiskDriveToDiskPartition&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> partition <span class="keyword">in</span> partitions:</span><br><span class="line">        logical_disks = partition.associators(<span class="string">&quot;Win32_LogicalDiskToPartition&quot;</span>)</span><br><span class="line">        <span class="keyword">for</span> logical_disk <span class="keyword">in</span> logical_disks:</span><br><span class="line">            drives_dict[logical_disk.DeviceID] = drive.MediaType</span><br></pre></td></tr></table></figure>
+<p>这段代码遍历每个磁盘驱动器，通过<code>WMI</code>的关联查询获取每个磁盘驱动器对应的磁盘分区，然后再获取每个磁盘分区对应的逻辑磁盘。最后，它将逻辑磁盘的设备<code>ID</code>和磁盘驱动器的媒体类型存储在<code>drives_dict</code>字典中。</p>
+<p>遍历字典，查找特定媒体类型的逻辑磁盘：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> key, value <span class="keyword">in</span> drives_dict.items():</span><br><span class="line">    <span class="keyword">if</span> value <span class="keyword">in</span> [<span class="string">&#x27;Removable Media&#x27;</span>, <span class="string">&#x27;External hard disk media&#x27;</span>]:</span><br><span class="line">        <span class="built_in">print</span>(key)</span><br></pre></td></tr></table></figure>
+<p>这段代码遍历<code>drives_dict</code>字典中的每个键值对，检查媒体类型是否为“可移动媒体”或“外部硬盘媒体”。如果是，它打印出逻辑磁盘的<code>设备ID</code>。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker-compose与k8s对比</title>
+    <url>/2025/03/31/docker-compose%E4%B8%8Ek8s%E5%AF%B9%E6%AF%94/</url>
+    <content><![CDATA[<p>在现代容器化生态中，<strong>Docker Compose</strong> 和 <strong>Kubernetes（K8S）</strong> 是两个最常用的编排工具，但它们的设计目标和适用场景截然不同。本文将深入分析它们的异同、优劣势及互补关系，帮助你做出合理的技术选型。</p>
+<hr>
+<h2 id="1-核心定位对比"><a href="#1-核心定位对比" class="headerlink" title="1. 核心定位对比"></a><strong>1. 核心定位对比</strong></h2><h3 id="Docker-Compose：轻量级单机编排"><a href="#Docker-Compose：轻量级单机编排" class="headerlink" title="Docker Compose：轻量级单机编排"></a><strong>Docker Compose：轻量级单机编排</strong></h3><ul>
+<li><strong>定位</strong>：定义和运行<strong>多个关联容器</strong>（如 Web + DB + Cache）。  </li>
+<li><strong>适用场景</strong>：  <ul>
+<li>本地开发环境  </li>
+<li>单机测试部署  </li>
+<li>快速原型验证  </li>
+</ul>
+</li>
+</ul>
+<h3 id="Kubernetes：企业级分布式编排"><a href="#Kubernetes：企业级分布式编排" class="headerlink" title="Kubernetes：企业级分布式编排"></a><strong>Kubernetes：企业级分布式编排</strong></h3><ul>
+<li><strong>定位</strong>：管理<strong>跨多节点的大规模容器集群</strong>。  </li>
+<li><strong>适用场景</strong>：  <ul>
+<li>生产环境微服务架构  </li>
+<li>高可用、自动伸缩需求  </li>
+<li>混合云/多云部署  </li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>类比</strong>：  </p>
+<ul>
+<li>Docker Compose 像“乐高说明书”，指导如何组装一组容器。  </li>
+<li>Kubernetes 像“智能机器人流水线”，自动管理全球工厂的乐高生产。  </li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="2-功能对比"><a href="#2-功能对比" class="headerlink" title="2. 功能对比"></a><strong>2. 功能对比</strong></h2><table>
+<thead>
+<tr>
+<th><strong>功能</strong></th>
+<th>Docker Compose</th>
+<th>Kubernetes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>部署单元</strong></td>
+<td>容器组（Services）</td>
+<td>Pod（1个或多个容器）</td>
+</tr>
+<tr>
+<td><strong>伸缩能力</strong></td>
+<td>手动（<code>docker-compose up --scale</code>）</td>
+<td>自动（HPA/VPA）</td>
+</tr>
+<tr>
+<td><strong>服务发现</strong></td>
+<td>容器名称作为DNS</td>
+<td>内置 Service + DNS</td>
+</tr>
+<tr>
+<td><strong>负载均衡</strong></td>
+<td>需手动配置</td>
+<td>原生支持（Ingress + Service）</td>
+</tr>
+<tr>
+<td><strong>存储管理</strong></td>
+<td>本地卷或简单驱动</td>
+<td>PV/PVC（动态供给）</td>
+</tr>
+<tr>
+<td><strong>滚动更新</strong></td>
+<td>需手动操作</td>
+<td>声明式滚动更新（Deployment）</td>
+</tr>
+<tr>
+<td><strong>健康检查</strong></td>
+<td>有限支持</td>
+<td>完备的 Liveness/Readiness 探针</td>
+</tr>
+<tr>
+<td><strong>跨主机网络</strong></td>
+<td>依赖第三方插件</td>
+<td>原生 CNI 网络插件</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-配置文件对比"><a href="#3-配置文件对比" class="headerlink" title="3. 配置文件对比"></a><strong>3. 配置文件对比</strong></h2><h3 id="Docker-Compose（YAML）"><a href="#Docker-Compose（YAML）" class="headerlink" title="Docker Compose（YAML）"></a><strong>Docker Compose（YAML）</strong></h3><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.8&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:latest</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8080:80&quot;</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres:13</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db_data:/var/lib/postgresql/data</span></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">db_data:</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>特点</strong>：简单直观，适合定义少量服务的依赖关系。</li>
+</ul>
+<h3 id="Kubernetes（多YAML组合）"><a href="#Kubernetes（多YAML组合）" class="headerlink" title="Kubernetes（多YAML组合）"></a><strong>Kubernetes（多YAML组合）</strong></h3><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># deployment.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">nginx:latest</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># service.yaml</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">web</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">      <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line">      <span class="attr">targetPort:</span> <span class="number">80</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">LoadBalancer</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>特点</strong>：模块化设计，需拆分多个资源对象（Deployment/Service/Ingress 等）。</li>
+</ul>
+<hr>
+<h2 id="4-优势与劣势"><a href="#4-优势与劣势" class="headerlink" title="4. 优势与劣势"></a><strong>4. 优势与劣势</strong></h2><h3 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker Compose"></a><strong>Docker Compose</strong></h3><p><strong>✅ 优势</strong>：  </p>
+<ul>
+<li>学习成本极低，5分钟上手。  </li>
+<li>开发环境一键启停（<code>docker-compose up/down</code>）。  </li>
+<li>无需集群，单机即可运行。  </li>
+</ul>
+<p><strong>❌ 劣势</strong>：  </p>
+<ul>
+<li>无自动扩缩容能力。  </li>
+<li>缺乏生产级高可用保障。  </li>
+<li>跨主机部署复杂。  </li>
+</ul>
+<h3 id="Kubernetes"><a href="#Kubernetes" class="headerlink" title="Kubernetes"></a><strong>Kubernetes</strong></h3><p><strong>✅ 优势</strong>：  </p>
+<ul>
+<li>企业级功能（自愈、滚动更新、资源配额）。  </li>
+<li>天然支持多云/混合云。  </li>
+<li>丰富的生态系统（Helm、Operators、CRD）。  </li>
+</ul>
+<p><strong>❌ 劣势</strong>：  </p>
+<ul>
+<li>学习曲线陡峭，需掌握大量概念（Pod/Service/Ingress/PVC 等）。  </li>
+<li>本地开发需要 Minikube/Kind 等工具。  </li>
+<li>运维复杂度高。  </li>
+</ul>
+<hr>
+<h2 id="5-互补与冲突"><a href="#5-互补与冲突" class="headerlink" title="5. 互补与冲突"></a><strong>5. 互补与冲突</strong></h2><h3 id="互补场景"><a href="#互补场景" class="headerlink" title="互补场景"></a><strong>互补场景</strong></h3><ol>
+<li><p><strong>开发与生产的协作</strong>：  </p>
+<ul>
+<li>开发阶段用 <code>docker-compose.yml</code> 快速启动环境。  </li>
+<li>生产阶段转换为 K8S 的 Helm Chart 或 Kustomize 配置。  </li>
+<li>工具如 <code>kompose</code> 可自动转换 Compose 文件为 K8S 资源。  </li>
+</ul>
+</li>
+<li><p><strong>本地调试与集群部署</strong>：  </p>
+<ul>
+<li>本地使用 Docker Compose 模拟依赖服务（如数据库）。  </li>
+<li>远程 K8S 集群运行核心业务。  </li>
+</ul>
+</li>
+</ol>
+<h3 id="冲突点"><a href="#冲突点" class="headerlink" title="冲突点"></a><strong>冲突点</strong></h3><ol>
+<li><strong>网络模型不兼容</strong>：  <ul>
+<li>Compose 的 <code>networks</code> 与 K8S 的 CNI 插件无法直接互通。  </li>
+</ul>
+</li>
+<li><strong>配置管理差异</strong>：  <ul>
+<li>Compose 的环境变量优先级策略与 K8S ConfigMap/Secret 不同。  </li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="6-如何选择？"><a href="#6-如何选择？" class="headerlink" title="6. 如何选择？"></a><strong>6. 如何选择？</strong></h2><h3 id="选择-Docker-Compose-如果："><a href="#选择-Docker-Compose-如果：" class="headerlink" title="选择 Docker Compose 如果："></a><strong>选择 Docker Compose 如果：</strong></h3><ul>
+<li>你是开发者，需要快速搭建本地环境。  </li>
+<li>项目仅需运行在单台机器上（如小型应用）。  </li>
+<li>不想投入时间学习 K8S。  </li>
+</ul>
+<h3 id="选择-Kubernetes-如果："><a href="#选择-Kubernetes-如果：" class="headerlink" title="选择 Kubernetes 如果："></a><strong>选择 Kubernetes 如果：</strong></h3><ul>
+<li>应用需要高可用（如用户量 &gt; 1k）。  </li>
+<li>团队有 DevOps 能力或云平台支持。  </li>
+<li>未来需要横向扩展（微服务架构）。  </li>
+</ul>
+<hr>
+<h2 id="7-进阶建议"><a href="#7-进阶建议" class="headerlink" title="7. 进阶建议"></a><strong>7. 进阶建议</strong></h2><ul>
+<li><strong>从 Compose 迁移到 K8S</strong>：<br>使用 <code>kompose convert</code> 工具生成基础 K8S YAML，再手动优化。  </li>
+<li><strong>混合使用</strong>：<br>开发环境保留 Compose，生产环境使用 K8S + Helm。  </li>
+<li><strong>性能敏感场景</strong>：<br>K8S 的 Resource Quotas 和 Affinity 规则能更好地控制资源分配。  </li>
+</ul>
+<hr>
+<h2 id="8-总结"><a href="#8-总结" class="headerlink" title="8. 总结"></a><strong>8. 总结</strong></h2><table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>Docker Compose</strong></th>
+<th><strong>Kubernetes</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>复杂度</strong></td>
+<td>简单</td>
+<td>复杂</td>
+</tr>
+<tr>
+<td><strong>扩展性</strong></td>
+<td>单机</td>
+<td>跨集群</td>
+</tr>
+<tr>
+<td><strong>适用阶段</strong></td>
+<td>开发/测试</td>
+<td>生产</td>
+</tr>
+<tr>
+<td><strong>自动化能力</strong></td>
+<td>弱</td>
+<td>强</td>
+</tr>
+</tbody></table>
+<p><strong>最终建议</strong>：  </p>
+<ul>
+<li><strong>个人开发者/小项目</strong>：Compose 足矣。  </li>
+<li><strong>企业级服务/长期项目</strong>：尽早拥抱 K8S。  </li>
+</ul>
+<blockquote>
+<p>注意：两者并非竞争关系，而是针对不同场景的解决方案。合理搭配使用，能最大化开发与运维效率！ 🚀</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>k8s</category>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>基础</tag>
+        <tag>docker</tag>
+        <tag>k8s</tag>
+        <tag>运维</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>工具LastActivityView获取历史运行记录</title>
+    <url>/2024/12/01/%E5%B7%A5%E5%85%B7-LastActivityView%E8%8E%B7%E5%8F%96%E5%8E%86%E5%8F%B2%E8%BF%90%E8%A1%8C%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h2 id="LastActivityView"><a href="#LastActivityView" class="headerlink" title="LastActivityView"></a><code>LastActivityView</code></h2><p>查看电脑操作记录(<code>LastActivityView</code>)是一款简单而有用的软件，可以在列表中清清楚楚的看到你的电脑使用历史记录。该软件直接调用系统日志，能显示安装软件、系统启动、关机、网络连接、执行的程序等几乎所有的电脑使用日志，让你更熟悉电脑的行为。</p>
+<h2 id="代码演示"><a href="#代码演示" class="headerlink" title="代码演示"></a>代码演示</h2><p>终止指定进程：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pe_name = <span class="string">&quot;LastActivityView.exe&quot;</span></span><br><span class="line"><span class="keyword">for</span> process <span class="keyword">in</span> psutil.process_iter():</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        name = process.name()</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        name = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> name == pe_name:</span><br><span class="line">            process.terminate()</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        setting.log.error(<span class="string">&quot;终止垃圾进程失败,原因: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(<span class="built_in">str</span>(e)))</span><br><span class="line">        <span class="keyword">return</span></span><br></pre></td></tr></table></figure>
+<p>这部分代码首先定义了一个要检查的进程名 <code>pe_name</code>，然后遍历所有正在运行的进程。如果发现进程名为 <code>LastActivityView.exe</code>，则尝试终止该进程，并记录日志。如果终止失败，也会记录日志并返回。</p>
+<p>执行外部程序获取软件运行历史记录：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tool_path = os.path.join(setting.PROJ_PATH, pe_name)</span><br><span class="line">csv_path = os.path.join(setting.PROJ_PATH, <span class="string">&quot;LastActivityView.csv&quot;</span>)</span><br><span class="line">os.system(<span class="string">&quot;&#123;&#125; /scomma &#123;&#125;&quot;</span>.<span class="built_in">format</span>(tool_path, csv_path))</span><br></pre></td></tr></table></figure>
+<p>这部分代码拼接了外部程序 <code>LastActivityView.exe</code> 的路径和保存<code>CSV</code>文件的路径，然后执行命令行命令，使用 <code>LastActivityView.exe</code> 生成软件运行历史记录的<code>CSV</code>文件。</p>
+<p>解析CSV文件：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(csv_path, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&quot;GB2312&quot;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> csv.DictReader(file, delimiter=<span class="string">&quot;,&quot;</span>):</span><br><span class="line">        clean_data = get_line(self, row, self.display_list)</span><br><span class="line">        data = json.dumps(clean_data, ensure_ascii=<span class="literal">False</span>)</span><br><span class="line">        write_file(self.file, data)</span><br></pre></td></tr></table></figure>
+<p>这部分代码打开<code>CSV</code>文件，使用 <code>csv.DictReader</code> 读取每一行数据，并将其转换为字典。然后，它调用 <code>get_line</code> 方法处理每一行数据，并将处理后的数据转换为 <code>JSON</code> 格式，最后写入到输出文件中。</p>
+<p>删除临时<code>CSV</code>文件：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">os.remove(csv_path)</span><br></pre></td></tr></table></figure>
+<p>这部分代码在处理完成后删除临时生成的<code>CSV</code>文件</p>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+        <tag>LastActivityView</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>doc与docx的历史</title>
+    <url>/2025/03/31/%E5%B7%A5%E5%85%B7-doc%E4%B8%8Edocx%E7%9A%84%E5%8E%86%E5%8F%B2/</url>
+    <content><![CDATA[<p>在 Linux 系统上处理 Microsoft Word 文档时，我们经常会遇到两种格式：<code>.doc</code> 和 <code>.docx</code>。由于兼容性问题，有时需要将旧版 <code>.doc</code> 转换为 <code>.docx</code> 才能正常编辑。本文将详细介绍这两种格式的历史、区别，并讲解如何使用 <strong>LibreOffice</strong> 进行转换。</p>
+<hr>
+<h2 id="1-DOC-与-DOCX-的历史与区别"><a href="#1-DOC-与-DOCX-的历史与区别" class="headerlink" title="1. DOC 与 DOCX 的历史与区别"></a><strong>1. DOC 与 DOCX 的历史与区别</strong></h2><h3 id="1-DOC-格式（1990s–2007）"><a href="#1-DOC-格式（1990s–2007）" class="headerlink" title="(1) DOC 格式（1990s–2007）"></a><strong>(1) DOC 格式（1990s–2007）</strong></h3><ul>
+<li><strong>诞生</strong>：DOC 是 Microsoft Word 的专有二进制格式，最早随 Word 1.0（1983）推出，并在 Word 97–2003 成为主流。</li>
+<li><strong>特点</strong>：<ul>
+<li>二进制存储（不可直接阅读）。</li>
+<li>文件体积较大（未优化压缩）。</li>
+<li>兼容性问题较多（不同 Word 版本可能显示不同）。</li>
+</ul>
+</li>
+<li><strong>现状</strong>：<ul>
+<li>已淘汰，但仍有一些旧文档使用。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-DOCX-格式（2007–至今）"><a href="#2-DOCX-格式（2007–至今）" class="headerlink" title="(2) DOCX 格式（2007–至今）"></a><strong>(2) DOCX 格式（2007–至今）</strong></h3><ul>
+<li><strong>诞生</strong>：DOCX 是 Microsoft Office 2007 引入的 <strong>Office Open XML (OOXML)</strong> 格式，现为 Word 默认格式。</li>
+<li><strong>特点</strong>：<ul>
+<li>基于 XML（结构化文本，可解压查看内容）。</li>
+<li>采用 ZIP 压缩，文件更小。</li>
+<li>兼容性更好（支持现代 Office 及开源软件）。</li>
+</ul>
+</li>
+<li><strong>优势</strong>：<ul>
+<li>更安全（不易损坏）。</li>
+<li>支持高级功能（如 SmartArt、新样式）。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p><strong>DOC vs DOCX 核心区别</strong>：<br>| 特性       | DOC (Word 97-2003) | DOCX (Word 2007+) |<br>|————|——————–|——————-|<br>| <strong>格式</strong>   | 二进制             | XML + ZIP 压缩    |<br>| <strong>体积</strong>   | 较大               | 较小              |<br>| <strong>兼容性</strong> | 旧版软件           | 现代软件          |<br>| <strong>扩展性</strong> | 功能有限           | 支持新特性        |</p>
+</blockquote>
+<hr>
+<h2 id="2-为什么在-Linux-上需要转换？"><a href="#2-为什么在-Linux-上需要转换？" class="headerlink" title="2. 为什么在 Linux 上需要转换？"></a><strong>2. 为什么在 Linux 上需要转换？</strong></h2><ul>
+<li><strong>兼容性问题</strong>：<ul>
+<li>LibreOffice 对 <code>.doc</code> 的支持不如 <code>.docx</code> 完善（可能丢失格式）。</li>
+<li>新版 Microsoft Word 已逐步放弃 <code>.doc</code> 的官方支持。</li>
+</ul>
+</li>
+<li><strong>功能需求</strong>：<ul>
+<li><code>.docx</code> 支持更丰富的排版、图表和样式。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="3-LibreOffice：开源办公套件"><a href="#3-LibreOffice：开源办公套件" class="headerlink" title="3. LibreOffice：开源办公套件"></a><strong>3. LibreOffice：开源办公套件</strong></h2><p>LibreOffice 是 <strong>最流行的开源 Office 套件</strong>，支持 DOC/DOCX 的读写与转换，包含：</p>
+<ul>
+<li><strong>Writer</strong>（Word 替代）</li>
+<li><strong>Calc</strong>（Excel 替代）</li>
+<li><strong>Impress</strong>（PowerPoint 替代）</li>
+</ul>
+<h3 id="安装-LibreOffice"><a href="#安装-LibreOffice" class="headerlink" title="安装 LibreOffice"></a><strong>安装 LibreOffice</strong></h3><p>在 Linux 上安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Debian/Ubuntu</span></span><br><span class="line">sudo apt install libreoffice</span><br><span class="line"></span><br><span class="line"><span class="comment"># CentOS/RHEL</span></span><br><span class="line">sudo yum install libreoffice</span><br><span class="line"></span><br><span class="line"><span class="comment"># Arch Linux</span></span><br><span class="line">sudo pacman -S libreoffice-fresh</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-LibreOffice-转换-DOC-→-DOCX"><a href="#使用-LibreOffice-转换-DOC-→-DOCX" class="headerlink" title="使用 LibreOffice 转换 DOC → DOCX"></a><strong>使用 LibreOffice 转换 DOC → DOCX</strong></h3><h4 id="方法-1：GUI-图形界面"><a href="#方法-1：GUI-图形界面" class="headerlink" title="方法 1：GUI 图形界面"></a><strong>方法 1：GUI 图形界面</strong></h4><ol>
+<li>打开 LibreOffice Writer。</li>
+<li>点击 <strong>文件 → 打开</strong>，选择 <code>.doc</code> 文件。</li>
+<li>点击 <strong>文件 → 另存为</strong>，格式选择 **”Word 2007-365 (.docx)”**。</li>
+<li>保存即可。</li>
+</ol>
+<h4 id="方法-2：命令行批量转换"><a href="#方法-2：命令行批量转换" class="headerlink" title="方法 2：命令行批量转换"></a><strong>方法 2：命令行批量转换</strong></h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">libreoffice --headless --convert-to docx *.doc</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>--headless</code>：无图形界面模式（适合服务器）。</li>
+<li><code>*.doc</code>：匹配所有 <code>.doc</code> 文件。</li>
+</ul>
+<h4 id="方法-3：Python-脚本自动化"><a href="#方法-3：Python-脚本自动化" class="headerlink" title="方法 3：Python 脚本自动化"></a><strong>方法 3：Python 脚本自动化</strong></h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.system(<span class="string">&quot;libreoffice --convert-to docx /path/to/file.doc&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-其他转换工具（备选）"><a href="#4-其他转换工具（备选）" class="headerlink" title="4. 其他转换工具（备选）"></a><strong>4. 其他转换工具（备选）</strong></h2><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Pandoc</strong></td>
+<td>支持 DOC/DOCX/ODT 互转（需安装）</td>
+</tr>
+<tr>
+<td><strong>unoconv</strong></td>
+<td>调用 LibreOffice 进行转换</td>
+</tr>
+<tr>
+<td><strong>Google Docs</strong></td>
+<td>在线导入后下载为 DOCX</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="5-转换注意事项"><a href="#5-转换注意事项" class="headerlink" title="5. 转换注意事项"></a><strong>5. 转换注意事项</strong></h2><ul>
+<li><strong>格式可能丢失</strong>：复杂排版、宏或特殊字体可能无法完美转换。</li>
+<li><strong>批量处理</strong>：建议用命令行或脚本自动化。</li>
+<li><strong>版本问题</strong>：确保使用最新版 LibreOffice（≥7.0）。</li>
+</ul>
+<hr>
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a><strong>6. 总结</strong></h2><ul>
+<li><strong>DOC</strong>：旧版二进制格式，已淘汰，兼容性差。  </li>
+<li><strong>DOCX</strong>：现代 XML 格式，推荐使用。  </li>
+<li><strong>LibreOffice</strong>：Linux 最佳转换工具，支持 GUI/CLI。  </li>
+</ul>
+<p><strong>推荐操作</strong>：</p>
+<ol>
+<li>将旧 <code>.doc</code> 转换为 <code>.docx</code> 以确保兼容性。</li>
+<li>使用 <code>libreoffice --convert-to</code> 批量处理。</li>
+<li>检查转换后的文件是否有格式错误。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>office</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>打包与压缩</title>
+    <url>/2025/03/31/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E6%89%93%E5%8C%85%E4%B8%8E%E5%8E%8B%E7%BC%A9/</url>
+    <content><![CDATA[<p>在软件开发、数据备份和文件传输中，我们经常会遇到各种归档和压缩格式，如 <strong>ZIP、TAR、TAR.GZ、RAR、7Z</strong> 等。这些格式有些是<strong>纯打包</strong>，有些是<strong>纯压缩</strong>，有些则是<strong>打包+压缩</strong>的组合。本文将详细解析它们的区别、适用场景及优缺点。</p>
+<hr>
+<h2 id="1-基础概念：打包-vs-压缩"><a href="#1-基础概念：打包-vs-压缩" class="headerlink" title="1. 基础概念：打包 vs 压缩"></a><strong>1. 基础概念：打包 vs 压缩</strong></h2><p>在讨论具体格式之前，先明确两个核心概念：</p>
+<ul>
+<li><p><strong>打包（Archiving）</strong>：将多个文件或目录合并成一个文件，但不进行压缩。<br><strong>特点</strong>：保留文件结构、权限、元数据，但文件大小不变。<br><strong>典型格式</strong>：<code>TAR</code>、<code>CPIO</code>。</p>
+</li>
+<li><p><strong>压缩（Compression）</strong>：通过算法减少文件体积，但不涉及多文件管理。<br><strong>特点</strong>：文件变小，但通常只能压缩单个文件（除非先打包）。<br><strong>典型格式</strong>：<code>GZ</code>、<code>BZ2</code>、<code>XZ</code>、<code>ZSTD</code>。</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>关键区别</strong>：  </p>
+<ul>
+<li><strong>打包</strong> = 合并文件（如 <code>tar</code>）  </li>
+<li><strong>压缩</strong> = 减小体积（如 <code>gzip</code>）  </li>
+<li><strong>打包+压缩</strong> = 先打包再压缩（如 <code>tar.gz</code>）</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="2-常见归档-压缩格式详解"><a href="#2-常见归档-压缩格式详解" class="headerlink" title="2. 常见归档/压缩格式详解"></a><strong>2. 常见归档/压缩格式详解</strong></h2><h3 id="1-纯打包格式"><a href="#1-纯打包格式" class="headerlink" title="(1) 纯打包格式"></a><strong>(1) 纯打包格式</strong></h3><h4 id="TAR-Tape-Archive"><a href="#TAR-Tape-Archive" class="headerlink" title="TAR (Tape Archive)"></a><strong>TAR (Tape Archive)</strong></h4><ul>
+<li><strong>特点</strong>：<ul>
+<li>Unix/Linux 标准打包工具，仅合并文件，不压缩。</li>
+<li>保留文件权限、符号链接、时间戳等元数据。</li>
+<li>通常结合压缩工具使用（如 <code>tar.gz</code>）。</li>
+</ul>
+</li>
+<li><strong>优点</strong>：<ul>
+<li>兼容性好，几乎所有系统支持。</li>
+<li>适合备份目录结构。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li>单独使用时不减少文件大小。</li>
+</ul>
+</li>
+<li><strong>示例命令</strong>：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -cvf archive.tar /path/to/files  <span class="comment"># 打包</span></span><br><span class="line">tar -xvf archive.tar                <span class="comment"># 解包</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h3 id="2-纯压缩格式"><a href="#2-纯压缩格式" class="headerlink" title="(2) 纯压缩格式"></a><strong>(2) 纯压缩格式</strong></h3><h4 id="GZIP-gz"><a href="#GZIP-gz" class="headerlink" title="GZIP (.gz)"></a><strong>GZIP (.gz)</strong></h4><ul>
+<li><strong>特点</strong>：<ul>
+<li>仅压缩单个文件（通常与 <code>tar</code> 配合使用，如 <code>.tar.gz</code>）。</li>
+<li>使用 DEFLATE 算法，压缩比中等，速度较快。</li>
+</ul>
+</li>
+<li><strong>优点</strong>：<ul>
+<li>广泛支持，适合文本文件。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li>不能压缩目录（需先打包）。</li>
+</ul>
+</li>
+<li><strong>示例命令</strong>：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gzip file.txt       <span class="comment"># 压缩 -&gt; file.txt.gz</span></span><br><span class="line">gunzip file.txt.gz  <span class="comment"># 解压</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="BZIP2-bz2"><a href="#BZIP2-bz2" class="headerlink" title="BZIP2 (.bz2)"></a><strong>BZIP2 (.bz2)</strong></h4><ul>
+<li><strong>特点</strong>：<ul>
+<li>比 <code>gzip</code> 压缩率更高（但更慢）。</li>
+<li>适合不追求速度的场景（如长期存储）。</li>
+</ul>
+</li>
+<li><strong>优点</strong>：<ul>
+<li>压缩比比 <code>gzip</code> 高约 10%~20%。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li>压缩/解压速度慢。</li>
+</ul>
+</li>
+<li><strong>示例命令</strong>：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bzip2 file.txt      <span class="comment"># 压缩 -&gt; file.txt.bz2</span></span><br><span class="line">bunzip2 file.txt.bz2</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="XZ-xz"><a href="#XZ-xz" class="headerlink" title="XZ (.xz)"></a><strong>XZ (.xz)</strong></h4><ul>
+<li><strong>特点</strong>：<ul>
+<li>使用 LZMA 算法，压缩率极高（但速度最慢）。</li>
+<li>适合分发大型文件（如 Linux 发行版）。</li>
+</ul>
+</li>
+<li><strong>优点</strong>：<ul>
+<li>目前主流压缩率最高的算法之一。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li>压缩/解压耗时长。</li>
+</ul>
+</li>
+<li><strong>示例命令</strong>：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">xz file.txt         <span class="comment"># 压缩 -&gt; file.txt.xz</span></span><br><span class="line">unxz file.txt.xz</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h3 id="3-打包-压缩组合格式"><a href="#3-打包-压缩组合格式" class="headerlink" title="(3) 打包+压缩组合格式"></a><strong>(3) 打包+压缩组合格式</strong></h3><h4 id="TAR-GZ-tar-gz"><a href="#TAR-GZ-tar-gz" class="headerlink" title="TAR.GZ (.tar.gz)"></a><strong>TAR.GZ (.tar.gz)</strong></h4><ul>
+<li><strong>特点</strong>：<ul>
+<li>先用 <code>tar</code> 打包，再用 <code>gzip</code> 压缩。</li>
+<li>Linux 最常见格式，平衡压缩率和速度。</li>
+</ul>
+</li>
+<li><strong>优点</strong>：<ul>
+<li>兼容性好，适合通用场景。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li>压缩率不如 <code>tar.xz</code>。</li>
+</ul>
+</li>
+<li><strong>示例命令</strong>：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -czvf archive.tar.gz /path/to/files  <span class="comment"># 打包+压缩</span></span><br><span class="line">tar -xzvf archive.tar.gz                <span class="comment"># 解压</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="TAR-XZ-tar-xz"><a href="#TAR-XZ-tar-xz" class="headerlink" title="TAR.XZ (.tar.xz)"></a><strong>TAR.XZ (.tar.xz)</strong></h4><ul>
+<li><strong>特点</strong>：<ul>
+<li>先用 <code>tar</code> 打包，再用 <code>xz</code> 压缩。</li>
+<li>压缩率极高，适合大型文件存储。</li>
+</ul>
+</li>
+<li><strong>优点</strong>：<ul>
+<li>比 <code>tar.gz</code> 体积更小。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li>压缩/解压速度慢。</li>
+</ul>
+</li>
+<li><strong>示例命令</strong>：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -cJvf archive.tar.xz /path/to/files</span><br><span class="line">tar -xJvf archive.tar.xz</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="ZIP-zip"><a href="#ZIP-zip" class="headerlink" title="ZIP (.zip)"></a><strong>ZIP (.zip)</strong></h4><ul>
+<li><strong>特点</strong>：<ul>
+<li>同时打包+压缩（Windows 默认格式）。</li>
+<li>支持密码加密（<code>zip -e</code>）。</li>
+</ul>
+</li>
+<li><strong>优点</strong>：<ul>
+<li>跨平台（Windows/macOS/Linux 原生支持）。</li>
+<li>可随机访问文件（无需解压全部内容）。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li>压缩率通常不如 <code>tar.gz</code>/<code>tar.xz</code>。</li>
+</ul>
+</li>
+<li><strong>示例命令</strong>：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zip -r archive.zip /path/to/files  <span class="comment"># 压缩</span></span><br><span class="line">unzip archive.zip                 <span class="comment"># 解压</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="7Z-7z"><a href="#7Z-7z" class="headerlink" title="7Z (.7z)"></a><strong>7Z (.7z)</strong></h4><ul>
+<li><strong>特点</strong>：<ul>
+<li>使用 LZMA 算法，压缩率接近 <code>xz</code>。</li>
+<li>支持分卷压缩、密码加密。</li>
+</ul>
+</li>
+<li><strong>优点</strong>：<ul>
+<li>高压缩率，功能丰富。</li>
+</ul>
+</li>
+<li><strong>缺点</strong>：<ul>
+<li>需额外工具（如 <code>p7zip</code>）。</li>
+</ul>
+</li>
+<li><strong>示例命令</strong>：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">7z a archive.7z /path/to/files  <span class="comment"># 压缩</span></span><br><span class="line">7z x archive.7z                <span class="comment"># 解压</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h2 id="3-如何选择合适的格式？"><a href="#3-如何选择合适的格式？" class="headerlink" title="3. 如何选择合适的格式？"></a><strong>3. 如何选择合适的格式？</strong></h2><table>
+<thead>
+<tr>
+<th>格式</th>
+<th>压缩率</th>
+<th>速度</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>TAR</code></td>
+<td>❌ 无</td>
+<td>⚡ 最快</td>
+<td>仅需打包，不压缩（如备份）</td>
+</tr>
+<tr>
+<td><code>TAR.GZ</code></td>
+<td>⭐⭐</td>
+<td>⏱️ 中等</td>
+<td>通用（日志、代码分发）</td>
+</tr>
+<tr>
+<td><code>TAR.XZ</code></td>
+<td>⭐⭐⭐</td>
+<td>🐢 最慢</td>
+<td>高压缩需求（如发行版）</td>
+</tr>
+<tr>
+<td><code>ZIP</code></td>
+<td>⭐</td>
+<td>⏱️ 中等</td>
+<td>Windows 兼容/加密需求</td>
+</tr>
+<tr>
+<td><code>7Z</code></td>
+<td>⭐⭐⭐</td>
+<td>🐢 慢</td>
+<td>极限压缩/分卷压缩</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a><strong>4. 总结</strong></h2><ul>
+<li><strong>仅打包</strong> → <code>TAR</code>  </li>
+<li><strong>仅压缩</strong> → <code>GZ</code>/<code>BZ2</code>/<code>XZ</code>（需先打包）  </li>
+<li><strong>打包+压缩</strong> → <code>TAR.GZ</code>（通用）、<code>TAR.XZ</code>（高压缩）、<code>ZIP</code>（跨平台）、<code>7Z</code>（极限压缩）  </li>
+</ul>
+<p><strong>推荐选择</strong>：</p>
+<ul>
+<li><strong>Linux 环境</strong>：<code>tar.gz</code>（平衡）、<code>tar.xz</code>（高压缩）  </li>
+<li><strong>Windows 环境</strong>：<code>ZIP</code>（兼容性）、<code>7Z</code>（高压缩）  </li>
+<li><strong>长期存储</strong>：<code>tar.xz</code> 或 <code>7z</code>  </li>
+</ul>
+]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>打包</tag>
+        <tag>压缩</tag>
+        <tag>归档</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>32位与64位的区别</title>
+    <url>/2024/12/01/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-32%E4%BD%8D%E4%B8%8E64%E4%BD%8D%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<h2 id="32位与64位的区别"><a href="#32位与64位的区别" class="headerlink" title="32位与64位的区别"></a>32位与64位的区别</h2><p>首先，我们需要了解计算机中的位数的概念。计算机中的位数指的是计算机中用于表示数据的最大二进制数。例如，32位计算机可以处理最大为2^32-1的整数，而64位计算机可以处理最大为2^64-1的整数。</p>
+<p>接下来，我们来详细解释32位程序与64位程序的区别。</p>
+<ol>
+<li>程序的地址空间不同</li>
+</ol>
+<p>32位程序的地址空间为4GB，而64位程序的地址空间为16GB。这意味着32位程序可以访问的内存地址范围比64位程序要小得多。</p>
+<ol start="2">
+<li>程序的寻址能力不同</li>
+</ol>
+<p>32位程序的寻址能力为4GB，而64位程序的寻址能力为16GB。这意味着32位程序可以访问的内存地址范围比64位程序要小得多。</p>
+<ol start="3">
+<li>程序的寄存器不同</li>
+</ol>
+<p>32位程序使用32位寄存器，而64位程序使用64位寄存器。这意味着32位程序可以处理的数据范围比64位程序要小得多。</p>
+<ol start="4">
+<li>程序的指令集不同</li>
+</ol>
+<p>32位程序使用32位指令集，而64位程序使用64位指令集。这意味着32位程序可以执行的指令比64位程序要少得多。</p>
+<ol start="5">
+<li>程序的兼容性问题</li>
+</ol>
+<p>由于32位程序和64位程序的地址空间和寄存器不同，因此它们之间可能存在兼容性问题。例如，某些32位程序可能无法在64位计算机上运行，或者在运行时出现错误。</p>
+<h2 id="两者之间的兼容"><a href="#两者之间的兼容" class="headerlink" title="两者之间的兼容"></a>两者之间的兼容</h2><ol>
+<li>操作系统兼容性</li>
+</ol>
+<p>由于32位程序在64位计算机上运行时可能存在兼容性问题，因此需要操作系统提供兼容性支持。例如，Windows操作系统提供了兼容性模式，允许32位程序在64位计算机上运行。</p>
+<ol start="2">
+<li>程序兼容性</li>
+</ol>
+<p>某些32位程序可能已经针对64位计算机进行了优化，因此可以在64位计算机上运行。但是，这种兼容性可能并不完全，可能会导致程序在运行时出现错误。</p>
+<ol start="3">
+<li>硬件兼容性</li>
+</ol>
+<p>某些硬件设备可能仅支持32位程序，因此无法在64位计算机上运行。<br>32位程序可以在64位计算机上运行的原因是操作系统提供了兼容性支持，以及某些程序针对64位计算机进行了优化。但是，这种兼容性可能并不完全，可能会导致程序在运行时出现错误。</p>
+]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>基础</tag>
+      </tags>
   </entry>
 </search>
