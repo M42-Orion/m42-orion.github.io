@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>分类 | 念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="常见的机器学习分类有，支持向量机、决策树、KNN、朴素贝叶斯，以前在学习机器学习的时候就简单学过，现在需要用在图像分类上了。一时间蒙了，忘记怎么图像转以前的数据了，现在在GitHub上找到一个不错的例子，特此记录一下。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分类">
+<meta property="og:url" content="https://m42-orion.github.io/2022/10/16/%E7%AE%97%E6%B3%95-%E5%88%86%E7%B1%BB/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="常见的机器学习分类有，支持向量机、决策树、KNN、朴素贝叶斯，以前在学习机器学习的时候就简单学过，现在需要用在图像分类上了。一时间蒙了，忘记怎么图像转以前的数据了，现在在GitHub上找到一个不错的例子，特此记录一下。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://liu__tao.gitee.io/drawing-bed/blog_img/分类/封面.png">
+<meta property="article:published_time" content="2022-10-16T12:02:21.000Z">
+<meta property="article:modified_time" content="2022-10-16T12:15:38.477Z">
+<meta property="article:author" content="望">
+<meta property="article:tag" content="杂谈">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://liu__tao.gitee.io/drawing-bed/blog_img/分类/封面.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "分类",
+  "url": "https://m42-orion.github.io/2022/10/16/%E7%AE%97%E6%B3%95-%E5%88%86%E7%B1%BB/",
+  "image": "http://liu__tao.gitee.io/drawing-bed/blog_img/分类/封面.png",
+  "datePublished": "2022-10-16T12:02:21.000Z",
+  "dateModified": "2022-10-16T12:15:38.477Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "望",
+      "url": "https://m42-orion.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://m42-orion.github.io/2022/10/16/%E7%AE%97%E6%B3%95-%E5%88%86%E7%B1%BB/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '分类',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 5.4.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(http://liu__tao.gitee.io/drawing-bed/blog_img/分类/封面.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">分类</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">分类</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-10-16T12:02:21.000Z" title="发表于 2022-10-16 20:02:21">2022-10-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-10-16T12:15:38.477Z" title="更新于 2022-10-16 20:15:38">2022-10-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>常见的机器学习分类有，支持向量机、决策树、KNN、朴素贝叶斯，以前在学习机器学习的时候就简单学过，现在需要用在图像分类上了。一时间蒙了，忘记怎么图像转以前的数据了，现在在GitHub上找到一个不错的例子，特此记录一下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix, classification_report</span><br><span class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVC</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> matplotlib <span class="keyword">as</span> mpl</span><br><span class="line"></span><br><span class="line">mpl.rcParams[<span class="string">&#x27;font.sans-serif&#x27;</span>] = [<span class="string">&#x27;KaiTi&#x27;</span>]</span><br><span class="line">mpl.rcParams[<span class="string">&#x27;font.serif&#x27;</span>] = [<span class="string">&#x27;KaiTi&#x27;</span>]</span><br><span class="line"><span class="comment"># mpl.rcParams[&#x27;axes.unicode_minus&#x27;] = False # 解决保存图像是负号&#x27;-&#x27;显示为方块的问题,或者转换负号为字符串</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># 第一步 切分训练集和测试集</span></span><br><span class="line"><span class="comment"># ----------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line">X = []  <span class="comment"># 定义图像名称</span></span><br><span class="line">Y = []  <span class="comment"># 定义图像分类类标</span></span><br><span class="line">Z = []  <span class="comment"># 定义图像像素</span></span><br><span class="line"><span class="comment"># 记得更改此处4或者10</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">10</span>):</span><br><span class="line">    <span class="comment"># 遍历文件夹，读取图片</span></span><br><span class="line">    <span class="keyword">for</span> f <span class="keyword">in</span> os.listdir(<span class="string">&quot;photo2/%s&quot;</span> % i):</span><br><span class="line">        <span class="comment"># 获取图像名称</span></span><br><span class="line">        X.append(<span class="string">&quot;photo2//&quot;</span> + <span class="built_in">str</span>(i) + <span class="string">&quot;//&quot;</span> + <span class="built_in">str</span>(f))</span><br><span class="line">        <span class="comment"># 获取图像类标即为文件夹名称</span></span><br><span class="line">        Y.append(i)</span><br><span class="line"><span class="comment"># print(X)</span></span><br><span class="line"><span class="comment"># print(Y)</span></span><br><span class="line"><span class="comment"># os.walk 可以遍历多层路径，使用root, dirs, files</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># for root, dirs, files in os.walk(&quot;photo&quot;):</span></span><br><span class="line"><span class="comment">#         # Y.append(type_name)</span></span><br><span class="line"><span class="comment">#     for file in files:</span></span><br><span class="line"><span class="comment">#         X.append(os.path.join(root, file))</span></span><br><span class="line"><span class="comment"># print(X)</span></span><br><span class="line"><span class="comment"># print(Y)</span></span><br><span class="line"></span><br><span class="line">X = np.array(X)</span><br><span class="line">Y = np.array(Y)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 随机率为100% 选取其中的20%作为测试集</span></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, Y,</span><br><span class="line">                                                    test_size=<span class="number">0.2</span>, random_state=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(X_train), <span class="built_in">len</span>(X_test), <span class="built_in">len</span>(y_train), <span class="built_in">len</span>(y_test))</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># 第二步 图像读取及转换为像素直方图</span></span><br><span class="line"><span class="comment"># ----------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练集</span></span><br><span class="line">XX_train = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> X_train:</span><br><span class="line">    <span class="comment"># 读取图像</span></span><br><span class="line">    <span class="comment"># print i</span></span><br><span class="line">    image = cv2.imdecode(np.fromfile(i, dtype=np.uint8), cv2.IMREAD_COLOR)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 图像像素大小一致</span></span><br><span class="line">    img = cv2.resize(image, (<span class="number">256</span>, <span class="number">256</span>),</span><br><span class="line">                     interpolation=cv2.INTER_CUBIC)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算图像直方图并存储至X数组</span></span><br><span class="line">    hist = cv2.calcHist([img], [<span class="number">0</span>, <span class="number">1</span>], <span class="literal">None</span>,</span><br><span class="line">                        [<span class="number">256</span>, <span class="number">256</span>], [<span class="number">0.0</span>, <span class="number">255.0</span>, <span class="number">0.0</span>, <span class="number">255.0</span>])</span><br><span class="line"></span><br><span class="line">    XX_train.append(((hist / <span class="number">255</span>).flatten()))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试集</span></span><br><span class="line">XX_test = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> X_test:</span><br><span class="line">    <span class="comment"># 读取图像</span></span><br><span class="line">    <span class="comment"># print i</span></span><br><span class="line">    <span class="comment"># 不使用imread，而是用imdecode以识别中文路径</span></span><br><span class="line">    image = cv2.imdecode(np.fromfile(i, dtype=np.uint8), cv2.IMREAD_COLOR)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 图像像素大小一致</span></span><br><span class="line">    img = cv2.resize(image, (<span class="number">256</span>, <span class="number">256</span>),</span><br><span class="line">                     interpolation=cv2.INTER_CUBIC)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算图像直方图并存储至X数组</span></span><br><span class="line">    hist = cv2.calcHist([img], [<span class="number">0</span>, <span class="number">1</span>], <span class="literal">None</span>,</span><br><span class="line">                        [<span class="number">256</span>, <span class="number">256</span>], [<span class="number">0.0</span>, <span class="number">255.0</span>, <span class="number">0.0</span>, <span class="number">255.0</span>])</span><br><span class="line"></span><br><span class="line">    XX_test.append(((hist / <span class="number">255</span>).flatten()))</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># 第三步 基于支持向量机的图像分类处理</span></span><br><span class="line"><span class="comment"># ----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># 0.5</span></span><br><span class="line"><span class="comment"># 常见核函数‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘precomputed’</span></span><br><span class="line">clf = SVC().fit(XX_train, y_train)</span><br><span class="line">clf = SVC(kernel=<span class="string">&quot;linear&quot;</span>).fit(XX_train, y_train)</span><br><span class="line">predictions_labels = clf.predict(XX_test)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># 第三步 基于决策树的图像分类处理</span></span><br><span class="line"><span class="comment"># ----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># 0.36</span></span><br><span class="line"><span class="comment"># from sklearn.tree import DecisionTreeClassifier</span></span><br><span class="line"><span class="comment"># clf = DecisionTreeClassifier().fit(XX_train, y_train)</span></span><br><span class="line"><span class="comment"># predictions_labels = clf.predict(XX_test)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># 第三步 基于KNN的图像分类处理</span></span><br><span class="line"><span class="comment"># ----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># 0.11</span></span><br><span class="line"><span class="comment"># from sklearn.neighbors import KNeighborsClassifier</span></span><br><span class="line"><span class="comment"># clf = KNeighborsClassifier(n_neighbors=11).fit(XX_train, y_train)</span></span><br><span class="line"><span class="comment"># predictions_labels = clf.predict(XX_test)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># 第三步 基于朴素贝叶斯的图像分类处理</span></span><br><span class="line"><span class="comment"># ----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"># 0.01</span></span><br><span class="line"><span class="comment"># from sklearn.naive_bayes import BernoulliNB</span></span><br><span class="line"><span class="comment"># clf = BernoulliNB().fit(XX_train, y_train)</span></span><br><span class="line"><span class="comment"># predictions_labels = clf.predict(XX_test)</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">u&#x27;预测结果:&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(predictions_labels)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">u&#x27;算法评价:&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, predictions_labels))</span><br><span class="line"></span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2022/10/16/%E7%AE%97%E6%B3%95-%E5%88%86%E7%B1%BB/">https://m42-orion.github.io/2022/10/16/%E7%AE%97%E6%B3%95-%E5%88%86%E7%B1%BB/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9D%82%E8%B0%88/">杂谈</a><a class="post-meta__tags" href="/tags/python/">python</a></div><div class="post-share"><div class="social-share" data-image="http://liu__tao.gitee.io/drawing-bed/blog_img/分类/封面.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2022/10/07/%E6%9C%89%E6%84%9F-%E5%B0%8F%E5%BF%83%E8%9E%83%E8%9F%B9/" title="小心螃蟹"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/小心螃蟹/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">小心螃蟹</div></div><div class="info-2"><div class="info-item-1">很多人都有一个常识：当我们往一个不高的容器中放进一只螃蟹时，它总会努力想尽办法逃出来。但如果放进去的是很多只螃蟹时，结果通常就是你拉我，我拽他，叠罗汉，最终谁也出不来。而在螃蟹群体中出现的这个特殊现象，竟然在人类群体中也同样适用。 这种现象我们称之为 Crab Mentality 螃蟹心理，那么螃蟹心理到底是怎么回事呢？把螃蟹放在桶里的时候，他们不会帮助对方逃脱。实际上，螃蟹群会阻止任何想单独逃脱的螃蟹。当一只螃蟹爬到桶的顶部时，其他的螃蟹会把他拽回来。这好像在说：“如果我要死了，那你也要一起死。”尽管螃蟹是否真的会这么做还有待探讨。但这种思维方式被称为“螃蟹心理”。它同时也可以应用到我们在生活中的表现。 比如，有一天，在一群不太关心学习的人中，有一个人决定要拿个好成绩。这个小组的其他成员不仅不会支持她，反而会嘲笑她，或者试图分散她在学习上的注意力。他们并不希望她成功，宁愿让她陷在跟他们一样的处境中。就好像在说，“如果我不能得到这个，那你也不能。”  这些人的心理就叫做“螃蟹心理”。 </div></div></div></a><a class="pagination-related" href="/2022/10/16/python%E7%9A%84%E5%9D%91%E8%AE%B0%E5%BD%95/" title="python的坑记录"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/python的坑记录/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">python的坑记录</div></div><div class="info-2"><div class="info-item-1">在阅读别人博客的时候看到别人记录了一个python的坑，我觉得可能是一个今后会发生的一个错误，因此记录下来。直接上代码： 1234567def f(a, L=[]):    L.append(a)    return Lprint(f(1))print(f(2))print(f(3))  打印出来的结果是: 123[1][1, 2][1, 2, 3]  这是因为, 作为默认参数, python在启动时就会将变量 L 建立, 我们在函数 f 内对 L 处理就会导致后来调用的 L 已经是修改过的 L 了, 我们可以通过打印 L 的内存地址来验证 123456789def f(a, L=[]):    print(id(L))    L.append(a)    print(id(L))    return Lprint(f(1))print(f(2))print(f(3))  结果是 12345678945132896004513289600[1]45132896004513289600[1, 2]45132896004513289600[1, 2,...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/02/15/python%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E7%89%B9%E6%AE%8A%E6%B3%A8%E9%87%8A/" title="python代码中的特殊注释"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202502/14/wgSD0bbnC93QM9o.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-15</div><div class="info-item-2">python代码中的特殊注释</div></div><div class="info-2"><div class="info-item-1">python代码中的特殊注释 **# noqa**：  用法：some_code = &quot;example&quot;  # noqa 功能：告诉flake8等工具忽略当前行的所有警告。   **# type: ignore**：  用法：import some_module  # type: ignore 功能：告诉mypy等类型检查器忽略当前行的类型检查警告。   **# pylint: disable=some-message**：  用法：some_code = &quot;example&quot;  # pylint: disable=unused-variable 功能：告诉pylint工具忽略特定的警告消息（例如未使用的变量）。   **# isort: skip**：  用法：import some_module  # isort: skip 功能：告诉isort工具在自动排序导入语句时跳过当前行。   # fmt: off 和 **# fmt: on**：  用法：123# fmt: offsome_code =...</div></div></div></a><a class="pagination-related" href="/2025/02/15/python%E5%BA%93parse%E7%9A%84%E4%BD%BF%E7%94%A8/" title="python库parse的使用"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202502/12/pGSm4WWdTBx5ZZY.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-15</div><div class="info-item-2">python库parse的使用</div></div><div class="info-2"><div class="info-item-1">深入浅出解析 Python parse 库的使用parse 是 Python 中一个强大的字符串解析库，它能够根据指定的格式从字符串中提取出所需的数据。与 Python 内置的字符串格式化功能（如 str.format()）相反，parse 库的作用是从格式化字符串中反向提取数据。  1. 安装 parse 库在开始使用 parse 库之前，需要先安装它。可以通过以下命令安装： 1pip install parse   2. 基本用法parse 库的核心功能是通过 parse() 函数从字符串中提取数据。其基本语法如下： 123from parse import parseresult = parse(format_string, input_string)   format_string：格式化字符串，用于定义提取数据的模式。 input_string：需要解析的输入字符串。 result：解析结果，返回一个 Result 对象。如果解析失败，返回 None。  示例 1：提取简单数据1234from parse import parseresult =...</div></div></div></a><a class="pagination-related" href="/2022/05/08/python%E7%B1%BB%E5%9E%8B%E6%B3%A8%E9%87%8A/" title="python类型注释"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/python类型注释/封面.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-08</div><div class="info-item-2">python类型注释</div></div><div class="info-2"><div class="info-item-1">我找到一些来自于官方的关于python类型注释的资源，我将其复制下来，用于个人收藏。良好的类型注释习惯能让代码的可读性大大增强，同时也能够保证后续加入的人员能够快速理解与使用。 变量Python 3.6 在 PEP 526 中引入了用于注释变量的语法，我们在大多数示例中都使用它。 123456789101112# This is how you declare the type of a variable type in Python 3.6age: int = 1# You don&#x27;t need to initialize a variable to annotate ita: int  # Ok (no value at runtime until assigned)# The latter is useful in conditional brancheschild: boolif age &lt; 18:    child = Trueelse:    child =...</div></div></div></a><a class="pagination-related" href="/2025/02/15/%E5%B7%A5%E5%85%B7-decouple%E5%BA%93%E4%BB%8B%E7%BB%8D/" title="decouple库介绍"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202502/14/5zSZqWW7TOx6DOM.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-15</div><div class="info-item-2">decouple库介绍</div></div><div class="info-2"><div class="info-item-1">python-decouple：简化配置管理的利器在现代软件开发中，合理地管理配置文件是确保项目安全性和可维护性的关键。python-decouple是一个强大的库，它帮助开发者将配置信息从代码中分离出来，使得项目更加灵活和安全。 安装安装python-decouple非常简单，只需一条pip命令： 1pip install python-decouple  核心特性 简化配置管理：通过简单易用的API，方便开发者管理配置信息。 解耦配置与代码：避免硬编码配置，提高代码的可维护性。 支持多种文件格式：支持读取和解析多种配置文件格式，如.env、.ini、.yaml等。 增强安全性：安全地存储敏感信息，如密码、API密钥等。  基本用法创建配置文件在项目根目录下创建一个.env文件，示例如下： 1234#...</div></div></div></a><a class="pagination-related" href="/2022/09/06/%E8%AF%AD%E6%B3%95-%E4%B8%8D%E5%B8%B8%E8%A7%81%E7%9A%84python%E7%B1%BB%E5%9E%8B%E6%A0%A1%E9%AA%8C/" title="不常见的python类型校验"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/不常见的python类型校验/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-06</div><div class="info-item-2">不常见的python类型校验</div></div><div class="info-2"><div class="info-item-1">以前写过关于python类型校验的相关总结，但是不怎么全面，有些不常见的特殊情况并未被记录。 任意类型any若声明某函数时指定函数传入参数的数据类型为any，则调用该函数时该参数的参数类型可以为任意类型。 1234def demo(name: any, age: &#x27;int &gt; 0&#x27; = 20) -&gt; str:  # -&gt;str 表示该函数的返回值是str类型的    print(name, type(name))    print(age, type(age))    return &quot;hello world&quot;  类型别名1234567# 给List[float]类型取个别名为VectorVector = List[float]def scale(scalar: float, vector: Vector) -&gt; Vector:    return [scalar * num for num in vector]new_vector = scale(2.0, [1.0, -4.2,...</div></div></div></a><a class="pagination-related" href="/2022/08/11/conda%E9%82%A3%E4%BA%9B%E5%91%BD%E4%BB%A4/" title="conda那些命令"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/conda那些命令/封面.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-11</div><div class="info-item-2">conda那些命令</div></div><div class="info-2"><div class="info-item-1">命令 创建虚拟环境 ： conda create --name my_first_env python=3.6  列出虚拟环境 ： conda env list  激活虚拟环境 ： conda activate my_first_env  查看环境信息 ： conda info -e  根据路径激活虚拟环境 ： conda source /root/python/bin/activate  推出虚拟环境 ： conda deactivate  删除虚拟环境 ： conda remove -n your_env_name --all  创建时候安装需要的包 ： conda create -n env_name numpy matplotlib python=2.7  在离线的时候创建虚拟环境 ： conda create -n env_name --offline python=3.8  环境复制 ： conda create --name new_env_name --clone old_env_name  查看所有包 : conda list   conda...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">170</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">81</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/21/RAG-%E4%BB%80%E4%B9%88%E6%98%AFRAG/" title="RAG-什么是RAG">RAG-什么是RAG</a><time datetime="2025-05-21T02:12:05.000Z" title="发表于 2025-05-21 10:12:05">2025-05-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/21/RAG-%E5%90%91%E9%87%8F%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9/" title="RAG-向量模型选择">RAG-向量模型选择</a><time datetime="2025-05-21T02:09:44.000Z" title="发表于 2025-05-21 10:09:44">2025-05-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/21/LLM-%E9%95%BF%E6%96%87%E6%9C%AC%E9%97%AE%E9%A2%98/" title="LLM-长文本问题">LLM-长文本问题</a><time datetime="2025-05-21T02:07:56.000Z" title="发表于 2025-05-21 10:07:56">2025-05-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/21/LLM-%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BE%AE%E8%B0%83/" title="LLN-训练与微调">LLN-训练与微调</a><time datetime="2025-05-21T02:06:21.000Z" title="发表于 2025-05-21 10:06:21">2025-05-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/21/LLM-%E6%98%BE%E5%AD%98%E8%AE%A1%E7%AE%97/" title="显存计算">显存计算</a><time datetime="2025-05-21T02:04:12.000Z" title="发表于 2025-05-21 10:04:12">2025-05-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By 望</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 5.4.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(function() {
+  const abcjsInit = function() {
+    const abcjsFn = function() {
+      setTimeout(function() {
+        const sheets = document.querySelectorAll(".abc-music-sheet")
+        for (let i = 0; i < sheets.length; i++) {
+          const ele = sheets[i]
+          if (ele.children.length > 0) continue
+
+          // Parse parameters from data-params attribute
+          let params = {}
+          const dp = ele.getAttribute("data-params")
+          if (dp) {
+            try {
+              params = JSON.parse(dp)
+            } catch (e) {
+              console.error("Failed to parse data-params:", e)
+            }
+          }
+
+          // Merge parsed parameters with the responsive option
+          // Ensures params content appears before responsive
+          const options = { ...params, responsive: "resize" }
+
+          // Render the music score using ABCJS.renderAbc
+          ABCJS.renderAbc(ele, ele.innerHTML, options)
+        }
+      }, 100)
+    }
+
+    if (typeof ABCJS === "object") {
+      abcjsFn()
+    } else {
+      btf.getScript("https://cdn.jsdelivr.net/npm/abcjs/dist/abcjs-basic-min.min.js").then(abcjsFn)
+    }
+  }
+
+  if (window.pjax) {
+    abcjsInit()
+  } else {
+    window.addEventListener("load", abcjsInit)
+  }
+
+  btf.addGlobalFn("encrypt", abcjsInit, "abcjs")
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="null" data-text="I,LOVE,YOU,木一" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

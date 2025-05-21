@@ -1,0 +1,439 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>显存计算 | 念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="了解大模型的显存占用在大型语言模型(LLM)领域，经常看到”7B”、”13B”、”70B”这样的参数规模描述，这些数字直接关系到模型运行所需的显存资源。对于开发者、研究人员和AI应用部署者来说，准确计算模型显存需求是：  硬件采购的基础 部署方案设计的依据 模型选择的关键因素 性能优化的起点  本文将系统性地解析大模型显存占用的计算方法，包括全精度加载和量化加载的不同场景。 一、基础概念：模型参数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="显存计算">
+<meta property="og:url" content="https://m42-orion.github.io/2025/05/21/LLM-%E6%98%BE%E5%AD%98%E8%AE%A1%E7%AE%97/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="了解大模型的显存占用在大型语言模型(LLM)领域，经常看到”7B”、”13B”、”70B”这样的参数规模描述，这些数字直接关系到模型运行所需的显存资源。对于开发者、研究人员和AI应用部署者来说，准确计算模型显存需求是：  硬件采购的基础 部署方案设计的依据 模型选择的关键因素 性能优化的起点  本文将系统性地解析大模型显存占用的计算方法，包括全精度加载和量化加载的不同场景。 一、基础概念：模型参数">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://m42-orion.github.io/img/butterfly-icon.png">
+<meta property="article:published_time" content="2025-05-21T02:04:12.000Z">
+<meta property="article:modified_time" content="2025-05-21T02:05:58.235Z">
+<meta property="article:author" content="望">
+<meta property="article:tag" content="LLM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://m42-orion.github.io/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "显存计算",
+  "url": "https://m42-orion.github.io/2025/05/21/LLM-%E6%98%BE%E5%AD%98%E8%AE%A1%E7%AE%97/",
+  "image": "https://m42-orion.github.io/img/butterfly-icon.png",
+  "datePublished": "2025-05-21T02:04:12.000Z",
+  "dateModified": "2025-05-21T02:05:58.235Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "望",
+      "url": "https://m42-orion.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://m42-orion.github.io/2025/05/21/LLM-%E6%98%BE%E5%AD%98%E8%AE%A1%E7%AE%97/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '显存计算',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 5.4.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">显存计算</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">显存计算</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-05-21T02:04:12.000Z" title="发表于 2025-05-21 10:04:12">2025-05-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-21T02:05:58.235Z" title="更新于 2025-05-21 10:05:58">2025-05-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/LLM/">LLM</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="了解大模型的显存占用"><a href="#了解大模型的显存占用" class="headerlink" title="了解大模型的显存占用"></a>了解大模型的显存占用</h2><p>在大型语言模型(LLM)领域，经常看到”7B”、”13B”、”70B”这样的参数规模描述，这些数字直接关系到模型运行所需的显存资源。对于开发者、研究人员和AI应用部署者来说，准确计算模型显存需求是：</p>
+<ul>
+<li>硬件采购的基础</li>
+<li>部署方案设计的依据</li>
+<li>模型选择的关键因素</li>
+<li>性能优化的起点</li>
+</ul>
+<p>本文将系统性地解析大模型显存占用的计算方法，包括全精度加载和量化加载的不同场景。</p>
+<h2 id="一、基础概念：模型参数与显存的关系"><a href="#一、基础概念：模型参数与显存的关系" class="headerlink" title="一、基础概念：模型参数与显存的关系"></a>一、基础概念：模型参数与显存的关系</h2><h3 id="1-1-参数量的表示方法"><a href="#1-1-参数量的表示方法" class="headerlink" title="1.1 参数量的表示方法"></a>1.1 参数量的表示方法</h3><ul>
+<li><strong>1B参数</strong> = 10亿(1,000,000,000)个参数</li>
+<li><strong>常见模型规模</strong>：<ul>
+<li>7B (70亿，如Llama 2-7B)</li>
+<li>13B (130亿，如Llama 2-13B)</li>
+<li>70B (700亿，如Llama 2-70B)</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-参数数据类型与显存占用"><a href="#1-2-参数数据类型与显存占用" class="headerlink" title="1.2 参数数据类型与显存占用"></a>1.2 参数数据类型与显存占用</h3><p>现代大模型通常使用以下数据类型：</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>位数</th>
+<th>字节数</th>
+<th>常见用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FP32</td>
+<td>32</td>
+<td>4</td>
+<td>全精度训练</td>
+</tr>
+<tr>
+<td>FP16</td>
+<td>16</td>
+<td>2</td>
+<td>混合精度训练/推理</td>
+</tr>
+<tr>
+<td>BF16</td>
+<td>16</td>
+<td>2</td>
+<td>训练(动态范围更大)</td>
+</tr>
+<tr>
+<td>INT8</td>
+<td>8</td>
+<td>1</td>
+<td>量化推理</td>
+</tr>
+<tr>
+<td>INT4</td>
+<td>4</td>
+<td>0.5</td>
+<td>极端量化</td>
+</tr>
+</tbody></table>
+<h2 id="二、全量加载显存计算"><a href="#二、全量加载显存计算" class="headerlink" title="二、全量加载显存计算"></a>二、全量加载显存计算</h2><h3 id="2-1-基础计算公式"><a href="#2-1-基础计算公式" class="headerlink" title="2.1 基础计算公式"></a>2.1 基础计算公式</h3><p><strong>全量加载显存(字节) = 参数量 × 每个参数所占字节数</strong></p>
+<p>举例：</p>
+<ul>
+<li>7B模型的FP32加载：7×10⁹ × 4 = 28GB</li>
+<li>70B模型的FP16加载：70×10⁹ × 2 = 140GB</li>
+</ul>
+<h3 id="2-2-实际计算中的额外开销"><a href="#2-2-实际计算中的额外开销" class="headerlink" title="2.2 实际计算中的额外开销"></a>2.2 实际计算中的额外开销</h3><p>实际显存占用还需考虑：</p>
+<ol>
+<li><p><strong>优化器状态</strong>（训练时）：</p>
+<ul>
+<li>Adam优化器：每个参数需要额外8字节(2个FP32状态)</li>
+<li>公式：参数量 × 12 (4参数+8优化器)</li>
+</ul>
+</li>
+<li><p><strong>激活值</strong>（前向传播）：</p>
+<ul>
+<li>约占总显存的20-30%</li>
+<li>与批次大小(batch size)和序列长度正相关</li>
+</ul>
+</li>
+<li><p><strong>临时缓冲区</strong>：</p>
+<ul>
+<li>用于中间计算结果存储</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-3-完整训练显存估算"><a href="#2-3-完整训练显存估算" class="headerlink" title="2.3 完整训练显存估算"></a>2.3 完整训练显存估算</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">总显存 ≈ 参数量 × (参数字节 + 优化器字节) × 安全系数(1.2~1.3)</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例</strong>：训练7B模型的FP16混合精度训练：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">7×10⁹ × (2 + 8) × 1.2 ≈ 84GB</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、量化加载显存计算"><a href="#三、量化加载显存计算" class="headerlink" title="三、量化加载显存计算"></a>三、量化加载显存计算</h2><h3 id="3-1-量化的基本原理"><a href="#3-1-量化的基本原理" class="headerlink" title="3.1 量化的基本原理"></a>3.1 量化的基本原理</h3><p>量化通过减少参数精度来降低显存需求：</p>
+<ul>
+<li><strong>权重量化</strong>：将FP32/FP16转换为低精度(INT8/INT4)</li>
+<li><strong>激活量化</strong>：动态量化中间结果</li>
+</ul>
+<h3 id="3-2-常见量化方案"><a href="#3-2-常见量化方案" class="headerlink" title="3.2 常见量化方案"></a>3.2 常见量化方案</h3><table>
+<thead>
+<tr>
+<th>量化类型</th>
+<th>权重</th>
+<th>激活值</th>
+<th>显存减少</th>
+<th>精度损失</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FP16</td>
+<td>16位</td>
+<td>16位</td>
+<td>~50%</td>
+<td>极小</td>
+</tr>
+<tr>
+<td>INT8</td>
+<td>8位</td>
+<td>8位</td>
+<td>~75%</td>
+<td>较小</td>
+</tr>
+<tr>
+<td>INT4</td>
+<td>4位</td>
+<td>8位</td>
+<td>~87.5%</td>
+<td>明显</td>
+</tr>
+<tr>
+<td>GPTQ</td>
+<td>混合</td>
+<td>FP16</td>
+<td>可配置</td>
+<td>较小</td>
+</tr>
+</tbody></table>
+<h3 id="3-3-量化显存计算公式"><a href="#3-3-量化显存计算公式" class="headerlink" title="3.3 量化显存计算公式"></a>3.3 量化显存计算公式</h3><p><strong>量化显存 = 参数量 × 量化后字节数 + 额外开销</strong></p>
+<p><strong>示例</strong>：7B模型INT8量化：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">7×10⁹ × 1 = 7GB</span><br></pre></td></tr></table></figure>
+<p>INT4量化：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">7×10⁹ × 0.5 = 3.5GB</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-实际工具中的量化实现"><a href="#3-4-实际工具中的量化实现" class="headerlink" title="3.4 实际工具中的量化实现"></a>3.4 实际工具中的量化实现</h3><p>现代推理框架提供了便捷的量化方式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用bitsandbytes进行8位量化</span></span><br><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoModelForCausalLM</span><br><span class="line">model = AutoModelForCausalLM.from_pretrained(</span><br><span class="line">    <span class="string">&quot;meta-llama/Llama-2-7b-hf&quot;</span>,</span><br><span class="line">    load_in_8bit=<span class="literal">True</span>,  <span class="comment"># 8位量化</span></span><br><span class="line">    device_map=<span class="string">&quot;auto&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或使用4位量化</span></span><br><span class="line">model = AutoModelForCausalLM.from_pretrained(</span><br><span class="line">    <span class="string">&quot;meta-llama/Llama-2-7b-hf&quot;</span>,</span><br><span class="line">    load_in_4bit=<span class="literal">True</span>,  <span class="comment"># 4位量化</span></span><br><span class="line">    device_map=<span class="string">&quot;auto&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、实践指南：如何选择加载方式？"><a href="#四、实践指南：如何选择加载方式？" class="headerlink" title="四、实践指南：如何选择加载方式？"></a>四、实践指南：如何选择加载方式？</h2><h3 id="4-1-全量加载-vs-量化加载"><a href="#4-1-全量加载-vs-量化加载" class="headerlink" title="4.1 全量加载 vs 量化加载"></a>4.1 全量加载 vs 量化加载</h3><table>
+<thead>
+<tr>
+<th>考量因素</th>
+<th>全量加载</th>
+<th>量化加载</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>显存需求</td>
+<td>高</td>
+<td>低</td>
+</tr>
+<tr>
+<td>计算速度</td>
+<td>快(适合A100等)</td>
+<td>可能稍慢</td>
+</tr>
+<tr>
+<td>模型精度</td>
+<td>最佳</td>
+<td>略有下降</td>
+</tr>
+<tr>
+<td>硬件要求</td>
+<td>需要高端GPU</td>
+<td>可在消费级GPU运行</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>训练/高精度推理</td>
+<td>资源受限的推理</td>
+</tr>
+</tbody></table>
+<h3 id="4-2-硬件与模型规模的匹配参考"><a href="#4-2-硬件与模型规模的匹配参考" class="headerlink" title="4.2 硬件与模型规模的匹配参考"></a>4.2 硬件与模型规模的匹配参考</h3><table>
+<thead>
+<tr>
+<th>模型规模</th>
+<th>全FP16(GB)</th>
+<th>INT8(GB)</th>
+<th>INT4(GB)</th>
+<th>推荐GPU</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>7B</td>
+<td>14</td>
+<td>7</td>
+<td>3.5</td>
+<td>RTX 3090/4090</td>
+</tr>
+<tr>
+<td>13B</td>
+<td>26</td>
+<td>13</td>
+<td>6.5</td>
+<td>A10G/A100 40GB</td>
+</tr>
+<tr>
+<td>70B</td>
+<td>140</td>
+<td>70</td>
+<td>35</td>
+<td>A100 80GB×2</td>
+</tr>
+</tbody></table>
+<h2 id="五、显存优化的其他技术"><a href="#五、显存优化的其他技术" class="headerlink" title="五、显存优化的其他技术"></a>五、显存优化的其他技术</h2><h3 id="5-1-模型并行"><a href="#5-1-模型并行" class="headerlink" title="5.1 模型并行"></a>5.1 模型并行</h3><ul>
+<li><strong>Tensor并行</strong>：将模型层拆分到多个GPU</li>
+<li><strong>Pipeline并行</strong>：按层划分到不同设备</li>
+<li><strong>示例</strong>：Deepspeed的Zero优化</li>
+</ul>
+<h3 id="5-2-Flash-Attention"><a href="#5-2-Flash-Attention" class="headerlink" title="5.2 Flash Attention"></a>5.2 Flash Attention</h3><p>优化注意力机制的内存访问模式，可减少约20%显存占用</p>
+<h3 id="5-3-梯度检查点"><a href="#5-3-梯度检查点" class="headerlink" title="5.3 梯度检查点"></a>5.3 梯度检查点</h3><p>用计算换显存，可减少约60%的激活值显存</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用梯度检查点</span></span><br><span class="line">model.gradient_checkpointing_enable()</span><br></pre></td></tr></table></figure>
+
+<h2 id="六、实用工具推荐"><a href="#六、实用工具推荐" class="headerlink" title="六、实用工具推荐"></a>六、实用工具推荐</h2><ol>
+<li><p><strong>显存估算工具</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoConfig</span><br><span class="line"></span><br><span class="line">config = AutoConfig.from_pretrained(<span class="string">&quot;meta-llama/Llama-2-7b-hf&quot;</span>)</span><br><span class="line">params = <span class="built_in">sum</span>(p.numel() <span class="keyword">for</span> p <span class="keyword">in</span> model.parameters())</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;FP32显存需求: <span class="subst">&#123;params * <span class="number">4</span> / <span class="number">1024</span>**<span class="number">3</span>:<span class="number">.2</span>f&#125;</span>GB&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>设备映射检查</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(model.hf_device_map)</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>显存监控</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvidia-smi -l 1  <span class="comment"># 实时监控显存使用</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="平衡"><a href="#平衡" class="headerlink" title="平衡"></a>平衡</h2><p>大模型部署始终是资源、精度和速度的平衡艺术。理解显存计算原理后，你可以：</p>
+<ol>
+<li>根据硬件条件选择合适模型</li>
+<li>为特定任务选择最佳量化方案</li>
+<li>设计高效的分布式推理方案</li>
+<li>预判扩展需求，合理规划硬件</li>
+</ol>
+<p>记住，没有”最好”的加载方式，只有最适合你应用场景的选择。希望本文能成为你在大型语言模型部署路上的实用参考！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2025/05/21/LLM-%E6%98%BE%E5%AD%98%E8%AE%A1%E7%AE%97/">https://m42-orion.github.io/2025/05/21/LLM-%E6%98%BE%E5%AD%98%E8%AE%A1%E7%AE%97/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/LLM/">LLM</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/03/31/RAG-Chonkie%E5%AE%9E%E8%B7%B5%E7%90%86%E8%A7%A3%E5%88%86%E5%9D%97/" title="RAG-Chonkie实践理解分块"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202205/25/20220525152607_36e08.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">RAG-Chonkie实践理解分块</div></div><div class="info-2"><div class="info-item-1">在构建高效的检索增强生成（RAG）系统时，文本分块（Chunking）是决定系统性能的关键预处理步骤。今天我们将深入探讨文本分块的重要性，并详细解析Chonkie库提供的五种分块方法，帮助开发者选择最适合自己场景的分块策略。  一. 为什么文本分块如此重要？在RAG流程中，分块是数据预处理的核心环节，直接影响：  检索精度：过大的块会引入噪声，过小的块丢失上下文。 生成质量：LLM需要连贯的上下文理解用户查询。 计算效率：合理分块减少无效计算。  错误分块的典型问题 案例1：将“巴黎是法国的首都。柏林是德国的首都”切分为： Chunk1: “巴黎是法国的首都。柏林” Chunk2: “是德国的首都”    → 检索“德国首都”时可能漏检Chunk1。 案例2：将一篇学术论文的“方法论”和“结论”合并为一个块→ 检索具体方法细节时引入无关信息。   二、Chonkie的五种分块方法详解1....</div></div></div></a><a class="pagination-related" href="/2025/05/21/LLM-%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BE%AE%E8%B0%83/" title="LLN-训练与微调"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">LLN-训练与微调</div></div><div class="info-2"><div class="info-item-1">为什么需要多种微调方法？在大模型应用落地的过程中，预训练后的微调(Fine-tuning)是使模型适应特定任务的关键环节。随着技术的发展，研究者们提出了从传统的监督微调(SFT)到基于人类反馈的强化学习(RHLF)，再到最新的直接偏好优化(DPO)等一系列方法。本文将系统解析6种主流微调技术的工作原理、适用场景及实践要点，根据具体需求选择最佳方案。 一、基础方法：监督微调(SFT)1.1 技术原理**监督微调(Supervised Fine-Tuning)**是最基础的微调方法，使用标注数据集通过标准交叉熵损失进行训练： 1L_SFT = -Σ log P(y|x;θ) 其中(x,y)是输入-输出对，θ是模型参数。 1.2 典型流程 准备高质量标注数据 在预训练模型上继续训练 使用学习率衰减策略（如cosine衰减）  1.3 优缺点分析优势：  实现简单，计算成本低 对小规模数据适应良好 可复用传统NLP训练流程  局限：  依赖大量标注数据 容易过拟合 无法学习复杂偏好  适用场景：任务明确、有充足标注数据的领域适应 二、高效微调技术：参数高效微调(ReFT)2.1...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/05/21/LLM-%E9%95%BF%E6%96%87%E6%9C%AC%E9%97%AE%E9%A2%98/" title="LLM-长文本问题"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-21</div><div class="info-item-2">LLM-长文本问题</div></div><div class="info-2"><div class="info-item-1">引言随着大语言模型(LLM)的广泛应用，处理超长文本输入已成为开发者面临的常见问题。当文本长度超过模型的上下文窗口限制（如GPT-4的32k token或Claude的100k token），或者即使长度未超限但内容过于复杂时，都需要特殊的处理策略。本文将分析现有解决方案，评估其适用场景，并介绍前沿的处理技术。(部分内容由大模型总结，请谨慎辨别) 一、长文本处理的核心挑战1. 技术限制 上下文窗口限制：主流模型的token上限  graph LR   A[模型类型] --> B[GPT-4-32k]   A --> C[Claude-100k]   A --> D[LLaMA2-4k] 注意力机制开销：Transformer的O(n²)复杂度 信息衰减现象：模型对中间位置内容理解较弱  2. 业务影响 关键信息丢失：超出窗口部分被截断 语义连贯性破坏：拆分导致上下文断裂 推理质量下降：复杂论证难以维持  二、现有解决方案深度评估1. 检索增强生成(RAG)技术实现： 123456789101112131415from langchain.embeddings import...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">170</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">81</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%86%E8%A7%A3%E5%A4%A7%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%98%BE%E5%AD%98%E5%8D%A0%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">了解大模型的显存占用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5%EF%BC%9A%E6%A8%A1%E5%9E%8B%E5%8F%82%E6%95%B0%E4%B8%8E%E6%98%BE%E5%AD%98%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">2.</span> <span class="toc-text">一、基础概念：模型参数与显存的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%8F%82%E6%95%B0%E9%87%8F%E7%9A%84%E8%A1%A8%E7%A4%BA%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.</span> <span class="toc-text">1.1 参数量的表示方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%8F%82%E6%95%B0%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E6%98%BE%E5%AD%98%E5%8D%A0%E7%94%A8"><span class="toc-number">2.2.</span> <span class="toc-text">1.2 参数数据类型与显存占用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%85%A8%E9%87%8F%E5%8A%A0%E8%BD%BD%E6%98%BE%E5%AD%98%E8%AE%A1%E7%AE%97"><span class="toc-number">3.</span> <span class="toc-text">二、全量加载显存计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%9F%BA%E7%A1%80%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 基础计算公式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%AE%9E%E9%99%85%E8%AE%A1%E7%AE%97%E4%B8%AD%E7%9A%84%E9%A2%9D%E5%A4%96%E5%BC%80%E9%94%80"><span class="toc-number">3.2.</span> <span class="toc-text">2.2 实际计算中的额外开销</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%AE%8C%E6%95%B4%E8%AE%AD%E7%BB%83%E6%98%BE%E5%AD%98%E4%BC%B0%E7%AE%97"><span class="toc-number">3.3.</span> <span class="toc-text">2.3 完整训练显存估算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E9%87%8F%E5%8C%96%E5%8A%A0%E8%BD%BD%E6%98%BE%E5%AD%98%E8%AE%A1%E7%AE%97"><span class="toc-number">4.</span> <span class="toc-text">三、量化加载显存计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E9%87%8F%E5%8C%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">4.1.</span> <span class="toc-text">3.1 量化的基本原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%B8%B8%E8%A7%81%E9%87%8F%E5%8C%96%E6%96%B9%E6%A1%88"><span class="toc-number">4.2.</span> <span class="toc-text">3.2 常见量化方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E9%87%8F%E5%8C%96%E6%98%BE%E5%AD%98%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F"><span class="toc-number">4.3.</span> <span class="toc-text">3.3 量化显存计算公式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%AE%9E%E9%99%85%E5%B7%A5%E5%85%B7%E4%B8%AD%E7%9A%84%E9%87%8F%E5%8C%96%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.4.</span> <span class="toc-text">3.4 实际工具中的量化实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97%EF%BC%9A%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%8A%A0%E8%BD%BD%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">四、实践指南：如何选择加载方式？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%85%A8%E9%87%8F%E5%8A%A0%E8%BD%BD-vs-%E9%87%8F%E5%8C%96%E5%8A%A0%E8%BD%BD"><span class="toc-number">5.1.</span> <span class="toc-text">4.1 全量加载 vs 量化加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E7%A1%AC%E4%BB%B6%E4%B8%8E%E6%A8%A1%E5%9E%8B%E8%A7%84%E6%A8%A1%E7%9A%84%E5%8C%B9%E9%85%8D%E5%8F%82%E8%80%83"><span class="toc-number">5.2.</span> <span class="toc-text">4.2 硬件与模型规模的匹配参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%98%BE%E5%AD%98%E4%BC%98%E5%8C%96%E7%9A%84%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF"><span class="toc-number">6.</span> <span class="toc-text">五、显存优化的其他技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%A8%A1%E5%9E%8B%E5%B9%B6%E8%A1%8C"><span class="toc-number">6.1.</span> <span class="toc-text">5.1 模型并行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-Flash-Attention"><span class="toc-number">6.2.</span> <span class="toc-text">5.2 Flash Attention</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E6%A2%AF%E5%BA%A6%E6%A3%80%E6%9F%A5%E7%82%B9"><span class="toc-number">6.3.</span> <span class="toc-text">5.3 梯度检查点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90"><span class="toc-number">7.</span> <span class="toc-text">六、实用工具推荐</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%B3%E8%A1%A1"><span class="toc-number">8.</span> <span class="toc-text">平衡</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/21/RAG-%E4%BB%80%E4%B9%88%E6%98%AFRAG/" title="RAG-什么是RAG">RAG-什么是RAG</a><time datetime="2025-05-21T02:12:05.000Z" title="发表于 2025-05-21 10:12:05">2025-05-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/21/RAG-%E5%90%91%E9%87%8F%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9/" title="RAG-向量模型选择">RAG-向量模型选择</a><time datetime="2025-05-21T02:09:44.000Z" title="发表于 2025-05-21 10:09:44">2025-05-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/21/LLM-%E9%95%BF%E6%96%87%E6%9C%AC%E9%97%AE%E9%A2%98/" title="LLM-长文本问题">LLM-长文本问题</a><time datetime="2025-05-21T02:07:56.000Z" title="发表于 2025-05-21 10:07:56">2025-05-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/21/LLM-%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BE%AE%E8%B0%83/" title="LLN-训练与微调">LLN-训练与微调</a><time datetime="2025-05-21T02:06:21.000Z" title="发表于 2025-05-21 10:06:21">2025-05-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/21/LLM-%E6%98%BE%E5%AD%98%E8%AE%A1%E7%AE%97/" title="显存计算">显存计算</a><time datetime="2025-05-21T02:04:12.000Z" title="发表于 2025-05-21 10:04:12">2025-05-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By 望</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 5.4.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(function() {
+  const abcjsInit = function() {
+    const abcjsFn = function() {
+      setTimeout(function() {
+        const sheets = document.querySelectorAll(".abc-music-sheet")
+        for (let i = 0; i < sheets.length; i++) {
+          const ele = sheets[i]
+          if (ele.children.length > 0) continue
+
+          // Parse parameters from data-params attribute
+          let params = {}
+          const dp = ele.getAttribute("data-params")
+          if (dp) {
+            try {
+              params = JSON.parse(dp)
+            } catch (e) {
+              console.error("Failed to parse data-params:", e)
+            }
+          }
+
+          // Merge parsed parameters with the responsive option
+          // Ensures params content appears before responsive
+          const options = { ...params, responsive: "resize" }
+
+          // Render the music score using ABCJS.renderAbc
+          ABCJS.renderAbc(ele, ele.innerHTML, options)
+        }
+      }, 100)
+    }
+
+    if (typeof ABCJS === "object") {
+      abcjsFn()
+    } else {
+      btf.getScript("https://cdn.jsdelivr.net/npm/abcjs/dist/abcjs-basic-min.min.js").then(abcjsFn)
+    }
+  }
+
+  if (window.pjax) {
+    abcjsInit()
+  } else {
+    window.addEventListener("load", abcjsInit)
+  }
+
+  btf.addGlobalFn("encrypt", abcjsInit, "abcjs")
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="null" data-text="I,LOVE,YOU,木一" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
