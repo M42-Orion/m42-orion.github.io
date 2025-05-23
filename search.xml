@@ -8431,35 +8431,291 @@
   </entry>
   <entry>
     <title>循环、迭代器、生成器</title>
-    <url>/2024/07/25/%E8%AF%AD%E6%B3%95-%E5%BE%AA%E7%8E%AF%E3%80%81%E8%BF%AD%E4%BB%A3%E5%99%A8%E3%80%81%E7%94%9F%E6%88%90%E5%99%A8/</url>
-    <content><![CDATA[<h1 id="循环、迭代器和生成器"><a href="#循环、迭代器和生成器" class="headerlink" title="循环、迭代器和生成器"></a>循环、迭代器和生成器</h1><p>在 Python 中，循环、迭代器和生成器是处理数据的重要工具。它们可以帮助我们遍历数据、生成数据以及优化性能。下面我们将详细解释这些概念。</p>
-<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><p>循环是一种编程结构，用于重复执行一段代码。Python 提供了两种循环结构：<code>for</code> 循环和 <code>while</code> 循环。</p>
-<h3 id="for-循环"><a href="#for-循环" class="headerlink" title="for 循环"></a><code>for</code> 循环</h3><p><code>for</code> 循环用于遍历一个可迭代对象（如列表、元组、字典、集合、字符串等）中的元素。每次循环，都会将可迭代对象中的一个元素赋值给循环变量，并执行循环体。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br></pre></td></tr></table></figure>
+    <url>/2025/05/23/%E8%AF%AD%E6%B3%95-%E5%BE%AA%E7%8E%AF%E3%80%81%E8%BF%AD%E4%BB%A3%E5%99%A8%E3%80%81%E7%94%9F%E6%88%90%E5%99%A8/</url>
+    <content><![CDATA[<h2 id="一、循环（Loop）"><a href="#一、循环（Loop）" class="headerlink" title="一、循环（Loop）"></a><strong>一、循环（Loop）</strong></h2><h3 id="本质"><a href="#本质" class="headerlink" title="本质"></a><strong>本质</strong></h3><p>循环是一种<strong>控制结构</strong>，用于重复执行代码块。它本身不是数据结构，而是一种语法机制。</p>
+<h3 id="常见形式"><a href="#常见形式" class="headerlink" title="常见形式"></a><strong>常见形式</strong></h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 1. for 循环（遍历可迭代对象）</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]:</span><br><span class="line">    <span class="built_in">print</span>(item)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. while 循环（基于条件）</span></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> i &lt; <span class="number">3</span>:</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br><span class="line">    i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
 
-<p>输出：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+<h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a><strong>适用场景</strong></h3><ul>
+<li>需要重复执行相同或相似的操作</li>
+<li>遍历容器中的元素（如列表、字典）</li>
+<li>实现需要终止条件的逻辑（如用户登录验证）</li>
+</ul>
+<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a><strong>优势</strong></h3><ul>
+<li>简单直观，易于理解和使用</li>
+<li>适用于大多数重复操作场景</li>
+</ul>
+<h3 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a><strong>劣势</strong></h3><ul>
+<li>当处理大量数据时，可能占用大量内存（如生成全量数据列表）</li>
+<li>无法暂停或恢复执行流程</li>
+</ul>
+<h2 id="二、迭代器（Iterator）"><a href="#二、迭代器（Iterator）" class="headerlink" title="二、迭代器（Iterator）"></a><strong>二、迭代器（Iterator）</strong></h2><h3 id="本质-1"><a href="#本质-1" class="headerlink" title="本质"></a><strong>本质</strong></h3><p>迭代器是实现了<strong>迭代器协议</strong>的对象（即包含 <code>__iter__()</code> 和 <code>__next__()</code> 方法）。它是一种<strong>数据访问方式</strong>，允许你按需逐个访问元素。</p>
+<h3 id="核心方法"><a href="#核心方法" class="headerlink" title="核心方法"></a><strong>核心方法</strong></h3><ul>
+<li><code>__iter__()</code>：返回迭代器自身</li>
+<li><code>__next__()</code>：返回下一个元素，若没有元素则抛出 <code>StopIteration</code> 异常</li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a><strong>示例</strong></h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">my_list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">my_iter = <span class="built_in">iter</span>(my_list)  <span class="comment"># 创建迭代器</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(my_iter))  <span class="comment"># 输出 1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(my_iter))  <span class="comment"># 输出 2</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(my_iter))  <span class="comment"># 输出 3</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(my_iter))  <span class="comment"># 抛出 StopIteration</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="while-循环"><a href="#while-循环" class="headerlink" title="while 循环"></a><code>while</code> 循环</h3><p><code>while</code> 循环用于在条件为真时重复执行一段代码。每次循环，都会检查条件，如果条件为真，则执行循环体。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">i = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> i &lt; <span class="number">5</span>:</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br><span class="line">    i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h3 id="适用场景-1"><a href="#适用场景-1" class="headerlink" title="适用场景"></a><strong>适用场景</strong></h3><ul>
+<li>需要逐个处理大量数据（如文件读取、数据库查询结果）</li>
+<li>实现自定义的遍历逻辑（如树形结构遍历）</li>
+</ul>
+<h3 id="优势-1"><a href="#优势-1" class="headerlink" title="优势"></a><strong>优势</strong></h3><ul>
+<li><strong>节省内存</strong>：不需要预先生成所有元素，而是按需生成</li>
+<li>支持无限序列（如计数器、斐波那契数列）</li>
+</ul>
+<h3 id="劣势-1"><a href="#劣势-1" class="headerlink" title="劣势"></a><strong>劣势</strong></h3><ul>
+<li>只能向前遍历，不能回退或重置（除非重新创建迭代器）</li>
+<li>代码复杂度略高于普通循环</li>
+</ul>
+<h2 id="三、生成器（Generator）"><a href="#三、生成器（Generator）" class="headerlink" title="三、生成器（Generator）"></a><strong>三、生成器（Generator）</strong></h2><h3 id="本质-2"><a href="#本质-2" class="headerlink" title="本质"></a><strong>本质</strong></h3><p>生成器是一种<strong>特殊的迭代器</strong>，它通过更简洁的语法实现（使用 <code>yield</code> 关键字或生成器表达式）。它允许你在需要时生成值，而不是预先计算并存储所有值。</p>
+<h3 id="两种形式"><a href="#两种形式" class="headerlink" title="两种形式"></a><strong>两种形式</strong></h3><ol>
+<li><p><strong>生成器函数</strong>（使用 <code>yield</code>）：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_generator</span>():</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="number">2</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="number">3</span></span><br><span class="line"></span><br><span class="line">gen = my_generator()</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen))  <span class="comment"># 输出 1</span></span><br></pre></td></tr></table></figure></li>
+<li><p><strong>生成器表达式</strong>（类似列表推导式，但用圆括号）：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">gen = (x <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen))  <span class="comment"># 输出 0</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="适用场景-2"><a href="#适用场景-2" class="headerlink" title="适用场景"></a><strong>适用场景</strong></h3><ul>
+<li>处理大量数据或无限序列（如日志分析、大数据集）</li>
+<li>实现惰性计算（只在需要时生成结果）</li>
+<li>简化迭代器的实现（无需手动编写 <code>__iter__</code> 和 <code>__next__</code> 方法）</li>
+</ul>
+<h3 id="优势-2"><a href="#优势-2" class="headerlink" title="优势"></a><strong>优势</strong></h3><ul>
+<li><strong>最节省内存</strong>：逐个生成值，不存储整个序列</li>
+<li>代码简洁，可读性高</li>
+<li>支持暂停和恢复执行（每次 <code>yield</code> 后暂停，下次调用 <code>next()</code> 继续执行）</li>
+</ul>
+<h3 id="劣势-2"><a href="#劣势-2" class="headerlink" title="劣势"></a><strong>劣势</strong></h3><ul>
+<li>只能遍历一次，不能回头</li>
+<li>不适合需要随机访问元素的场景</li>
+</ul>
+<h2 id="四、对比总结"><a href="#四、对比总结" class="headerlink" title="四、对比总结"></a><strong>四、对比总结</strong></h2><table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><strong>循环（Loop）</strong></th>
+<th><strong>迭代器（Iterator）</strong></th>
+<th><strong>生成器（Generator）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>本质</strong></td>
+<td>控制结构</td>
+<td>实现迭代协议的对象</td>
+<td>特殊的迭代器</td>
+</tr>
+<tr>
+<td><strong>内存效率</strong></td>
+<td>低（预生成所有元素）</td>
+<td>高（按需生成）</td>
+<td>极高（按需生成）</td>
+</tr>
+<tr>
+<td><strong>代码复杂度</strong></td>
+<td>最低</td>
+<td>中等</td>
+<td>低（比迭代器更简洁）</td>
+</tr>
+<tr>
+<td><strong>状态保存</strong></td>
+<td>无</td>
+<td>自动保存（通过 <code>__next__</code>）</td>
+<td>自动保存（通过 <code>yield</code>）</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>简单重复操作</td>
+<td>自定义遍历逻辑</td>
+<td>大数据处理、惰性计算</td>
+</tr>
+<tr>
+<td><strong>能否无限序列</strong></td>
+<td>需手动控制终止条件</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+</tbody></table>
+<h2 id="五、何时用哪个？"><a href="#五、何时用哪个？" class="headerlink" title="五、何时用哪个？"></a><strong>五、何时用哪个？</strong></h2><ul>
+<li><strong>用循环</strong>：当需要简单遍历已知的、有限的数据集，且不需要节省内存时。</li>
+<li><strong>用迭代器</strong>：当需要自定义遍历逻辑，或处理大量数据但不想一次性加载到内存时。</li>
+<li><strong>用生成器</strong>：当处理超大数据集、无限序列，或需要最大化内存效率时（如数据管道、流式处理）。</li>
+</ul>
+<p><strong>举个例子</strong>：</p>
+<ul>
+<li>遍历一个小列表：直接用 <code>for</code> 循环。</li>
+<li>遍历一个 10GB 的日志文件：用生成器逐行读取。</li>
+<li>实现一个斐波那契数列生成器：用生成器函数（无限序列）。</li>
+</ul>
+<hr>
+<p>看完之后可能还会有一个疑问，就是<code>__iter__</code>返回自身，但是好像并没有看到调用<code>__iter__</code>的地方，这是为什么呢？</p>
+<h2 id="六、-iter-的核心作用"><a href="#六、-iter-的核心作用" class="headerlink" title="六、__iter__ 的核心作用"></a><strong>六、<code>__iter__</code> 的核心作用</strong></h2><p>在Python中，<strong>迭代器协议</strong>要求对象必须同时实现两个方法：</p>
+<ol>
+<li><code>__iter__()</code>：返回迭代器自身（即 <code>self</code>）</li>
+<li><code>__next__()</code>：返回下一个元素，若无元素则抛出 <code>StopIteration</code></li>
+</ol>
+<p><strong>关键点</strong>：<code>__iter__</code> 的存在是为了让迭代器对象<strong>也能作为可迭代对象使用</strong>。</p>
+<h2 id="七、为什么需要-iter-返回自身？"><a href="#七、为什么需要-iter-返回自身？" class="headerlink" title="七、为什么需要 __iter__ 返回自身？"></a><strong>七、为什么需要 <code>__iter__</code> 返回自身？</strong></h2><h3 id="1-支持-for-循环和内置函数"><a href="#1-支持-for-循环和内置函数" class="headerlink" title="1. 支持 for 循环和内置函数"></a><strong>1. 支持 <code>for</code> 循环和内置函数</strong></h3><p>Python的 <code>for</code> 循环、<code>list()</code>、<code>sum()</code> 等内置函数在使用迭代器前，会先调用 <code>iter()</code> 函数将对象转换为迭代器。例如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">my_list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">iterator = <span class="built_in">iter</span>(my_list)  <span class="comment"># 等价于调用 my_list.__iter__()</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以下两种写法等价</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> iterator:  <span class="comment"># 隐式调用 iter(iterator)</span></span><br><span class="line">    <span class="built_in">print</span>(item)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 等价于手动实现的循环</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        item = iterator.__next__()  <span class="comment"># 手动调用 next</span></span><br><span class="line">        <span class="built_in">print</span>(item)</span><br><span class="line">    <span class="keyword">except</span> StopIteration:</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<p><strong>关键点</strong>：当你将迭代器对象传入 <code>for</code> 循环时，Python会先调用 <code>iter(iterator)</code>，此时需要 <code>iterator.__iter__()</code> 返回自身，否则会报错。</p>
+<h3 id="2-支持多重迭代"><a href="#2-支持多重迭代" class="headerlink" title="2. 支持多重迭代"></a><strong>2. 支持多重迭代</strong></h3><p>有些场景需要对同一个迭代器进行多次迭代（虽然不常见）。例如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyRange</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, n</span>):</span><br><span class="line">        self.n = n</span><br><span class="line">        self.current = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__iter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self  <span class="comment"># 返回自身，支持多重迭代</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__next__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> self.current &lt; self.n:</span><br><span class="line">            value = self.current</span><br><span class="line">            self.current += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> StopIteration</span><br><span class="line"></span><br><span class="line"><span class="comment"># 错误示例：重置迭代器状态的错误方式</span></span><br><span class="line">r = MyRange(<span class="number">3</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> r: <span class="built_in">print</span>(i)  <span class="comment"># 输出 0, 1, 2</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> r: <span class="built_in">print</span>(i)  <span class="comment"># 无输出，因为迭代器已耗尽</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 正确示例：每次创建新迭代器</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyRangeFixed</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, n</span>):</span><br><span class="line">        self.n = n</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__iter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> MyRangeIterator(self.n)  <span class="comment"># 每次返回新的迭代器实例</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyRangeIterator</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, n</span>):</span><br><span class="line">        self.n = n</span><br><span class="line">        self.current = <span class="number">0</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__iter__</span>(<span class="params">self</span>): <span class="keyword">return</span> self</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__next__</span>(<span class="params">self</span>): ...</span><br><span class="line"></span><br><span class="line">r = MyRangeFixed(<span class="number">3</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> r: <span class="built_in">print</span>(i)  <span class="comment"># 输出 0, 1, 2</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> r: <span class="built_in">print</span>(i)  <span class="comment"># 再次输出 0, 1, 2（因为每次都创建新迭代器）</span></span><br></pre></td></tr></table></figure>
 
-<p>输出：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
 
-<h2 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h2><p>迭代器是一种用于遍历可迭代对象的对象。迭代器对象有一个 <code>__iter__()</code> 方法，返回迭代器本身，以及一个 <code>__next__()</code> 方法，返回下一个元素。当没有更多元素时，<code>__next__()</code> 方法会抛出 <code>StopIteration</code> 异常。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyIterator</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, data</span>):</span><br><span class="line">        self.data = data</span><br><span class="line">        self.index = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__iter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__next__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> self.index &lt; <span class="built_in">len</span>(self.data):</span><br><span class="line">            result = self.data[self.index]</span><br><span class="line">            self.index += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> result</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> StopIteration</span><br><span class="line"></span><br><span class="line">iterator = MyIterator([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> iterator:</span><br><span class="line">    <span class="built_in">print</span>(value)</span><br></pre></td></tr></table></figure>
+<h2 id="八、-iter-何时被调用？"><a href="#八、-iter-何时被调用？" class="headerlink" title="八、__iter__ 何时被调用？"></a><strong>八、<code>__iter__</code> 何时被调用？</strong></h2><ol>
+<li><strong>显式调用</strong>：当你手动调用 <code>iter(iterator)</code> 时</li>
+<li><strong>隐式调用</strong>：<ul>
+<li>使用 <code>for</code> 循环遍历迭代器时</li>
+<li>使用内置函数（如 <code>list()</code>、<code>sum()</code>、<code>tuple()</code> 等）处理迭代器时</li>
+<li>在需要可迭代对象的地方使用迭代器时（如解包操作 <code>*iterator</code>）</li>
+</ul>
+</li>
+</ol>
+<p><strong>示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">my_iterator = <span class="built_in">iter</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])  <span class="comment"># 创建迭代器</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显式调用</span></span><br><span class="line">explicit_iter = <span class="built_in">iter</span>(my_iterator)  <span class="comment"># 调用 my_iterator.__iter__()</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 隐式调用</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> my_iterator:  <span class="comment"># 隐式调用 iter(my_iterator)</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 内置函数调用</span></span><br><span class="line"><span class="built_in">list</span>(my_iterator)  <span class="comment"># 调用 iter(my_iterator)</span></span><br></pre></td></tr></table></figure>
 
-<p>输出：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
 
-<h2 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h2><p>生成器是一种特殊的迭代器，它使用 <code>yield</code> 关键字来生成元素。生成器函数在每次调用 <code>yield</code> 关键字时暂停执行，并返回一个值。下次调用 <code>next()</code> 函数时，生成器函数会从上次暂停的地方继续执行。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_generator</span>():</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="number">2</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> my_generator():</span><br><span class="line">    <span class="built_in">print</span>(value)</span><br></pre></td></tr></table></figure>
+<h2 id="九、为什么你没看到-iter-被调用？"><a href="#九、为什么你没看到-iter-被调用？" class="headerlink" title="九、为什么你没看到 __iter__ 被调用？"></a><strong>九、为什么你没看到 <code>__iter__</code> 被调用？</strong></h2><p>因为 <code>__iter__</code> 通常是被Python解释器<strong>隐式调用</strong>的，你在代码中看不到它。但如果没有正确实现 <code>__iter__</code>，以下情况会报错：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">BadIterator</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.count = <span class="number">0</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__next__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> self.count &lt; <span class="number">3</span>:</span><br><span class="line">            self.count += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> self.count</span><br><span class="line">        <span class="keyword">raise</span> StopIteration</span><br><span class="line"></span><br><span class="line"><span class="comment"># 缺少 __iter__，无法用于 for 循环</span></span><br><span class="line">bad = BadIterator()</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> bad:  <span class="comment"># 报错：TypeError: &#x27;BadIterator&#x27; object is not iterable</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
 
-<p>输出：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
 
-<p>生成器函数和普通函数的主要区别在于，生成器函数使用 <code>yield</code> 关键字来生成元素，而不是使用 <code>return</code> 关键字。生成器函数返回一个生成器对象，可以使用 <code>for</code> 循环或 <code>next()</code> 函数来遍历生成器对象。</p>
-<p>总结起来，循环、迭代器和生成器是处理数据的重要工具。循环用于重复执行一段代码，迭代器用于遍历可迭代对象，生成器用于生成元素。它们可以帮助我们更灵活地处理数据，提高代码的可读性和性能。</p>
+<h2 id="十、-iter-的意义"><a href="#十、-iter-的意义" class="headerlink" title="十、__iter__ 的意义"></a><strong>十、<code>__iter__</code> 的意义</strong></h2><ol>
+<li><strong>满足迭代器协议</strong>：Python要求迭代器必须同时实现 <code>__iter__</code> 和 <code>__next__</code></li>
+<li><strong>支持与语言特性无缝集成</strong>：确保迭代器可以在 <code>for</code> 循环、内置函数等场景中正常工作</li>
+<li><strong>区分迭代器和可迭代对象</strong>：<ul>
+<li><strong>可迭代对象</strong>（如列表）：<code>__iter__</code> 返回一个新的迭代器</li>
+<li><strong>迭代器本身</strong>：<code>__iter__</code> 返回自身（<code>self</code>）</li>
+</ul>
+</li>
+</ol>
+<p>如果没有 <code>__iter__</code>，迭代器就无法作为可迭代对象使用，Python的许多语法和函数都将无法正常处理它。</p>
+<hr>
+<p>看到迭代器跟生成器有这么复杂的功能，那么实际场景当中不免让人想，生成器跟迭代器在循环过程当中可以重置吗？可以反向找到上一个吗？</p>
+<p>在 Python 中，<strong>生成器默认是单向、不可逆的</strong>，但可以通过一些技巧实现“回退”或“重置”的效果。让我分情况解释：</p>
+<h2 id="十一、标准生成器：无法回退或重置"><a href="#十一、标准生成器：无法回退或重置" class="headerlink" title="十一、标准生成器：无法回退或重置"></a><strong>十一、标准生成器：无法回退或重置</strong></h2><p>生成器函数（使用 <code>yield</code>）或生成器表达式创建的生成器对象，只能向前迭代，无法后退或重置。每次调用 <code>next()</code> 会执行到下一个 <code>yield</code>，状态自动保存，直到生成结束（抛出 <code>StopIteration</code>）。</p>
+<p><strong>示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">count_up_to</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        <span class="keyword">yield</span> i</span><br><span class="line"></span><br><span class="line">gen = count_up_to(<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen))  <span class="comment"># 0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen))  <span class="comment"># 1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen))  <span class="comment"># 2</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen))  <span class="comment"># StopIteration（无法回退到 0 或 1）</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="十二、实现“回退”功能的方法"><a href="#十二、实现“回退”功能的方法" class="headerlink" title="十二、实现“回退”功能的方法"></a><strong>十二、实现“回退”功能的方法</strong></h2><h3 id="1-缓存已生成的值（手动回退）"><a href="#1-缓存已生成的值（手动回退）" class="headerlink" title="1. 缓存已生成的值（手动回退）"></a><strong>1. 缓存已生成的值（手动回退）</strong></h3><p>将生成器的输出缓存到列表中，需要回退时直接访问列表。</p>
+<p><strong>示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">count_up_to</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        <span class="keyword">yield</span> i</span><br><span class="line"></span><br><span class="line">gen = count_up_to(<span class="number">3</span>)</span><br><span class="line">cache = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># 正常迭代并缓存</span></span><br><span class="line">cache.append(<span class="built_in">next</span>(gen))  <span class="comment"># 缓存 0</span></span><br><span class="line">cache.append(<span class="built_in">next</span>(gen))  <span class="comment"># 缓存 1</span></span><br><span class="line"><span class="built_in">print</span>(cache)  <span class="comment"># [0, 1]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 回退到之前的值</span></span><br><span class="line"><span class="built_in">print</span>(cache[-<span class="number">1</span>])  <span class="comment"># 1（回退到上一个值）</span></span><br><span class="line"><span class="built_in">print</span>(cache[<span class="number">0</span>])   <span class="comment"># 0（回退到第一个值）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-自定义生成器类（支持双向迭代）"><a href="#2-自定义生成器类（支持双向迭代）" class="headerlink" title="2. 自定义生成器类（支持双向迭代）"></a><strong>2. 自定义生成器类（支持双向迭代）</strong></h3><p>通过实现 <code>__iter__</code> 和 <code>__next__</code> 方法，结合内部状态管理，实现双向迭代。</p>
+<p><strong>示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">BidirectionalGenerator</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, data</span>):</span><br><span class="line">        self.data = data</span><br><span class="line">        self.index = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__iter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__next__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> self.index &lt; <span class="built_in">len</span>(self.data):</span><br><span class="line">            value = self.data[self.index]</span><br><span class="line">            self.index += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line">        <span class="keyword">raise</span> StopIteration</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">prev</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> self.index &gt; <span class="number">0</span>:</span><br><span class="line">            self.index -= <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> self.data[self.index]</span><br><span class="line">        <span class="keyword">raise</span> ValueError(<span class="string">&quot;Already at the beginning&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用示例</span></span><br><span class="line">gen = BidirectionalGenerator([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen))  <span class="comment"># 1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen))  <span class="comment"># 2</span></span><br><span class="line"><span class="built_in">print</span>(gen.prev()) <span class="comment"># 1（回退）</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="十三、实现“重置”功能的方法"><a href="#十三、实现“重置”功能的方法" class="headerlink" title="十三、实现“重置”功能的方法"></a><strong>十三、实现“重置”功能的方法</strong></h2><h3 id="1-每次创建新生成器实例"><a href="#1-每次创建新生成器实例" class="headerlink" title="1. 每次创建新生成器实例"></a><strong>1. 每次创建新生成器实例</strong></h3><p>最简单的方法是每次需要重置时重新调用生成器函数。</p>
+<p><strong>示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">count_up_to</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        <span class="keyword">yield</span> i</span><br><span class="line"></span><br><span class="line">gen = count_up_to(<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen))  <span class="comment"># 0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen))  <span class="comment"># 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重置：重新创建生成器</span></span><br><span class="line">gen = count_up_to(<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen))  <span class="comment"># 0（从头开始）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-自定义可重置生成器类"><a href="#2-自定义可重置生成器类" class="headerlink" title="2. 自定义可重置生成器类"></a><strong>2. 自定义可重置生成器类</strong></h3><p>通过添加 <code>reset()</code> 方法重置内部状态。</p>
+<p><strong>示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ResettableGenerator</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, n</span>):</span><br><span class="line">        self.n = n</span><br><span class="line">        self.reset()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reset</span>(<span class="params">self</span>):</span><br><span class="line">        self.index = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__iter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__next__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> self.index &lt; self.n:</span><br><span class="line">            value = self.index</span><br><span class="line">            self.index += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line">        <span class="keyword">raise</span> StopIteration</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用示例</span></span><br><span class="line">gen = ResettableGenerator(<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen))  <span class="comment"># 0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen))  <span class="comment"># 1</span></span><br><span class="line"></span><br><span class="line">gen.reset()</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen))  <span class="comment"># 0（重置后从头开始）</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="十四、使用-tee-复制生成器（有限回退）"><a href="#十四、使用-tee-复制生成器（有限回退）" class="headerlink" title="十四、使用 tee 复制生成器（有限回退）"></a><strong>十四、使用 <code>tee</code> 复制生成器（有限回退）</strong></h2><p><code>itertools.tee</code> 可以将一个生成器复制为多个独立的迭代器，允许有限次数的回退。</p>
+<p><strong>示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> tee</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">count_up_to</span>(<span class="params">n</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        <span class="keyword">yield</span> i</span><br><span class="line"></span><br><span class="line">gen = count_up_to(<span class="number">3</span>)</span><br><span class="line">gen1, gen2 = tee(gen, <span class="number">2</span>)  <span class="comment"># 复制为两个独立迭代器</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen1))  <span class="comment"># 0</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen1))  <span class="comment"># 1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen2))  <span class="comment"># 0（gen2 独立于 gen1，从头开始）</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：<code>tee</code> 会缓存已生成的值，若原生成器已消耗过多元素，可能导致内存问题。</p>
+<h2 id="十五、建议"><a href="#十五、建议" class="headerlink" title="十五、建议"></a><strong>十五、建议</strong></h2><table>
+<thead>
+<tr>
+<th><strong>需求</strong></th>
+<th><strong>最佳实现方式</strong></th>
+<th><strong>适用场景</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>少量回退</td>
+<td>缓存已生成的值（列表/队列）</td>
+<td>数据量较小，需频繁前后移动</td>
+</tr>
+<tr>
+<td>完全重置</td>
+<td>重新创建生成器实例或自定义 <code>reset()</code></td>
+<td>需多次从头开始迭代</td>
+</tr>
+<tr>
+<td>多分支迭代</td>
+<td><code>itertools.tee</code></td>
+<td>需要同时维护多个迭代进度</td>
+</tr>
+</tbody></table>
+<p><strong>核心原则</strong>：生成器的设计初衷是<strong>高效处理一次性数据流</strong>，若需要频繁回退或随机访问，建议使用列表等可重复遍历的数据结构。只有在数据量极大且确实需要回退时，才考虑上述优化方法。</p>
+<blockquote>
+<p>看到以上案例，肯定还有人还有疑问，就是这不是在说生成器么，怎么生成器的class当中没有yield？没有yield的话，这是不是就是歌迭代器类了？不是生成器类了？马上回答这个问题</p>
+</blockquote>
+<p>这涉及到 Python 中 <strong>生成器(Generator)</strong> 和 <strong>迭代器(Iterator)</strong> 的本质区别。</p>
+<h2 id="十六、核心概念区分"><a href="#十六、核心概念区分" class="headerlink" title="十六、核心概念区分"></a><strong>十六、核心概念区分</strong></h2><h3 id="1-生成器（Generator）"><a href="#1-生成器（Generator）" class="headerlink" title="1. 生成器（Generator）"></a><strong>1. 生成器（Generator）</strong></h3><ul>
+<li><strong>定义</strong>：一种特殊的迭代器，使用 <strong><code>yield</code> 关键字</strong> 或 <strong>生成器表达式</strong> 创建。</li>
+<li><strong>特点</strong>：<ul>
+<li>自动实现 <code>__iter__</code> 和 <code>__next__</code> 方法。</li>
+<li>状态自动保存（每次 <code>yield</code> 暂停，下次从暂停处继续）。</li>
+<li>代码更简洁，无需手动管理状态。</li>
+</ul>
+</li>
+</ul>
+<p><strong>示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">gen_numbers</span>():  <span class="comment"># 生成器函数（使用 yield）</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="number">2</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="number">3</span></span><br><span class="line"></span><br><span class="line">gen = gen_numbers()  <span class="comment"># 创建生成器对象</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen))  <span class="comment"># 1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(gen))  <span class="comment"># 2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-迭代器（Iterator）"><a href="#2-迭代器（Iterator）" class="headerlink" title="2. 迭代器（Iterator）"></a><strong>2. 迭代器（Iterator）</strong></h3><ul>
+<li><strong>定义</strong>：实现了 <strong><code>__iter__</code> 和 <code>__next__</code> 方法</strong> 的对象。</li>
+<li><strong>特点</strong>：<ul>
+<li>手动管理状态（如维护索引）。</li>
+<li>需显式抛出 <code>StopIteration</code>。</li>
+<li>代码更复杂，但更灵活。</li>
+</ul>
+</li>
+</ul>
+<p><strong>示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">NumIterator</span>:  <span class="comment"># 迭代器类</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.index = <span class="number">0</span></span><br><span class="line">        self.data = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__iter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__next__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> self.index &lt; <span class="built_in">len</span>(self.data):</span><br><span class="line">            value = self.data[self.index]</span><br><span class="line">            self.index += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> value</span><br><span class="line">        <span class="keyword">raise</span> StopIteration</span><br><span class="line"></span><br><span class="line">it = NumIterator()  <span class="comment"># 创建迭代器对象</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(it))  <span class="comment"># 1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">next</span>(it))  <span class="comment"># 2</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="十七、我们提到的类属于迭代器，而非生成器"><a href="#十七、我们提到的类属于迭代器，而非生成器" class="headerlink" title="十七、我们提到的类属于迭代器，而非生成器"></a><strong>十七、我们提到的类属于迭代器，而非生成器</strong></h2><p>当我编写的类（如 <code>ResettableGenerator</code> 和 <code>BidirectionalGenerator</code>）<strong>没有使用 <code>yield</code> 关键字</strong> 时，它们实际上是 <strong>迭代器类</strong>，而非生成器类。虽然名字中包含“Generator”，但从技术上讲：</p>
+<ol>
+<li><strong>生成器</strong>：由 <code>yield</code> 或生成器表达式创建，是 Python 内置的特殊类型。</li>
+<li><strong>迭代器</strong>：通过手动实现 <code>__iter__</code> 和 <code>__next__</code> 方法创建的普通类。</li>
+</ol>
+<p><strong>示例对比</strong>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 生成器（使用 yield）</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generator_example</span>():</span><br><span class="line">    <span class="keyword">yield</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">yield</span> <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 迭代器（手动实现协议）</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">IteratorExample</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.current = <span class="number">0</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__iter__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__next__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> self.current &lt; <span class="number">2</span>:</span><br><span class="line">            self.current += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> self.current</span><br><span class="line">        <span class="keyword">raise</span> StopIteration</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="十八、为什么会混淆？"><a href="#十八、为什么会混淆？" class="headerlink" title="十八、为什么会混淆？"></a><strong>十八、为什么会混淆？</strong></h2><ol>
+<li><strong>生成器是迭代器的子类</strong>：所有生成器都是迭代器（因为自动实现了迭代器协议），但并非所有迭代器都是生成器。</li>
+<li><strong>语义习惯</strong>：在日常交流中，有时会用“生成器”泛指任何可迭代对象，导致混淆。</li>
+<li><strong>功能重叠</strong>：两者都支持 <code>next()</code> 和 <code>for</code> 循环，但实现方式不同。</li>
+</ol>
+<h2 id="十九、何时用迭代器？何时用生成器？"><a href="#十九、何时用迭代器？何时用生成器？" class="headerlink" title="十九、何时用迭代器？何时用生成器？"></a><strong>十九、何时用迭代器？何时用生成器？</strong></h2><table>
+<thead>
+<tr>
+<th><strong>场景</strong></th>
+<th><strong>选择</strong></th>
+<th><strong>示例</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>简单的一次性数据流</td>
+<td>生成器</td>
+<td><code>python&lt;br&gt;def read_file_lines(file_path):&lt;br&gt;    with open(file_path) as f:&lt;br&gt;        for line in f:&lt;br&gt;            yield line&lt;br&gt;</code></td>
+</tr>
+<tr>
+<td>复杂状态管理（如双向迭代）</td>
+<td>迭代器</td>
+<td>自定义类实现 <code>prev()</code> 或 <code>reset()</code> 方法</td>
+</tr>
+<tr>
+<td>需要实现特定接口（如上下文管理器）</td>
+<td>迭代器</td>
+<td>类中同时实现 <code>__iter__</code> 和 <code>__enter__</code>/<code>__exit__</code></td>
+</tr>
+</tbody></table>
+<h3 id="二十、理解"><a href="#二十、理解" class="headerlink" title="二十、理解"></a><strong>二十、理解</strong></h3><ol>
+<li><strong>生成器</strong>：用 <code>yield</code> 创建，自动实现迭代器协议，代码简洁。</li>
+<li><strong>迭代器</strong>：手动实现 <code>__iter__</code> 和 <code>__next__</code>，更灵活但代码复杂。</li>
+<li><strong>选择标准</strong>：优先用生成器（代码简洁），需要高级控制时用迭代器。</li>
+</ol>
+<p>当你需要“回退”或“重置”功能时，由于生成器本身不支持这些特性，只能通过迭代器类手动实现。虽然名称可能叫“Generator”，但本质上是迭代器。</p>
 ]]></content>
       <categories>
         <category>学习</category>
