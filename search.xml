@@ -9079,8 +9079,333 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux-htop命令的使用</title>
+    <url>/2025/08/12/Linux-htop%E5%91%BD%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h1 id="深入掌握htop：从入门到精通的Linux系统监控指南"><a href="#深入掌握htop：从入门到精通的Linux系统监控指南" class="headerlink" title="深入掌握htop：从入门到精通的Linux系统监控指南"></a>深入掌握htop：从入门到精通的Linux系统监控指南</h1><p>htop作为Linux系统中最受欢迎的进程监控工具之一，比传统的top命令提供了更丰富的功能和更友好的用户界面。本文将从htop的基础使用开始，逐步深入到高级技巧和实战应用，帮助全面掌握这个强大的系统监控工具。</p>
+<h2 id="一、htop简介与安装"><a href="#一、htop简介与安装" class="headerlink" title="一、htop简介与安装"></a>一、htop简介与安装</h2><h3 id="1-1-什么是htop？"><a href="#1-1-什么是htop？" class="headerlink" title="1.1 什么是htop？"></a>1.1 什么是htop？</h3><p>htop是一个Linux系统下的交互式进程查看器，它是传统top命令的现代化替代品。与top相比，htop提供了彩色界面、鼠标支持、进程树视图等增强功能，使系统监控变得更加直观和高效。</p>
+<p>htop的主要优势包括：</p>
+<ul>
+<li><strong>彩色显示</strong>：不同类型进程和系统状态用不同颜色区分</li>
+<li><strong>可视化布局</strong>：直观展示CPU、内存和交换空间使用情况</li>
+<li><strong>鼠标支持</strong>：可以直接用鼠标点击操作界面元素</li>
+<li><strong>进程树视图</strong>：可以查看进程间的层级关系</li>
+<li><strong>自定义排序</strong>：可按各种指标对进程排序</li>
+<li><strong>进程操作</strong>：可直接终止、调整优先级等</li>
+</ul>
+<h3 id="1-2-安装htop"><a href="#1-2-安装htop" class="headerlink" title="1.2 安装htop"></a>1.2 安装htop</h3><p>htop不像top那样是Linux系统默认安装的工具，需要手动安装。以下是不同Linux发行版的安装方法：</p>
+<p><strong>在基于Debian/Ubuntu的系统上：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install htop</span><br></pre></td></tr></table></figure>
+
+<p><strong>在基于RHEL/CentOS的系统上：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo yum install epel-release  <span class="comment"># 先安装EPEL仓库</span></span><br><span class="line">sudo yum install htop</span><br></pre></td></tr></table></figure>
+
+<p><strong>在基于Arch Linux的系统上：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S htop</span><br></pre></td></tr></table></figure>
+
+<p><strong>在macOS系统上（使用Homebrew）：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install htop</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，直接在终端输入<code>htop</code>命令即可启动。</p>
+<h2 id="二、htop界面详解"><a href="#二、htop界面详解" class="headerlink" title="二、htop界面详解"></a>二、htop界面详解</h2><p>启动htop后，会看到一个分为几个主要区域的界面。理解这些区域的含义是有效使用htop的关键。</p>
+<h3 id="2-1-顶部区域：系统概览信息"><a href="#2-1-顶部区域：系统概览信息" class="headerlink" title="2.1 顶部区域：系统概览信息"></a>2.1 顶部区域：系统概览信息</h3><p>顶部区域显示了系统的整体资源使用情况，包括：</p>
+<ol>
+<li><p><strong>CPU使用率</strong>：按核心显示，每个核心有一个独立的进度条。颜色代表不同类型的CPU使用：</p>
+<ul>
+<li>绿色：用户态进程的CPU使用率（%user）</li>
+<li>红色：内核态进程的CPU使用率（%sys）</li>
+<li>蓝色：低优先级进程的CPU使用率（%nice）</li>
+<li>黄色：I/O等待时间（%iowait）</li>
+<li>灰色：软中断（%softirq）</li>
+<li>橙色：硬中断（%irq）</li>
+<li>黑色（空白）：CPU空闲时间</li>
+</ul>
+</li>
+<li><p><strong>内存使用情况</strong>：</p>
+<ul>
+<li>绿色：已用内存（含缓存和缓冲）</li>
+<li>蓝色：缓冲区内存</li>
+<li>黄色：缓存内存</li>
+</ul>
+</li>
+<li><p><strong>交换空间(Swap)使用情况</strong>：通常显示为红色进度条</p>
+</li>
+<li><p><strong>系统运行时间和平均负载</strong>：</p>
+<ul>
+<li>Tasks：进程总数，当前运行进程数</li>
+<li>Load average：系统1分钟、5分钟、15分钟的平均负载</li>
+<li>Uptime：系统已运行时间</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-2-中间区域：进程列表"><a href="#2-2-中间区域：进程列表" class="headerlink" title="2.2 中间区域：进程列表"></a>2.2 中间区域：进程列表</h3><p>进程列表显示了系统中运行的所有进程的详细信息，主要字段包括：</p>
+<ul>
+<li><strong>PID</strong>：进程ID，唯一标识每个进程</li>
+<li><strong>USER</strong>：运行此进程的用户</li>
+<li><strong>PRI</strong>：进程优先级（数字越小优先级越高）</li>
+<li><strong>NI</strong>：进程的nice值（-20到19，影响进程优先级）</li>
+<li><strong>VIRT</strong>：进程使用的虚拟内存总量（KiB）</li>
+<li><strong>RES</strong>：进程使用的物理内存（resident set size，KiB）</li>
+<li><strong>SHR</strong>：进程使用的共享内存（KiB）</li>
+<li><strong>S</strong>：进程状态：<ul>
+<li>R：运行中</li>
+<li>S：休眠中</li>
+<li>Z：僵尸进程</li>
+<li>T：停止或跟踪状态</li>
+</ul>
+</li>
+<li><strong>%CPU</strong>：进程占用的CPU使用率</li>
+<li><strong>%MEM</strong>：进程占用的物理内存百分比</li>
+<li>**TIME+**：进程使用的累计CPU时间</li>
+<li><strong>COMMAND</strong>：进程启动命令名称</li>
+</ul>
+<h3 id="2-3-底部区域：功能键提示"><a href="#2-3-底部区域：功能键提示" class="headerlink" title="2.3 底部区域：功能键提示"></a>2.3 底部区域：功能键提示</h3><p>底部显示了可用的快捷键及其功能，如F1帮助、F3搜索、F9终止进程等。这些快捷键是htop高效操作的关键。</p>
+<h2 id="三、htop基本操作"><a href="#三、htop基本操作" class="headerlink" title="三、htop基本操作"></a>三、htop基本操作</h2><h3 id="3-1-常用快捷键"><a href="#3-1-常用快捷键" class="headerlink" title="3.1 常用快捷键"></a>3.1 常用快捷键</h3><p>htop的强大之处在于其丰富的快捷键操作，以下是常用快捷键及其功能：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>F1 或 h</td>
+<td>显示帮助文档</td>
+</tr>
+<tr>
+<td>F2 或 S</td>
+<td>进入设置菜单</td>
+</tr>
+<tr>
+<td>F3 或 /</td>
+<td>搜索进程</td>
+</tr>
+<tr>
+<td>F4 或 \</td>
+<td>过滤进程（只显示匹配的进程）</td>
+</tr>
+<tr>
+<td>F5 或 t</td>
+<td>显示进程树视图</td>
+</tr>
+<tr>
+<td>F6 或 &lt;</td>
+<td>选择排序字段</td>
+</tr>
+<tr>
+<td>F7 或 [</td>
+<td>降低进程优先级（增加nice值）</td>
+</tr>
+<tr>
+<td>F8 或 ]</td>
+<td>提高进程优先级（减小nice值）</td>
+</tr>
+<tr>
+<td>F9 或 k</td>
+<td>终止选中的进程</td>
+</tr>
+<tr>
+<td>F10 或 q</td>
+<td>退出htop</td>
+</tr>
+<tr>
+<td>空格键</td>
+<td>标记/取消标记进程</td>
+</tr>
+<tr>
+<td>u</td>
+<td>显示特定用户的进程</td>
+</tr>
+<tr>
+<td>H</td>
+<td>显示/隐藏用户线程</td>
+</tr>
+<tr>
+<td>K</td>
+<td>显示/隐藏内核线程</td>
+</tr>
+<tr>
+<td>P</td>
+<td>按CPU使用率排序</td>
+</tr>
+<tr>
+<td>M</td>
+<td>按内存使用率排序</td>
+</tr>
+<tr>
+<td>T</td>
+<td>按运行时间排序</td>
+</tr>
+</tbody></table>
+<h3 id="3-2-进程搜索与过滤"><a href="#3-2-进程搜索与过滤" class="headerlink" title="3.2 进程搜索与过滤"></a>3.2 进程搜索与过滤</h3><p>**搜索进程(F3)**：按下F3后输入进程名或PID，htop会将光标定位到第一个匹配的进程上，继续按F3可以查找下一个匹配项。</p>
+<p>**过滤进程(F4)**：按下F4后输入过滤条件，htop会只显示符合条件的进程。这在系统中有大量进程时特别有用。</p>
+<h3 id="3-3-进程操作"><a href="#3-3-进程操作" class="headerlink" title="3.3 进程操作"></a>3.3 进程操作</h3><p>**终止进程(F9)**：选中进程后按F9，会显示可发送的信号列表（通常选择15 SIGTERM或9 SIGKILL），按回车确认。</p>
+<p>**调整优先级(F7/F8)**：选中进程后按F7增加nice值（降低优先级），按F8减小nice值（提高优先级）。</p>
+<p>**标记进程(空格键)**：用空格键可以标记多个进程，然后对这些进程执行批量操作（如同时终止）。</p>
+<h3 id="3-4-树形视图-F5"><a href="#3-4-树形视图-F5" class="headerlink" title="3.4 树形视图(F5)"></a>3.4 树形视图(F5)</h3><p>按下F5可以切换到树形视图，显示进程间的父子关系。这对于理解进程间的依赖关系特别有帮助。</p>
+<h2 id="四、htop高级功能与配置"><a href="#四、htop高级功能与配置" class="headerlink" title="四、htop高级功能与配置"></a>四、htop高级功能与配置</h2><h3 id="4-1-自定义界面-F2"><a href="#4-1-自定义界面-F2" class="headerlink" title="4.1 自定义界面(F2)"></a>4.1 自定义界面(F2)</h3><p>按F2进入设置菜单，可以：</p>
+<ol>
+<li><strong>调整显示的列</strong>：添加或移除进程列表中显示的字段</li>
+<li><strong>更改颜色主题</strong>：选择不同的配色方案</li>
+<li><strong>设置刷新间隔</strong>：调整htop更新显示的频率</li>
+<li><strong>配置其他显示选项</strong>：如是否显示完整的命令行路径等</li>
+</ol>
+<h3 id="4-2-跟踪进程系统调用-s"><a href="#4-2-跟踪进程系统调用-s" class="headerlink" title="4.2 跟踪进程系统调用(s)"></a>4.2 跟踪进程系统调用(s)</h3><p>选中进程后按<code>s</code>键，可以用strace跟踪进程的系统调用，这对于分析进程行为和高CPU占用原因非常有帮助。</p>
+<h3 id="4-3-显示进程打开的文件-l"><a href="#4-3-显示进程打开的文件-l" class="headerlink" title="4.3 显示进程打开的文件(l)"></a>4.3 显示进程打开的文件(l)</h3><p>如果系统安装了lsof工具，选中进程后按<code>l</code>键可以显示该进程打开的所有文件。</p>
+<h3 id="4-4-配置文件"><a href="#4-4-配置文件" class="headerlink" title="4.4 配置文件"></a>4.4 配置文件</h3><p>htop的配置文件通常位于<code>~/.config/htop/htoprc</code>，可以通过修改这个文件来持久化你的自定义设置。一些有用的配置项包括：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 显示内核线程</span></span><br><span class="line"><span class="attr">hide_kernel_threads</span>=<span class="number">0</span></span><br><span class="line"><span class="comment"># 显示用户态线程</span></span><br><span class="line"><span class="attr">hide_userland_threads</span>=<span class="number">0</span></span><br><span class="line"><span class="comment"># 颜色方案（1-6）</span></span><br><span class="line"><span class="attr">color_scheme</span>=<span class="number">6</span></span><br><span class="line"><span class="comment"># 左侧显示内容</span></span><br><span class="line"><span class="attr">left_meters</span>=AllCPUs Memory Swap</span><br><span class="line"><span class="attr">left_meter_modes</span>=<span class="number">1</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line"><span class="comment"># 右侧显示内容</span></span><br><span class="line"><span class="attr">right_meters</span>=Tasks LoadAverage Uptime</span><br><span class="line"><span class="attr">right_meter_modes</span>=<span class="number">2</span> <span class="number">2</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="五、htop实战应用场景"><a href="#五、htop实战应用场景" class="headerlink" title="五、htop实战应用场景"></a>五、htop实战应用场景</h2><h3 id="5-1-系统性能瓶颈分析"><a href="#5-1-系统性能瓶颈分析" class="headerlink" title="5.1 系统性能瓶颈分析"></a>5.1 系统性能瓶颈分析</h3><p>htop是识别系统性能瓶颈的利器。以下是常见问题及排查方法：</p>
+<p><strong>CPU使用率高的问题</strong>：</p>
+<ol>
+<li>按<code>P</code>键按CPU使用率排序</li>
+<li>查看占用CPU高的进程是否正常</li>
+<li>如果是应用程序，检查是否有死循环或性能问题</li>
+<li>如果%sys（红色）过高，可能是系统调用频繁，考虑用strace分析</li>
+</ol>
+<p><strong>内存不足问题</strong>：</p>
+<ol>
+<li>按<code>M</code>键按内存使用率排序</li>
+<li>检查是否有内存泄漏（RES持续增长）</li>
+<li>如果Swap使用量高（红色），说明物理内存不足</li>
+</ol>
+<p><strong>I/O等待高的问题</strong>：</p>
+<ol>
+<li>观察顶部CPU区域黄色部分（%iowait）</li>
+<li>如果长期过高，可能存在磁盘瓶颈</li>
+<li>配合iotop工具查看I/O占用高的进程</li>
+</ol>
+<h3 id="5-2-生产环境排障案例"><a href="#5-2-生产环境排障案例" class="headerlink" title="5.2 生产环境排障案例"></a>5.2 生产环境排障案例</h3><p><strong>案例1：CPU软中断飙升（网络丢包场景）</strong></p>
+<ol>
+<li>现象：%si（软中断）持续高于30%</li>
+<li>按F2 -&gt; 勾选”Show custom thread names”</li>
+<li>按F6选择”PERCENT_CPU”降序排序</li>
+<li>定位ksoftirqd线程（内核软中断处理）</li>
+<li>配合ethtool检查网卡中断均衡：<code>sudo ethtool -S eth0 | grep rx_packets</code></li>
+</ol>
+<p><strong>案例2：Java应用内存泄漏</strong></p>
+<ol>
+<li>按F4输入”java”过滤进程</li>
+<li>按F6选择”RES”排序，观察RES增长趋势</li>
+<li>按<code>s</code>进入strace跟踪内存分配：频繁的brk/mmap调用说明堆内存泄漏</li>
+</ol>
+<p><strong>案例3：僵尸进程批量清理</strong></p>
+<ol>
+<li>按F4输入” Z “过滤僵尸进程（注意空格）</li>
+<li>按空格标记所有僵尸进程</li>
+<li>按F9选择SIGCHLD信号批量发送</li>
+<li>按F5切换树形视图确认父进程状态</li>
+</ol>
+<h3 id="5-3-容器环境监控"><a href="#5-3-容器环境监控" class="headerlink" title="5.3 容器环境监控"></a>5.3 容器环境监控</h3><p>在容器化环境中，htop可以配合cgroup过滤功能监控容器进程：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">htop --filter cgroup:/docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="六、htop与top的对比"><a href="#六、htop与top的对比" class="headerlink" title="六、htop与top的对比"></a>六、htop与top的对比</h2><p>虽然htop和top都是进程监控工具，但htop在多个方面具有明显优势：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>htop</th>
+<th>top</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>界面</td>
+<td>彩色，直观</td>
+<td>单色，基本</td>
+</tr>
+<tr>
+<td>鼠标支持</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>进程树视图</td>
+<td>支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>排序方式</td>
+<td>多种，可动态调整</td>
+<td>有限</td>
+</tr>
+<tr>
+<td>进程操作</td>
+<td>更丰富</td>
+<td>基本</td>
+</tr>
+<tr>
+<td>自定义</td>
+<td>高度可配置</td>
+<td>有限</td>
+</tr>
+<tr>
+<td>资源占用</td>
+<td>稍高</td>
+<td>较低</td>
+</tr>
+</tbody></table>
+<h2 id="七、htop常见问题解决"><a href="#七、htop常见问题解决" class="headerlink" title="七、htop常见问题解决"></a>七、htop常见问题解决</h2><ol>
+<li><p><strong>界面显示错乱</strong></p>
+<ul>
+<li>解决方案：设置正确的终端类型<code>export TERM=xterm-256color</code></li>
+</ul>
+</li>
+<li><p><strong>无法显示容器进程</strong></p>
+<ul>
+<li>解决方案：使用cgroup过滤功能<code>htop --filter cgroup:/docker</code></li>
+</ul>
+</li>
+<li><p><strong>快捷键冲突</strong></p>
+<ul>
+<li>解决方案：修改<code>~/.config/htop/htoprc</code>中的delay或key_delay参数</li>
+</ul>
+</li>
+<li><p><strong>内存显示单位不符</strong></p>
+<ul>
+<li>解决方案：F2 -&gt; Display Options -&gt; 切换MB/GB显示模式</li>
+</ul>
+</li>
+</ol>
+<h2 id="八、htop替代方案与组合工具"><a href="#八、htop替代方案与组合工具" class="headerlink" title="八、htop替代方案与组合工具"></a>八、htop替代方案与组合工具</h2><p>虽然htop功能强大，但在某些场景下，可以结合其他工具获得更全面的系统视图：</p>
+<ol>
+<li><strong>glances</strong>：提供更全面的系统监控指标</li>
+<li><strong>atop</strong>：记录历史性能数据，便于事后分析</li>
+<li><strong>nmon</strong>：专业的性能监控工具，适合生成报告</li>
+<li><strong>btop</strong>：htop的现代化替代品，界面更美观</li>
+</ol>
+<h2 id="九、htop原理简介"><a href="#九、htop原理简介" class="headerlink" title="九、htop原理简介"></a>九、htop原理简介</h2><p>htop是基于Linux的/proc文件系统实现的。/proc包含了系统的进程和硬件信息。htop通过读取/proc/stat和/proc/<PID>/stat文件来获取每个进程的CPU、内存等资源使用情况，结合ncurses库进行终端界面展示。</p>
+<p>具体来说：</p>
+<ul>
+<li><code>/proc/stat</code>：提供整体CPU的使用情况</li>
+<li><code>/proc/&lt;PID&gt;/stat</code>：包含每个进程的详细信息</li>
+</ul>
+<p>这种设计使htop能够实时展示系统资源使用情况，同时保持较高的效率。</p>
+<h2 id="十、总结与最佳实践"><a href="#十、总结与最佳实践" class="headerlink" title="十、总结与最佳实践"></a>十、总结与最佳实践</h2><p>htop是Linux系统管理员和开发者的强大工具，通过本文的学习，应该已经掌握了：</p>
+<ol>
+<li>htop的安装与基本界面解读</li>
+<li>常用快捷键和操作技巧</li>
+<li>高级配置与自定义方法</li>
+<li>实际生产环境中的排障案例</li>
+<li>常见问题解决方法</li>
+</ol>
+<p><strong>htop最佳实践建议</strong>：</p>
+<ul>
+<li>将常用快捷键记忆熟练（如F3搜索、F4过滤、F9终止等）</li>
+<li>根据个人习惯配置htop界面（如显示的列、颜色方案等）</li>
+<li>结合其他工具（如strace、iotop）进行深入分析</li>
+<li>在性能分析时，先看整体（顶部区域），再看细节（进程列表）</li>
+<li>定期检查是否有异常进程（如CPU/MEM异常高、僵尸进程等）</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>操作系统-物理机带显卡安装Ubuntu操作系统.md</title>
-    <url>/2025/08/11/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E7%89%A9%E7%90%86%E6%9C%BA%E5%B8%A6%E6%98%BE%E5%8D%A1%E5%AE%89%E8%A3%85Ubuntu%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-md/</url>
+    <url>/2025/08/11/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E7%89%A9%E7%90%86%E6%9C%BA%E5%B8%A6%E6%98%BE%E5%8D%A1%E5%AE%89%E8%A3%85Ubuntu%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
     <content><![CDATA[<h1 id="双系统安装Ubuntu时NVIDIA显卡驱动问题的完整解决方案"><a href="#双系统安装Ubuntu时NVIDIA显卡驱动问题的完整解决方案" class="headerlink" title="双系统安装Ubuntu时NVIDIA显卡驱动问题的完整解决方案"></a>双系统安装Ubuntu时NVIDIA显卡驱动问题的完整解决方案</h1><h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>许多用户在Windows系统基础上安装Ubuntu双系统时，会遇到由于NVIDIA显卡驱动不兼容导致的安装界面卡死或黑屏问题。这种情况通常发生在使用较新NVIDIA显卡的电脑上，原因是Ubuntu默认使用的开源驱动<code>nouveau</code>与部分NVIDIA显卡存在兼容性问题。</p>
 <h2 id="问题根源分析"><a href="#问题根源分析" class="headerlink" title="问题根源分析"></a>问题根源分析</h2><p>Ubuntu安装程序默认使用开源显卡驱动<code>nouveau</code>来提供图形界面支持。虽然这个驱动对大多数显卡都能提供基本支持，但在以下情况下可能出现问题：</p>
 <ol>
@@ -9307,6 +9632,189 @@
       </categories>
       <tags>
         <tag>教程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux-终端该如何粘贴内容</title>
+    <url>/2025/08/11/Linux-%E7%BB%88%E7%AB%AF%E8%AF%A5%E5%A6%82%E4%BD%95%E7%B2%98%E8%B4%B4%E5%86%85%E5%AE%B9/</url>
+    <content><![CDATA[<h1 id="复制粘贴后为什么会出现-200-…-？"><a href="#复制粘贴后为什么会出现-200-…-？" class="headerlink" title="复制粘贴后为什么会出现 ^[[200~ … ~？"></a>复制粘贴后为什么会出现 <code>^[[200~ … ~</code>？</h1><p>在用终端（Terminal）复制粘贴一段 GitHub 地址时，遇到了一个奇怪的现象：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">^[[200~https://github.com/microsoft/markitdown.git~</span><br></pre></td></tr></table></figure>
+
+<p>好好的链接前后突然多了 <code>^[[200~</code> 和 <code>~</code>。这到底是什么？会不会把命令弄坏？本文用最通俗的语言把原因、影响以及避免方法一次讲清。</p>
+<hr>
+<h2 id="1-现象还原"><a href="#1-现象还原" class="headerlink" title="1  现象还原"></a>1  现象还原</h2><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>我的操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>①</td>
+<td>在网页上复制了地址 <code>https://github.com/microsoft/markitdown.git</code></td>
+</tr>
+<tr>
+<td>②</td>
+<td>回到终端，<strong>先按了</strong> <code>Ctrl+V</code></td>
+</tr>
+<tr>
+<td>③</td>
+<td>发现没反应，又右键选择 <strong>Paste</strong></td>
+</tr>
+<tr>
+<td>④</td>
+<td>终端里出现 <code>^[[200~https://github.com/microsoft/markitdown.git~</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="2-罪魁祸首：终端的“括号粘贴模式”"><a href="#2-罪魁祸首：终端的“括号粘贴模式”" class="headerlink" title="2  罪魁祸首：终端的“括号粘贴模式”"></a>2  罪魁祸首：终端的“括号粘贴模式”</h2><p>现代终端（Linux 的 gnome-terminal、macOS 的 iTerm2、Windows 的 Windows Terminal、VS Code 的内置终端等）都支持一项叫 <strong>Bracketed Paste（括号粘贴）</strong> 的功能。</p>
+<ul>
+<li><strong>目的</strong>：让 shell 或编辑器知道“这是一整块粘贴”，防止粘贴内容被意外解释成命令。  </li>
+<li><strong>做法</strong>：在真正文本前后插入两串看不见的转义字符  <ul>
+<li>开头：<code>ESC[200~</code>（终端里显示成 <code>^[[200~</code>）  </li>
+<li>结尾：<code>ESC[201~</code>（有时只显示成单独的 <code>~</code>）</li>
+</ul>
+</li>
+</ul>
+<p>所以：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">^[[200~https://github.com/microsoft/markitdown.git~</span><br></pre></td></tr></table></figure>
+
+<p>其实就是：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ESC[200~ 真正内容 ESC[201~</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-触发条件"><a href="#3-触发条件" class="headerlink" title="3  触发条件"></a>3  触发条件</h2><ol>
+<li><strong>你先按了 <code>Ctrl+V</code></strong><br>在很多终端里，<code>Ctrl+V</code> 不是“粘贴”，而是告诉终端“我要开始一次带括号的粘贴”。  </li>
+<li><strong>紧接着又点了右键 → Paste</strong><br>终端收到两次“粘贴”信号，于是把转义字符也一起输出了。</li>
+</ol>
+<hr>
+<h2 id="4-如何避免"><a href="#4-如何避免" class="headerlink" title="4  如何避免"></a>4  如何避免</h2><table>
+<thead>
+<tr>
+<th>目标</th>
+<th>正确姿势</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>只想粘贴</td>
+<td>**别按 <code>Ctrl+V</code>**，直接右键 Paste 即可</td>
+</tr>
+<tr>
+<td>想彻底关闭该功能</td>
+<td>在对应 shell 里执行一条命令：<br><strong>Bash/Zsh</strong>：<code>bind &#39;set enable-bracketed-paste off&#39;</code><br><strong>Fish</strong>：<code>set -g fish_paste_bracketed off</code></td>
+</tr>
+<tr>
+<td>已经粘进来了</td>
+<td>手动删掉 <code>^[[200~</code> 和末尾的 <code>~</code>，再回车即可，不会影响命令本身</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="5-一句话总结"><a href="#5-一句话总结" class="headerlink" title="5  一句话总结"></a>5  一句话总结</h2><blockquote>
+<p>终端为了“安全粘贴”自动加了 <code>^[[200~ … ~</code>，<strong>不是链接坏了</strong>，删掉即可；下次直接右键 Paste，别再按 <code>Ctrl+V</code>，就能彻底告别这串奇怪字符。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>学习</category>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>终端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux-常用的一些命令升级版</title>
+    <url>/2025/08/12/Linux-%E5%B8%B8%E7%94%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E5%91%BD%E4%BB%A4%E5%8D%87%E7%BA%A7%E7%89%88/</url>
+    <content><![CDATA[<h1 id="如何用现代替代品替换传统的Linux命令"><a href="#如何用现代替代品替换传统的Linux命令" class="headerlink" title="如何用现代替代品替换传统的Linux命令"></a>如何用现代替代品替换传统的Linux命令</h1><p>Linux系统中有许多经典命令已经服务了几十年，虽然它们仍然可靠，但现代开发者已经创建了更直观、功能更强大的替代工具。本文将介绍如何用这些现代工具替换传统的Linux命令，提升你的命令行效率。</p>
+<h2 id="为什么需要替代传统命令？"><a href="#为什么需要替代传统命令？" class="headerlink" title="为什么需要替代传统命令？"></a>为什么需要替代传统命令？</h2><p>传统的Linux命令如<code>ls</code>、<code>find</code>、<code>grep</code>等虽然功能强大，但存在一些局限性：</p>
+<ul>
+<li>输出格式不够直观</li>
+<li>缺少彩色高亮</li>
+<li>功能选项复杂难记</li>
+<li>执行速度较慢</li>
+</ul>
+<p>现代替代工具通过以下改进解决了这些问题：</p>
+<ul>
+<li>更美观的输出显示</li>
+<li>更快的执行速度</li>
+<li>更智能的默认行为</li>
+<li>更好的用户体验</li>
+</ul>
+<h2 id="主要命令替代方案"><a href="#主要命令替代方案" class="headerlink" title="主要命令替代方案"></a>主要命令替代方案</h2><h3 id="1-ls-→-exa"><a href="#1-ls-→-exa" class="headerlink" title="1. ls → exa"></a>1. <code>ls</code> → <code>exa</code></h3><p><code>exa</code>是<code>ls</code>命令的现代替代品，具有以下优势：</p>
+<ul>
+<li>彩色输出，不同类型文件有不同颜色</li>
+<li>自动显示Git仓库状态</li>
+<li>树状结构显示目录</li>
+<li>更好的文件大小显示格式</li>
+</ul>
+<p>安装方法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install exa  <span class="comment"># Debian/Ubuntu</span></span><br><span class="line">sudo dnf install exa  <span class="comment"># Fedora</span></span><br><span class="line">brew install exa      <span class="comment"># macOS</span></span><br></pre></td></tr></table></figure>
+
+<p>使用示例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">exa -l --git  <span class="comment"># 显示详细信息包括Git状态</span></span><br><span class="line">exa -T       <span class="comment"># 树状显示目录结构</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-find-→-fd"><a href="#2-find-→-fd" class="headerlink" title="2. find → fd"></a>2. <code>find</code> → <code>fd</code></h3><p><code>fd</code>是比<code>find</code>更快、更友好的文件搜索工具：</p>
+<ul>
+<li>彩色输出</li>
+<li>智能大小写匹配</li>
+<li>默认忽略.gitignore中的文件</li>
+<li>搜索速度显著快于find</li>
+</ul>
+<p>安装方法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install fd-find  <span class="comment"># Debian/Ubuntu</span></span><br><span class="line">sudo dnf install fd      <span class="comment"># Fedora</span></span><br><span class="line">brew install fd          <span class="comment"># macOS</span></span><br></pre></td></tr></table></figure>
+
+<p>使用示例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fd <span class="string">&quot;\.rs$&quot;</span>  <span class="comment"># 搜索所有.rs文件</span></span><br><span class="line">fd -e md    <span class="comment"># 搜索所有.md文件</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-grep-→-ripgrep-rg"><a href="#3-grep-→-ripgrep-rg" class="headerlink" title="3. grep → ripgrep (rg)"></a>3. <code>grep</code> → <code>ripgrep (rg)</code></h3><p><code>ripgrep</code>是<code>grep</code>的现代替代品：</p>
+<ul>
+<li>自动递归搜索</li>
+<li>智能忽略.gitignore文件</li>
+<li>搜索速度极快</li>
+<li>彩色高亮匹配结果</li>
+</ul>
+<p>安装方法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install ripgrep  <span class="comment"># Debian/Ubuntu</span></span><br><span class="line">sudo dnf install ripgrep  <span class="comment"># Fedora</span></span><br><span class="line">brew install ripgrep      <span class="comment"># macOS</span></span><br></pre></td></tr></table></figure>
+
+<p>使用示例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rg <span class="string">&quot;search_term&quot;</span>  <span class="comment"># 递归搜索</span></span><br><span class="line">rg -tjs <span class="string">&quot;console&quot;</span> <span class="comment"># 只在js文件中搜索&quot;console&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-cat-→-bat"><a href="#4-cat-→-bat" class="headerlink" title="4. cat → bat"></a>4. <code>cat</code> → <code>bat</code></h3><p><code>bat</code>是带有语法高亮的<code>cat</code>替代品：</p>
+<ul>
+<li>语法高亮支持多种语言</li>
+<li>Git集成显示修改状态</li>
+<li>自动分页显示长文件</li>
+<li>行号显示</li>
+</ul>
+<p>安装方法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install bat  <span class="comment"># Debian/Ubuntu</span></span><br><span class="line">sudo dnf install bat  <span class="comment"># Fedora</span></span><br><span class="line">brew install bat      <span class="comment"># macOS</span></span><br></pre></td></tr></table></figure>
+
+<p>使用示例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bat ~/.bashrc  <span class="comment"># 查看文件带语法高亮</span></span><br><span class="line">bat -pp file.txt <span class="comment"># 禁用分页器</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-top-→-htop-btop"><a href="#5-top-→-htop-btop" class="headerlink" title="5. top → htop/btop"></a>5. <code>top</code> → <code>htop</code>/<code>btop</code></h3><p><code>htop</code>和<code>btop</code>提供了更强大的进程监控：</p>
+<ul>
+<li>彩色界面</li>
+<li>鼠标支持</li>
+<li>更直观的CPU/内存使用显示</li>
+<li>树状视图显示进程关系</li>
+</ul>
+<p>安装方法：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install htop btop  <span class="comment"># Debian/Ubuntu</span></span><br><span class="line">sudo dnf install htop btop  <span class="comment"># Fedora</span></span><br><span class="line">brew install htop btop      <span class="comment"># macOS</span></span><br></pre></td></tr></table></figure>
+
+<p>使用示例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">htop    <span class="comment"># 经典增强版top</span></span><br><span class="line">btop    <span class="comment"># 更现代化的界面</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="如何永久替换这些命令"><a href="#如何永久替换这些命令" class="headerlink" title="如何永久替换这些命令"></a>如何永久替换这些命令</h2><p>如果你习惯了这些新工具，可以设置别名永久替换：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 添加到~/.bashrc或~/.zshrc</span></span><br><span class="line"><span class="built_in">alias</span> <span class="built_in">ls</span>=<span class="string">&#x27;exa&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> find=<span class="string">&#x27;fd&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> grep=<span class="string">&#x27;rg&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> <span class="built_in">cat</span>=<span class="string">&#x27;bat&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> top=<span class="string">&#x27;htop&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>或者使用<code>sudo update-alternatives</code>系统级替换（需要谨慎操作）。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>这些现代命令行工具不仅能提高工作效率，还能让命令行工作变得更加愉快。它们保留了传统命令的核心功能，同时提供了更好的用户体验和额外功能。建议从一两个工具开始尝试，逐步替换你日常使用最多的命令。</p>
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
 </search>
