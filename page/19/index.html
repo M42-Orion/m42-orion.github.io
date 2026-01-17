@@ -1,0 +1,237 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="望的个人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="念念不忘，必有回响">
+<meta property="og:url" content="https://m42-orion.github.io/page/19/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="望的个人博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://m42-orion.github.io/img/butterfly-icon.png">
+<meta property="article:author" content="望">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://m42-orion.github.io/img/butterfly-icon.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://m42-orion.github.io/page/19/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '念念不忘，必有回响',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><meta name="generator" content="Hexo 5.4.2"></head><body><div class="page" id="body-wrap"><header class="full_page" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a></span><div id="menus"></div></nav><div id="site-info"><h1 id="site-title">念念不忘，必有回响</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/2022/04/24/python%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C/" title="python数据校验"><img class="post-bg" src="http://liu__tao.gitee.io/drawing-bed/blog_img/python数据校验/封面.jpeg" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python数据校验"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/04/24/python%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C/" title="python数据校验">python数据校验</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-04-24T13:47:06.000Z" title="发表于 2022-04-24 21:47:06">2022-04-24</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="content">什么是数据校验？在实际的开发过程当中，我们往往会面临很多需要数据对接的情况，这时候一个函数可能需要处理一个或者多个数据参数，也就是说函数的参数面临着多且不确定性，参数本身不确定性还伴随着在传递过程当中是否符合规范的问题。以python函数为例，以下是随意写法和标准写法： 1234567891011121314151617181920212223# 随意def max(a,b):    if a&gt;b:        return a    elif a&lt;b:        return b    return 0# 建议的标准写法def max(a:int=0,        b:int=0)-&gt;int:    &quot;&quot;&quot;    这里描述函数的功能    :param a: 参数描述    :param b: 参数描述    :returns: 返回描述    :raises keyError: 可能的错误捕获描述    &quot;&quot;&quot;    if a&gt;b:        return a    elif...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/04/23/python%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5-vscode/" title="python代码片段(vscode)"><img class="post-bg" src="http://liu__tao.gitee.io/drawing-bed/blog_img/python代码片段(vscode)/封面.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python代码片段(vscode)"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/04/23/python%E4%BB%A3%E7%A0%81%E7%89%87%E6%AE%B5-vscode/" title="python代码片段(vscode)">python代码片段(vscode)</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-04-23T09:46:51.000Z" title="发表于 2022-04-23 17:46:51">2022-04-23</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="content">...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2022/04/23/%E7%BD%91%E7%BB%9C-%E8%AF%A6%E8%A7%A3post%E4%B8%8Eget/" title="详解post与get"><img class="post-bg" src="http://liu__tao.gitee.io/drawing-bed/blog_img/post%E4%B8%8Eget/%E5%B0%81%E9%9D%A2.jpeg" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="详解post与get"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/04/23/%E7%BD%91%E7%BB%9C-%E8%AF%A6%E8%A7%A3post%E4%B8%8Eget/" title="详解post与get">详解post与get</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-04-23T09:46:51.000Z" title="发表于 2022-04-23 17:46:51">2022-04-23</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="content">POST和GET网络请求有OPTIONS、HEAD、GET、POST、PUT、DELETE、TRACE、CONNECT这常见的几种方式，其中最常见也就是post与get方法，在开发过程当中常常会遇到一个问题，这个接口到底是使用post请求好一点还是使用get请求好一点？两者到底有什么区别？这篇文章就将给出对应的解释。 对post与get区别的错误理解get安全性非常低，post安全性较高一般来说，在对新手上手的时候会跟他说这样的话，并说get是能够明文看见的，但是post不行…这个说法是有一定道理的，对于完全不知道情况的普通用户来说，安全一点确实有道理，因为从浏览器的地址上确实看不到post请求的参数，url链接也变短了，但是不代表数据被完全隐藏，实际上通过简单的开发者工具抓包就能够看到明文数据。因此某些极小的点上可以说安全，但是实际上可能并不安全。...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/04/23/hello-world/" title="hello world"><img class="post-bg" src="http://liu__tao.gitee.io/drawing-bed/blog_img/hello%20world/%E5%B0%81%E9%9D%A2.jpg" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="hello world"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/04/23/hello-world/" title="hello world">hello world</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-04-23T09:01:19.000Z" title="发表于 2022-04-23 17:01:19">2022-04-23</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%B7%A5%E4%BD%9C/">工作</a></span></div><div class="content">hello world12345678910#FileName: HelloWorld.java  public class HelloWorld   #如果有 public 类的话，类名必须和文件同名，注意大小写  &#123;    #Java 入口程序，程序从此入口    public static void main(String[] args)    &#123;    #向控制台打印一条语句      System.out.println(&quot;Hello,World!&quot;);    &#125;  &#125;   123456#include &lt;stdio.h&gt;  int main()                #main 入口函数  &#123;    printf(&quot;Hello,World!&quot;); #printf 函数打印    return 1;               #函数返回值  &#125;    1234567891011#include &lt;iostream&gt;           ...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/18/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/#content-inner">18</a><span class="page-number current">19</span></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">184</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">90</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/12/30/%E5%B7%A5%E5%85%B7-MinerU%E9%AB%98%E6%98%BE%E5%AD%98%E5%8D%A0%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" title="工具-MinerU高显存占用解决方案">工具-MinerU高显存占用解决方案</a><time datetime="2025-12-30T06:14:03.000Z" title="发表于 2025-12-30 14:14:03">2025-12-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/12/30/docker-%E5%A6%82%E4%BD%95%E5%9C%A8%E5%AE%B9%E5%99%A8%E4%B8%AD%E6%98%A0%E5%B0%84%E5%AD%97%E4%BD%93/" title="docker-如何在容器中映射字体"><img src="https://c-ssl.duitang.com/uploads/blog/202209/03/20220903225737_e7fdf.jpeg" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="docker-如何在容器中映射字体"/></a><div class="content"><a class="title" href="/2025/12/30/docker-%E5%A6%82%E4%BD%95%E5%9C%A8%E5%AE%B9%E5%99%A8%E4%B8%AD%E6%98%A0%E5%B0%84%E5%AD%97%E4%BD%93/" title="docker-如何在容器中映射字体">docker-如何在容器中映射字体</a><time datetime="2025-12-30T04:00:12.000Z" title="发表于 2025-12-30 12:00:12">2025-12-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/12/30/docker-deploy-gitea/" title="Docker部署Gitea服务：轻量级Git仓库的搭建与迁移指南"><img src="https://raw.githubusercontent.com/go-gitea/gitea/main/assets/logo.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Docker部署Gitea服务：轻量级Git仓库的搭建与迁移指南"/></a><div class="content"><a class="title" href="/2025/12/30/docker-deploy-gitea/" title="Docker部署Gitea服务：轻量级Git仓库的搭建与迁移指南">Docker部署Gitea服务：轻量级Git仓库的搭建与迁移指南</a><time datetime="2025-12-30T03:00:00.000Z" title="发表于 2025-12-30 11:00:00">2025-12-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/10/10/%E8%AF%AD%E6%B3%95-Python%E7%B1%BB%E5%9E%8B%E6%B3%A8%E8%A7%A3-%E8%AE%A9%E5%8A%A8%E6%80%81%E8%AF%AD%E8%A8%80%E6%9B%B4%E7%A8%B3%E5%81%A5/" title="Python类型注解:让动态语言更稳健">Python类型注解:让动态语言更稳健</a><time datetime="2025-10-10T08:20:59.000Z" title="发表于 2025-10-10 16:20:59">2025-10-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/09/28/docker-%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7Portainer%E4%B8%8EDockge%E7%9A%84%E5%AE%9A%E4%BD%8D%E4%B8%8E%E6%8A%89%E6%8B%A9/" title="Docker管理工具对比:Portainer与Dockge的定位与抉择"><img src="https://c-ssl.duitang.com/uploads/blog/202508/28/oVSp300bsgaVOYn.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Docker管理工具对比:Portainer与Dockge的定位与抉择"/></a><div class="content"><a class="title" href="/2025/09/28/docker-%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7Portainer%E4%B8%8EDockge%E7%9A%84%E5%AE%9A%E4%BD%8D%E4%B8%8E%E6%8A%89%E6%8B%A9/" title="Docker管理工具对比:Portainer与Dockge的定位与抉择">Docker管理工具对比:Portainer与Dockge的定位与抉择</a><time datetime="2025-09-28T00:09:07.000Z" title="发表于 2025-09-28 08:09:07">2025-09-28</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+      <i class="fas fa-angle-right"></i></a>
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/LLM/"><span class="card-category-list-name">LLM</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/RAG/"><span class="card-category-list-name">RAG</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/docker/"><span class="card-category-list-name">docker</span><span class="card-category-list-count">9</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/docker/GPU/"><span class="card-category-list-name">GPU</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/docker/git/"><span class="card-category-list-name">git</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/k8s/"><span class="card-category-list-name">k8s</span><span class="card-category-list-count">3</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/k8s/docker/"><span class="card-category-list-name">docker</span><span class="card-category-list-count">2</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/mysql/"><span class="card-category-list-name">mysql</span><span class="card-category-list-count">1</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E6%9D%82%E8%B0%88/" style="font-size: 1.42em; color: rgb(185, 195, 50);">杂谈</a><a href="/tags/python/" style="font-size: 1.45em; color: rgb(119, 189, 50);">python</a><a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 1.4em; color: rgb(159, 86, 116);">基础</a><a href="/tags/web/" style="font-size: 1.23em; color: rgb(120, 50, 57);">web</a><a href="/tags/go/" style="font-size: 1.18em; color: rgb(50, 116, 183);">go</a><a href="/tags/Linux/" style="font-size: 1.31em; color: rgb(194, 87, 157);">Linux</a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.26em; color: rgb(149, 50, 114);">教程</a><a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 1.18em; color: rgb(50, 120, 84);">机器学习</a><a href="/tags/RAG/" style="font-size: 1.29em; color: rgb(50, 95, 70);">RAG</a><a href="/tags/Win10%E5%8F%96%E8%AF%81/" style="font-size: 1.29em; color: rgb(200, 61, 175);">Win10取证</a><a href="/tags/%E5%89%AA%E5%88%87%E6%9D%BF/" style="font-size: 1.15em; color: rgb(92, 69, 111);">剪切板</a><a href="/tags/%E5%9B%BE%E5%83%8F/" style="font-size: 1.15em; color: rgb(196, 138, 127);">图像</a><a href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" style="font-size: 1.15em; color: rgb(50, 164, 164);">浏览器</a><a href="/tags/%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90/" style="font-size: 1.18em; color: rgb(50, 200, 133);">日志分析</a><a href="/tags/%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95/" style="font-size: 1.15em; color: rgb(185, 59, 50);">历史记录</a><a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" style="font-size: 1.18em; color: rgb(66, 76, 50);">虚拟化</a><a href="/tags/%E5%AE%B9%E5%99%A8/" style="font-size: 1.18em; color: rgb(64, 84, 50);">容器</a><a href="/tags/conda/" style="font-size: 1.18em; color: rgb(90, 185, 143);">conda</a><a href="/tags/docker/" style="font-size: 1.37em; color: rgb(164, 196, 65);">docker</a><a href="/tags/fastapi/" style="font-size: 1.34em; color: rgb(88, 191, 50);">fastapi</a><a href="/tags/%E7%8A%B6%E6%80%81%E7%A0%81/" style="font-size: 1.15em; color: rgb(123, 107, 166);">状态码</a><a href="/tags/git/" style="font-size: 1.29em; color: rgb(67, 50, 50);">git</a><a href="/tags/%E5%8F%98%E9%87%8F/" style="font-size: 1.15em; color: rgb(129, 61, 50);">变量</a><a href="/tags/%E5%8A%A0%E5%AF%86/" style="font-size: 1.2em; color: rgb(56, 50, 82);">加密</a><a href="/tags/minio/" style="font-size: 1.15em; color: rgb(137, 138, 138);">minio</a><a href="/tags/MySQL/" style="font-size: 1.15em; color: rgb(120, 167, 50);">MySQL</a><a href="/tags/Neo4j/" style="font-size: 1.15em; color: rgb(70, 167, 192);">Neo4j</a><a href="/tags/%E9%94%99%E8%AF%AF%E8%AE%B0%E5%BD%95/" style="font-size: 1.2em; color: rgb(109, 91, 50);">错误记录</a><a href="/tags/%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86/" style="font-size: 1.18em; color: rgb(50, 140, 50);">代码混淆</a><a href="/tags/python%E5%9F%BA%E7%A1%80/" style="font-size: 1.15em; color: rgb(132, 154, 116);">python基础</a><a href="/tags/%E5%9B%9E%E8%B0%83/" style="font-size: 1.15em; color: rgb(69, 129, 130);">回调</a><a href="/tags/%E6%97%A5%E5%BF%97/" style="font-size: 1.15em; color: rgb(50, 84, 50);">日志</a><a href="/tags/ssh/" style="font-size: 1.15em; color: rgb(105, 50, 85);">ssh</a><a href="/tags/%E9%94%99%E8%AF%AF/" style="font-size: 1.2em; color: rgb(50, 50, 113);">错误</a><a href="/tags/vscode/" style="font-size: 1.18em; color: rgb(160, 93, 50);">vscode</a><a href="/tags/%E5%91%BD%E5%90%8D%E7%AE%A1%E9%81%93/" style="font-size: 1.15em; color: rgb(50, 186, 65);">命名管道</a><a href="/tags/with/" style="font-size: 1.15em; color: rgb(81, 106, 98);">with</a><a href="/tags/%E5%8D%9A%E5%BC%88/" style="font-size: 1.18em; color: rgb(50, 50, 98);">博弈</a><a href="/tags/%E7%BD%91%E7%BB%9C/" style="font-size: 1.18em; color: rgb(139, 156, 50);">网络</a><a href="/tags/%E5%8D%8F%E8%AE%AE/" style="font-size: 1.23em; color: rgb(118, 193, 92);">协议</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      <a class="card-more-btn" href="/archives/"
+            title="查看更多">
+            <i class="fas fa-angle-right"></i>
+          </a>
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/12/">
+            <span class="card-archive-list-date">
+              十二月 2025
+            </span>
+            <span class="card-archive-list-count">3</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/10/">
+            <span class="card-archive-list-date">
+              十月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/09/">
+            <span class="card-archive-list-date">
+              九月 2025
+            </span>
+            <span class="card-archive-list-count">6</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/08/">
+            <span class="card-archive-list-date">
+              八月 2025
+            </span>
+            <span class="card-archive-list-count">4</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/05/">
+            <span class="card-archive-list-date">
+              五月 2025
+            </span>
+            <span class="card-archive-list-count">6</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/03/">
+            <span class="card-archive-list-date">
+              三月 2025
+            </span>
+            <span class="card-archive-list-count">15</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/02/">
+            <span class="card-archive-list-date">
+              二月 2025
+            </span>
+            <span class="card-archive-list-count">7</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2024/12/">
+            <span class="card-archive-list-date">
+              十二月 2024
+            </span>
+            <span class="card-archive-list-count">31</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">184</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-01-17T16:42:39.843Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 望</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 5.4.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="null" data-text="I,LOVE,YOU,木一" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
