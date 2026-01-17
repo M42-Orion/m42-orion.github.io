@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？ | 念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在现代 Web 开发中，ORM（对象关系映射）框架的普及极大地降低了 SQL 注入的风险。很多开发者（包括以前的我）因此产生了一种错觉：“只要我用了 SQLAlchemy 或 Django ORM，我的后端就是安全的。” 然而，现实往往会给你一记响亮的耳光。最近我在做安全排查时被告知存在“文件注入”和“文件名注入”风险。这让我意识到，Web 安全远不止 SQL 注入那么简单。 今天我们就来聊聊，除">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？">
+<meta property="og:url" content="https://m42-orion.github.io/2026/01/18/%E5%AE%89%E5%85%A8-%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="在现代 Web 开发中，ORM（对象关系映射）框架的普及极大地降低了 SQL 注入的风险。很多开发者（包括以前的我）因此产生了一种错觉：“只要我用了 SQLAlchemy 或 Django ORM，我的后端就是安全的。” 然而，现实往往会给你一记响亮的耳光。最近我在做安全排查时被告知存在“文件注入”和“文件名注入”风险。这让我意识到，Web 安全远不止 SQL 注入那么简单。 今天我们就来聊聊，除">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c-ssl.duitang.com/uploads/blog/202601/03/0GSPADDgi0avbNx.png">
+<meta property="article:published_time" content="2026-01-18T03:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-17T17:19:39.387Z">
+<meta property="article:author" content="望">
+<meta property="article:tag" content="Web安全">
+<meta property="article:tag" content="注入攻击">
+<meta property="article:tag" content="路径遍历">
+<meta property="article:tag" content="开发规范">
+<meta property="article:tag" content="命令注入">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c-ssl.duitang.com/uploads/blog/202601/03/0GSPADDgi0avbNx.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？",
+  "url": "https://m42-orion.github.io/2026/01/18/%E5%AE%89%E5%85%A8-%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1%E6%8C%87%E5%8D%97/",
+  "image": "https://c-ssl.duitang.com/uploads/blog/202601/03/0GSPADDgi0avbNx.png",
+  "datePublished": "2026-01-18T03:00:00.000Z",
+  "dateModified": "2026-01-17T17:19:39.387Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "望",
+      "url": "https://m42-orion.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://m42-orion.github.io/2026/01/18/%E5%AE%89%E5%85%A8-%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1%E6%8C%87%E5%8D%97/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 5.4.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://c-ssl.duitang.com/uploads/blog/202601/03/0GSPADDgi0avbNx.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-01-18T03:00:00.000Z" title="发表于 2026-01-18 11:00:00">2026-01-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-17T17:19:39.387Z" title="更新于 2026-01-18 01:19:39">2026-01-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AE%89%E5%85%A8/">安全</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AE%89%E5%85%A8/Python/">Python</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>在现代 Web 开发中，ORM（对象关系映射）框架的普及极大地降低了 SQL 注入的风险。很多开发者（包括以前的我）因此产生了一种错觉：“只要我用了 SQLAlchemy 或 Django ORM，我的后端就是安全的。”</p>
+<p>然而，现实往往会给你一记响亮的耳光。最近我在做安全排查时被告知存在“文件注入”和“文件名注入”风险。这让我意识到，Web 安全远不止 SQL 注入那么简单。</p>
+<p>今天我们就来聊聊，除了 SQL 注入，开发过程中还有哪些容易被忽视的“注入”陷阱，以及我们该如何防御。</p>
+<hr>
+<h2 id="一、-文件名注入与路径遍历-Path-Traversal"><a href="#一、-文件名注入与路径遍历-Path-Traversal" class="headerlink" title="一、 文件名注入与路径遍历 (Path Traversal)"></a>一、 文件名注入与路径遍历 (Path Traversal)</h2><p>这是很多初级甚至中级开发者最容易踩的坑。</p>
+<h3 id="1-场景还原"><a href="#1-场景还原" class="headerlink" title="1. 场景还原"></a>1. 场景还原</h3><p>假设你有一个上传头像的功能，后端代码可能是这样写的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">upload_avatar</span>(<span class="params">file</span>):</span><br><span class="line">    <span class="comment"># 直接使用用户上传的文件名</span></span><br><span class="line">    filename = file.filename </span><br><span class="line">    save_path = os.path.join(<span class="string">&#x27;/var/www/uploads&#x27;</span>, filename)</span><br><span class="line">    file.save(save_path)</span><br></pre></td></tr></table></figure>
+
+<p>看起来很正常，对吧？</p>
+<h3 id="2-攻击方式"><a href="#2-攻击方式" class="headerlink" title="2. 攻击方式"></a>2. 攻击方式</h3><p>如果攻击者构造了一个恶意的请求，把文件名改成了这样：<code>../../../../etc/passwd</code>（Linux）或者 <code>../../windows/system32/cmd.exe</code>（Windows）。</p>
+<p>当 <code>os.path.join</code> 拼接路径时，它会解析 <code>..</code>，导致文件最终被保存到了 <code>/var/www/uploads/../../../../etc/passwd</code>，也就是 <code>/etc/passwd</code>。</p>
+<p><strong>后果</strong>：</p>
+<ul>
+<li>  <strong>覆盖系统关键文件</strong>：攻击者可以覆盖你的配置文件、系统脚本，甚至 SSH authorized_keys。</li>
+<li>  <strong>任意文件读取</strong>：如果是下载功能，攻击者可以通过 <code>../../</code> 读取服务器上的任意文件（源代码、数据库配置等）。</li>
+</ul>
+<h3 id="3-防御方案"><a href="#3-防御方案" class="headerlink" title="3. 防御方案"></a>3. 防御方案</h3><p><strong>核心原则：永远不要信任用户的输入，包括文件名。</strong></p>
+<p>在 Python 中，<code>werkzeug</code> 库提供了一个非常好的工具函数 <code>secure_filename</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.utils <span class="keyword">import</span> secure_filename</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">upload_avatar</span>(<span class="params">file</span>):</span><br><span class="line">    <span class="comment"># 过滤文件名，只保留 ASCII 字符，去除路径分隔符</span></span><br><span class="line">    filename = secure_filename(file.filename) </span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 双重保险：生成随机文件名（推荐）</span></span><br><span class="line">    <span class="comment"># import uuid</span></span><br><span class="line">    <span class="comment"># ext = filename.rsplit(&#x27;.&#x27;, 1)[1] if &#x27;.&#x27; in filename else &#x27;png&#x27;</span></span><br><span class="line">    <span class="comment"># filename = f&quot;&#123;uuid.uuid4()&#125;.&#123;ext&#125;&quot;</span></span><br><span class="line"></span><br><span class="line">    save_path = os.path.join(<span class="string">&#x27;/var/www/uploads&#x27;</span>, filename)</span><br><span class="line">    file.save(save_path)</span><br></pre></td></tr></table></figure>
+
+<p>如果不使用库，你也必须手动剥离路径分隔符，并限制文件名的字符集（例如只允许字母、数字、下划线）。</p>
+<hr>
+<h2 id="二、-命令注入-Command-Injection"><a href="#二、-命令注入-Command-Injection" class="headerlink" title="二、 命令注入 (Command Injection)"></a>二、 命令注入 (Command Injection)</h2><p>当你的应用需要调用系统命令时，如果参数处理不当，就会引发命令注入。</p>
+<h3 id="1-场景还原-1"><a href="#1-场景还原-1" class="headerlink" title="1. 场景还原"></a>1. 场景还原</h3><p>假设你需要做一个简单的网络诊断工具，允许用户输入 IP 进行 Ping 测试。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ping_host</span>(<span class="params">ip</span>):</span><br><span class="line">    <span class="comment"># 危险！直接拼接命令</span></span><br><span class="line">    command = <span class="string">f&quot;ping -c 1 <span class="subst">&#123;ip&#125;</span>&quot;</span></span><br><span class="line">    os.system(command)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-攻击方式-1"><a href="#2-攻击方式-1" class="headerlink" title="2. 攻击方式"></a>2. 攻击方式</h3><p>用户输入正常的 IP <code>127.0.0.1</code> 没问题。<br>但如果用户输入：<code>127.0.0.1; rm -rf /</code> （Linux） 或 <code>127.0.0.1 &amp; del C:\*</code> （Windows）。</p>
+<p>最终执行的命令变成了：<code>ping -c 1 127.0.0.1; rm -rf /</code>。<br>系统会先执行 ping，紧接着执行删除命令。</p>
+<h3 id="3-防御方案-1"><a href="#3-防御方案-1" class="headerlink" title="3. 防御方案"></a>3. 防御方案</h3><p><strong>方法一：使用 <code>subprocess</code> 模块并避免 <code>shell=True</code></strong></p>
+<p>这是最推荐的做法。将命令和参数作为一个列表传递，Python 会负责处理参数转义，系统会将参数视为字符串而非可执行命令。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ping_host</span>(<span class="params">ip</span>):</span><br><span class="line">    <span class="comment"># 安全：参数被隔离</span></span><br><span class="line">    subprocess.run([<span class="string">&quot;ping&quot;</span>, <span class="string">&quot;-c&quot;</span>, <span class="string">&quot;1&quot;</span>, ip], shell=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法二：使用专用库代替系统命令</strong></p>
+<p>能用 Python 库解决的，绝不调用系统命令。</p>
+<ul>
+<li>  想 Ping？用 <code>pythonping</code> 库。</li>
+<li>  想处理视频？用 <code>ffmpeg-python</code> 绑定库，而不是 <code>os.system(&#39;ffmpeg ...&#39;)</code>。</li>
+</ul>
+<hr>
+<h2 id="三、-Python-特有的坑：Pickle-反序列化漏洞"><a href="#三、-Python-特有的坑：Pickle-反序列化漏洞" class="headerlink" title="三、 Python 特有的坑：Pickle 反序列化漏洞"></a>三、 Python 特有的坑：Pickle 反序列化漏洞</h2><p>这就不是“注入”了，但属于极其严重且容易被忽视的安全问题。</p>
+<h3 id="1-场景还原-2"><a href="#1-场景还原-2" class="headerlink" title="1. 场景还原"></a>1. 场景还原</h3><p>为了方便，很多开发者会用 <code>pickle</code> 模块把 Python 对象序列化后存入 Redis 或文件中，读取时再反序列化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取用户上传的数据（假设）</span></span><br><span class="line">data = get_user_input()</span><br><span class="line">obj = pickle.loads(data)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-攻击方式-2"><a href="#2-攻击方式-2" class="headerlink" title="2. 攻击方式"></a>2. 攻击方式</h3><p><code>pickle</code> 是一个允许执行任意代码的协议。攻击者可以构造一段恶意的字节流，当你的代码执行 <code>pickle.loads()</code> 时，这段字节流里的恶意代码（比如反弹 Shell）就会被立刻执行。</p>
+<h3 id="3-防御方案-2"><a href="#3-防御方案-2" class="headerlink" title="3. 防御方案"></a>3. 防御方案</h3><p><strong>核心原则：绝对不要对不可信的数据源使用 <code>pickle.load()</code> 或 <code>pickle.loads()</code>。</strong></p>
+<ul>
+<li>  <strong>使用 JSON</strong>：如果只是存储数据（字典、列表、字符串、数字），永远优先使用 <code>json</code>。它不仅跨语言通用，而且安全。</li>
+<li>  <strong>签名验证</strong>：如果你必须用 <code>pickle</code>（比如在内部可信节点间传输），必须对数据进行加密签名（HMAC），确保数据在传输过程中没有被篡改。</li>
+</ul>
+<hr>
+<h2 id="四、-总结"><a href="#四、-总结" class="headerlink" title="四、 总结"></a>四、 总结</h2><p>安全开发不仅仅是“防住 SQL 注入”那么简单。作为一个后端开发，我们需要建立起一种<strong>“零信任”</strong>的思维模式：</p>
+<ol>
+<li> <strong>输入即恶意</strong>：前端传来的文件名、IP 地址、ID、JSON 数据，统统当作潜在的攻击载体。</li>
+<li> <strong>最小权限原则</strong>：运行 Web 服务的用户不应该有 root 权限，不应该能访问项目目录以外的文件。</li>
+<li> <strong>使用成熟的轮子</strong>：不要自己写正则去过滤路径，用 <code>secure_filename</code>；不要自己拼 SQL，用 ORM；不要自己拼 Shell 命令，用 <code>subprocess</code>。</li>
+</ol>
+<p>希望这篇总结能帮你避开开发路上的那些安全暗礁。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2026/01/18/%E5%AE%89%E5%85%A8-%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1%E6%8C%87%E5%8D%97/">https://m42-orion.github.io/2026/01/18/%E5%AE%89%E5%85%A8-%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1%E6%8C%87%E5%8D%97/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Web%E5%AE%89%E5%85%A8/">Web安全</a><a class="post-meta__tags" href="/tags/%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB/">注入攻击</a><a class="post-meta__tags" href="/tags/%E8%B7%AF%E5%BE%84%E9%81%8D%E5%8E%86/">路径遍历</a><a class="post-meta__tags" href="/tags/%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/">开发规范</a><a class="post-meta__tags" href="/tags/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/">命令注入</a></div><div class="post-share"><div class="social-share" data-image="https://c-ssl.duitang.com/uploads/blog/202601/03/0GSPADDgi0avbNx.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2026/01/18/%E6%95%B0%E6%8D%AE%E5%BA%93-%E8%81%94%E8%A1%A8%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/" title="SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202601/07/3BSD1QQoCzvALv4.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”</div></div><div class="info-2"><div class="info-item-1">在 Python 后端开发中，我们经常使用 SQLAlchemy 作为 ORM 框架。最近在做项目时，我遇到了一件非常有意思的事情，或者说是一个“经典的误解”。 事情是这样的：我有一个现成的文件表 File，它的结构定义得很完美。随着业务发展，我需要创建一个备份表 BackupFile，要求它的结构跟 File 表 完全一致。 作为一个崇尚 DRY (Don’t Repeat Yourself) 原则的程序员，我的第一反应当然是——继承！ 于是我写出了类似这样的代码： 123456789101112131415from sqlalchemy import Column, Integer, String, ForeignKeyfrom sqlalchemy.orm import declarative_baseBase = declarative_base()class File(Base):    __tablename__ = &#x27;file&#x27;    id = Column(Integer, primary_key=True)    filename =...</div></div></div></a><a class="pagination-related" href="/2026/01/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%98%BE%E5%AD%98%E5%8E%BB%E5%93%AA%E4%BA%86%EF%BC%9F/" title="显存去哪了？深度学习框架显存管理机制与多模型共存指南"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202601/01/xDSnPGGYI2VNLV7.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">显存去哪了？深度学习框架显存管理机制与多模型共存指南</div></div><div class="info-2"><div class="info-item-1">在使用 MinerU、Stable Diffusion 或 LLM 本地部署时，我们经常会遇到一种“灵异现象”：模型明明跑完了，任务也结束了，但显存（VRAM）占用依然居高不下。如果有两个模型想在同一张显卡上轮流跑，经常会因为前一个模型“占着茅坑不拉屎”而导致后一个模型 OOM（Out Of Memory）。 为什么显存会“无休止”地扩张？为什么框架不愿意把显存还给操作系统？这背后其实是一套精心设计的“贪婪”机制。 今天我们就来扒一扒深度学习框架（以 PyTorch 为例，TensorFlow 同理）的显存管理底层逻辑，以及如何在单卡上优雅地运行多个模型。  一、 为什么显存“只吃不吐”？很多开发者会发现，Python 脚本运行过程中，显存占用往往是一条只增不减的曲线。这其实是因为框架内部实现了一个 Caching Allocator（缓存分配器）。 1. 昂贵的系统调用在 GPU 上分配内存（cudaMalloc）和释放内存（cudaFree）是系统级调用，这些操作非常“昂贵”，会强制 GPU...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">188</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">114</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">39</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E6%96%87%E4%BB%B6%E5%90%8D%E6%B3%A8%E5%85%A5%E4%B8%8E%E8%B7%AF%E5%BE%84%E9%81%8D%E5%8E%86-Path-Traversal"><span class="toc-number">1.</span> <span class="toc-text">一、 文件名注入与路径遍历 (Path Traversal)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%9C%BA%E6%99%AF%E8%BF%98%E5%8E%9F"><span class="toc-number">1.1.</span> <span class="toc-text">1. 场景还原</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">2. 攻击方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%98%B2%E5%BE%A1%E6%96%B9%E6%A1%88"><span class="toc-number">1.3.</span> <span class="toc-text">3. 防御方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5-Command-Injection"><span class="toc-number">2.</span> <span class="toc-text">二、 命令注入 (Command Injection)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%9C%BA%E6%99%AF%E8%BF%98%E5%8E%9F-1"><span class="toc-number">2.1.</span> <span class="toc-text">1. 场景还原</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F-1"><span class="toc-number">2.2.</span> <span class="toc-text">2. 攻击方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%98%B2%E5%BE%A1%E6%96%B9%E6%A1%88-1"><span class="toc-number">2.3.</span> <span class="toc-text">3. 防御方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81-Python-%E7%89%B9%E6%9C%89%E7%9A%84%E5%9D%91%EF%BC%9APickle-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E"><span class="toc-number">3.</span> <span class="toc-text">三、 Python 特有的坑：Pickle 反序列化漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%9C%BA%E6%99%AF%E8%BF%98%E5%8E%9F-2"><span class="toc-number">3.1.</span> <span class="toc-text">1. 场景还原</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F-2"><span class="toc-number">3.2.</span> <span class="toc-text">2. 攻击方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%98%B2%E5%BE%A1%E6%96%B9%E6%A1%88-2"><span class="toc-number">3.3.</span> <span class="toc-text">3. 防御方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">四、 总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/01/18/%E8%AE%BE%E8%AE%A1-Web%E5%BC%80%E5%8F%91%E6%BC%94%E5%8F%98%E5%8F%B2/" title="架构演变史：你以为的“前后端分离”可能只是冰山一角"><img src="https://c-ssl.duitang.com/uploads/blog/202512/23/lGSDpggYCxLVPA8.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="架构演变史：你以为的“前后端分离”可能只是冰山一角"/></a><div class="content"><a class="title" href="/2026/01/18/%E8%AE%BE%E8%AE%A1-Web%E5%BC%80%E5%8F%91%E6%BC%94%E5%8F%98%E5%8F%B2/" title="架构演变史：你以为的“前后端分离”可能只是冰山一角">架构演变史：你以为的“前后端分离”可能只是冰山一角</a><time datetime="2026-01-18T05:00:00.000Z" title="发表于 2026-01-18 13:00:00">2026-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%98%BE%E5%AD%98%E5%8E%BB%E5%93%AA%E4%BA%86%EF%BC%9F/" title="显存去哪了？深度学习框架显存管理机制与多模型共存指南"><img src="https://c-ssl.duitang.com/uploads/blog/202601/01/xDSnPGGYI2VNLV7.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="显存去哪了？深度学习框架显存管理机制与多模型共存指南"/></a><div class="content"><a class="title" href="/2026/01/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%98%BE%E5%AD%98%E5%8E%BB%E5%93%AA%E4%BA%86%EF%BC%9F/" title="显存去哪了？深度学习框架显存管理机制与多模型共存指南">显存去哪了？深度学习框架显存管理机制与多模型共存指南</a><time datetime="2026-01-18T04:00:00.000Z" title="发表于 2026-01-18 12:00:00">2026-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/18/%E5%AE%89%E5%85%A8-%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1%E6%8C%87%E5%8D%97/" title="开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？"><img src="https://c-ssl.duitang.com/uploads/blog/202601/03/0GSPADDgi0avbNx.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？"/></a><div class="content"><a class="title" href="/2026/01/18/%E5%AE%89%E5%85%A8-%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1%E6%8C%87%E5%8D%97/" title="开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？">开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？</a><time datetime="2026-01-18T03:00:00.000Z" title="发表于 2026-01-18 11:00:00">2026-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/18/%E6%95%B0%E6%8D%AE%E5%BA%93-%E8%81%94%E8%A1%A8%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/" title="SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”"><img src="https://c-ssl.duitang.com/uploads/blog/202601/07/3BSD1QQoCzvALv4.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”"/></a><div class="content"><a class="title" href="/2026/01/18/%E6%95%B0%E6%8D%AE%E5%BA%93-%E8%81%94%E8%A1%A8%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/" title="SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”">SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”</a><time datetime="2026-01-18T02:00:00.000Z" title="发表于 2026-01-18 10:00:00">2026-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/12/30/%E5%B7%A5%E5%85%B7-MinerU%E9%AB%98%E6%98%BE%E5%AD%98%E5%8D%A0%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" title="工具-MinerU高显存占用解决方案"><img src="https://c-ssl.duitang.com/uploads/blog/202601/07/gVSLNJJ0TQDgwDM.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="工具-MinerU高显存占用解决方案"/></a><div class="content"><a class="title" href="/2025/12/30/%E5%B7%A5%E5%85%B7-MinerU%E9%AB%98%E6%98%BE%E5%AD%98%E5%8D%A0%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" title="工具-MinerU高显存占用解决方案">工具-MinerU高显存占用解决方案</a><time datetime="2025-12-30T06:14:03.000Z" title="发表于 2025-12-30 14:14:03">2025-12-30</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 望</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 5.4.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(function() {
+  const abcjsInit = function() {
+    const abcjsFn = function() {
+      setTimeout(function() {
+        const sheets = document.querySelectorAll(".abc-music-sheet")
+        for (let i = 0; i < sheets.length; i++) {
+          const ele = sheets[i]
+          if (ele.children.length > 0) continue
+
+          // Parse parameters from data-params attribute
+          let params = {}
+          const dp = ele.getAttribute("data-params")
+          if (dp) {
+            try {
+              params = JSON.parse(dp)
+            } catch (e) {
+              console.error("Failed to parse data-params:", e)
+            }
+          }
+
+          // Merge parsed parameters with the responsive option
+          // Ensures params content appears before responsive
+          const options = { ...params, responsive: "resize" }
+
+          // Render the music score using ABCJS.renderAbc
+          ABCJS.renderAbc(ele, ele.innerHTML, options)
+        }
+      }, 100)
+    }
+
+    if (typeof ABCJS === "object") {
+      abcjsFn()
+    } else {
+      btf.getScript("https://cdn.jsdelivr.net/npm/abcjs/dist/abcjs-basic-min.min.js").then(abcjsFn)
+    }
+  }
+
+  if (window.pjax) {
+    abcjsInit()
+  } else {
+    window.addEventListener("load", abcjsInit)
+  }
+
+  btf.addGlobalFn("encrypt", abcjsInit, "abcjs")
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="null" data-text="I,LOVE,YOU,木一" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

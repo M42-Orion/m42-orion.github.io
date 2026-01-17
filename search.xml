@@ -10689,6 +10689,13 @@ F --> G[LLM合成最终答案]</pre>
 <p>虽然类型注解是可选的，但在大型项目或团队协作中强烈推荐使用。它代表了Python语言发展的一个重要方向——在保持灵活性的同时，提供更多的工程化支持。</p>
 <p><strong>类型注解不是要将Python变成静态类型语言，而是让动态类型更加可控和可靠。</strong></p>
 ]]></content>
+      <categories>
+        <category>语法</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>语法</tag>
+      </tags>
   </entry>
   <entry>
     <title>工具-MinerU高显存占用解决方案</title>
@@ -10792,5 +10799,329 @@ F --> G[LLM合成最终答案]</pre>
 <h2 id="5-结语"><a href="#5-结语" class="headerlink" title="5. 结语"></a>5. 结语</h2><p>在处理 PDF 解析这类计算密集型任务时，<strong>工程架构的优化往往比模型微调更具性价比</strong>。通过简单的 Python 脚本将大任务拆解为原子任务，我们不仅解决了显存瓶颈，还获得了更高的稳定性和业务灵活性。</p>
 <p>这段 <code>pdf_cntent_mineru.py</code> 代码虽短，却是“分而治之”算法思想在工程实践中的完美体现。</p>
 ]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>工具</tag>
+        <tag>MinerU</tag>
+        <tag>高显存占用</tag>
+        <tag>解决方案</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？</title>
+    <url>/2026/01/18/%E5%AE%89%E5%85%A8-%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1%E6%8C%87%E5%8D%97/</url>
+    <content><![CDATA[<p>在现代 Web 开发中，ORM（对象关系映射）框架的普及极大地降低了 SQL 注入的风险。很多开发者（包括以前的我）因此产生了一种错觉：“只要我用了 SQLAlchemy 或 Django ORM，我的后端就是安全的。”</p>
+<p>然而，现实往往会给你一记响亮的耳光。最近我在做安全排查时被告知存在“文件注入”和“文件名注入”风险。这让我意识到，Web 安全远不止 SQL 注入那么简单。</p>
+<p>今天我们就来聊聊，除了 SQL 注入，开发过程中还有哪些容易被忽视的“注入”陷阱，以及我们该如何防御。</p>
+<hr>
+<h2 id="一、-文件名注入与路径遍历-Path-Traversal"><a href="#一、-文件名注入与路径遍历-Path-Traversal" class="headerlink" title="一、 文件名注入与路径遍历 (Path Traversal)"></a>一、 文件名注入与路径遍历 (Path Traversal)</h2><p>这是很多初级甚至中级开发者最容易踩的坑。</p>
+<h3 id="1-场景还原"><a href="#1-场景还原" class="headerlink" title="1. 场景还原"></a>1. 场景还原</h3><p>假设你有一个上传头像的功能，后端代码可能是这样写的：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">upload_avatar</span>(<span class="params">file</span>):</span><br><span class="line">    <span class="comment"># 直接使用用户上传的文件名</span></span><br><span class="line">    filename = file.filename </span><br><span class="line">    save_path = os.path.join(<span class="string">&#x27;/var/www/uploads&#x27;</span>, filename)</span><br><span class="line">    file.save(save_path)</span><br></pre></td></tr></table></figure>
+
+<p>看起来很正常，对吧？</p>
+<h3 id="2-攻击方式"><a href="#2-攻击方式" class="headerlink" title="2. 攻击方式"></a>2. 攻击方式</h3><p>如果攻击者构造了一个恶意的请求，把文件名改成了这样：<code>../../../../etc/passwd</code>（Linux）或者 <code>../../windows/system32/cmd.exe</code>（Windows）。</p>
+<p>当 <code>os.path.join</code> 拼接路径时，它会解析 <code>..</code>，导致文件最终被保存到了 <code>/var/www/uploads/../../../../etc/passwd</code>，也就是 <code>/etc/passwd</code>。</p>
+<p><strong>后果</strong>：</p>
+<ul>
+<li>  <strong>覆盖系统关键文件</strong>：攻击者可以覆盖你的配置文件、系统脚本，甚至 SSH authorized_keys。</li>
+<li>  <strong>任意文件读取</strong>：如果是下载功能，攻击者可以通过 <code>../../</code> 读取服务器上的任意文件（源代码、数据库配置等）。</li>
+</ul>
+<h3 id="3-防御方案"><a href="#3-防御方案" class="headerlink" title="3. 防御方案"></a>3. 防御方案</h3><p><strong>核心原则：永远不要信任用户的输入，包括文件名。</strong></p>
+<p>在 Python 中，<code>werkzeug</code> 库提供了一个非常好的工具函数 <code>secure_filename</code>。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> werkzeug.utils <span class="keyword">import</span> secure_filename</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">upload_avatar</span>(<span class="params">file</span>):</span><br><span class="line">    <span class="comment"># 过滤文件名，只保留 ASCII 字符，去除路径分隔符</span></span><br><span class="line">    filename = secure_filename(file.filename) </span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 双重保险：生成随机文件名（推荐）</span></span><br><span class="line">    <span class="comment"># import uuid</span></span><br><span class="line">    <span class="comment"># ext = filename.rsplit(&#x27;.&#x27;, 1)[1] if &#x27;.&#x27; in filename else &#x27;png&#x27;</span></span><br><span class="line">    <span class="comment"># filename = f&quot;&#123;uuid.uuid4()&#125;.&#123;ext&#125;&quot;</span></span><br><span class="line"></span><br><span class="line">    save_path = os.path.join(<span class="string">&#x27;/var/www/uploads&#x27;</span>, filename)</span><br><span class="line">    file.save(save_path)</span><br></pre></td></tr></table></figure>
+
+<p>如果不使用库，你也必须手动剥离路径分隔符，并限制文件名的字符集（例如只允许字母、数字、下划线）。</p>
+<hr>
+<h2 id="二、-命令注入-Command-Injection"><a href="#二、-命令注入-Command-Injection" class="headerlink" title="二、 命令注入 (Command Injection)"></a>二、 命令注入 (Command Injection)</h2><p>当你的应用需要调用系统命令时，如果参数处理不当，就会引发命令注入。</p>
+<h3 id="1-场景还原-1"><a href="#1-场景还原-1" class="headerlink" title="1. 场景还原"></a>1. 场景还原</h3><p>假设你需要做一个简单的网络诊断工具，允许用户输入 IP 进行 Ping 测试。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ping_host</span>(<span class="params">ip</span>):</span><br><span class="line">    <span class="comment"># 危险！直接拼接命令</span></span><br><span class="line">    command = <span class="string">f&quot;ping -c 1 <span class="subst">&#123;ip&#125;</span>&quot;</span></span><br><span class="line">    os.system(command)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-攻击方式-1"><a href="#2-攻击方式-1" class="headerlink" title="2. 攻击方式"></a>2. 攻击方式</h3><p>用户输入正常的 IP <code>127.0.0.1</code> 没问题。<br>但如果用户输入：<code>127.0.0.1; rm -rf /</code> （Linux） 或 <code>127.0.0.1 &amp; del C:\*</code> （Windows）。</p>
+<p>最终执行的命令变成了：<code>ping -c 1 127.0.0.1; rm -rf /</code>。<br>系统会先执行 ping，紧接着执行删除命令。</p>
+<h3 id="3-防御方案-1"><a href="#3-防御方案-1" class="headerlink" title="3. 防御方案"></a>3. 防御方案</h3><p><strong>方法一：使用 <code>subprocess</code> 模块并避免 <code>shell=True</code></strong></p>
+<p>这是最推荐的做法。将命令和参数作为一个列表传递，Python 会负责处理参数转义，系统会将参数视为字符串而非可执行命令。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ping_host</span>(<span class="params">ip</span>):</span><br><span class="line">    <span class="comment"># 安全：参数被隔离</span></span><br><span class="line">    subprocess.run([<span class="string">&quot;ping&quot;</span>, <span class="string">&quot;-c&quot;</span>, <span class="string">&quot;1&quot;</span>, ip], shell=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>方法二：使用专用库代替系统命令</strong></p>
+<p>能用 Python 库解决的，绝不调用系统命令。</p>
+<ul>
+<li>  想 Ping？用 <code>pythonping</code> 库。</li>
+<li>  想处理视频？用 <code>ffmpeg-python</code> 绑定库，而不是 <code>os.system(&#39;ffmpeg ...&#39;)</code>。</li>
+</ul>
+<hr>
+<h2 id="三、-Python-特有的坑：Pickle-反序列化漏洞"><a href="#三、-Python-特有的坑：Pickle-反序列化漏洞" class="headerlink" title="三、 Python 特有的坑：Pickle 反序列化漏洞"></a>三、 Python 特有的坑：Pickle 反序列化漏洞</h2><p>这就不是“注入”了，但属于极其严重且容易被忽视的安全问题。</p>
+<h3 id="1-场景还原-2"><a href="#1-场景还原-2" class="headerlink" title="1. 场景还原"></a>1. 场景还原</h3><p>为了方便，很多开发者会用 <code>pickle</code> 模块把 Python 对象序列化后存入 Redis 或文件中，读取时再反序列化。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取用户上传的数据（假设）</span></span><br><span class="line">data = get_user_input()</span><br><span class="line">obj = pickle.loads(data)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-攻击方式-2"><a href="#2-攻击方式-2" class="headerlink" title="2. 攻击方式"></a>2. 攻击方式</h3><p><code>pickle</code> 是一个允许执行任意代码的协议。攻击者可以构造一段恶意的字节流，当你的代码执行 <code>pickle.loads()</code> 时，这段字节流里的恶意代码（比如反弹 Shell）就会被立刻执行。</p>
+<h3 id="3-防御方案-2"><a href="#3-防御方案-2" class="headerlink" title="3. 防御方案"></a>3. 防御方案</h3><p><strong>核心原则：绝对不要对不可信的数据源使用 <code>pickle.load()</code> 或 <code>pickle.loads()</code>。</strong></p>
+<ul>
+<li>  <strong>使用 JSON</strong>：如果只是存储数据（字典、列表、字符串、数字），永远优先使用 <code>json</code>。它不仅跨语言通用，而且安全。</li>
+<li>  <strong>签名验证</strong>：如果你必须用 <code>pickle</code>（比如在内部可信节点间传输），必须对数据进行加密签名（HMAC），确保数据在传输过程中没有被篡改。</li>
+</ul>
+<hr>
+<h2 id="四、-总结"><a href="#四、-总结" class="headerlink" title="四、 总结"></a>四、 总结</h2><p>安全开发不仅仅是“防住 SQL 注入”那么简单。作为一个后端开发，我们需要建立起一种<strong>“零信任”</strong>的思维模式：</p>
+<ol>
+<li> <strong>输入即恶意</strong>：前端传来的文件名、IP 地址、ID、JSON 数据，统统当作潜在的攻击载体。</li>
+<li> <strong>最小权限原则</strong>：运行 Web 服务的用户不应该有 root 权限，不应该能访问项目目录以外的文件。</li>
+<li> <strong>使用成熟的轮子</strong>：不要自己写正则去过滤路径，用 <code>secure_filename</code>；不要自己拼 SQL，用 ORM；不要自己拼 Shell 命令，用 <code>subprocess</code>。</li>
+</ol>
+<p>希望这篇总结能帮你避开开发路上的那些安全暗礁。</p>
+]]></content>
+      <categories>
+        <category>安全</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Web安全</tag>
+        <tag>注入攻击</tag>
+        <tag>路径遍历</tag>
+        <tag>开发规范</tag>
+        <tag>命令注入</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”</title>
+    <url>/2026/01/18/%E6%95%B0%E6%8D%AE%E5%BA%93-%E8%81%94%E8%A1%A8%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/</url>
+    <content><![CDATA[<p>在 Python 后端开发中，我们经常使用 SQLAlchemy 作为 ORM 框架。最近在做项目时，我遇到了一件非常有意思的事情，或者说是一个“经典的误解”。</p>
+<p>事情是这样的：我有一个现成的文件表 <code>File</code>，它的结构定义得很完美。随着业务发展，我需要创建一个备份表 <code>BackupFile</code>，要求它的结构跟 <code>File</code> 表 <strong>完全一致</strong>。</p>
+<p>作为一个崇尚 DRY (Don’t Repeat Yourself) 原则的程序员，我的第一反应当然是——<strong>继承</strong>！</p>
+<p>于是我写出了类似这样的代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> Column, Integer, String, ForeignKey</span><br><span class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> declarative_base</span><br><span class="line"></span><br><span class="line">Base = declarative_base()</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">File</span>(<span class="title class_ inherited__">Base</span>):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;file&#x27;</span></span><br><span class="line">    <span class="built_in">id</span> = Column(Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    filename = Column(String(<span class="number">100</span>))</span><br><span class="line">    path = Column(String(<span class="number">200</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 我以为这样就能得到一个结构一样的 backup_file 表</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BackupFile</span>(<span class="title class_ inherited__">File</span>):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;backup_file&#x27;</span></span><br><span class="line">    <span class="comment"># 我想着继承了 File，字段应该都有了吧？</span></span><br></pre></td></tr></table></figure>
+
+<p>当我兴致勃勃地去生成数据库表时，却发现 <code>backup_file</code> 表的结构非常奇怪：它里面并没有 <code>filename</code> 和 <code>path</code> 字段，只有一个 <code>id</code> 字段，而且这个 <code>id</code> 还是 <code>file</code> 表的外键！</p>
+<p>这时候大佬告诉我：“兄弟，你这触发了 SQLAlchemy 的 **联表继承 (Joined Table Inheritance)**。”</p>
+<p>这就触及到我的知识盲区了。我只想复制个表，怎么就“联表继承”了？这篇博客就来把这个概念由浅入深地讲清楚。</p>
+<hr>
+<h2 id="什么是联表继承-Joined-Table-Inheritance-？"><a href="#什么是联表继承-Joined-Table-Inheritance-？" class="headerlink" title="什么是联表继承 (Joined Table Inheritance)？"></a>什么是联表继承 (Joined Table Inheritance)？</h2><p>在面向对象编程 (OOP) 中，继承意味着“子类是父类的一种特殊形态”。比如 <code>Dog</code> 继承自 <code>Animal</code>。</p>
+<p>SQLAlchemy 作为一个优秀的 ORM，它试图在关系型数据库中还原这种面向对象的关系。当你让一个 Model 类直接继承另一个 Model 类时，SQLAlchemy 会默认你是在做 <strong>数据层面的继承</strong>，而不是简单的 <strong>代码复用</strong>。</p>
+<h3 id="它在数据库里长什么样？"><a href="#它在数据库里长什么样？" class="headerlink" title="它在数据库里长什么样？"></a>它在数据库里长什么样？</h3><p>在上面的例子中，SQLAlchemy 是这样理解的：</p>
+<ol>
+<li> <code>File</code> 是父类，存储所有文件的通用信息（如 <code>filename</code>, <code>path</code>）。</li>
+<li> <code>BackupFile</code> 是子类，它是 <code>File</code> 的一种特殊形式。</li>
+</ol>
+<p>因此，它生成的表结构逻辑如下：</p>
+<ul>
+<li>  <strong>file 表</strong>：存储 <code>id</code>, <code>filename</code>, <code>path</code>。</li>
+<li>  <strong>backup_file 表</strong>：只存储它自己特有的字段（在我的代码里没有定义特有字段）以及一个<strong>指向父表的主键</strong> (<code>id</code>)。</li>
+</ul>
+<h3 id="数据的存储与查询"><a href="#数据的存储与查询" class="headerlink" title="数据的存储与查询"></a>数据的存储与查询</h3><p>这种结构下，数据是<strong>分散存储</strong>的。</p>
+<p>当你创建一个 <code>BackupFile</code> 对象并保存时：</p>
+<ul>
+<li>  公共字段（<code>filename</code> 等）的数据会被存入 <code>file</code> 表。</li>
+<li>  特有字段的数据会被存入 <code>backup_file</code> 表。</li>
+<li>  两张表通过主键 <code>id</code> 关联。</li>
+</ul>
+<p>当你查询 <code>BackupFile</code> 时：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查询 BackupFile</span></span><br><span class="line">backup = session.query(BackupFile).first()</span><br></pre></td></tr></table></figure>
+<p>SQLAlchemy 会自动生成一个 <code>JOIN</code> 语句，把 <code>file</code> 表和 <code>backup_file</code> 表连接起来，把你需要的完整数据拼凑给你。</p>
+<h3 id="为什么这不符合“复制表”的需求？"><a href="#为什么这不符合“复制表”的需求？" class="headerlink" title="为什么这不符合“复制表”的需求？"></a>为什么这不符合“复制表”的需求？</h3><p>虽然“联表继承”在处理真正的继承关系（如 <code>User</code> -&gt; <code>AdminUser</code>, <code>RegularUser</code>）时非常有用，但对于“我想创建一个完全独立的备份表”这个需求来说，它是个大坑：</p>
+<ol>
+<li> <strong>数据耦合</strong>：<code>BackupFile</code> 的数据实际上依赖于 <code>file</code> 表。如果你删除了 <code>file</code> 表里的一行，对应的 <code>BackupFile</code> 数据也会失去意义（或者被级联删除）。</li>
+<li> <strong>性能损耗</strong>：每次查询 <code>BackupFile</code> 都要进行 <code>JOIN</code> 操作，而我们原本只需要一张独立的单表。</li>
+<li> <strong>逻辑错误</strong>：备份表通常应该是独立的快照，不应该跟原表共享同一行物理数据。</li>
+</ol>
+<hr>
+<h2 id="正确的做法：抽象基类-Abstract-Base-Class"><a href="#正确的做法：抽象基类-Abstract-Base-Class" class="headerlink" title="正确的做法：抽象基类 (Abstract Base Class)"></a>正确的做法：抽象基类 (Abstract Base Class)</h2><p>既然直接继承 Model 类会导致“联表继承”，那我们该怎么做才能既复用代码，又生成两张完全独立的表呢？</p>
+<p>答案是使用 <strong>抽象基类</strong> 或 <strong>Mixin</strong>。</p>
+<p>我们需要告诉 SQLAlchemy：“这个父类只是一个模板（Template），不要把它当成数据库里的一张实体表。”</p>
+<p>在 SQLAlchemy 中，我们可以通过设置 <code>__abstract__ = True</code> 来实现。</p>
+<h3 id="代码修正"><a href="#代码修正" class="headerlink" title="代码修正"></a>代码修正</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个抽象基类，它不会在数据库生成表</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BaseFileModel</span>(<span class="title class_ inherited__">Base</span>):</span><br><span class="line">    __abstract__ = <span class="literal">True</span>  <span class="comment"># 关键点！</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">id</span> = Column(Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    filename = Column(String(<span class="number">100</span>))</span><br><span class="line">    path = Column(String(<span class="number">200</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># File 表继承这个模板</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">File</span>(<span class="title class_ inherited__">BaseFileModel</span>):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;file&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># BackupFile 表也继承这个模板</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BackupFile</span>(<span class="title class_ inherited__">BaseFileModel</span>):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;backup_file&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="结果对比"><a href="#结果对比" class="headerlink" title="结果对比"></a>结果对比</h3><p>现在，SQLAlchemy 会这样处理：</p>
+<ol>
+<li> 看到 <code>BaseFileModel</code> 是抽象的，跳过建表。</li>
+<li> 看到 <code>File</code> 继承自 <code>BaseFileModel</code>，把模板里的字段都拷贝过来，创建一张独立的 <code>file</code> 表。</li>
+<li> 看到 <code>BackupFile</code> 继承自 <code>BaseFileModel</code>，同样拷贝字段，创建一张独立的 <code>backup_file</code> 表。</li>
+</ol>
+<p>此时，<code>file</code> 表和 <code>backup_file</code> 表在数据库物理层面上是<strong>完全隔离</strong>的，互不干扰，但我们在 Python 代码层面又实现了完美的复用。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>  <strong>Model 继承 Model</strong> (<code>class B(A)</code>)：默认触发 <strong>联表继承</strong>。数据库会有两张表，子表通过外键关联父表。适用于“子类是父类的一种”且需要多态查询的场景。</li>
+<li>  <strong>Model 继承 Abstract Base</strong> (<code>__abstract__ = True</code>)：这是 <strong>代码复用</strong>。数据库会生成两张完全独立的表，结构一致。这才是“复制表结构”的正确姿势。</li>
+</ul>
+<p>下次想“复制”表的时候，千万别手滑直接继承了，记得多加一个 <code>__abstract__ = True</code> 的中间层！</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>SQLAlchemy</tag>
+        <tag>ORM</tag>
+        <tag>继承</tag>
+        <tag>踩坑记录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>显存去哪了？深度学习框架显存管理机制与多模型共存指南</title>
+    <url>/2026/01/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%98%BE%E5%AD%98%E5%8E%BB%E5%93%AA%E4%BA%86%EF%BC%9F/</url>
+    <content><![CDATA[<p>在使用 MinerU、Stable Diffusion 或 LLM 本地部署时，我们经常会遇到一种“灵异现象”：模型明明跑完了，任务也结束了，但显存（VRAM）占用依然居高不下。如果有两个模型想在同一张显卡上轮流跑，经常会因为前一个模型“占着茅坑不拉屎”而导致后一个模型 OOM（Out Of Memory）。</p>
+<p>为什么显存会“无休止”地扩张？为什么框架不愿意把显存还给操作系统？这背后其实是一套精心设计的“贪婪”机制。</p>
+<p>今天我们就来扒一扒深度学习框架（以 PyTorch 为例，TensorFlow 同理）的显存管理底层逻辑，以及如何在单卡上优雅地运行多个模型。</p>
+<hr>
+<h2 id="一、-为什么显存“只吃不吐”？"><a href="#一、-为什么显存“只吃不吐”？" class="headerlink" title="一、 为什么显存“只吃不吐”？"></a>一、 为什么显存“只吃不吐”？</h2><p>很多开发者会发现，Python 脚本运行过程中，显存占用往往是一条只增不减的曲线。这其实是因为框架内部实现了一个 <strong>Caching Allocator（缓存分配器）</strong>。</p>
+<h3 id="1-昂贵的系统调用"><a href="#1-昂贵的系统调用" class="headerlink" title="1. 昂贵的系统调用"></a>1. 昂贵的系统调用</h3><p>在 GPU 上分配内存（<code>cudaMalloc</code>）和释放内存（<code>cudaFree</code>）是<strong>系统级调用</strong>，这些操作非常“昂贵”，会强制 GPU 同步，打断计算流水线。</p>
+<p>如果模型在推理过程中，每算一层网络就申请一次显存，算完就释放，那么 GPU 大部分时间都在等待内存分配，而不是在做计算。这会导致推理速度慢如蜗牛。</p>
+<h3 id="2-框架的“贪婪”策略"><a href="#2-框架的“贪婪”策略" class="headerlink" title="2. 框架的“贪婪”策略"></a>2. 框架的“贪婪”策略</h3><p>为了极致的性能，PyTorch 采用了一种“<strong>池化管理</strong>”策略：</p>
+<ul>
+<li>  <strong>申请</strong>：当你需要显存时，PyTorch 会先找 CUDA 要。</li>
+<li>  <strong>释放</strong>：当你用完显存（比如变量被销毁），PyTorch <strong>不会</strong>把显存还给 CUDA（操作系统），而是把这块显存标记为“空闲”，放入自己的<strong>内部缓存池</strong>中。</li>
+<li>  <strong>复用</strong>：下次你需要显存时，PyTorch 直接从缓存池里拿，完全跳过了昂贵的 <code>cudaMalloc</code>。</li>
+</ul>
+<p>这就是为什么你用 <code>nvidia-smi</code> 看到的显存占用一直很高，但程序内部其实并没有真的在用那么多。框架就像一个“守财奴”，把要来的显存都存着，以备不时之需。</p>
+<hr>
+<h2 id="二、-显存碎片的诅咒"><a href="#二、-显存碎片的诅咒" class="headerlink" title="二、 显存碎片的诅咒"></a>二、 显存碎片的诅咒</h2><p>你可能遇到过这种情况：<code>nvidia-smi</code> 显示还有 4GB 空闲显存，但你申请 2GB 显存时却报错 OOM。</p>
+<p><strong>这是“显存碎片”在作祟。</strong></p>
+<p>想象显存是一条长长的面包：</p>
+<ol>
+<li> 你切了 1GB 给变量 A。</li>
+<li> 你切了 2GB 给变量 B。</li>
+<li> 你切了 1GB 给变量 C。</li>
+<li> 现在变量 B 用完了，释放了。中间空出了 2GB。</li>
+<li> 现在你需要申请 3GB 给变量 D。</li>
+</ol>
+<p>虽然总空闲显存有 2GB（中间）+ 剩余的，但中间那块 2GB 的洞塞不下 3GB 的变量 D。这就是<strong>外部碎片</strong>。</p>
+<p>MinerU 或 Transformer 类模型在处理变长序列时，经常频繁申请不同大小的显存，极易导致碎片化。这也是为什么有时候重启一下代码就能跑通的原因——重启重置了显存布局。</p>
+<hr>
+<h2 id="三、-如何实现多模型共存？"><a href="#三、-如何实现多模型共存？" class="headerlink" title="三、 如何实现多模型共存？"></a>三、 如何实现多模型共存？</h2><p>既然知道了底层原因，我们在单卡上同时跑多个模型（比如一个 OCR，一个 LLM）时，就有章可循了。</p>
+<h3 id="1-主动清理缓存：empty-cache"><a href="#1-主动清理缓存：empty-cache" class="headerlink" title="1. 主动清理缓存：empty_cache()"></a>1. 主动清理缓存：<code>empty_cache()</code></h3><p>这是最直接的手段。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行模型 A</span></span><br><span class="line">model_a.predict()</span><br><span class="line"><span class="keyword">del</span> model_a  <span class="comment"># 删除引用</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 强制归还显存给 OS</span></span><br><span class="line">torch.cuda.empty_cache()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 现在运行模型 B，显存就像刚开机一样干净</span></span><br><span class="line">model_b.predict()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  <strong>原理</strong>：告诉缓存分配器，“别贪了，把缓存池里没用的显存统统还给操作系统”。</li>
+<li>  <strong>代价</strong>：下次再申请显存时，需要重新进行系统调用，会稍微慢一点点，但对于多模型切换场景，这是必要的。</li>
+</ul>
+<h3 id="2-显存隔离与限制"><a href="#2-显存隔离与限制" class="headerlink" title="2. 显存隔离与限制"></a>2. 显存隔离与限制</h3><p>如果你希望两个模型同时运行（并发），而不是轮流运行，你需要限制每个进程的显存上限，防止一个模型吃光所有资源。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 限制当前进程只能使用 50% 的显存</span></span><br><span class="line">torch.cuda.set_per_process_memory_fraction(<span class="number">0.5</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>这样，即使模型想“贪婪”地缓存更多显存，也会被框架强制制止，从而给另一个模型留出空间。</p>
+<h3 id="3-终极方案：模型卸载-CPU-Offload"><a href="#3-终极方案：模型卸载-CPU-Offload" class="headerlink" title="3. 终极方案：模型卸载 (CPU Offload)"></a>3. 终极方案：模型卸载 (CPU Offload)</h3><p>如果显存实在太小，可以采用“时间换空间”的策略。模型权重平时存在 CPU 内存（RAM）里，计算时才加载到 GPU。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 伪代码示例</span></span><br><span class="line">device = <span class="string">&quot;cuda&quot;</span></span><br><span class="line">model.to(device)  <span class="comment"># 加载到 GPU</span></span><br><span class="line">output = model(<span class="built_in">input</span>)</span><br><span class="line">model.to(<span class="string">&quot;cpu&quot;</span>)   <span class="comment"># 用完立刻踢回 CPU</span></span><br><span class="line">torch.cuda.empty_cache() <span class="comment"># 清理残留</span></span><br></pre></td></tr></table></figure>
+<p>像 <code>accelerate</code> 库或 <code>LangChain</code> 中的很多组件都内置了这种 <code>device_map=&quot;auto&quot;</code> 或 <code>offload_folder</code> 机制，自动帮你做这件事。</p>
+<hr>
+<h2 id="四、-总结"><a href="#四、-总结" class="headerlink" title="四、 总结"></a>四、 总结</h2><p>深度学习框架的显存管理机制，本质上是在做 <strong>Speed（速度） vs Memory（显存）</strong> 的权衡。</p>
+<ul>
+<li>  <strong>为什么不释放？</strong> 为了快，避免系统调用。</li>
+<li>  <strong>为什么会 OOM？</strong> 除了真不够用，还可能是碎片化导致的有空地没法用。</li>
+<li><strong>怎么解决？</strong> <ul>
+<li>  单任务大文件：拆分输入（如 MinerU 的单页处理）。</li>
+<li>  多模型切换：用完及时 <code>del</code> 并 <code>empty_cache()</code>。</li>
+<li>  多模型并发：设置显存上限 <code>set_per_process_memory_fraction</code>。</li>
+</ul>
+</li>
+</ul>
+<p>理解了这些，当你下次再看到显存占用居高不下时，就不会惊慌了——那只是你的框架在为你“未雨绸缪”。</p>
+]]></content>
+      <categories>
+        <category>深度学习</category>
+        <category>原理</category>
+      </categories>
+      <tags>
+        <tag>CUDA</tag>
+        <tag>显存管理</tag>
+        <tag>PyTorch</tag>
+        <tag>OOM</tag>
+        <tag>性能优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>架构演变史：你以为的“前后端分离”可能只是冰山一角</title>
+    <url>/2026/01/18/%E8%AE%BE%E8%AE%A1-Web%E5%BC%80%E5%8F%91%E6%BC%94%E5%8F%98%E5%8F%B2/</url>
+    <content><![CDATA[<p>作为一名后端开发者，你是否也有过这样的困惑：</p>
+<blockquote>
+<p>“前端把代码打包成一堆 HTML/CSS/JS 给我，我把它丢在我的 Nginx 或者静态目录里部署，这不就是以前的 MVC 吗？这也能叫前后端分离？”</p>
+<p>“隔壁组的前端自己在服务器上跑了个 Node.js 服务（React/Vue），然后调我的 Java/Python 接口，用户直接访问他们的服务，这才是真正的分离吧？”</p>
+</blockquote>
+<p>其实，这两种模式都属于“前后端分离”，只是处于演变历史中的不同阶段，或者说是为了解决不同问题而诞生的架构模式。</p>
+<p>今天，我们就来一场时空穿越，聊聊 Web 开发架构的前世今生，帮你彻底理清这些概念。</p>
+<hr>
+<h2 id="第一阶段：混沌初开-——-传统的服务端渲染-Classic-SSR-MVC"><a href="#第一阶段：混沌初开-——-传统的服务端渲染-Classic-SSR-MVC" class="headerlink" title="第一阶段：混沌初开 —— 传统的服务端渲染 (Classic SSR / MVC)"></a>第一阶段：混沌初开 —— 传统的服务端渲染 (Classic SSR / MVC)</h2><p>在 2010 年以前（PHP、JSP、ASP.NET、早期的 Django/Rails 时代），Web 开发的主流是 **服务端渲染 (Server-Side Rendering)**。</p>
+<h3 id="工作模式"><a href="#工作模式" class="headerlink" title="工作模式"></a>工作模式</h3><ol>
+<li> <strong>浏览器</strong>向服务器发送请求。</li>
+<li> <strong>后端</strong>（PHP/Java/Python）接收请求，查询数据库。</li>
+<li> <strong>后端</strong>使用模板引擎（JSP, Jinja2, Blade），把数据填充到 HTML 模板中。</li>
+<li> <strong>后端</strong>把生成好的完整 HTML 字符串返回给浏览器。</li>
+<li> <strong>浏览器</strong>只需要解析 HTML 展示即可。</li>
+</ol>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>  <strong>前后端不分家</strong>：通常是后端写逻辑，顺便把 HTML 也写了；或者前端写好静态 HTML，后端一点点“套”进模板里。</li>
+<li>  <strong>重后端，轻前端</strong>：JavaScript 只是用来做点弹窗、表单验证这种“锦上添花”的小把戏。</li>
+</ul>
+<h3 id="为什么被抛弃？"><a href="#为什么被抛弃？" class="headerlink" title="为什么被抛弃？"></a>为什么被抛弃？</h3><p>随着 Gmail 和 iPhone 的出现，用户对 <strong>交互体验</strong> 的要求越来越高。每次点击都要刷新整个页面（白屏一下），这种体验太糟糕了。</p>
+<hr>
+<h2 id="第二阶段：各立门户-——-单页应用-SPA-与-伪全栈时代"><a href="#第二阶段：各立门户-——-单页应用-SPA-与-伪全栈时代" class="headerlink" title="第二阶段：各立门户 —— 单页应用 (SPA) 与 伪全栈时代"></a>第二阶段：各立门户 —— 单页应用 (SPA) 与 伪全栈时代</h2><p>为了解决体验问题，<strong>前后端分离 (Decoupled Architecture)</strong> 的概念开始爆发，AngularJS, React, Vue 相继诞生。这也是你最困惑的阶段。</p>
+<h3 id="模式-A：静态资源托管（你困惑的“前端打包给我”）"><a href="#模式-A：静态资源托管（你困惑的“前端打包给我”）" class="headerlink" title="模式 A：静态资源托管（你困惑的“前端打包给我”）"></a>模式 A：静态资源托管（你困惑的“前端打包给我”）</h3><p>这是目前最主流的“前后端分离”模式。</p>
+<h4 id="工作模式-1"><a href="#工作模式-1" class="headerlink" title="工作模式"></a>工作模式</h4><ol>
+<li> <strong>前端</strong>：负责编写 UI，最终打包成一堆静态文件（<code>index.html</code>, <code>bundle.js</code>, <code>style.css</code>）。</li>
+<li> <strong>后端</strong>：只负责提供 API（JSON 数据），不再关心页面长什么样。</li>
+<li> <strong>部署</strong>：前端的包被放在 Nginx、CDN 或者后端框架的静态文件目录（static folder）里。</li>
+<li> <strong>运行</strong>：用户访问网页 -&gt; 浏览器下载 HTML/JS -&gt; <strong>JS 在浏览器运行</strong> -&gt; JS 发起 Ajax 请求找后端要数据 -&gt; JS 渲染页面。</li>
+</ol>
+<h4 id="为什么这也叫“前后端分离”？"><a href="#为什么这也叫“前后端分离”？" class="headerlink" title="为什么这也叫“前后端分离”？"></a>为什么这也叫“前后端分离”？</h4><p>虽然物理上代码可能还在一台服务器上，但在 <strong>开发层面</strong>，它们已经彻底分家了：</p>
+<ul>
+<li>  <strong>关注点分离</strong>：后端只管数据（API），前端只管展示（UI）。</li>
+<li>  <strong>解耦</strong>：后端改数据库结构，只要 API 格式不变，前端无感知；前端改按钮颜色，不需要后端重启服务。</li>
+</ul>
+<p>这就像<strong>外卖模式</strong>：以前（MVC）是厨师（后端）做好菜直接端上桌；现在（SPA）是厨师只管做菜（API），外卖小哥（JS）负责把菜送到客户面前并摆盘。</p>
+<h3 id="模式-B：前端独立服务（你看到的“React-启动服务”）"><a href="#模式-B：前端独立服务（你看到的“React-启动服务”）" class="headerlink" title="模式 B：前端独立服务（你看到的“React 启动服务”）"></a>模式 B：前端独立服务（你看到的“React 启动服务”）</h3><p>随着 Node.js 的崛起，前端不再满足于只写运行在浏览器里的 JS，他们开始搞 <strong>中间层 (BFF - Backend For Frontend)</strong> 或者 **服务端渲染 (SSR 2.0)**，比如 Next.js, Nuxt.js。</p>
+<h4 id="工作模式-2"><a href="#工作模式-2" class="headerlink" title="工作模式"></a>工作模式</h4><ol>
+<li> <strong>用户</strong>访问的其实是 <strong>前端服务器</strong>（Node.js）。</li>
+<li> <strong>前端服务器</strong>接收请求，先找<strong>后端服务器</strong>（Python/Java）拿数据。</li>
+<li> <strong>前端服务器</strong>组装好 HTML（或者转发 API），返回给用户。</li>
+</ol>
+<h4 id="为什么要这么折腾？"><a href="#为什么要这么折腾？" class="headerlink" title="为什么要这么折腾？"></a>为什么要这么折腾？</h4><ol>
+<li> <strong>SEO（搜索引擎优化）</strong>：模式 A 全靠浏览器渲染，爬虫抓不到内容。模式 B 在服务器生成 HTML，对 SEO 友好。</li>
+<li> <strong>首屏速度</strong>：模式 A 需要先下载 JS 再执行再请求数据，慢；模式 B 直接给 HTML，快。</li>
+<li> <strong>接口聚合</strong>：后端给的接口太细碎，前端可以在 Node 层把 3 个接口聚合成 1 个，减少浏览器请求次数。</li>
+</ol>
+<hr>
+<h2 id="第三阶段：怎么选？——-架构选型指南"><a href="#第三阶段：怎么选？——-架构选型指南" class="headerlink" title="第三阶段：怎么选？—— 架构选型指南"></a>第三阶段：怎么选？—— 架构选型指南</h2><p>回到你的困惑，开发一个网站到底该选哪种？</p>
+<h3 id="1-选“静态资源托管”（SPA-API）"><a href="#1-选“静态资源托管”（SPA-API）" class="headerlink" title="1. 选“静态资源托管”（SPA + API）"></a>1. 选“静态资源托管”（SPA + API）</h3><p><strong>适用场景</strong>：管理后台（Admin Dashboard）、企业内部系统、对 SEO 没要求的应用。</p>
+<ul>
+<li><strong>优点</strong>：<ul>
+<li>  <strong>开发简单</strong>：后端只写 API，前端只写页面。</li>
+<li>  <strong>部署便宜</strong>：前端丢到 CDN 或 Nginx 就能跑，不需要独立的应用服务器。</li>
+<li>  <strong>后端省心</strong>：这就是你现在的模式，前端打包给你，你配置一下路径完事。</li>
+</ul>
+</li>
+<li>  <strong>缺点</strong>：首屏加载慢，SEO 差。</li>
+</ul>
+<h3 id="2-选“前端独立服务”（Next-js-SSR）"><a href="#2-选“前端独立服务”（Next-js-SSR）" class="headerlink" title="2. 选“前端独立服务”（Next.js / SSR）"></a>2. 选“前端独立服务”（Next.js / SSR）</h3><p><strong>适用场景</strong>：门户网站、博客、电商商品页、任何需要 SEO 的公开网站。</p>
+<ul>
+<li>  <strong>优点</strong>：SEO 极佳，首屏极快，用户体验最好。</li>
+<li><strong>缺点</strong>：<ul>
+<li>  <strong>运维复杂</strong>：你需要维护两个服务（后端服务 + Node.js 服务）。</li>
+<li>  <strong>服务器成本高</strong>：Node.js 渲染 HTML 是消耗 CPU 的。</li>
+<li>  <strong>开发门槛高</strong>：前端需要懂服务端编程。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-选“传统-MVC”（Django-Template-Jinja2）"><a href="#3-选“传统-MVC”（Django-Template-Jinja2）" class="headerlink" title="3. 选“传统 MVC”（Django Template / Jinja2）"></a>3. 选“传统 MVC”（Django Template / Jinja2）</h3><p><strong>适用场景</strong>：超简单的个人小工具、完全不需要复杂交互的页面。</p>
+<ul>
+<li>  <strong>现状</strong>：基本只在极小型项目或老项目中存活。</li>
+</ul>
+<hr>
+<h2 id="总结：什么才是真正的“分离”？"><a href="#总结：什么才是真正的“分离”？" class="headerlink" title="总结：什么才是真正的“分离”？"></a>总结：什么才是真正的“分离”？</h2><p><strong>前后端分离的核心，不在于代码部署在哪里，而在于职责的划分。</strong></p>
+<ul>
+<li>  如果你还在用 Python 拼接 HTML 字符串，那叫 <strong>不分离</strong>。</li>
+<li>  如果前端通过 API 获取数据，自己负责渲染逻辑，哪怕你把前端代码塞在 Python 的 <code>static</code> 目录下运行，这也叫 <strong>前后端分离</strong>。</li>
+<li>  如果前端启动了一个 Node.js 服务来做中间层，那是 <strong>架构升级版的前后端分离</strong>。</li>
+</ul>
+<p>所以，不要纠结于“谁启动服务”。下次前端打包给你代码，你可以自信地告诉自己：“这是标准的 SPA 架构，我是提供 API 的厨师，他是负责摆盘的服务员，我们分工明确，这就是分离。”</p>
+]]></content>
+      <categories>
+        <category>架构设计</category>
+        <category>Web开发</category>
+      </categories>
+      <tags>
+        <tag>前后端分离</tag>
+        <tag>MVC</tag>
+        <tag>SPA</tag>
+        <tag>SSR</tag>
+        <tag>BFF</tag>
+        <tag>历史演变</tag>
+      </tags>
   </entry>
 </search>

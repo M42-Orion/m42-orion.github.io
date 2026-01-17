@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承” | 念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在 Python 后端开发中，我们经常使用 SQLAlchemy 作为 ORM 框架。最近在做项目时，我遇到了一件非常有意思的事情，或者说是一个“经典的误解”。 事情是这样的：我有一个现成的文件表 File，它的结构定义得很完美。随着业务发展，我需要创建一个备份表 BackupFile，要求它的结构跟 File 表 完全一致。 作为一个崇尚 DRY (Don’t Repeat Yourself)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”">
+<meta property="og:url" content="https://m42-orion.github.io/2026/01/18/%E6%95%B0%E6%8D%AE%E5%BA%93-%E8%81%94%E8%A1%A8%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="在 Python 后端开发中，我们经常使用 SQLAlchemy 作为 ORM 框架。最近在做项目时，我遇到了一件非常有意思的事情，或者说是一个“经典的误解”。 事情是这样的：我有一个现成的文件表 File，它的结构定义得很完美。随着业务发展，我需要创建一个备份表 BackupFile，要求它的结构跟 File 表 完全一致。 作为一个崇尚 DRY (Don’t Repeat Yourself)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c-ssl.duitang.com/uploads/blog/202601/07/3BSD1QQoCzvALv4.png">
+<meta property="article:published_time" content="2026-01-18T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-17T17:13:45.762Z">
+<meta property="article:author" content="望">
+<meta property="article:tag" content="SQLAlchemy">
+<meta property="article:tag" content="ORM">
+<meta property="article:tag" content="继承">
+<meta property="article:tag" content="踩坑记录">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c-ssl.duitang.com/uploads/blog/202601/07/3BSD1QQoCzvALv4.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”",
+  "url": "https://m42-orion.github.io/2026/01/18/%E6%95%B0%E6%8D%AE%E5%BA%93-%E8%81%94%E8%A1%A8%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/",
+  "image": "https://c-ssl.duitang.com/uploads/blog/202601/07/3BSD1QQoCzvALv4.png",
+  "datePublished": "2026-01-18T02:00:00.000Z",
+  "dateModified": "2026-01-17T17:13:45.762Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "望",
+      "url": "https://m42-orion.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://m42-orion.github.io/2026/01/18/%E6%95%B0%E6%8D%AE%E5%BA%93-%E8%81%94%E8%A1%A8%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 5.4.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://c-ssl.duitang.com/uploads/blog/202601/07/3BSD1QQoCzvALv4.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-01-18T02:00:00.000Z" title="发表于 2026-01-18 10:00:00">2026-01-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-17T17:13:45.762Z" title="更新于 2026-01-18 01:13:45">2026-01-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python/">Python</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>在 Python 后端开发中，我们经常使用 SQLAlchemy 作为 ORM 框架。最近在做项目时，我遇到了一件非常有意思的事情，或者说是一个“经典的误解”。</p>
+<p>事情是这样的：我有一个现成的文件表 <code>File</code>，它的结构定义得很完美。随着业务发展，我需要创建一个备份表 <code>BackupFile</code>，要求它的结构跟 <code>File</code> 表 <strong>完全一致</strong>。</p>
+<p>作为一个崇尚 DRY (Don’t Repeat Yourself) 原则的程序员，我的第一反应当然是——<strong>继承</strong>！</p>
+<p>于是我写出了类似这样的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> Column, Integer, String, ForeignKey</span><br><span class="line"><span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> declarative_base</span><br><span class="line"></span><br><span class="line">Base = declarative_base()</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">File</span>(<span class="title class_ inherited__">Base</span>):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;file&#x27;</span></span><br><span class="line">    <span class="built_in">id</span> = Column(Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    filename = Column(String(<span class="number">100</span>))</span><br><span class="line">    path = Column(String(<span class="number">200</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 我以为这样就能得到一个结构一样的 backup_file 表</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BackupFile</span>(<span class="title class_ inherited__">File</span>):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;backup_file&#x27;</span></span><br><span class="line">    <span class="comment"># 我想着继承了 File，字段应该都有了吧？</span></span><br></pre></td></tr></table></figure>
+
+<p>当我兴致勃勃地去生成数据库表时，却发现 <code>backup_file</code> 表的结构非常奇怪：它里面并没有 <code>filename</code> 和 <code>path</code> 字段，只有一个 <code>id</code> 字段，而且这个 <code>id</code> 还是 <code>file</code> 表的外键！</p>
+<p>这时候大佬告诉我：“兄弟，你这触发了 SQLAlchemy 的 **联表继承 (Joined Table Inheritance)**。”</p>
+<p>这就触及到我的知识盲区了。我只想复制个表，怎么就“联表继承”了？这篇博客就来把这个概念由浅入深地讲清楚。</p>
+<hr>
+<h2 id="什么是联表继承-Joined-Table-Inheritance-？"><a href="#什么是联表继承-Joined-Table-Inheritance-？" class="headerlink" title="什么是联表继承 (Joined Table Inheritance)？"></a>什么是联表继承 (Joined Table Inheritance)？</h2><p>在面向对象编程 (OOP) 中，继承意味着“子类是父类的一种特殊形态”。比如 <code>Dog</code> 继承自 <code>Animal</code>。</p>
+<p>SQLAlchemy 作为一个优秀的 ORM，它试图在关系型数据库中还原这种面向对象的关系。当你让一个 Model 类直接继承另一个 Model 类时，SQLAlchemy 会默认你是在做 <strong>数据层面的继承</strong>，而不是简单的 <strong>代码复用</strong>。</p>
+<h3 id="它在数据库里长什么样？"><a href="#它在数据库里长什么样？" class="headerlink" title="它在数据库里长什么样？"></a>它在数据库里长什么样？</h3><p>在上面的例子中，SQLAlchemy 是这样理解的：</p>
+<ol>
+<li> <code>File</code> 是父类，存储所有文件的通用信息（如 <code>filename</code>, <code>path</code>）。</li>
+<li> <code>BackupFile</code> 是子类，它是 <code>File</code> 的一种特殊形式。</li>
+</ol>
+<p>因此，它生成的表结构逻辑如下：</p>
+<ul>
+<li>  <strong>file 表</strong>：存储 <code>id</code>, <code>filename</code>, <code>path</code>。</li>
+<li>  <strong>backup_file 表</strong>：只存储它自己特有的字段（在我的代码里没有定义特有字段）以及一个<strong>指向父表的主键</strong> (<code>id</code>)。</li>
+</ul>
+<h3 id="数据的存储与查询"><a href="#数据的存储与查询" class="headerlink" title="数据的存储与查询"></a>数据的存储与查询</h3><p>这种结构下，数据是<strong>分散存储</strong>的。</p>
+<p>当你创建一个 <code>BackupFile</code> 对象并保存时：</p>
+<ul>
+<li>  公共字段（<code>filename</code> 等）的数据会被存入 <code>file</code> 表。</li>
+<li>  特有字段的数据会被存入 <code>backup_file</code> 表。</li>
+<li>  两张表通过主键 <code>id</code> 关联。</li>
+</ul>
+<p>当你查询 <code>BackupFile</code> 时：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询 BackupFile</span></span><br><span class="line">backup = session.query(BackupFile).first()</span><br></pre></td></tr></table></figure>
+<p>SQLAlchemy 会自动生成一个 <code>JOIN</code> 语句，把 <code>file</code> 表和 <code>backup_file</code> 表连接起来，把你需要的完整数据拼凑给你。</p>
+<h3 id="为什么这不符合“复制表”的需求？"><a href="#为什么这不符合“复制表”的需求？" class="headerlink" title="为什么这不符合“复制表”的需求？"></a>为什么这不符合“复制表”的需求？</h3><p>虽然“联表继承”在处理真正的继承关系（如 <code>User</code> -&gt; <code>AdminUser</code>, <code>RegularUser</code>）时非常有用，但对于“我想创建一个完全独立的备份表”这个需求来说，它是个大坑：</p>
+<ol>
+<li> <strong>数据耦合</strong>：<code>BackupFile</code> 的数据实际上依赖于 <code>file</code> 表。如果你删除了 <code>file</code> 表里的一行，对应的 <code>BackupFile</code> 数据也会失去意义（或者被级联删除）。</li>
+<li> <strong>性能损耗</strong>：每次查询 <code>BackupFile</code> 都要进行 <code>JOIN</code> 操作，而我们原本只需要一张独立的单表。</li>
+<li> <strong>逻辑错误</strong>：备份表通常应该是独立的快照，不应该跟原表共享同一行物理数据。</li>
+</ol>
+<hr>
+<h2 id="正确的做法：抽象基类-Abstract-Base-Class"><a href="#正确的做法：抽象基类-Abstract-Base-Class" class="headerlink" title="正确的做法：抽象基类 (Abstract Base Class)"></a>正确的做法：抽象基类 (Abstract Base Class)</h2><p>既然直接继承 Model 类会导致“联表继承”，那我们该怎么做才能既复用代码，又生成两张完全独立的表呢？</p>
+<p>答案是使用 <strong>抽象基类</strong> 或 <strong>Mixin</strong>。</p>
+<p>我们需要告诉 SQLAlchemy：“这个父类只是一个模板（Template），不要把它当成数据库里的一张实体表。”</p>
+<p>在 SQLAlchemy 中，我们可以通过设置 <code>__abstract__ = True</code> 来实现。</p>
+<h3 id="代码修正"><a href="#代码修正" class="headerlink" title="代码修正"></a>代码修正</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义一个抽象基类，它不会在数据库生成表</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BaseFileModel</span>(<span class="title class_ inherited__">Base</span>):</span><br><span class="line">    __abstract__ = <span class="literal">True</span>  <span class="comment"># 关键点！</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">id</span> = Column(Integer, primary_key=<span class="literal">True</span>)</span><br><span class="line">    filename = Column(String(<span class="number">100</span>))</span><br><span class="line">    path = Column(String(<span class="number">200</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># File 表继承这个模板</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">File</span>(<span class="title class_ inherited__">BaseFileModel</span>):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;file&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># BackupFile 表也继承这个模板</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BackupFile</span>(<span class="title class_ inherited__">BaseFileModel</span>):</span><br><span class="line">    __tablename__ = <span class="string">&#x27;backup_file&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="结果对比"><a href="#结果对比" class="headerlink" title="结果对比"></a>结果对比</h3><p>现在，SQLAlchemy 会这样处理：</p>
+<ol>
+<li> 看到 <code>BaseFileModel</code> 是抽象的，跳过建表。</li>
+<li> 看到 <code>File</code> 继承自 <code>BaseFileModel</code>，把模板里的字段都拷贝过来，创建一张独立的 <code>file</code> 表。</li>
+<li> 看到 <code>BackupFile</code> 继承自 <code>BaseFileModel</code>，同样拷贝字段，创建一张独立的 <code>backup_file</code> 表。</li>
+</ol>
+<p>此时，<code>file</code> 表和 <code>backup_file</code> 表在数据库物理层面上是<strong>完全隔离</strong>的，互不干扰，但我们在 Python 代码层面又实现了完美的复用。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>  <strong>Model 继承 Model</strong> (<code>class B(A)</code>)：默认触发 <strong>联表继承</strong>。数据库会有两张表，子表通过外键关联父表。适用于“子类是父类的一种”且需要多态查询的场景。</li>
+<li>  <strong>Model 继承 Abstract Base</strong> (<code>__abstract__ = True</code>)：这是 <strong>代码复用</strong>。数据库会生成两张完全独立的表，结构一致。这才是“复制表结构”的正确姿势。</li>
+</ul>
+<p>下次想“复制”表的时候，千万别手滑直接继承了，记得多加一个 <code>__abstract__ = True</code> 的中间层！</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2026/01/18/%E6%95%B0%E6%8D%AE%E5%BA%93-%E8%81%94%E8%A1%A8%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/">https://m42-orion.github.io/2026/01/18/%E6%95%B0%E6%8D%AE%E5%BA%93-%E8%81%94%E8%A1%A8%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SQLAlchemy/">SQLAlchemy</a><a class="post-meta__tags" href="/tags/ORM/">ORM</a><a class="post-meta__tags" href="/tags/%E7%BB%A7%E6%89%BF/">继承</a><a class="post-meta__tags" href="/tags/%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/">踩坑记录</a></div><div class="post-share"><div class="social-share" data-image="https://c-ssl.duitang.com/uploads/blog/202601/07/3BSD1QQoCzvALv4.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/12/30/%E5%B7%A5%E5%85%B7-MinerU%E9%AB%98%E6%98%BE%E5%AD%98%E5%8D%A0%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" title="工具-MinerU高显存占用解决方案"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202601/07/gVSLNJJ0TQDgwDM.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">工具-MinerU高显存占用解决方案</div></div><div class="info-2"><div class="info-item-1">在文档智能处理（Document AI）领域，MinerU 是一款强大的开源 PDF 解析工具，能够精准提取文档中的 Markdown 内容、公式和表格。然而，在实际工程落地中，直接将几百页的 PDF 扔给模型处理，往往会面临一个棘手的问题——显存（VRAM）爆炸。 本文将结合一段 Python 实战代码，深入剖析为什么大文件会导致显存溢出，并阐述一种基于“单页拆分”的优化策略及其背后的原理。 1. 痛点：为什么大文件会让显存“烟花”？MinerU（以及大多数基于 Transformer 或视觉编码器的模型）在处理文档时，需要将输入内容转换为高维向量表示。要回答“为什么拆分后显存就不炸了”，我们需要深入到深度学习模型的显存占用机制。 1.1 显存都去哪儿了？在深度学习推理（Inference）过程中，显存主要被以下几部分占用：  模型权重（Model Weights）： 这是固定的。不管你输入是一个字还是一万个字，加载模型本身（如 InternVL、LayoutLM 等）就需要占用几个 GB 的显存。这部分是“入场费”。  中间激活值（Activations）与临时缓冲区：...</div></div></div></a><a class="pagination-related" href="/2026/01/18/%E5%AE%89%E5%85%A8-%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1%E6%8C%87%E5%8D%97/" title="开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202601/03/0GSPADDgi0avbNx.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？</div></div><div class="info-2"><div class="info-item-1">在现代 Web 开发中，ORM（对象关系映射）框架的普及极大地降低了 SQL 注入的风险。很多开发者（包括以前的我）因此产生了一种错觉：“只要我用了 SQLAlchemy 或 Django ORM，我的后端就是安全的。” 然而，现实往往会给你一记响亮的耳光。最近我在做安全排查时被告知存在“文件注入”和“文件名注入”风险。这让我意识到，Web 安全远不止 SQL 注入那么简单。 今天我们就来聊聊，除了 SQL 注入，开发过程中还有哪些容易被忽视的“注入”陷阱，以及我们该如何防御。  一、 文件名注入与路径遍历 (Path Traversal)这是很多初级甚至中级开发者最容易踩的坑。 1. 场景还原假设你有一个上传头像的功能，后端代码可能是这样写的： 1234567import osdef upload_avatar(file):    # 直接使用用户上传的文件名    filename = file.filename     save_path = os.path.join(&#x27;/var/www/uploads&#x27;, filename)   ...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">188</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">114</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">39</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%81%94%E8%A1%A8%E7%BB%A7%E6%89%BF-Joined-Table-Inheritance-%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什么是联表继承 (Joined Table Inheritance)？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%83%E5%9C%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E9%87%8C%E9%95%BF%E4%BB%80%E4%B9%88%E6%A0%B7%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">它在数据库里长什么样？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AD%98%E5%82%A8%E4%B8%8E%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.2.</span> <span class="toc-text">数据的存储与查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B8%8D%E7%AC%A6%E5%90%88%E2%80%9C%E5%A4%8D%E5%88%B6%E8%A1%A8%E2%80%9D%E7%9A%84%E9%9C%80%E6%B1%82%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">为什么这不符合“复制表”的需求？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E7%A1%AE%E7%9A%84%E5%81%9A%E6%B3%95%EF%BC%9A%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB-Abstract-Base-Class"><span class="toc-number">2.</span> <span class="toc-text">正确的做法：抽象基类 (Abstract Base Class)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E4%BF%AE%E6%AD%A3"><span class="toc-number">2.1.</span> <span class="toc-text">代码修正</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C%E5%AF%B9%E6%AF%94"><span class="toc-number">2.2.</span> <span class="toc-text">结果对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/01/18/%E8%AE%BE%E8%AE%A1-Web%E5%BC%80%E5%8F%91%E6%BC%94%E5%8F%98%E5%8F%B2/" title="架构演变史：你以为的“前后端分离”可能只是冰山一角"><img src="https://c-ssl.duitang.com/uploads/blog/202512/23/lGSDpggYCxLVPA8.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="架构演变史：你以为的“前后端分离”可能只是冰山一角"/></a><div class="content"><a class="title" href="/2026/01/18/%E8%AE%BE%E8%AE%A1-Web%E5%BC%80%E5%8F%91%E6%BC%94%E5%8F%98%E5%8F%B2/" title="架构演变史：你以为的“前后端分离”可能只是冰山一角">架构演变史：你以为的“前后端分离”可能只是冰山一角</a><time datetime="2026-01-18T05:00:00.000Z" title="发表于 2026-01-18 13:00:00">2026-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%98%BE%E5%AD%98%E5%8E%BB%E5%93%AA%E4%BA%86%EF%BC%9F/" title="显存去哪了？深度学习框架显存管理机制与多模型共存指南"><img src="https://c-ssl.duitang.com/uploads/blog/202601/01/xDSnPGGYI2VNLV7.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="显存去哪了？深度学习框架显存管理机制与多模型共存指南"/></a><div class="content"><a class="title" href="/2026/01/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%98%BE%E5%AD%98%E5%8E%BB%E5%93%AA%E4%BA%86%EF%BC%9F/" title="显存去哪了？深度学习框架显存管理机制与多模型共存指南">显存去哪了？深度学习框架显存管理机制与多模型共存指南</a><time datetime="2026-01-18T04:00:00.000Z" title="发表于 2026-01-18 12:00:00">2026-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/18/%E5%AE%89%E5%85%A8-%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1%E6%8C%87%E5%8D%97/" title="开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？"><img src="https://c-ssl.duitang.com/uploads/blog/202601/03/0GSPADDgi0avbNx.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？"/></a><div class="content"><a class="title" href="/2026/01/18/%E5%AE%89%E5%85%A8-%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1%E6%8C%87%E5%8D%97/" title="开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？">开发安全指北：ORM 防住了 SQL 注入，那“文件名注入”呢？</a><time datetime="2026-01-18T03:00:00.000Z" title="发表于 2026-01-18 11:00:00">2026-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/18/%E6%95%B0%E6%8D%AE%E5%BA%93-%E8%81%94%E8%A1%A8%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/" title="SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”"><img src="https://c-ssl.duitang.com/uploads/blog/202601/07/3BSD1QQoCzvALv4.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”"/></a><div class="content"><a class="title" href="/2026/01/18/%E6%95%B0%E6%8D%AE%E5%BA%93-%E8%81%94%E8%A1%A8%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/" title="SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”">SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”</a><time datetime="2026-01-18T02:00:00.000Z" title="发表于 2026-01-18 10:00:00">2026-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/12/30/%E5%B7%A5%E5%85%B7-MinerU%E9%AB%98%E6%98%BE%E5%AD%98%E5%8D%A0%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" title="工具-MinerU高显存占用解决方案"><img src="https://c-ssl.duitang.com/uploads/blog/202601/07/gVSLNJJ0TQDgwDM.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="工具-MinerU高显存占用解决方案"/></a><div class="content"><a class="title" href="/2025/12/30/%E5%B7%A5%E5%85%B7-MinerU%E9%AB%98%E6%98%BE%E5%AD%98%E5%8D%A0%E7%94%A8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" title="工具-MinerU高显存占用解决方案">工具-MinerU高显存占用解决方案</a><time datetime="2025-12-30T06:14:03.000Z" title="发表于 2025-12-30 14:14:03">2025-12-30</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 望</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 5.4.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(function() {
+  const abcjsInit = function() {
+    const abcjsFn = function() {
+      setTimeout(function() {
+        const sheets = document.querySelectorAll(".abc-music-sheet")
+        for (let i = 0; i < sheets.length; i++) {
+          const ele = sheets[i]
+          if (ele.children.length > 0) continue
+
+          // Parse parameters from data-params attribute
+          let params = {}
+          const dp = ele.getAttribute("data-params")
+          if (dp) {
+            try {
+              params = JSON.parse(dp)
+            } catch (e) {
+              console.error("Failed to parse data-params:", e)
+            }
+          }
+
+          // Merge parsed parameters with the responsive option
+          // Ensures params content appears before responsive
+          const options = { ...params, responsive: "resize" }
+
+          // Render the music score using ABCJS.renderAbc
+          ABCJS.renderAbc(ele, ele.innerHTML, options)
+        }
+      }, 100)
+    }
+
+    if (typeof ABCJS === "object") {
+      abcjsFn()
+    } else {
+      btf.getScript("https://cdn.jsdelivr.net/npm/abcjs/dist/abcjs-basic-min.min.js").then(abcjsFn)
+    }
+  }
+
+  if (window.pjax) {
+    abcjsInit()
+  } else {
+    window.addEventListener("load", abcjsInit)
+  }
+
+  btf.addGlobalFn("encrypt", abcjsInit, "abcjs")
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="null" data-text="I,LOVE,YOU,木一" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
