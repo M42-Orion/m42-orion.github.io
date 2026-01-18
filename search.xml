@@ -11124,4 +11124,241 @@ F --> G[LLM合成最终答案]</pre>
         <tag>历史演变</tag>
       </tags>
   </entry>
+  <entry>
+    <title>再见 Conda？Python 极速包管理器 uv 上手指南</title>
+    <url>/2026/01/18/%E5%B7%A5%E5%85%B7-Python%E5%8C%85%E7%AE%A1%E7%90%86%E6%96%B0%E6%98%9Fuv/</url>
+    <content><![CDATA[<p>Python 的环境管理一直是个让开发者头秃的问题。</p>
+<p>从最早的 <code>pip + venv</code>，到科学计算必备的 <code>conda</code>，再到后来追求项目隔离的 <code>poetry</code> 和 <code>pdm</code>，我们手里的工具越来越多，但困惑也越来越多：</p>
+<blockquote>
+<p>“Conda 解析依赖太慢了，一直在转圈圈。”<br>“听说 Anaconda 公司改了协议，公司用要收费了？”<br>“Poetry 很好用，但是安装依赖有时候卡很久。”</p>
+</blockquote>
+<p>就在大家在这个泥潭里挣扎时，<strong>uv</strong> 横空出世。它号称是“Python 的 Cargo（Rust 的包管理器）”，主打一个字：<strong>快</strong>。</p>
+<p>今天我们就来聊聊这个用 Rust 编写的 Python 包管理新星，看看它是否有资格终结这场“环境管理之战”。</p>
+<hr>
+<h2 id="一、-为什么要换掉-Conda？"><a href="#一、-为什么要换掉-Conda？" class="headerlink" title="一、 为什么要换掉 Conda？"></a>一、 为什么要换掉 Conda？</h2><p>很多 Python 初学者（尤其是搞数据科学的）入行安装的第一个软件就是 Anaconda。但随着时间推移，Conda 的问题逐渐暴露：</p>
+<ol>
+<li> <strong>慢</strong>：这是最大的槽点。当你安装一个复杂的库（比如 PyTorch）时，Conda 的依赖解析（Solving environment）能让你等到怀疑人生。</li>
+<li> <strong>臃肿</strong>：Anaconda 预装了太多你根本用不到的库，占用几 GB 空间。虽然有 Miniconda，但依然不够轻量。</li>
+<li> <strong>版权陷阱</strong>：<strong>这一点非常重要</strong>。Anaconda Inc. 在 2020 年更新了服务条款，对于<strong>超过 200 人的商业公司</strong>，如果使用 Anaconda 的默认仓库（defaults channel），是需要<strong>付费授权</strong>的。虽然你可以切换到社区维护的 <code>conda-forge</code> 频道来规避，但这始终是一个潜在的合规风险。</li>
+</ol>
+<p>这也是为什么最近一年，Miniforge（默认使用 conda-forge）和 Micromamba（C+ 重写的极速 Conda）开始流行的原因。</p>
+<p>但 <strong>uv</strong> 的出现，似乎想把这些工具全部“降维打击”。</p>
+<hr>
+<h2 id="二、-uv-是什么？"><a href="#二、-uv-是什么？" class="headerlink" title="二、 uv 是什么？"></a>二、 uv 是什么？</h2><p><code>uv</code> 是由 <strong>Astral</strong> 团队开发的（他们也是极速 Python 代码检查工具 <code>Ruff</code> 的开发者）。</p>
+<p><strong>它的核心卖点就两个：</strong></p>
+<ol>
+<li> <strong>Rust 编写</strong>：快到离谱。官方宣称比 pip 快 10-100 倍，比 pip-tools 快 100 倍。</li>
+<li><strong>All-in-One</strong>：它不仅仅是 <code>pip</code> 的替代品，它还能：<ul>
+<li>  管理 Python 版本（替代 <code>pyenv</code> / <code>conda</code>）</li>
+<li>  管理虚拟环境（替代 <code>venv</code> / <code>virtualenv</code>）</li>
+<li>  管理项目依赖（替代 <code>poetry</code> / <code>pip-tools</code>）</li>
+<li>  运行脚本（替代 <code>pipx</code>）</li>
+</ul>
+</li>
+</ol>
+<p>简单来说，<strong>有了 uv，你可能不再需要安装 Python、pip、poetry、pyenv 了，只需要一个 uv 二进制文件。</strong></p>
+<hr>
+<h2 id="三、-实际上手：快得像假的一样"><a href="#三、-实际上手：快得像假的一样" class="headerlink" title="三、 实际上手：快得像假的一样"></a>三、 实际上手：快得像假的一样</h2><h3 id="1-安装-uv"><a href="#1-安装-uv" class="headerlink" title="1. 安装 uv"></a>1. 安装 uv</h3><p>uv 不需要依赖 Python 环境，它自己就是个独立的程序。</p>
+<p>Windows (PowerShell):</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">powershell <span class="literal">-c</span> <span class="string">&quot;irm https://astral.sh/uv/install.ps1 | iex&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>Linux / macOS:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -LsSf https://astral.sh/uv/install.sh | sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-初始化项目"><a href="#2-初始化项目" class="headerlink" title="2. 初始化项目"></a>2. 初始化项目</h3><p>以前我们创建一个新项目可能需要手动建 venv，现在：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建一个名为 my-project 的项目</span></span><br><span class="line">uv init my-project</span><br><span class="line"><span class="built_in">cd</span> my-project</span><br></pre></td></tr></table></figure>
+
+<p>这会生成一个 <code>pyproject.toml</code> 文件（现代 Python 项目标准配置）和一个 <code>.python-version</code> 文件。</p>
+<h3 id="3-管理-Python-版本"><a href="#3-管理-Python-版本" class="headerlink" title="3. 管理 Python 版本"></a>3. 管理 Python 版本</h3><p>这是我觉得 uv 最杀手级的功能。你不需要去官网下载 Python 安装包，也不需要配置环境变量。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 我想在这个项目里用 Python 3.12</span></span><br><span class="line">uv python install 3.12</span><br></pre></td></tr></table></figure>
+
+<p>uv 会自动下载一个独立的 Python 解释器放在它的缓存目录里，不会污染你的系统环境。</p>
+<h3 id="4-添加依赖"><a href="#4-添加依赖" class="headerlink" title="4. 添加依赖"></a>4. 添加依赖</h3><p>抛弃 <code>pip install</code> 吧，试试 <code>uv add</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装 requests</span></span><br><span class="line">uv add requests</span><br></pre></td></tr></table></figure>
+
+<p>你会发现，<strong>几乎是瞬间完成</strong>。<br>uv 会自动创建虚拟环境（<code>.venv</code>），解析依赖，下载包，安装包，并把依赖关系写入 <code>pyproject.toml</code> 和 <code>uv.lock</code>（锁定文件，保证队友安装的版本和你一模一样）。</p>
+<h3 id="5-运行脚本"><a href="#5-运行脚本" class="headerlink" title="5. 运行脚本"></a>5. 运行脚本</h3><p>不需要手动激活虚拟环境（<code>source .venv/bin/activate</code>），直接用 <code>uv run</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 运行项目里的脚本</span></span><br><span class="line">uv run hello.py</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者临时运行一个带依赖的脚本（无需显式安装）</span></span><br><span class="line"><span class="comment"># 这行命令会自动下载 numpy 并运行，跑完即焚，不污染环境</span></span><br><span class="line">uv run --with numpy -c <span class="string">&quot;import numpy; print(numpy.pi)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、-兼容性：如果你还想用-pip"><a href="#四、-兼容性：如果你还想用-pip" class="headerlink" title="四、 兼容性：如果你还想用 pip"></a>四、 兼容性：如果你还想用 pip</h2><p>uv 非常务实，它提供了一个 <code>uv pip</code> 接口，完全兼容现有的 pip 习惯。</p>
+<p>如果你不想改变项目结构（不想用 <code>pyproject.toml</code>），只想单纯加速 <code>pip install</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建虚拟环境</span></span><br><span class="line">uv venv</span><br><span class="line"></span><br><span class="line"><span class="comment"># 激活环境 (Windows)</span></span><br><span class="line">.venv\Scripts\activate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 极速安装 requirements.txt</span></span><br><span class="line">uv pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>对于老项目，你可以直接把 CI/CD 流程里的 <code>pip</code> 替换成 <code>uv pip</code>，安装速度通常能提升 5-10 倍，大幅节省构建时间。</p>
+<hr>
+<h2 id="五、-总结"><a href="#五、-总结" class="headerlink" title="五、 总结"></a>五、 总结</h2><p>回到你的问题：<strong>Conda 还有必要吗？</strong></p>
+<ul>
+<li>  如果你极度依赖 <strong>非 Python 的二进制科学计算库</strong>（比如某些复杂的生物信息学工具，必须通过 Conda 安装），那么 Conda 依然是不可替代的。</li>
+<li>  但对于 <strong>90% 的 Python Web 开发、数据分析、脚本编写</strong> 场景，<strong>uv 是目前更好的选择</strong>。</li>
+</ul>
+<p><strong>uv 的优势总结：</strong></p>
+<ol>
+<li> <strong>极速</strong>：Rust 加持，毫秒级解析。</li>
+<li> <strong>合规</strong>：MIT / Apache 2.0 开源协议，无商业授权担忧。</li>
+<li> <strong>省心</strong>：自动管理 Python 版本和虚拟环境，告别“环境地狱”。</li>
+<li> <strong>统一</strong>：一个工具解决所有问题。</li>
+</ol>
+<p>建议从今天开始，在你的个人新项目里尝试使用 uv，你会体验到那种“德芙般丝滑”的感觉。</p>
+]]></content>
+      <categories>
+        <category>工具</category>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>conda</tag>
+        <tag>pip</tag>
+        <tag>uv</tag>
+        <tag>包管理</tag>
+        <tag>Rust</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PostgreSQL：数据库界的“瑞士军刀”，真的能取代 Redis 吗？</title>
+    <url>/2026/01/18/%E6%95%B0%E6%8D%AE%E5%BA%93-PostgreSQL%E8%83%BD%E5%90%A6%E5%8F%96%E4%BB%A3Redis/</url>
+    <content><![CDATA[<p>最近，技术圈里刮起了一股“反简化”的风潮，其中最响亮的口号之一就是：<strong>“你其实不需要 Redis，一个 PostgreSQL 就够了。”</strong></p>
+<p>作为一个习惯了 <code>MySQL + Redis</code> 黄金搭档的开发者，听到这话的第一反应通常是：“疯了吧？Redis 是内存数据库，PostgreSQL 是关系型数据库，这俩能是一回事？”</p>
+<p>但当你深入了解 PostgreSQL（简称 PG）之后，你会发现它早已不是一个简单的“关系型数据库”了。它更像是一个无所不能的<strong>数据库平台</strong>。</p>
+<p>今天我们就来聊聊这位“全能选手”，以及它是否真的有底气取代 Redis。</p>
+<hr>
+<h2 id="为什么大家都在谈论-PostgreSQL？"><a href="#为什么大家都在谈论-PostgreSQL？" class="headerlink" title="为什么大家都在谈论 PostgreSQL？"></a>为什么大家都在谈论 PostgreSQL？</h2><p>在 MySQL 称霸 Web 开发的年代，PostgreSQL 常被贴上“学院派”、“配置复杂”的标签。但随着版本迭代，PG 凭借其强大的扩展能力（Extensions）和先进的特性，逐渐成为了架构师的心头好。</p>
+<p>它支持：</p>
+<ul>
+<li>  <strong>关系型数据</strong>（标准的 SQL，比 MySQL 更严格更强大）。</li>
+<li>  <strong>JSON 文档</strong>（JSONB 类型，查询性能甚至超越 MongoDB）。</li>
+<li>  <strong>地理空间数据</strong>（PostGIS，地图应用的行业标准）。</li>
+<li>  <strong>全文检索</strong>（自带分词，很多时候不需要 ElasticSearch）。</li>
+<li>  <strong>向量搜索</strong>（pgvector，完美适配现在的 AI 浪潮）。</li>
+</ul>
+<p>这时候有人就想了：既然它这么强，能不能把 Redis 的活儿也干了？</p>
+<hr>
+<h2 id="PG-凭什么挑战-Redis？"><a href="#PG-凭什么挑战-Redis？" class="headerlink" title="PG 凭什么挑战 Redis？"></a>PG 凭什么挑战 Redis？</h2><p>Redis 的核心应用场景通常有三个：<strong>缓存</strong>、<strong>消息队列</strong>、<strong>分布式锁</strong>。PostgreSQL 在这些领域竟然都有对应的解决方案。</p>
+<h3 id="1-缓存：Unlogged-Tables（不记录日志表）"><a href="#1-缓存：Unlogged-Tables（不记录日志表）" class="headerlink" title="1. 缓存：Unlogged Tables（不记录日志表）"></a>1. 缓存：Unlogged Tables（不记录日志表）</h3><p>Redis 快是因为它在内存里。PG 虽然是磁盘数据库，但它有一个大杀器：<code>UNLOGGED Tables</code>。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> UNLOGGED <span class="keyword">TABLE</span> cache_items (</span><br><span class="line">    key TEXT <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">    <span class="keyword">value</span> JSONB,</span><br><span class="line">    expires_at <span class="type">TIMESTAMP</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  <strong>原理</strong>：普通的 PG 表为了保证数据不丢，写入时要写两份（一份数据文件，一份 WAL 日志）。<code>UNLOGGED</code> 表不写 WAL 日志。</li>
+<li>  <strong>效果</strong>：写入速度提升数倍。虽然崩了会丢数据，但这不就是缓存的特性吗？而且配合现代操作系统的 Page Cache 和 NVMe SSD，它的读取速度对于 99% 的应用来说已经足够快了。</li>
+</ul>
+<h3 id="2-消息队列：LISTEN-NOTIFY"><a href="#2-消息队列：LISTEN-NOTIFY" class="headerlink" title="2. 消息队列：LISTEN / NOTIFY"></a>2. 消息队列：LISTEN / NOTIFY</h3><p>Redis 常被用作简单的 Pub/Sub（发布订阅）。PG 竟然原生支持这个功能：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 消费者监听</span></span><br><span class="line">LISTEN my_channel;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 生产者发送</span></span><br><span class="line">NOTIFY my_channel, <span class="string">&#x27;Hello World&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>对于任务队列，PG 还有 <code>FOR UPDATE SKIP LOCKED</code> 特性，可以实现多消费者不冲突地抢任务，可靠性比 Redis 还要高（因为数据是持久化的）。</p>
+<h3 id="3-分布式锁：Advisory-Locks"><a href="#3-分布式锁：Advisory-Locks" class="headerlink" title="3. 分布式锁：Advisory Locks"></a>3. 分布式锁：Advisory Locks</h3><p>Redis 做分布式锁很常见（SetNX），但处理超时和原子性比较麻烦。PG 提供了 <code>Advisory Locks</code>（咨询锁）：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 获取锁（快速，不存磁盘，纯内存操作）</span></span><br><span class="line"><span class="keyword">SELECT</span> pg_try_advisory_lock(<span class="number">12345</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 释放锁</span></span><br><span class="line"><span class="keyword">SELECT</span> pg_advisory_unlock(<span class="number">12345</span>);</span><br></pre></td></tr></table></figure>
+<p>这完全是内存级的操作，性能极高，而且连接断开自动释放，不用担心死锁。</p>
+<hr>
+<h2 id="真的能取代吗？冷静分析"><a href="#真的能取代吗？冷静分析" class="headerlink" title="真的能取代吗？冷静分析"></a>真的能取代吗？冷静分析</h2><p>虽然 PG 能干这些活，但<strong>能干</strong>不代表<strong>最擅长</strong>。</p>
+<h3 id="✅-支持取代的理由（Just-Use-Postgres）"><a href="#✅-支持取代的理由（Just-Use-Postgres）" class="headerlink" title="✅ 支持取代的理由（Just Use Postgres）"></a>✅ 支持取代的理由（Just Use Postgres）</h3><ol>
+<li> <strong>架构极简</strong>：以前你需要维护 <code>App + MySQL + Redis + ES + Kafka</code>。现在可能只需要 <code>App + PostgreSQL</code>。少一个组件，就少一份运维成本，少一类网络故障风险。</li>
+<li> <strong>事务一致性</strong>：你的缓存、队列和主数据都在同一个数据库里，你可以用<strong>事务</strong>来保证原子性！“写入数据库同时写入队列”这种难题瞬间消失。</li>
+<li> <strong>成本</strong>：Redis 需要昂贵的内存，PG 可以利用廉价的 SSD。</li>
+</ol>
+<h3 id="❌-不建议取代的理由"><a href="#❌-不建议取代的理由" class="headerlink" title="❌ 不建议取代的理由"></a>❌ 不建议取代的理由</h3><ol>
+<li> <strong>极致性能</strong>：Redis 是<strong>亚毫秒级</strong>（&lt;1ms）响应，单机轻松 10w QPS。PG 即使再优化，网络协议和 SQL 解析的开销也摆在那，通常是<strong>毫秒级</strong>（1-10ms）。对于高频计数器、实时抢购等场景，Redis 是不可替代的。</li>
+<li> <strong>数据结构</strong>：Redis 有 <code>Set</code>, <code>ZSet</code>, <code>List</code>, <code>Hash</code> 等丰富的数据结构，操作极其方便。虽然 PG 可以用 JSONB 模拟，但复杂度高且效率不如 Redis 原生结构。</li>
+<li> <strong>连接消耗</strong>：PG 的连接（Connection）是比较重的资源。如果把 PG 当缓存用，大量的并发请求可能会把数据库连接池打满，影响主业务。</li>
+</ol>
+<hr>
+<h2 id="总结：如何选择？"><a href="#总结：如何选择？" class="headerlink" title="总结：如何选择？"></a>总结：如何选择？</h2><p><strong>PostgreSQL 就像一把瑞士军刀</strong>，它能锯木头、剪指甲、开红酒。<br><strong>Redis 就像一把专业的手术刀</strong>，它专注于极致的切割。</p>
+<ul>
+<li>  <strong>如果你是初创团队 / 中小型项目</strong>：强力推荐 <strong>All-in PostgreSQL</strong>。在这个阶段，架构的简单性大于极致的性能。不用维护 Redis，不用处理缓存一致性问题，幸福感爆棚。</li>
+<li>  <strong>如果你是高并发 / 复杂业务系统</strong>：请继续使用 <strong>PostgreSQL + Redis</strong>。让专业的工具做专业的事，PG 负责持久化和复杂查询，Redis 负责抗高并发流量。</li>
+</ul>
+<p>PostgreSQL 也许不会完全“杀死” Redis，但它确实给了我们一个<strong>重新思考架构</strong>的机会：我们真的需要那么复杂的架构吗？</p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>架构设计</category>
+      </categories>
+      <tags>
+        <tag>PostgreSQL</tag>
+        <tag>Redis</tag>
+        <tag>缓存</tag>
+        <tag>架构选型</tag>
+        <tag>技术趋势</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>面试造航母：普通开发者真的需要担心“千万级并发”吗？</title>
+    <url>/2026/01/18/%E6%9D%82%E8%B0%88-%E5%8D%83%E4%B8%87%E7%BA%A7%E5%B9%B6%E5%8F%91%E7%9A%84%E8%B0%8E%E8%A8%80%E4%B8%8E%E7%9C%9F%E7%9B%B8/</url>
+    <content><![CDATA[<p>“如果有 1000 万并发，你的系统怎么设计？”</p>
+<p>这大概是后端面试中最经典，也最让人无语的问题之一。</p>
+<p>作为一个在中小厂摸爬滚打多年的普通开发者，我常常看着自己负责的系统——QPS（每秒查询率）峰值不到 50，日活几千人——陷入沉思：<strong>我这辈子真的能遇到千万级并发吗？</strong></p>
+<p>今天我们就来戳破这个泡沫，聊聊并发的真相，以及作为普通开发者，我们真正应该关心什么。</p>
+<hr>
+<h2 id="一、-别被“并发”忽悠了"><a href="#一、-别被“并发”忽悠了" class="headerlink" title="一、 别被“并发”忽悠了"></a>一、 别被“并发”忽悠了</h2><p>首先，我们要厘清几个被混淆的概念。</p>
+<h3 id="1-网页资源多-并发高？"><a href="#1-网页资源多-并发高？" class="headerlink" title="1. 网页资源多 = 并发高？"></a>1. 网页资源多 = 并发高？</h3><p>有人告诉你：“一个网页加载要请求 50 个图片、CSS、JS，如果有 1 万个人访问，那就是 50 万并发啊！”</p>
+<p><strong>这是典型的偷换概念。</strong></p>
+<ul>
+<li>  <strong>CDN 的存在</strong>：现代 Web 开发，静态资源（图片、CSS、JS）通常都放在 CDN 上，根本不会打到你的后端服务器（API Server）。</li>
+<li>  <strong>浏览器限制</strong>：浏览器对同一个域名的并发连接数是有限制的（通常 6-8 个）。</li>
+<li>  <strong>长连接</strong>：HTTP/1.1 和 HTTP/2 复用了 TCP 连接。</li>
+</ul>
+<p>所以，前端资源的请求量，跟后端服务的并发压力，完全是两码事。</p>
+<h3 id="2-用户量大-并发高？"><a href="#2-用户量大-并发高？" class="headerlink" title="2. 用户量大 = 并发高？"></a>2. 用户量大 = 并发高？</h3><p>“我们系统有 100 万注册用户！” 听起来很吓人。<br>但 100 万注册用户，日活可能只有 10 万。这 10 万人分布在 24 小时内访问，平均每秒可能只有几个人在操作。</p>
+<p><strong>真实的并发计算</strong>：<br>假设日活 10 万（DAU），平均每人每天调用 100 次接口。<br>总请求量 = 100,000 * 100 = 10,000,000 (一千万请求/天)。<br>平均 QPS = 10,000,000 / (24 * 60 * 60) ≈ <strong>115 QPS</strong>。</p>
+<p>你看，<strong>日请求量一千万的系统，平均 QPS 也就 100 出头</strong>。一台 4核8G 的服务器跑个 Java 或 Go 服务，绰绰有余。</p>
+<hr>
+<h2 id="二、-普通开发者的真实世界"><a href="#二、-普通开发者的真实世界" class="headerlink" title="二、 普通开发者的真实世界"></a>二、 普通开发者的真实世界</h2><p>对于 99% 的公司和开发者来说，真实的并发进阶路线是这样的：</p>
+<h3 id="阶段一：QPS-lt-100（绝大多数项目）"><a href="#阶段一：QPS-lt-100（绝大多数项目）" class="headerlink" title="阶段一：QPS &lt; 100（绝大多数项目）"></a>阶段一：QPS &lt; 100（绝大多数项目）</h3><p>这是常态。内部管理系统、ToB 业务、初期创业项目。<br><strong>你应该关心：</strong></p>
+<ul>
+<li>  <strong>代码可维护性</strong>：写出人能看懂的代码，比写出高性能的代码更重要。</li>
+<li>  <strong>数据库设计</strong>：范式是否合理？索引加对了没？SQL 别写太烂。</li>
+<li>  <strong>业务逻辑正确性</strong>：别把钱算错了，别把数据存丢了。</li>
+</ul>
+<h3 id="阶段二：QPS-100-1000（成功的项目）"><a href="#阶段二：QPS-100-1000（成功的项目）" class="headerlink" title="阶段二：QPS 100 ~ 1000（成功的项目）"></a>阶段二：QPS 100 ~ 1000（成功的项目）</h3><p>恭喜你，你的产品已经活得很好了，可能有几十万日活。<br><strong>你应该关心：</strong></p>
+<ul>
+<li>  **缓存 (Redis)**：这是解决性能问题的一号银弹。把热点数据塞进 Redis，数据库压力瞬间减半。</li>
+<li>  <strong>简单的负载均衡</strong>：一台机器扛不住，就两台，前面挂个 Nginx。</li>
+<li>  <strong>异步解耦</strong>：发邮件、生成报表这种慢任务，扔到消息队列（RabbitMQ/Kafka）里去慢慢跑。</li>
+</ul>
+<h3 id="阶段三：QPS-10-000-（大厂-独角兽）"><a href="#阶段三：QPS-10-000-（大厂-独角兽）" class="headerlink" title="阶段三：QPS 10,000+（大厂/独角兽）"></a>阶段三：QPS 10,000+（大厂/独角兽）</h3><p>这时候你才需要考虑“面试题”里的那些技术：</p>
+<ul>
+<li>  <strong>分库分表</strong>：单表数据量过亿，读写都慢，必须拆。</li>
+<li>  <strong>微服务架构</strong>：拆分服务，独立部署，互不影响。</li>
+<li>  <strong>极致的熔断降级</strong>：某个服务挂了，别把整个系统拖死。</li>
+</ul>
+<p><strong>真相是：</strong> 大部分开发者，终其一生都在阶段一和阶段二之间徘徊。这不可耻，这是商业规律。</p>
+<hr>
+<h2 id="三、-真遇到了高并发，该怎么做？"><a href="#三、-真遇到了高并发，该怎么做？" class="headerlink" title="三、 真遇到了高并发，该怎么做？"></a>三、 真遇到了高并发，该怎么做？</h2><p>如果你运气爆棚，真的遇到了流量暴涨（比如老板突然要去央视打广告），作为普通开发者，千万别去搞什么“重构架构”、“上 Kubernetes”。</p>
+<p><strong>你要做的是“保命三板斧”：</strong></p>
+<ol>
+<li><p><strong>扩容 (Scale Out)</strong></p>
+<ul>
+<li>  <strong>最快</strong>：花钱买机器。云服务器按量付费，开 10 台机器，挂在负载均衡后面。只要你的服务是无状态的（Session 存 Redis 了），这招立竿见影。</li>
+</ul>
+</li>
+<li><p><strong>缓存 (Cache)</strong></p>
+<ul>
+<li>  <strong>最狠</strong>：把所有能缓存的数据全塞进 Redis。甚至可以直接做页面静态化（把动态页面生成 HTML 文件），让 Nginx 直接返回，请求都不进后端代码。</li>
+</ul>
+</li>
+<li><p><strong>限流 (Rate Limiting)</strong></p>
+<ul>
+<li>  <strong>最稳</strong>：承认系统的极限。如果系统只能抗 1000 QPS，那就把第 1001 个请求直接拒绝（返回 “系统繁忙”）。</li>
+<li>  <strong>保护数据库</strong>：数据库是最后一道防线，一旦数据库挂了，整个系统就完了。所以宁可拒绝用户，也不能让数据库崩盘。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="四、-总结"><a href="#四、-总结" class="headerlink" title="四、 总结"></a>四、 总结</h2><p>面试官问“千万级并发”，考察的不是你有没有<strong>做过</strong>，而是你有没有<strong>眼界</strong>。他想知道你是否了解技术的天花板在哪里。</p>
+<p>但作为普通开发者，我们在工作中：</p>
+<ul>
+<li>  <strong>不要过度设计</strong>：为了根本不存在的“未来流量”，引入复杂的分库分表和微服务，是给自己挖坑。</li>
+<li>  <strong>关注基础</strong>：SQL 优化、Redis 使用、日志监控、异常处理。把这些地基打牢，比空谈架构更有价值。</li>
+</ul>
+<p>下次再有人忽悠你“网页资源多并发就高”，你可以自信地回他一句：<br><strong>“那叫流量，不叫并发。我的后端很稳，因为我加了索引，还用了 Redis。”</strong></p>
+]]></content>
+      <categories>
+        <category>杂谈</category>
+        <category>架构设计</category>
+      </categories>
+      <tags>
+        <tag>性能优化</tag>
+        <tag>并发</tag>
+        <tag>面试</tag>
+        <tag>职业成长</tag>
+      </tags>
+  </entry>
 </search>

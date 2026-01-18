@@ -1,0 +1,283 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>再见 Conda？Python 极速包管理器 uv 上手指南 | 念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Python 的环境管理一直是个让开发者头秃的问题。 从最早的 pip + venv，到科学计算必备的 conda，再到后来追求项目隔离的 poetry 和 pdm，我们手里的工具越来越多，但困惑也越来越多：  “Conda 解析依赖太慢了，一直在转圈圈。”“听说 Anaconda 公司改了协议，公司用要收费了？”“Poetry 很好用，但是安装依赖有时候卡很久。”  就在大家在这个泥潭里挣扎时，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="再见 Conda？Python 极速包管理器 uv 上手指南">
+<meta property="og:url" content="https://m42-orion.github.io/2026/01/18/%E5%B7%A5%E5%85%B7-Python%E5%8C%85%E7%AE%A1%E7%90%86%E6%96%B0%E6%98%9Fuv/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="Python 的环境管理一直是个让开发者头秃的问题。 从最早的 pip + venv，到科学计算必备的 conda，再到后来追求项目隔离的 poetry 和 pdm，我们手里的工具越来越多，但困惑也越来越多：  “Conda 解析依赖太慢了，一直在转圈圈。”“听说 Anaconda 公司改了协议，公司用要收费了？”“Poetry 很好用，但是安装依赖有时候卡很久。”  就在大家在这个泥潭里挣扎时，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c-ssl.duitang.com/uploads/blog/202512/21/AvSLJQQaTwWWLPN.png">
+<meta property="article:published_time" content="2026-01-18T08:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-18T11:56:44.826Z">
+<meta property="article:author" content="望">
+<meta property="article:tag" content="conda">
+<meta property="article:tag" content="pip">
+<meta property="article:tag" content="uv">
+<meta property="article:tag" content="包管理">
+<meta property="article:tag" content="Rust">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c-ssl.duitang.com/uploads/blog/202512/21/AvSLJQQaTwWWLPN.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "再见 Conda？Python 极速包管理器 uv 上手指南",
+  "url": "https://m42-orion.github.io/2026/01/18/%E5%B7%A5%E5%85%B7-Python%E5%8C%85%E7%AE%A1%E7%90%86%E6%96%B0%E6%98%9Fuv/",
+  "image": "https://c-ssl.duitang.com/uploads/blog/202512/21/AvSLJQQaTwWWLPN.png",
+  "datePublished": "2026-01-18T08:00:00.000Z",
+  "dateModified": "2026-01-18T11:56:44.826Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "望",
+      "url": "https://m42-orion.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://m42-orion.github.io/2026/01/18/%E5%B7%A5%E5%85%B7-Python%E5%8C%85%E7%AE%A1%E7%90%86%E6%96%B0%E6%98%9Fuv/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '再见 Conda？Python 极速包管理器 uv 上手指南',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 5.4.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://c-ssl.duitang.com/uploads/blog/202512/21/AvSLJQQaTwWWLPN.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">再见 Conda？Python 极速包管理器 uv 上手指南</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">再见 Conda？Python 极速包管理器 uv 上手指南</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-01-18T08:00:00.000Z" title="发表于 2026-01-18 16:00:00">2026-01-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-18T11:56:44.826Z" title="更新于 2026-01-18 19:56:44">2026-01-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%B7%A5%E5%85%B7/Python/">Python</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>Python 的环境管理一直是个让开发者头秃的问题。</p>
+<p>从最早的 <code>pip + venv</code>，到科学计算必备的 <code>conda</code>，再到后来追求项目隔离的 <code>poetry</code> 和 <code>pdm</code>，我们手里的工具越来越多，但困惑也越来越多：</p>
+<blockquote>
+<p>“Conda 解析依赖太慢了，一直在转圈圈。”<br>“听说 Anaconda 公司改了协议，公司用要收费了？”<br>“Poetry 很好用，但是安装依赖有时候卡很久。”</p>
+</blockquote>
+<p>就在大家在这个泥潭里挣扎时，<strong>uv</strong> 横空出世。它号称是“Python 的 Cargo（Rust 的包管理器）”，主打一个字：<strong>快</strong>。</p>
+<p>今天我们就来聊聊这个用 Rust 编写的 Python 包管理新星，看看它是否有资格终结这场“环境管理之战”。</p>
+<hr>
+<h2 id="一、-为什么要换掉-Conda？"><a href="#一、-为什么要换掉-Conda？" class="headerlink" title="一、 为什么要换掉 Conda？"></a>一、 为什么要换掉 Conda？</h2><p>很多 Python 初学者（尤其是搞数据科学的）入行安装的第一个软件就是 Anaconda。但随着时间推移，Conda 的问题逐渐暴露：</p>
+<ol>
+<li> <strong>慢</strong>：这是最大的槽点。当你安装一个复杂的库（比如 PyTorch）时，Conda 的依赖解析（Solving environment）能让你等到怀疑人生。</li>
+<li> <strong>臃肿</strong>：Anaconda 预装了太多你根本用不到的库，占用几 GB 空间。虽然有 Miniconda，但依然不够轻量。</li>
+<li> <strong>版权陷阱</strong>：<strong>这一点非常重要</strong>。Anaconda Inc. 在 2020 年更新了服务条款，对于<strong>超过 200 人的商业公司</strong>，如果使用 Anaconda 的默认仓库（defaults channel），是需要<strong>付费授权</strong>的。虽然你可以切换到社区维护的 <code>conda-forge</code> 频道来规避，但这始终是一个潜在的合规风险。</li>
+</ol>
+<p>这也是为什么最近一年，Miniforge（默认使用 conda-forge）和 Micromamba（C+ 重写的极速 Conda）开始流行的原因。</p>
+<p>但 <strong>uv</strong> 的出现，似乎想把这些工具全部“降维打击”。</p>
+<hr>
+<h2 id="二、-uv-是什么？"><a href="#二、-uv-是什么？" class="headerlink" title="二、 uv 是什么？"></a>二、 uv 是什么？</h2><p><code>uv</code> 是由 <strong>Astral</strong> 团队开发的（他们也是极速 Python 代码检查工具 <code>Ruff</code> 的开发者）。</p>
+<p><strong>它的核心卖点就两个：</strong></p>
+<ol>
+<li> <strong>Rust 编写</strong>：快到离谱。官方宣称比 pip 快 10-100 倍，比 pip-tools 快 100 倍。</li>
+<li><strong>All-in-One</strong>：它不仅仅是 <code>pip</code> 的替代品，它还能：<ul>
+<li>  管理 Python 版本（替代 <code>pyenv</code> / <code>conda</code>）</li>
+<li>  管理虚拟环境（替代 <code>venv</code> / <code>virtualenv</code>）</li>
+<li>  管理项目依赖（替代 <code>poetry</code> / <code>pip-tools</code>）</li>
+<li>  运行脚本（替代 <code>pipx</code>）</li>
+</ul>
+</li>
+</ol>
+<p>简单来说，<strong>有了 uv，你可能不再需要安装 Python、pip、poetry、pyenv 了，只需要一个 uv 二进制文件。</strong></p>
+<hr>
+<h2 id="三、-实际上手：快得像假的一样"><a href="#三、-实际上手：快得像假的一样" class="headerlink" title="三、 实际上手：快得像假的一样"></a>三、 实际上手：快得像假的一样</h2><h3 id="1-安装-uv"><a href="#1-安装-uv" class="headerlink" title="1. 安装 uv"></a>1. 安装 uv</h3><p>uv 不需要依赖 Python 环境，它自己就是个独立的程序。</p>
+<p>Windows (PowerShell):</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell <span class="literal">-c</span> <span class="string">&quot;irm https://astral.sh/uv/install.ps1 | iex&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>Linux / macOS:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -LsSf https://astral.sh/uv/install.sh | sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-初始化项目"><a href="#2-初始化项目" class="headerlink" title="2. 初始化项目"></a>2. 初始化项目</h3><p>以前我们创建一个新项目可能需要手动建 venv，现在：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建一个名为 my-project 的项目</span></span><br><span class="line">uv init my-project</span><br><span class="line"><span class="built_in">cd</span> my-project</span><br></pre></td></tr></table></figure>
+
+<p>这会生成一个 <code>pyproject.toml</code> 文件（现代 Python 项目标准配置）和一个 <code>.python-version</code> 文件。</p>
+<h3 id="3-管理-Python-版本"><a href="#3-管理-Python-版本" class="headerlink" title="3. 管理 Python 版本"></a>3. 管理 Python 版本</h3><p>这是我觉得 uv 最杀手级的功能。你不需要去官网下载 Python 安装包，也不需要配置环境变量。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 我想在这个项目里用 Python 3.12</span></span><br><span class="line">uv python install 3.12</span><br></pre></td></tr></table></figure>
+
+<p>uv 会自动下载一个独立的 Python 解释器放在它的缓存目录里，不会污染你的系统环境。</p>
+<h3 id="4-添加依赖"><a href="#4-添加依赖" class="headerlink" title="4. 添加依赖"></a>4. 添加依赖</h3><p>抛弃 <code>pip install</code> 吧，试试 <code>uv add</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 requests</span></span><br><span class="line">uv add requests</span><br></pre></td></tr></table></figure>
+
+<p>你会发现，<strong>几乎是瞬间完成</strong>。<br>uv 会自动创建虚拟环境（<code>.venv</code>），解析依赖，下载包，安装包，并把依赖关系写入 <code>pyproject.toml</code> 和 <code>uv.lock</code>（锁定文件，保证队友安装的版本和你一模一样）。</p>
+<h3 id="5-运行脚本"><a href="#5-运行脚本" class="headerlink" title="5. 运行脚本"></a>5. 运行脚本</h3><p>不需要手动激活虚拟环境（<code>source .venv/bin/activate</code>），直接用 <code>uv run</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 运行项目里的脚本</span></span><br><span class="line">uv run hello.py</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者临时运行一个带依赖的脚本（无需显式安装）</span></span><br><span class="line"><span class="comment"># 这行命令会自动下载 numpy 并运行，跑完即焚，不污染环境</span></span><br><span class="line">uv run --with numpy -c <span class="string">&quot;import numpy; print(numpy.pi)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、-兼容性：如果你还想用-pip"><a href="#四、-兼容性：如果你还想用-pip" class="headerlink" title="四、 兼容性：如果你还想用 pip"></a>四、 兼容性：如果你还想用 pip</h2><p>uv 非常务实，它提供了一个 <code>uv pip</code> 接口，完全兼容现有的 pip 习惯。</p>
+<p>如果你不想改变项目结构（不想用 <code>pyproject.toml</code>），只想单纯加速 <code>pip install</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建虚拟环境</span></span><br><span class="line">uv venv</span><br><span class="line"></span><br><span class="line"><span class="comment"># 激活环境 (Windows)</span></span><br><span class="line">.venv\Scripts\activate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 极速安装 requirements.txt</span></span><br><span class="line">uv pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<p>对于老项目，你可以直接把 CI/CD 流程里的 <code>pip</code> 替换成 <code>uv pip</code>，安装速度通常能提升 5-10 倍，大幅节省构建时间。</p>
+<hr>
+<h2 id="五、-总结"><a href="#五、-总结" class="headerlink" title="五、 总结"></a>五、 总结</h2><p>回到你的问题：<strong>Conda 还有必要吗？</strong></p>
+<ul>
+<li>  如果你极度依赖 <strong>非 Python 的二进制科学计算库</strong>（比如某些复杂的生物信息学工具，必须通过 Conda 安装），那么 Conda 依然是不可替代的。</li>
+<li>  但对于 <strong>90% 的 Python Web 开发、数据分析、脚本编写</strong> 场景，<strong>uv 是目前更好的选择</strong>。</li>
+</ul>
+<p><strong>uv 的优势总结：</strong></p>
+<ol>
+<li> <strong>极速</strong>：Rust 加持，毫秒级解析。</li>
+<li> <strong>合规</strong>：MIT / Apache 2.0 开源协议，无商业授权担忧。</li>
+<li> <strong>省心</strong>：自动管理 Python 版本和虚拟环境，告别“环境地狱”。</li>
+<li> <strong>统一</strong>：一个工具解决所有问题。</li>
+</ol>
+<p>建议从今天开始，在你的个人新项目里尝试使用 uv，你会体验到那种“德芙般丝滑”的感觉。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2026/01/18/%E5%B7%A5%E5%85%B7-Python%E5%8C%85%E7%AE%A1%E7%90%86%E6%96%B0%E6%98%9Fuv/">https://m42-orion.github.io/2026/01/18/%E5%B7%A5%E5%85%B7-Python%E5%8C%85%E7%AE%A1%E7%90%86%E6%96%B0%E6%98%9Fuv/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/conda/">conda</a><a class="post-meta__tags" href="/tags/pip/">pip</a><a class="post-meta__tags" href="/tags/uv/">uv</a><a class="post-meta__tags" href="/tags/%E5%8C%85%E7%AE%A1%E7%90%86/">包管理</a><a class="post-meta__tags" href="/tags/Rust/">Rust</a></div><div class="post-share"><div class="social-share" data-image="https://c-ssl.duitang.com/uploads/blog/202512/21/AvSLJQQaTwWWLPN.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/01/18/%E6%9D%82%E8%B0%88-%E5%8D%83%E4%B8%87%E7%BA%A7%E5%B9%B6%E5%8F%91%E7%9A%84%E8%B0%8E%E8%A8%80%E4%B8%8E%E7%9C%9F%E7%9B%B8/" title="面试造航母：普通开发者真的需要担心“千万级并发”吗？"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">面试造航母：普通开发者真的需要担心“千万级并发”吗？</div></div><div class="info-2"><div class="info-item-1">“如果有 1000 万并发，你的系统怎么设计？” 这大概是后端面试中最经典，也最让人无语的问题之一。 作为一个在中小厂摸爬滚打多年的普通开发者，我常常看着自己负责的系统——QPS（每秒查询率）峰值不到 50，日活几千人——陷入沉思：我这辈子真的能遇到千万级并发吗？ 今天我们就来戳破这个泡沫，聊聊并发的真相，以及作为普通开发者，我们真正应该关心什么。  一、 别被“并发”忽悠了首先，我们要厘清几个被混淆的概念。 1. 网页资源多 = 并发高？有人告诉你：“一个网页加载要请求 50 个图片、CSS、JS，如果有 1 万个人访问，那就是 50 万并发啊！” 这是典型的偷换概念。    CDN 的存在：现代 Web 开发，静态资源（图片、CSS、JS）通常都放在 CDN 上，根本不会打到你的后端服务器（API Server）。   浏览器限制：浏览器对同一个域名的并发连接数是有限制的（通常 6-8 个）。   长连接：HTTP/1.1 和 HTTP/2 复用了 TCP 连接。  所以，前端资源的请求量，跟后端服务的并发压力，完全是两码事。 2. 用户量大 = 并发高？“我们系统有...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/03/23/pyhon%E5%8C%85%E7%9A%84%E7%A6%BB%E7%BA%BF%E6%9B%B4%E6%96%B0%E4%B8%8E%E8%BF%81%E7%A7%BB/" title="pyhon包的离线更新与迁移"><img class="cover" src="https://c-ssl.duitang.com/uploads/item/202002/18/20200218150946_xwikc.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-23</div><div class="info-item-2">pyhon包的离线更新与迁移</div></div><div class="info-2"><div class="info-item-1">如何使用 Conda 和 Pip 离线下载 Python 包在某些情况下，可能需要在没有网络连接的环境中安装 Python 包，例如在公司内网或安全环境中。为了实现这一目标，可以使用 Conda 和 Pip 提供的离线下载功能，提前将所需的包下载到本地，然后在目标环境中进行安装。以下是一个简单的指南，帮助你在离线环境中高效地管理 Python 包。  第一步：离线下载包使用 Pip 下载Pip 提供了一个非常方便的选项来离线下载包及其依赖。你可以使用以下命令下载指定的包及其依赖： 1pip download package_name  如果你有一个 requirements.txt 文件，包含多个包的依赖，可以使用以下命令一次性下载所有包： 1pip download -r requirements.txt  这会将所有包及其依赖下载到当前目录。你也可以指定下载路径，例如： 1pip download -r requirements.txt -d /path/to/download  这样，所有下载的 .whl 文件和 .tar.gz 文件都会保存到指定的目录中。  使用...</div></div></div></a><a class="pagination-related" href="/2022/08/11/conda%E9%82%A3%E4%BA%9B%E5%91%BD%E4%BB%A4/" title="conda那些命令"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/conda那些命令/封面.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-11</div><div class="info-item-2">conda那些命令</div></div><div class="info-2"><div class="info-item-1">命令 创建虚拟环境 ： conda create --name my_first_env python=3.6  列出虚拟环境 ： conda env list  激活虚拟环境 ： conda activate my_first_env  查看环境信息 ： conda info -e  根据路径激活虚拟环境 ： conda source /root/python/bin/activate  推出虚拟环境 ： conda deactivate  删除虚拟环境 ： conda remove -n your_env_name --all  创建时候安装需要的包 ： conda create -n env_name numpy matplotlib python=2.7  在离线的时候创建虚拟环境 ： conda create -n env_name --offline python=3.8  环境复制 ： conda create --name new_env_name --clone old_env_name  查看所有包 : conda list   conda...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">191</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">125</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">42</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%8D%A2%E6%8E%89-Conda%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">一、 为什么要换掉 Conda？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-uv-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">二、 uv 是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81-%E5%AE%9E%E9%99%85%E4%B8%8A%E6%89%8B%EF%BC%9A%E5%BF%AB%E5%BE%97%E5%83%8F%E5%81%87%E7%9A%84%E4%B8%80%E6%A0%B7"><span class="toc-number">3.</span> <span class="toc-text">三、 实际上手：快得像假的一样</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85-uv"><span class="toc-number">3.1.</span> <span class="toc-text">1. 安装 uv</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%9D%E5%A7%8B%E5%8C%96%E9%A1%B9%E7%9B%AE"><span class="toc-number">3.2.</span> <span class="toc-text">2. 初始化项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%AE%A1%E7%90%86-Python-%E7%89%88%E6%9C%AC"><span class="toc-number">3.3.</span> <span class="toc-text">3. 管理 Python 版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="toc-number">3.4.</span> <span class="toc-text">4. 添加依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC"><span class="toc-number">3.5.</span> <span class="toc-text">5. 运行脚本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-%E5%85%BC%E5%AE%B9%E6%80%A7%EF%BC%9A%E5%A6%82%E6%9E%9C%E4%BD%A0%E8%BF%98%E6%83%B3%E7%94%A8-pip"><span class="toc-number">4.</span> <span class="toc-text">四、 兼容性：如果你还想用 pip</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81-%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">五、 总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/01/18/%E5%B7%A5%E5%85%B7-Python%E5%8C%85%E7%AE%A1%E7%90%86%E6%96%B0%E6%98%9Fuv/" title="再见 Conda？Python 极速包管理器 uv 上手指南"><img src="https://c-ssl.duitang.com/uploads/blog/202512/21/AvSLJQQaTwWWLPN.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="再见 Conda？Python 极速包管理器 uv 上手指南"/></a><div class="content"><a class="title" href="/2026/01/18/%E5%B7%A5%E5%85%B7-Python%E5%8C%85%E7%AE%A1%E7%90%86%E6%96%B0%E6%98%9Fuv/" title="再见 Conda？Python 极速包管理器 uv 上手指南">再见 Conda？Python 极速包管理器 uv 上手指南</a><time datetime="2026-01-18T08:00:00.000Z" title="发表于 2026-01-18 16:00:00">2026-01-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/18/%E6%9D%82%E8%B0%88-%E5%8D%83%E4%B8%87%E7%BA%A7%E5%B9%B6%E5%8F%91%E7%9A%84%E8%B0%8E%E8%A8%80%E4%B8%8E%E7%9C%9F%E7%9B%B8/" title="面试造航母：普通开发者真的需要担心“千万级并发”吗？">面试造航母：普通开发者真的需要担心“千万级并发”吗？</a><time datetime="2026-01-18T07:00:00.000Z" title="发表于 2026-01-18 15:00:00">2026-01-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/18/%E6%95%B0%E6%8D%AE%E5%BA%93-PostgreSQL%E8%83%BD%E5%90%A6%E5%8F%96%E4%BB%A3Redis/" title="PostgreSQL：数据库界的“瑞士军刀”，真的能取代 Redis 吗？">PostgreSQL：数据库界的“瑞士军刀”，真的能取代 Redis 吗？</a><time datetime="2026-01-18T06:00:00.000Z" title="发表于 2026-01-18 14:00:00">2026-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/18/%E8%AE%BE%E8%AE%A1-Web%E5%BC%80%E5%8F%91%E6%BC%94%E5%8F%98%E5%8F%B2/" title="架构演变史：你以为的“前后端分离”可能只是冰山一角"><img src="https://c-ssl.duitang.com/uploads/blog/202512/23/lGSDpggYCxLVPA8.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="架构演变史：你以为的“前后端分离”可能只是冰山一角"/></a><div class="content"><a class="title" href="/2026/01/18/%E8%AE%BE%E8%AE%A1-Web%E5%BC%80%E5%8F%91%E6%BC%94%E5%8F%98%E5%8F%B2/" title="架构演变史：你以为的“前后端分离”可能只是冰山一角">架构演变史：你以为的“前后端分离”可能只是冰山一角</a><time datetime="2026-01-18T05:00:00.000Z" title="发表于 2026-01-18 13:00:00">2026-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%98%BE%E5%AD%98%E5%8E%BB%E5%93%AA%E4%BA%86%EF%BC%9F/" title="显存去哪了？深度学习框架显存管理机制与多模型共存指南"><img src="https://c-ssl.duitang.com/uploads/blog/202601/01/xDSnPGGYI2VNLV7.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="显存去哪了？深度学习框架显存管理机制与多模型共存指南"/></a><div class="content"><a class="title" href="/2026/01/18/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%98%BE%E5%AD%98%E5%8E%BB%E5%93%AA%E4%BA%86%EF%BC%9F/" title="显存去哪了？深度学习框架显存管理机制与多模型共存指南">显存去哪了？深度学习框架显存管理机制与多模型共存指南</a><time datetime="2026-01-18T04:00:00.000Z" title="发表于 2026-01-18 12:00:00">2026-01-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 望</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 5.4.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(function() {
+  const abcjsInit = function() {
+    const abcjsFn = function() {
+      setTimeout(function() {
+        const sheets = document.querySelectorAll(".abc-music-sheet")
+        for (let i = 0; i < sheets.length; i++) {
+          const ele = sheets[i]
+          if (ele.children.length > 0) continue
+
+          // Parse parameters from data-params attribute
+          let params = {}
+          const dp = ele.getAttribute("data-params")
+          if (dp) {
+            try {
+              params = JSON.parse(dp)
+            } catch (e) {
+              console.error("Failed to parse data-params:", e)
+            }
+          }
+
+          // Merge parsed parameters with the responsive option
+          // Ensures params content appears before responsive
+          const options = { ...params, responsive: "resize" }
+
+          // Render the music score using ABCJS.renderAbc
+          ABCJS.renderAbc(ele, ele.innerHTML, options)
+        }
+      }, 100)
+    }
+
+    if (typeof ABCJS === "object") {
+      abcjsFn()
+    } else {
+      btf.getScript("https://cdn.jsdelivr.net/npm/abcjs/dist/abcjs-basic-min.min.js").then(abcjsFn)
+    }
+  }
+
+  if (window.pjax) {
+    abcjsInit()
+  } else {
+    window.addEventListener("load", abcjsInit)
+  }
+
+  btf.addGlobalFn("encrypt", abcjsInit, "abcjs")
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="null" data-text="I,LOVE,YOU,木一" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
