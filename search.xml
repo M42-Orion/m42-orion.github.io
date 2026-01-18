@@ -11321,7 +11321,70 @@ F --> G[LLM合成最终答案]</pre>
 </ul>
 <p><strong>真相是：</strong> 大部分开发者，终其一生都在阶段一和阶段二之间徘徊。这不可耻，这是商业规律。</p>
 <hr>
-<h2 id="三、-真遇到了高并发，该怎么做？"><a href="#三、-真遇到了高并发，该怎么做？" class="headerlink" title="三、 真遇到了高并发，该怎么做？"></a>三、 真遇到了高并发，该怎么做？</h2><p>如果你运气爆棚，真的遇到了流量暴涨（比如老板突然要去央视打广告），作为普通开发者，千万别去搞什么“重构架构”、“上 Kubernetes”。</p>
+<h2 id="三、-拒绝“拍脑袋”：服务器配置选型指南"><a href="#三、-拒绝“拍脑袋”：服务器配置选型指南" class="headerlink" title="三、 拒绝“拍脑袋”：服务器配置选型指南"></a>三、 拒绝“拍脑袋”：服务器配置选型指南</h2><p>很多时候，比写代码更难的，是老板问你：“上线这套系统，需要几台服务器？什么配置？”</p>
+<p>如果你直接报一个“8核16G”，老板问你“为什么不是4核8G？”，你答不上来，那就尴尬了。这里有一份基于经验的<strong>“起步配置对照表”</strong>，供你参考（以云服务器为例）：</p>
+<h3 id="1-配置对照表"><a href="#1-配置对照表" class="headerlink" title="1. 配置对照表"></a>1. 配置对照表</h3><table>
+<thead>
+<tr>
+<th align="left">业务阶段</th>
+<th align="left">预估日活 (DAU)</th>
+<th align="left">应用服务器 (API)</th>
+<th align="left">数据库 (MySQL/PG)</th>
+<th align="left">缓存 (Redis)</th>
+<th align="left">策略建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>入门/MVP</strong></td>
+<td align="left">&lt; 500</td>
+<td align="left"><strong>2核 2G</strong> (x1)</td>
+<td align="left">同机部署</td>
+<td align="left">同机部署</td>
+<td align="left">也就是常见的“99元/年”活动机。适合个人项目或验证想法，需开启 Swap。</td>
+</tr>
+<tr>
+<td align="left"><strong>起步期</strong></td>
+<td align="left">500 ~ 5,000</td>
+<td align="left"><strong>2核 4G</strong> (x1)</td>
+<td align="left"><strong>2核 4G</strong> (独立)</td>
+<td align="left">(可选) 与应用同机</td>
+<td align="left">业务正式上线，数据库独立以保证数据安全和性能。</td>
+</tr>
+<tr>
+<td align="left"><strong>发展期</strong></td>
+<td align="left">1w ~ 5w</td>
+<td align="left"><strong>4核 8G</strong> (x2)</td>
+<td align="left"><strong>4核 16G</strong></td>
+<td align="left"><strong>2核 4G</strong> (云实例)</td>
+<td align="left">应用做负载均衡，数据库由于吃内存，建议内存是核数的4倍。</td>
+</tr>
+<tr>
+<td align="left"><strong>爆发期</strong></td>
+<td align="left">10w+</td>
+<td align="left"><strong>8核 16G</strong> (xN)</td>
+<td align="left"><strong>8核 32G</strong> (主从)</td>
+<td align="left"><strong>4核 16G</strong> (集群)</td>
+<td align="left">此时瓶颈通常在数据库，需要读写分离。</td>
+</tr>
+</tbody></table>
+<h3 id="2-选型核心逻辑"><a href="#2-选型核心逻辑" class="headerlink" title="2. 选型核心逻辑"></a>2. 选型核心逻辑</h3><ul>
+<li><strong>CPU vs 内存</strong>：<ul>
+<li>  <strong>Web 应用（Java/Go/Python）</strong>：通常是<strong>计算密集型</strong>（逻辑处理）+ <strong>IO密集型</strong>（等数据库）。<strong>2核4G</strong> 或 <strong>4核8G</strong> 是性价比最高的“黄金比例”。Java 应用因为 JVM 的存在，内存建议 4G 起步。</li>
+<li>  <strong>数据库</strong>：<strong>吃内存！吃内存！吃内存！</strong> 内存越大，缓存的索引和数据越多，速度越快。所以数据库服务器的内存通常要是 CPU 核数的 4 倍甚至更多（如 4核16G）。</li>
+</ul>
+</li>
+<li><strong>磁盘</strong>：<ul>
+<li>  别省那点钱，<strong>必须上 SSD（高效云盘/ESSD）</strong>。机械硬盘的 IOPS 会是数据库的噩梦。</li>
+</ul>
+</li>
+<li><strong>带宽</strong>：<ul>
+<li>  初期 <strong>5Mbps</strong> 足够抗住几百并发（前提是图片走 CDN）。带宽是云服务里最贵的资源，建议<strong>按量付费</strong>或者设一个较小的固定带宽，不够再加。</li>
+</ul>
+</li>
+</ul>
+<p><strong>一句话原则</strong>：<strong>利用云的弹性，先买小的，不够随时升。</strong> 只要不是物理机托管，千万别一次性买顶配，那是给老板浪费钱。</p>
+<hr>
+<h2 id="四、-真遇到了高并发，该怎么做？"><a href="#四、-真遇到了高并发，该怎么做？" class="headerlink" title="四、 真遇到了高并发，该怎么做？"></a>四、 真遇到了高并发，该怎么做？</h2><p>如果你运气爆棚，真的遇到了流量暴涨（比如老板突然要去央视打广告），作为普通开发者，千万别去搞什么“重构架构”、“上 Kubernetes”。</p>
 <p><strong>你要做的是“保命三板斧”：</strong></p>
 <ol>
 <li><p><strong>扩容 (Scale Out)</strong></p>
@@ -11342,7 +11405,7 @@ F --> G[LLM合成最终答案]</pre>
 </li>
 </ol>
 <hr>
-<h2 id="四、-总结"><a href="#四、-总结" class="headerlink" title="四、 总结"></a>四、 总结</h2><p>面试官问“千万级并发”，考察的不是你有没有<strong>做过</strong>，而是你有没有<strong>眼界</strong>。他想知道你是否了解技术的天花板在哪里。</p>
+<h2 id="五、-总结"><a href="#五、-总结" class="headerlink" title="五、 总结"></a>五、 总结</h2><p>面试官问“千万级并发”，考察的不是你有没有<strong>做过</strong>，而是你有没有<strong>眼界</strong>。他想知道你是否了解技术的天花板在哪里。</p>
 <p>但作为普通开发者，我们在工作中：</p>
 <ul>
 <li>  <strong>不要过度设计</strong>：为了根本不存在的“未来流量”，引入复杂的分库分表和微服务，是给自己挖坑。</li>
