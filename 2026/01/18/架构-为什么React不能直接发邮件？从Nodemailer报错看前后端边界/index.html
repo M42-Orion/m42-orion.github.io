@@ -1,0 +1,306 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>为什么 React 不能直接发邮件？从 Nodemailer 报错看前后端边界 | 念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="最近在开发一个功能时，我遇到了一个非常典型的“新手墙”。 需求很简单：用户点击“发送反馈”按钮，系统发一封邮件到我的邮箱。作为一个熟悉 React 和 TypeScript 的开发者，我的第一反应是：“这不就是调个库的事儿吗？” 于是我找来了 Node.js 界大名鼎鼎的邮件库 nodemailer，在我的 Login.tsx 里写下了这段代码： 123456789101112import nod">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么 React 不能直接发邮件？从 Nodemailer 报错看前后端边界">
+<meta property="og:url" content="https://m42-orion.github.io/2026/01/18/%E6%9E%B6%E6%9E%84-%E4%B8%BA%E4%BB%80%E4%B9%88React%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E5%8F%91%E9%82%AE%E4%BB%B6%EF%BC%9F%E4%BB%8ENodemailer%E6%8A%A5%E9%94%99%E7%9C%8B%E5%89%8D%E5%90%8E%E7%AB%AF%E8%BE%B9%E7%95%8C/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="最近在开发一个功能时，我遇到了一个非常典型的“新手墙”。 需求很简单：用户点击“发送反馈”按钮，系统发一封邮件到我的邮箱。作为一个熟悉 React 和 TypeScript 的开发者，我的第一反应是：“这不就是调个库的事儿吗？” 于是我找来了 Node.js 界大名鼎鼎的邮件库 nodemailer，在我的 Login.tsx 里写下了这段代码： 123456789101112import nod">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c-ssl.duitang.com/uploads/blog/202512/02/xDSnPGGYI2VWo8N.png">
+<meta property="article:published_time" content="2026-01-18T09:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-20T06:41:54.804Z">
+<meta property="article:author" content="望">
+<meta property="article:tag" content="安全">
+<meta property="article:tag" content="踩坑记录">
+<meta property="article:tag" content="前后端分离">
+<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="SMTP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c-ssl.duitang.com/uploads/blog/202512/02/xDSnPGGYI2VWo8N.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "为什么 React 不能直接发邮件？从 Nodemailer 报错看前后端边界",
+  "url": "https://m42-orion.github.io/2026/01/18/%E6%9E%B6%E6%9E%84-%E4%B8%BA%E4%BB%80%E4%B9%88React%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E5%8F%91%E9%82%AE%E4%BB%B6%EF%BC%9F%E4%BB%8ENodemailer%E6%8A%A5%E9%94%99%E7%9C%8B%E5%89%8D%E5%90%8E%E7%AB%AF%E8%BE%B9%E7%95%8C/",
+  "image": "https://c-ssl.duitang.com/uploads/blog/202512/02/xDSnPGGYI2VWo8N.png",
+  "datePublished": "2026-01-18T09:00:00.000Z",
+  "dateModified": "2026-01-20T06:41:54.804Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "望",
+      "url": "https://m42-orion.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://m42-orion.github.io/2026/01/18/%E6%9E%B6%E6%9E%84-%E4%B8%BA%E4%BB%80%E4%B9%88React%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E5%8F%91%E9%82%AE%E4%BB%B6%EF%BC%9F%E4%BB%8ENodemailer%E6%8A%A5%E9%94%99%E7%9C%8B%E5%89%8D%E5%90%8E%E7%AB%AF%E8%BE%B9%E7%95%8C/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '为什么 React 不能直接发邮件？从 Nodemailer 报错看前后端边界',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 5.4.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://c-ssl.duitang.com/uploads/blog/202512/02/xDSnPGGYI2VWo8N.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">为什么 React 不能直接发邮件？从 Nodemailer 报错看前后端边界</span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">为什么 React 不能直接发邮件？从 Nodemailer 报错看前后端边界</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-01-18T09:00:00.000Z" title="发表于 2026-01-18 17:00:00">2026-01-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-20T06:41:54.804Z" title="更新于 2026-01-20 14:41:54">2026-01-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/">架构设计</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/">前端开发</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>最近在开发一个功能时，我遇到了一个非常典型的“新手墙”。</p>
+<p>需求很简单：用户点击“发送反馈”按钮，系统发一封邮件到我的邮箱。<br>作为一个熟悉 React 和 TypeScript 的开发者，我的第一反应是：<strong>“这不就是调个库的事儿吗？”</strong></p>
+<p>于是我找来了 Node.js 界大名鼎鼎的邮件库 <code>nodemailer</code>，在我的 <code>Login.tsx</code> 里写下了这段代码：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> nodemailer <span class="keyword">from</span> <span class="string">&#x27;nodemailer&#x27;</span>; <span class="comment">// ❌ 错误开始的地方</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">sendEmail</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> transporter = nodemailer.<span class="title function_">createTransport</span>(&#123;</span><br><span class="line">    <span class="attr">service</span>: <span class="string">&#x27;qq&#x27;</span>,</span><br><span class="line">    <span class="attr">auth</span>: &#123;</span><br><span class="line">      <span class="attr">user</span>: <span class="string">&#x27;my_email@qq.com&#x27;</span>,</span><br><span class="line">      <span class="attr">pass</span>: <span class="string">&#x27;my_auth_code_123&#x27;</span> <span class="comment">// 😱 致命错误</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// ...发送逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果，代码刚保存，控制台就炸了：<br><code>Module not found: Error: Can&#39;t resolve &#39;net&#39; in &#39;node_modules/nodemailer/lib/smtp-connection&#39;</code><br><code>Module not found: Error: Can&#39;t resolve &#39;tls&#39; ...</code><br><code>Module not found: Error: Can&#39;t resolve &#39;fs&#39; ...</code></p>
+<p>这不仅是技术报错，更是一次架构层面的“降维打击”。今天我们就借这个案例，深入聊聊<strong>为什么有些事前端注定做不了</strong>，以及 Node.js 在前后端分离中的真正角色。</p>
+<hr>
+<h2 id="一、-技术之墙：浏览器是个“沙盒”"><a href="#一、-技术之墙：浏览器是个“沙盒”" class="headerlink" title="一、 技术之墙：浏览器是个“沙盒”"></a>一、 技术之墙：浏览器是个“沙盒”</h2><p>首先解释为什么会报错。这需要从网络协议的底层说起。</p>
+<p>你写的 React 代码虽然是在 Node.js 环境下编译（通过 Webpack 或 Vite），但最终生成的 JS 文件是<strong>运行在用户的浏览器里</strong>的。</p>
+<h3 id="1-协议的生殖隔离：HTTP-vs-SMTP"><a href="#1-协议的生殖隔离：HTTP-vs-SMTP" class="headerlink" title="1. 协议的生殖隔离：HTTP vs SMTP"></a>1. 协议的生殖隔离：HTTP vs SMTP</h3><ul>
+<li>  <strong>Web 世界的通用语</strong>：浏览器天生是为 <strong>HTTP/HTTPS</strong> 协议设计的。当你调用 <code>fetch</code> 或 <code>axios</code> 时，浏览器底层封装好了 TCP 连接、握手、TLS 加密等一系列复杂操作，只暴露给你一个简单的请求接口。</li>
+<li>  <strong>邮件世界的通用语</strong>：发送邮件使用的是 <strong>SMTP (Simple Mail Transfer Protocol)</strong> 协议。这是一个基于 <strong>TCP 长连接</strong> 的纯文本协议，需要客户端与服务器进行多次“对话”（握手 -&gt; 验证身份 -&gt; 发送发件人 -&gt; 发送收件人 -&gt; 发送内容 -&gt; 挥手）。</li>
+</ul>
+<h3 id="2-缺失的底层能力：Socket"><a href="#2-缺失的底层能力：Socket" class="headerlink" title="2. 缺失的底层能力：Socket"></a>2. 缺失的底层能力：Socket</h3><ul>
+<li>  <strong>Node.js 环境</strong>（后端）：拥有 <code>net</code> 模块，它允许代码直接创建原始的 <strong>TCP Socket</strong>。<code>nodemailer</code> 正是利用这个能力，手动构建 SMTP 协议的数据包，通过 TCP 管道直接发给邮件服务器（如 QQ 邮箱的 smtp.qq.com:465）。</li>
+<li><strong>浏览器环境</strong>（前端）：为了防止恶意网页随意连接你内网的打印机或路由器，浏览器把 JS 关在一个“沙盒”里。它<strong>严厉禁止</strong> JS 代码直接创建 TCP Socket。<ul>
+<li>  <em>“等等，WebSocket 呢？”</em> —— WebSocket 虽然名字带 Socket，但它本质上还是基于 HTTP 握手升级上来的应用层协议，并不是原始的 TCP Socket。你无法用 WebSocket 去连接一个标准的 SMTP 服务器，因为对方听不懂 WebSocket 的握手包。</li>
+</ul>
+</li>
+</ul>
+<p>所以，当 <code>nodemailer</code> 试图在浏览器里调用 <code>require(&#39;net&#39;)</code> 去创建一个 Socket 时，Webpack 会告诉你：“对不起，浏览器里没有这个东西。”</p>
+<h3 id="3-文件系统的隔离"><a href="#3-文件系统的隔离" class="headerlink" title="3. 文件系统的隔离"></a>3. 文件系统的隔离</h3><p>很多 Node.js 库依赖 <code>fs</code> 模块读取本地的证书文件或附件。浏览器出于隐私保护，绝对不允许 JS 随意扫描用户的硬盘。这也是一道无法逾越的墙。</p>
+<hr>
+<h2 id="二、-安全之墙：源代码是“裸奔”的"><a href="#二、-安全之墙：源代码是“裸奔”的" class="headerlink" title="二、 安全之墙：源代码是“裸奔”的"></a>二、 安全之墙：源代码是“裸奔”的</h2><p>如果说技术限制还可以通过“魔改库”来绕过（比如用 HTTP API 替代 SMTP），那么<strong>安全问题</strong>则是死穴。</p>
+<p>在我的那段代码里，我把邮箱的<strong>授权码（密码）</strong>直接写在了代码里：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">auth</span>: &#123;</span><br><span class="line">  <span class="attr">user</span>: <span class="string">&#x27;my_email@qq.com&#x27;</span>,</span><br><span class="line">  <span class="attr">pass</span>: <span class="string">&#x27;my_auth_code_123&#x27;</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="前端代码没有秘密"><a href="#前端代码没有秘密" class="headerlink" title="前端代码没有秘密"></a>前端代码没有秘密</h3><p>不管你用 Webpack 怎么压缩混淆，前端代码最终都会被下载到用户的电脑上。<br>任何一个略懂技术的用户，只需要：</p>
+<ol>
+<li> 打开浏览器控制台 (F12)。</li>
+<li> 点击 Sources 面板。</li>
+<li> 搜索 “qq.com” 或 “pass”。</li>
+</ol>
+<p>你的密码就赤裸裸地躺在那里。这意味着<strong>任何人</strong>都可以拿到你的授权码，用你的邮箱给全世界发送垃圾邮件。</p>
+<p><strong>结论：永远不要在前端代码里保存任何 Secret（密码、密钥、Token）。</strong></p>
+<hr>
+<h2 id="三、-认清-Node-js-的两张面孔"><a href="#三、-认清-Node-js-的两张面孔" class="headerlink" title="三、 认清 Node.js 的两张面孔"></a>三、 认清 Node.js 的两张面孔</h2><p>这个案例暴露了一个常见的认知误区：<strong>混淆了“作为构建工具的 Node.js”和“作为服务器的 Node.js”。</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">场景</th>
+<th align="left">角色</th>
+<th align="left">运行位置</th>
+<th align="left">能力范围</th>
+<th align="left">例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>前端开发</strong></td>
+<td align="left">构建工具</td>
+<td align="left">开发者电脑 / CI服务器</td>
+<td align="left">读写文件、编译代码</td>
+<td align="left">Webpack, Vite, Create-React-App</td>
+</tr>
+<tr>
+<td align="left"><strong>前端运行</strong></td>
+<td align="left">脚本</td>
+<td align="left"><strong>用户浏览器</strong></td>
+<td align="left">DOM操作、HTTP请求</td>
+<td align="left">React, Vue, jQuery</td>
+</tr>
+<tr>
+<td align="left"><strong>后端运行</strong></td>
+<td align="left">服务器</td>
+<td align="left"><strong>服务器</strong></td>
+<td align="left">TCP连接、数据库、文件系统</td>
+<td align="left">Express, Koa, NestJS</td>
+</tr>
+</tbody></table>
+<p>你在 <code>Login.tsx</code> 里写的代码，属于<strong>第二行</strong>。它虽然是用 Node.js 工具链编译出来的，但它<strong>不是</strong> Node.js 程序，它只是运行在浏览器里的 JavaScript。</p>
+<hr>
+<h2 id="四、-正确的架构：后端作为“代理人”"><a href="#四、-正确的架构：后端作为“代理人”" class="headerlink" title="四、 正确的架构：后端作为“代理人”"></a>四、 正确的架构：后端作为“代理人”</h2><p>既然前端做不了，那该怎么发邮件？<br>这正是<strong>后端（Backend）</strong>存在的意义。我们需要一个拥有特权的“中间人”。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ol>
+<li><p>**前端 (React)**：</p>
+<ul>
+<li>  只负责收集用户输入（邮件内容）。</li>
+<li>  通过 HTTP POST 请求把数据发给后端。</li>
+<li>  <strong>不需要</strong> 知道邮箱密码。</li>
+</ul>
+ <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 前端代码</span></span><br><span class="line"><span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&#x27;/api/send-email&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123; <span class="attr">content</span>: <span class="string">&#x27;用户反馈...&#x27;</span> &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+<li><p>**后端 (Node.js/Python/Go)**：</p>
+<ul>
+<li>  运行在服务器上，环境受控且安全。</li>
+<li>  <strong>持有密码</strong>（从环境变量读取，不进版本控制）。</li>
+<li>  引入 <code>nodemailer</code>，通过 TCP 连接邮件服务器发送邮件。</li>
+</ul>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 后端代码 (Node.js Express)</span></span><br><span class="line"><span class="keyword">const</span> nodemailer = <span class="built_in">require</span>(<span class="string">&#x27;nodemailer&#x27;</span>);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&#x27;/api/send-email&#x27;</span>, <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 1. 这里可以使用 net/tls 模块</span></span><br><span class="line">    <span class="comment">// 2. 密码保存在服务器环境变量中，用户看不见</span></span><br><span class="line">    <span class="keyword">const</span> transporter = nodemailer.<span class="title function_">createTransport</span>(&#123; ... &#125;); </span><br><span class="line">    <span class="keyword">await</span> transporter.<span class="title function_">sendMail</span>(&#123; ... &#125;);</span><br><span class="line">    res.<span class="title function_">json</span>(&#123; <span class="attr">success</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h2 id="五、-总结"><a href="#五、-总结" class="headerlink" title="五、 总结"></a>五、 总结</h2><p>这次“发邮件失败”的经历，实际上是一堂生动的架构课。它告诉我们，<strong>前后端分离不仅仅是代码的分离，更是 信任边界 (Trust Boundary) 的划分。</strong></p>
+<ul>
+<li>  <strong>前端 (Client)<strong>：是</strong>不可信环境</strong>。它受限于浏览器沙盒，且代码完全公开。它只负责“展示”和“请求”。</li>
+<li>  <strong>后端 (Server)<strong>：是</strong>可信环境</strong>。它拥有系统底层权限（网络、文件、数据库），且可以安全地保管机密。它负责“执行”和“守护”。</li>
+</ul>
+<p>下次当你发现某个 Node.js 库在 React 里跑不通，或者需要在代码里写密码时，停下来想一想：<strong>“这个功能，是不是本该属于后端的职责？”</strong></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2026/01/18/%E6%9E%B6%E6%9E%84-%E4%B8%BA%E4%BB%80%E4%B9%88React%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E5%8F%91%E9%82%AE%E4%BB%B6%EF%BC%9F%E4%BB%8ENodemailer%E6%8A%A5%E9%94%99%E7%9C%8B%E5%89%8D%E5%90%8E%E7%AB%AF%E8%BE%B9%E7%95%8C/">https://m42-orion.github.io/2026/01/18/%E6%9E%B6%E6%9E%84-%E4%B8%BA%E4%BB%80%E4%B9%88React%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E5%8F%91%E9%82%AE%E4%BB%B6%EF%BC%9F%E4%BB%8ENodemailer%E6%8A%A5%E9%94%99%E7%9C%8B%E5%89%8D%E5%90%8E%E7%AB%AF%E8%BE%B9%E7%95%8C/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AE%89%E5%85%A8/">安全</a><a class="post-meta__tags" href="/tags/%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/">踩坑记录</a><a class="post-meta__tags" href="/tags/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB/">前后端分离</a><a class="post-meta__tags" href="/tags/Node-js/">Node.js</a><a class="post-meta__tags" href="/tags/SMTP/">SMTP</a></div><div class="post-share"><div class="social-share" data-image="https://c-ssl.duitang.com/uploads/blog/202512/02/xDSnPGGYI2VWo8N.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/01/18/%E5%B7%A5%E5%85%B7-Python%E5%8C%85%E7%AE%A1%E7%90%86%E6%96%B0%E6%98%9Fuv/" title="再见 Conda？Python 极速包管理器 uv 上手指南"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202512/21/AvSLJQQaTwWWLPN.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">再见 Conda？Python 极速包管理器 uv 上手指南</div></div><div class="info-2"><div class="info-item-1">Python 的环境管理一直是个让开发者头秃的问题。 从最早的 pip + venv，到科学计算必备的 conda，再到后来追求项目隔离的 poetry 和 pdm，我们手里的工具越来越多，但困惑也越来越多：  “Conda 解析依赖太慢了，一直在转圈圈。”“听说 Anaconda 公司改了协议，公司用要收费了？”“Poetry 很好用，但是安装依赖有时候卡很久。”  就在大家在这个泥潭里挣扎时，uv 横空出世。它号称是“Python 的 Cargo（Rust 的包管理器）”，主打一个字：快。 今天我们就来聊聊这个用 Rust 编写的 Python 包管理新星，看看它是否有资格终结这场“环境管理之战”。  一、 为什么要换掉 Conda？很多 Python 初学者（尤其是搞数据科学的）入行安装的第一个软件就是 Anaconda。但随着时间推移，Conda 的问题逐渐暴露：   慢：这是最大的槽点。当你安装一个复杂的库（比如 PyTorch）时，Conda 的依赖解析（Solving environment）能让你等到怀疑人生。  臃肿：Anaconda...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/09/28/OAuth-%E4%B8%80%E5%9C%BA%E2%80%9C%E6%8E%88%E6%9D%83%E2%80%9D%E8%80%8C%E9%9D%9E%E2%80%9C%E5%9D%A6%E7%99%BD%E2%80%9D%E7%9A%84%E5%AE%89%E5%85%A8%E8%88%9E%E4%BC%9A/" title="OAuth:一场“授权”而非“坦白”的安全舞会"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202509/26/9WSX2MM5c8XmmM9.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-28</div><div class="info-item-2">OAuth:一场“授权”而非“坦白”的安全舞会</div></div><div class="info-2"><div class="info-item-1">OAuth：一场“授权”而非“坦白”的安全舞会想象一下这个场景：你新装了一款精美的个人记账软件（我们叫它“小账本”），它告诉你：“我能帮你自动分析你的银行消费，让你理财更轻松！” 你心动了，但问题来了：要让它分析你的银行账单，你是不是得把自己的银行账号和密码直接告诉“小账本”？ 停！快打消这个危险的念头！ 这就像你把家里的钥匙交给一个陌生的管家。即使他心地善良，万一他保管不善，钥匙被复制了怎么办？你永远不应该把自己的主密码（尤其是银行密码）交给任何第三方。 那么，如何安全地让“小账本”只读取你的银行交易记录，而又不暴露你的密码呢？ 这就是 OAuth 要解决的世纪难题。它诞生于2007年的Twitter，核心目标就是：让第三方应用能在“不拿到用户密码”的前提下，获得有限的访问权限。 一、 OAuth 的核心思想：从“交钥匙”到“发门禁卡”我们可以用一个简单的比喻来理解：  坏方法（交钥匙）：你把银行保险库的主钥匙（密码）...</div></div></div></a><a class="pagination-related" href="/2026/01/18/%E6%95%B0%E6%8D%AE%E5%BA%93-%E8%81%94%E8%A1%A8%E7%BB%A7%E6%89%BF%E4%B8%8E%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB/" title="SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202601/07/3BSD1QQoCzvALv4.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-18</div><div class="info-item-2">SQLAlchemy 踩坑：我只想复制一张表，却意外触发了“联表继承”</div></div><div class="info-2"><div class="info-item-1">在 Python 后端开发中，我们经常使用 SQLAlchemy 作为 ORM 框架。最近在做项目时，我遇到了一件非常有意思的事情，或者说是一个“经典的误解”。 事情是这样的：我有一个现成的文件表 File，它的结构定义得很完美。随着业务发展，我需要创建一个备份表 BackupFile，要求它的结构跟 File 表 完全一致。 作为一个崇尚 DRY (Don’t Repeat Yourself) 原则的程序员，我的第一反应当然是——继承！ 于是我写出了类似这样的代码： 123456789101112131415from sqlalchemy import Column, Integer, String, ForeignKeyfrom sqlalchemy.orm import declarative_baseBase = declarative_base()class File(Base):    __tablename__ = &#x27;file&#x27;    id = Column(Integer, primary_key=True)    filename =...</div></div></div></a><a class="pagination-related" href="/2026/01/18/%E8%AE%BE%E8%AE%A1-Web%E5%BC%80%E5%8F%91%E6%BC%94%E5%8F%98%E5%8F%B2/" title="架构演变史：你以为的“前后端分离”可能只是冰山一角"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202512/23/lGSDpggYCxLVPA8.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-18</div><div class="info-item-2">架构演变史：你以为的“前后端分离”可能只是冰山一角</div></div><div class="info-2"><div class="info-item-1">作为一名后端开发者，你是否也有过这样的困惑：  “前端把代码打包成一堆 HTML/CSS/JS 给我，我把它丢在我的 Nginx 或者静态目录里部署，这不就是以前的 MVC 吗？这也能叫前后端分离？” “隔壁组的前端自己在服务器上跑了个 Node.js 服务（React/Vue），然后调我的 Java/Python 接口，用户直接访问他们的服务，这才是真正的分离吧？”  其实，这两种模式都属于“前后端分离”，只是处于演变历史中的不同阶段，或者说是为了解决不同问题而诞生的架构模式。 今天，我们就来一场时空穿越，聊聊 Web 开发架构的前世今生，帮你彻底理清这些概念。  第一阶段：混沌初开 —— 传统的服务端渲染 (Classic SSR / MVC)在 2010 年以前（PHP、JSP、ASP.NET、早期的 Django/Rails 时代），Web 开发的主流是 **服务端渲染 (Server-Side Rendering)**。 工作模式  浏览器向服务器发送请求。  后端（PHP/Java/Python）接收请求，查询数据库。  后端使用模板引擎（JSP, Jinja2,...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">192</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">127</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">43</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E6%8A%80%E6%9C%AF%E4%B9%8B%E5%A2%99%EF%BC%9A%E6%B5%8F%E8%A7%88%E5%99%A8%E6%98%AF%E4%B8%AA%E2%80%9C%E6%B2%99%E7%9B%92%E2%80%9D"><span class="toc-number">1.</span> <span class="toc-text">一、 技术之墙：浏览器是个“沙盒”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%94%9F%E6%AE%96%E9%9A%94%E7%A6%BB%EF%BC%9AHTTP-vs-SMTP"><span class="toc-number">1.1.</span> <span class="toc-text">1. 协议的生殖隔离：HTTP vs SMTP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%BC%BA%E5%A4%B1%E7%9A%84%E5%BA%95%E5%B1%82%E8%83%BD%E5%8A%9B%EF%BC%9ASocket"><span class="toc-number">1.2.</span> <span class="toc-text">2. 缺失的底层能力：Socket</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E9%9A%94%E7%A6%BB"><span class="toc-number">1.3.</span> <span class="toc-text">3. 文件系统的隔离</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-%E5%AE%89%E5%85%A8%E4%B9%8B%E5%A2%99%EF%BC%9A%E6%BA%90%E4%BB%A3%E7%A0%81%E6%98%AF%E2%80%9C%E8%A3%B8%E5%A5%94%E2%80%9D%E7%9A%84"><span class="toc-number">2.</span> <span class="toc-text">二、 安全之墙：源代码是“裸奔”的</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E4%BB%A3%E7%A0%81%E6%B2%A1%E6%9C%89%E7%A7%98%E5%AF%86"><span class="toc-number">2.1.</span> <span class="toc-text">前端代码没有秘密</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81-%E8%AE%A4%E6%B8%85-Node-js-%E7%9A%84%E4%B8%A4%E5%BC%A0%E9%9D%A2%E5%AD%94"><span class="toc-number">3.</span> <span class="toc-text">三、 认清 Node.js 的两张面孔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-%E6%AD%A3%E7%A1%AE%E7%9A%84%E6%9E%B6%E6%9E%84%EF%BC%9A%E5%90%8E%E7%AB%AF%E4%BD%9C%E4%B8%BA%E2%80%9C%E4%BB%A3%E7%90%86%E4%BA%BA%E2%80%9D"><span class="toc-number">4.</span> <span class="toc-text">四、 正确的架构：后端作为“代理人”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">4.1.</span> <span class="toc-text">解决方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81-%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">五、 总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/01/18/%E6%9E%B6%E6%9E%84-%E4%B8%BA%E4%BB%80%E4%B9%88React%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E5%8F%91%E9%82%AE%E4%BB%B6%EF%BC%9F%E4%BB%8ENodemailer%E6%8A%A5%E9%94%99%E7%9C%8B%E5%89%8D%E5%90%8E%E7%AB%AF%E8%BE%B9%E7%95%8C/" title="为什么 React 不能直接发邮件？从 Nodemailer 报错看前后端边界"><img src="https://c-ssl.duitang.com/uploads/blog/202512/02/xDSnPGGYI2VWo8N.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="为什么 React 不能直接发邮件？从 Nodemailer 报错看前后端边界"/></a><div class="content"><a class="title" href="/2026/01/18/%E6%9E%B6%E6%9E%84-%E4%B8%BA%E4%BB%80%E4%B9%88React%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E5%8F%91%E9%82%AE%E4%BB%B6%EF%BC%9F%E4%BB%8ENodemailer%E6%8A%A5%E9%94%99%E7%9C%8B%E5%89%8D%E5%90%8E%E7%AB%AF%E8%BE%B9%E7%95%8C/" title="为什么 React 不能直接发邮件？从 Nodemailer 报错看前后端边界">为什么 React 不能直接发邮件？从 Nodemailer 报错看前后端边界</a><time datetime="2026-01-18T09:00:00.000Z" title="发表于 2026-01-18 17:00:00">2026-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/18/%E5%B7%A5%E5%85%B7-Python%E5%8C%85%E7%AE%A1%E7%90%86%E6%96%B0%E6%98%9Fuv/" title="再见 Conda？Python 极速包管理器 uv 上手指南"><img src="https://c-ssl.duitang.com/uploads/blog/202512/21/AvSLJQQaTwWWLPN.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="再见 Conda？Python 极速包管理器 uv 上手指南"/></a><div class="content"><a class="title" href="/2026/01/18/%E5%B7%A5%E5%85%B7-Python%E5%8C%85%E7%AE%A1%E7%90%86%E6%96%B0%E6%98%9Fuv/" title="再见 Conda？Python 极速包管理器 uv 上手指南">再见 Conda？Python 极速包管理器 uv 上手指南</a><time datetime="2026-01-18T08:00:00.000Z" title="发表于 2026-01-18 16:00:00">2026-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/18/%E6%9D%82%E8%B0%88-%E5%8D%83%E4%B8%87%E7%BA%A7%E5%B9%B6%E5%8F%91%E7%9A%84%E8%B0%8E%E8%A8%80%E4%B8%8E%E7%9C%9F%E7%9B%B8/" title="面试造航母：普通开发者真的需要担心“千万级并发”吗？"><img src="https://c-ssl.duitang.com/uploads/blog/202512/21/XxS5eqqaTQpp9G3.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="面试造航母：普通开发者真的需要担心“千万级并发”吗？"/></a><div class="content"><a class="title" href="/2026/01/18/%E6%9D%82%E8%B0%88-%E5%8D%83%E4%B8%87%E7%BA%A7%E5%B9%B6%E5%8F%91%E7%9A%84%E8%B0%8E%E8%A8%80%E4%B8%8E%E7%9C%9F%E7%9B%B8/" title="面试造航母：普通开发者真的需要担心“千万级并发”吗？">面试造航母：普通开发者真的需要担心“千万级并发”吗？</a><time datetime="2026-01-18T07:00:00.000Z" title="发表于 2026-01-18 15:00:00">2026-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/18/%E6%95%B0%E6%8D%AE%E5%BA%93-PostgreSQL%E8%83%BD%E5%90%A6%E5%8F%96%E4%BB%A3Redis/" title="PostgreSQL：数据库界的“瑞士军刀”，真的能取代 Redis 吗？"><img src="https://c-ssl.duitang.com/uploads/blog/202512/21/d3SJ4eevUqXX5A1.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="PostgreSQL：数据库界的“瑞士军刀”，真的能取代 Redis 吗？"/></a><div class="content"><a class="title" href="/2026/01/18/%E6%95%B0%E6%8D%AE%E5%BA%93-PostgreSQL%E8%83%BD%E5%90%A6%E5%8F%96%E4%BB%A3Redis/" title="PostgreSQL：数据库界的“瑞士军刀”，真的能取代 Redis 吗？">PostgreSQL：数据库界的“瑞士军刀”，真的能取代 Redis 吗？</a><time datetime="2026-01-18T06:00:00.000Z" title="发表于 2026-01-18 14:00:00">2026-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/18/%E8%AE%BE%E8%AE%A1-Web%E5%BC%80%E5%8F%91%E6%BC%94%E5%8F%98%E5%8F%B2/" title="架构演变史：你以为的“前后端分离”可能只是冰山一角"><img src="https://c-ssl.duitang.com/uploads/blog/202512/23/lGSDpggYCxLVPA8.png" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="架构演变史：你以为的“前后端分离”可能只是冰山一角"/></a><div class="content"><a class="title" href="/2026/01/18/%E8%AE%BE%E8%AE%A1-Web%E5%BC%80%E5%8F%91%E6%BC%94%E5%8F%98%E5%8F%B2/" title="架构演变史：你以为的“前后端分离”可能只是冰山一角">架构演变史：你以为的“前后端分离”可能只是冰山一角</a><time datetime="2026-01-18T05:00:00.000Z" title="发表于 2026-01-18 13:00:00">2026-01-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 望</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 5.4.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.5</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(function() {
+  const abcjsInit = function() {
+    const abcjsFn = function() {
+      setTimeout(function() {
+        const sheets = document.querySelectorAll(".abc-music-sheet")
+        for (let i = 0; i < sheets.length; i++) {
+          const ele = sheets[i]
+          if (ele.children.length > 0) continue
+
+          // Parse parameters from data-params attribute
+          let params = {}
+          const dp = ele.getAttribute("data-params")
+          if (dp) {
+            try {
+              params = JSON.parse(dp)
+            } catch (e) {
+              console.error("Failed to parse data-params:", e)
+            }
+          }
+
+          // Merge parsed parameters with the responsive option
+          // Ensures params content appears before responsive
+          const options = { ...params, responsive: "resize" }
+
+          // Render the music score using ABCJS.renderAbc
+          ABCJS.renderAbc(ele, ele.innerHTML, options)
+        }
+      }, 100)
+    }
+
+    if (typeof ABCJS === "object") {
+      abcjsFn()
+    } else {
+      btf.getScript("https://cdn.jsdelivr.net/npm/abcjs/dist/abcjs-basic-min.min.js").then(abcjsFn)
+    }
+  }
+
+  if (window.pjax) {
+    abcjsInit()
+  } else {
+    window.addEventListener("load", abcjsInit)
+  }
+
+  btf.addGlobalFn("encrypt", abcjsInit, "abcjs")
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="null" data-text="I,LOVE,YOU,木一" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
