@@ -160,7 +160,7 @@
   isHighlightShrink: false,
   isToc: false,
   pageType: 'post'
-}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://c-ssl.duitang.com/uploads/blog/202507/28/AvSLJQQaTwpb2dA.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">RAG-什么是RAG</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">RAG-什么是RAG</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-05-21T02:12:05.000Z" title="发表于 2025-05-21 10:12:05">2025-05-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-11T02:05:28.136Z" title="更新于 2025-08-11 10:05:28">2025-08-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/RAG/">RAG</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>在传统数据库查询与RAG（检索增强生成）技术之间，存在着如同图书馆卡片目录与专业学术顾问之间的本质差异。这种差异不仅体现在技术实现层面，更深刻地改变了获取和处理知识的方式。</p>
+}</script><style>body{background-image:radial-gradient(circle,#c8c8c8 0.8px,transparent 0.8px);background-size:24px 24px}</style><meta name="generator" content="Hexo 8.1.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://c-ssl.duitang.com/uploads/blog/202507/28/AvSLJQQaTwpb2dA.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">RAG-什么是RAG</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">RAG-什么是RAG</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-05-21T02:12:05.000Z" title="发表于 2025-05-21 10:12:05">2025-05-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-11T02:05:28.136Z" title="更新于 2025-08-11 10:05:28">2025-08-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/RAG/">RAG</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>在传统数据库查询与RAG（检索增强生成）技术之间，存在着如同图书馆卡片目录与专业学术顾问之间的本质差异。这种差异不仅体现在技术实现层面，更深刻地改变了获取和处理知识的方式。</p>
 <p>传统数据库查询如同在结构严谨的档案馆中工作，通过精确的SQL语句或关键词匹配，从行列分明的表格中提取预设答案。这种查询遵循严格的模式（Schema），要求提问者必须明确知道如何构建查询条件，系统则根据索引快速返回完全匹配的结果。例如查询”2023年公司销售额”，数据库会直接返回存储在”financial_data”表中”year&#x3D;2023”的对应数值。</p>
 <p>而RAG的知识库查询更像与一位博览群书的专家对话。当用户提出”请分析去年销售表现及其主要原因”这样的开放性问题时，RAG系统首先会理解问题的语义背景，从海量文档（可能是PDF报告、网页、邮件等非结构化数据）中检索相关片段，然后综合这些信息生成结构化的分析报告。这个过程涉及三个认知层面的跃升：</p>
 <p>在技术架构上，RAG系统通过嵌入模型（如BERT、GPT）将知识库文档和查询都转换为高维向量，在向量空间中进行相似性检索。这种基于语义而非字面匹配的方式，使得系统能够理解”营收”、”收入”、”销售额”等不同表述的实际关联。典型的处理流程包括：查询理解→向量检索→相关性排序→上下文构造→生成回答，整个过程在毫秒级完成。</p>
@@ -168,7 +168,328 @@
 <p>这种差异在实际应用中产生深远影响。医疗领域，传统数据库可以准确查询”患者A的血型”，而RAG系统能够回答”患者A的症状与哪些疾病相关”；法律场景中，数据库能检索特定法条编号，RAG则可以综合判例解释法条适用性。RAG特别适合处理那些需要背景知识、多文档关联和推理判断的复杂查询。</p>
 <p>实现高效的RAG系统需要精心设计多个环节：文档分块策略影响检索精度，通常采用语义段落而非固定字数分割；向量模型选择决定语义理解深度，当前sentence-transformers模型较通用；检索阶段可加入元数据过滤提升准确性；生成环节要通过提示工程确保回答基于检索内容。值得注意的是，RAG并非万能，对于需要精确数值的查询（如”库存量”），传统数据库仍是更可靠选择。</p>
 <p>RAG技术正在重塑知识管理系统的发展方向。它打破了传统数据库”垃圾进-垃圾出”的限制，使组织能够充分利用积累的非结构化数据财富。随着嵌入模型和生成模型的持续进步，未来的知识查询系统将更加智能，在保持事实准确性的同时，提供更深度的知识分析和洞察。这种转变不仅改变了人机交互方式，更重新定义了组织获取和利用知识的基本范式。</p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2025/05/21/RAG-%E4%BB%80%E4%B9%88%E6%98%AFRAG/">https://m42-orion.github.io/2025/05/21/RAG-%E4%BB%80%E4%B9%88%E6%98%AFRAG/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9D%82%E8%B0%88/">杂谈</a><a class="post-meta__tags" href="/tags/RAG/">RAG</a></div><div class="post-share"><div class="social-share" data-image="https://c-ssl.duitang.com/uploads/blog/202507/28/AvSLJQQaTwpb2dA.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/05/23/%E8%AF%AD%E6%B3%95-%E5%BE%AA%E7%8E%AF%E3%80%81%E8%BF%AD%E4%BB%A3%E5%99%A8%E3%80%81%E7%94%9F%E6%88%90%E5%99%A8/" title="循环、迭代器、生成器"><img class="cover" src="https://c-ssl.dtstatic.com/uploads/blog/202407/24/xDSnPGGYI2ljmyq.thumb.1000_0.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">循环、迭代器、生成器</div></div><div class="info-2"><div class="info-item-1">一、循环（Loop）本质循环是一种控制结构，用于重复执行代码块。它本身不是数据结构，而是一种语法机制。 常见形式123456789# 1. for 循环（遍历可迭代对象）for item in [1, 2, 3]:    print(item)# 2. while 循环（基于条件）i = 0while i &lt; 3:    print(i)    i += 1  适用场景 需要重复执行相同或相似的操作 遍历容器中的元素（如列表、字典） 实现需要终止条件的逻辑（如用户登录验证）  优势 简单直观，易于理解和使用 适用于大多数重复操作场景  劣势 当处理大量数据时，可能占用大量内存（如生成全量数据列表） 无法暂停或恢复执行流程  二、迭代器（Iterator）本质迭代器是实现了迭代器协议的对象（即包含 __iter__() 和 __next__() 方法）。它是一种数据访问方式，允许你按需逐个访问元素。 核心方法 __iter__()：返回迭代器自身 __next__()：返回下一个元素，若没有元素则抛出 StopIteration 异常  示例1234567my_list = ...</div></div></div></a><a class="pagination-related" href="/2025/05/21/RAG-%E5%90%91%E9%87%8F%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9/" title="RAG-向量模型选择"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202507/24/XxS5eqqaTQqgxQL.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">RAG-向量模型选择</div></div><div class="info-2"><div class="info-item-1">引言在检索增强生成(Retrieval-Augmented Generation, RAG)系统中，向量模型的质量直接决定了系统的检索效果，进而影响最终生成内容的相关性和准确性。本文将深入探讨如何评估和选择适合RAG系统的向量模型,如有不足请指正。 一、向量模型的核心作用向量模型(嵌入模型)在RAG系统中承担着将文本转化为数值向量(嵌入)的关键任务，其质量影响以下核心环节：  语义表示能力：决定模型是否能准确捕捉文本的深层含义 检索相关性：影响系统找到与查询最相关文档的能力 计算效率：直接影响系统的响应速度和资源消耗 领域适应性：决定模型在特定领域的表现效果  二、主流向量模型类型1. 通用预训练模型 示例：OpenAI的text-embedding-ada-002、Cohere的embed-english-v3.0 特点：在大规模通用语料上预训练，适合大多数通用场景 优势：开箱即用，无需额外训练  2. 领域专用模型 示例：BioBERT(生物医学)、Legal-BERT(法律) 特点：在特定领域数据上训练或微调 优势：在专业领域表现更优  3. 多语言模型 示例：paraph...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2022/04/23/%E7%BD%91%E7%BB%9C-%E8%AF%A6%E8%A7%A3post%E4%B8%8Eget/" title="详解post与get"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/post%E4%B8%8Eget/%E5%B0%81%E9%9D%A2.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-23</div><div class="info-item-2">详解post与get</div></div><div class="info-2"><div class="info-item-1">POST和GET网络请求有OPTIONS、HEAD、GET、POST、PUT、DELETE、TRACE、CONNECT这常见的几种方式，其中最常见也就是post与get方法，在开发过程当中常常会遇到一个问题，这个接口到底是使用post请求好一点还是使用get请求好一点？两者到底有什么区别？这篇文章就将给出对应的解释。 对post与get区别的错误理解get安全性非常低，post安全性较高一般来说，在对新手上手的时候会跟他说这样的话，并说get是能够明文看见的，但是post不行…这个说法是有一定道理的，对于完全不知道情况的普通用户来说，安全一点确实有道理，因为从浏览器的地址上确实看不到post请求的参数，url链接也变短了，但是不代表数据被完全隐藏，实际上通过简单的开发者工具抓包就能够看到明文数据。因此某些极小的点上可以说安全，但是实际上可能并不安全。  get传送的数据量较小，不能大于2KB。post传送的数据量较大，一般被默认为不受限制。这个说法其实是指当我们使用get请求的时候，参数会直接被显示在url当中如：https://www.duitang.com/blog/?id=...</div></div></div></a><a class="pagination-related" href="/2022/09/07/%E5%B7%A5%E5%85%B7-opencv%E8%AF%86%E5%88%AB%E9%A2%9C%E8%89%B2%E4%B8%8E%E7%BA%BF%E6%AE%B5/" title="opencv识别颜色与线段"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/opencv识别颜色与线段/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-07</div><div class="info-item-2">opencv识别颜色与线段</div></div><div class="info-2"><div class="info-item-1">在使用opencv的过程中，实际情况常常需要对线段、圆形、颜色等条件的判断，但是网上多给出一些图像处理的数据，没有给出我需要的判定结果。在尝试后记录了两端代码供之后使用 对于线段的判断输出结果为线段长度 1234567891011121314151617img = cv2.imread(&quot;data/img/file.jpeg&quot;)img=img[0:int(img.shape[0]*0.9),0:int(img.shape[1]*0.9)]gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)edges = cv2.Canny(gray, 50, 150, apertureSize=3)lines = cv2.HoughLinesP(edges,1,np.pi/360,100,minLineLength=int(img.shape[1]*0.7),maxLineGap=10)def draw_line(img,lines):    # 绘制直线    for line_points in lines:        lenth ...</div></div></div></a><a class="pagination-related" href="/2022/05/08/python%E7%B1%BB%E5%9E%8B%E6%B3%A8%E9%87%8A/" title="python类型注释"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/python类型注释/封面.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-08</div><div class="info-item-2">python类型注释</div></div><div class="info-2"><div class="info-item-1">我找到一些来自于官方的关于python类型注释的资源，我将其复制下来，用于个人收藏。良好的类型注释习惯能让代码的可读性大大增强，同时也能够保证后续加入的人员能够快速理解与使用。 变量Python 3.6 在 PEP 526 中引入了用于注释变量的语法，我们在大多数示例中都使用它。 123456789101112# This is how you declare the type of a variable type in Python 3.6age: int = 1# You don&#x27;t need to initialize a variable to annotate ita: int  # Ok (no value at runtime until assigned)# The latter is useful in conditional brancheschild: boolif age &lt; 18:    child = Trueelse:    child = False  内置类型123456789101112131415161718192021222...</div></div></div></a><a class="pagination-related" href="/2022/04/29/%E8%AF%AD%E6%B3%95-%E8%A3%85%E9%A5%B0%E5%99%A8/" title="装饰器"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/装饰器/封面.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-29</div><div class="info-item-2">装饰器</div></div><div class="info-2"><div class="info-item-1">12from IPython.core.interactiveshell import InteractiveShellInteractiveShell.ast_node_interactivity = &#x27;all&#x27;  装饰器(Decorators)装饰器(Decorators)是 Python 的一个重要部分。简单地说：他们是修改其他函数的功能的函数。他们有助于让我们的代码更简短，也更Pythonic（Python范儿）。 1234567891011121314def hi(name=&quot; world&quot;):    return &quot;hello&quot; + namehi() # 我们甚至可以将一个函数赋值给一个变量，比如greet = hi# 我们这里没有在使用小括号，因为并不是在调用hi函数# 而是在将它放在greet变量里头。尝试运行下这个greet()# 如果删掉旧的hi函数del hi# hi() # 报错 greet()  12345&#x27;hello world&#x27;&#x27;hello world&#x27...</div></div></div></a><a class="pagination-related" href="/2025/05/21/RAG-%E5%90%91%E9%87%8F%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9/" title="RAG-向量模型选择"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202507/24/XxS5eqqaTQqgxQL.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-21</div><div class="info-item-2">RAG-向量模型选择</div></div><div class="info-2"><div class="info-item-1">引言在检索增强生成(Retrieval-Augmented Generation, RAG)系统中，向量模型的质量直接决定了系统的检索效果，进而影响最终生成内容的相关性和准确性。本文将深入探讨如何评估和选择适合RAG系统的向量模型,如有不足请指正。 一、向量模型的核心作用向量模型(嵌入模型)在RAG系统中承担着将文本转化为数值向量(嵌入)的关键任务，其质量影响以下核心环节：  语义表示能力：决定模型是否能准确捕捉文本的深层含义 检索相关性：影响系统找到与查询最相关文档的能力 计算效率：直接影响系统的响应速度和资源消耗 领域适应性：决定模型在特定领域的表现效果  二、主流向量模型类型1. 通用预训练模型 示例：OpenAI的text-embedding-ada-002、Cohere的embed-english-v3.0 特点：在大规模通用语料上预训练，适合大多数通用场景 优势：开箱即用，无需额外训练  2. 领域专用模型 示例：BioBERT(生物医学)、Legal-BERT(法律) 特点：在特定领域数据上训练或微调 优势：在专业领域表现更优  3. 多语言模型 示例：paraph...</div></div></div></a><a class="pagination-related" href="/2022/04/30/%E8%AF%AD%E6%B3%95-%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA/" title="python之类型提示"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/python之类型提示/封面.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-30</div><div class="info-item-2">python之类型提示</div></div><div class="info-2"><div class="info-item-1">Python 3.6+ 版本加入了对”类型提示”的支持。通过声明变量的类型，编辑器和一些工具能给你提供更好的支持。 示例当我们在使用python写一段代码的时候，如果遇到下面这种情况： 12def funcname(param1,param2):    print(param1.split(&#x27;&#x27;))  如果我们想要对函数传递的某些参数进行一些操作的话，在使用一些内置方法的时候，我们通常会依赖python的联想功能，但是在这种情况下，一切都不管用，因为编辑器根本不知道参数是什么类型，所以更不知道可以做什么操作。就像下面这样:  但是，我们加上类型提示之后，一切都会变得不一样。而所谓的类型提示就是告诉编辑器，这到底是一个什么类型的参数，如下：  这样我们就能够正确的去实现编辑器的联想功能了。但是….类型提示仅限于此吗？并非如此，类型提示可以帮助我们规范参数类型，自动过滤某些非法参数，防止SQL注入等安全问题。 更多普通类型普通类型即我们常见的类型，如：int、float、bool、bytes这些类型使用方式如上，在函数参数处声明使用。 嵌套类型嵌套类型指该类型内部...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">205</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">55</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="彻底搞懂 Token"/></a><div class="content"><a class="title" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token">彻底搞懂 Token</a><time datetime="2026-05-25T20:00:00.000Z" title="发表于 2026-05-26 04:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析"><img src="https://c-ssl.duitang.com/uploads/blog/202604/16/pGSm4WWdTBDOWWY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Agent 沙箱深度解析"/></a><div class="content"><a class="title" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析">AI Agent 沙箱深度解析</a><time datetime="2026-05-25T19:30:00.000Z" title="发表于 2026-05-26 03:30:00">2026-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2025/05/21/RAG-%E4%BB%80%E4%B9%88%E6%98%AFRAG/">https://m42-orion.github.io/2025/05/21/RAG-%E4%BB%80%E4%B9%88%E6%98%AFRAG/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9D%82%E8%B0%88/">杂谈</a><a class="post-meta__tags" href="/tags/RAG/">RAG</a></div><div class="post-share"><div class="social-share" data-image="https://c-ssl.duitang.com/uploads/blog/202507/28/AvSLJQQaTwpb2dA.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/05/23/%E8%AF%AD%E6%B3%95-%E5%BE%AA%E7%8E%AF%E3%80%81%E8%BF%AD%E4%BB%A3%E5%99%A8%E3%80%81%E7%94%9F%E6%88%90%E5%99%A8/" title="循环、迭代器、生成器"><img class="cover" src="https://c-ssl.dtstatic.com/uploads/blog/202407/24/xDSnPGGYI2ljmyq.thumb.1000_0.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">循环、迭代器、生成器</div></div><div class="info-2"><div class="info-item-1">一、循环（Loop）本质循环是一种控制结构，用于重复执行代码块。它本身不是数据结构，而是一种语法机制。 常见形式123456789# 1. for 循环（遍历可迭代对象）for item in [1, 2, 3]:    print(item)# 2. while 循环（基于条件）i = 0while i &lt; 3:    print(i)    i += 1  适用场景 需要重复执行相同或相似的操作 遍历容器中的元素（如列表、字典） 实现需要终止条件的逻辑（如用户登录验证）  优势 简单直观，易于理解和使用 适用于大多数重复操作场景  劣势 当处理大量数据时，可能占用大量内存（如生成全量数据列表） 无法暂停或恢复执行流程  二、迭代器（Iterator）本质迭代器是实现了迭代器协议的对象（即包含 __iter__() 和 __next__() 方法）。它是一种数据访问方式，允许你按需逐个访问元素。 核心方法 __iter__()：返回迭代器自身 __next__()：返回下一个元素，若没有元素则抛出 StopIteration 异常  示例1234567my_list = ...</div></div></div></a><a class="pagination-related" href="/2025/05/21/RAG-%E5%90%91%E9%87%8F%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9/" title="RAG-向量模型选择"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202507/24/XxS5eqqaTQqgxQL.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">RAG-向量模型选择</div></div><div class="info-2"><div class="info-item-1">引言在检索增强生成(Retrieval-Augmented Generation, RAG)系统中，向量模型的质量直接决定了系统的检索效果，进而影响最终生成内容的相关性和准确性。本文将深入探讨如何评估和选择适合RAG系统的向量模型,如有不足请指正。 一、向量模型的核心作用向量模型(嵌入模型)在RAG系统中承担着将文本转化为数值向量(嵌入)的关键任务，其质量影响以下核心环节：  语义表示能力：决定模型是否能准确捕捉文本的深层含义 检索相关性：影响系统找到与查询最相关文档的能力 计算效率：直接影响系统的响应速度和资源消耗 领域适应性：决定模型在特定领域的表现效果  二、主流向量模型类型1. 通用预训练模型 示例：OpenAI的text-embedding-ada-002、Cohere的embed-english-v3.0 特点：在大规模通用语料上预训练，适合大多数通用场景 优势：开箱即用，无需额外训练  2. 领域专用模型 示例：BioBERT(生物医学)、Legal-BERT(法律) 特点：在特定领域数据上训练或微调 优势：在专业领域表现更优  3. 多语言模型 示例：paraph...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/05/21/RAG-%E5%90%91%E9%87%8F%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9/" title="RAG-向量模型选择"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202507/24/XxS5eqqaTQqgxQL.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-21</div><div class="info-item-2">RAG-向量模型选择</div></div><div class="info-2"><div class="info-item-1">引言在检索增强生成(Retrieval-Augmented Generation, RAG)系统中，向量模型的质量直接决定了系统的检索效果，进而影响最终生成内容的相关性和准确性。本文将深入探讨如何评估和选择适合RAG系统的向量模型,如有不足请指正。 一、向量模型的核心作用向量模型(嵌入模型)在RAG系统中承担着将文本转化为数值向量(嵌入)的关键任务，其质量影响以下核心环节：  语义表示能力：决定模型是否能准确捕捉文本的深层含义 检索相关性：影响系统找到与查询最相关文档的能力 计算效率：直接影响系统的响应速度和资源消耗 领域适应性：决定模型在特定领域的表现效果  二、主流向量模型类型1. 通用预训练模型 示例：OpenAI的text-embedding-ada-002、Cohere的embed-english-v3.0 特点：在大规模通用语料上预训练，适合大多数通用场景 优势：开箱即用，无需额外训练  2. 领域专用模型 示例：BioBERT(生物医学)、Legal-BERT(法律) 特点：在特定领域数据上训练或微调 优势：在专业领域表现更优  3. 多语言模型 示例：paraph...</div></div></div></a><a class="pagination-related" href="/2022/08/01/python%E8%BF%9B%E7%A8%8B%E5%9F%BA%E7%A1%80/" title="python进程基础"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/python进程基础/封面.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-01</div><div class="info-item-2">python进程基础</div></div><div class="info-2"><div class="info-item-1">在学习python进程相关知识的时候，查询各种网站或者博客，对于进程的解释都没有那么全面，有时候仅给出部分案例，导致代码有时候爆出一些莫名其妙的错误，因此写下这篇基础文章。 python 的三种进程模式在python当中进程被分为三种模式，不同的模式有不同的约束条件，也有不同的运行场景，需要依据情况而定：    fork spawn forkserver    拷贝几乎程序拥有的所有资源 需要从启动函数处传入程序运行的必要资源 需要从启动函数处传入程序运行的必要资源   支持文件对象&#x2F;线程锁等传参 不支持文件对象&#x2F;线程锁等传参 不支持文件对象&#x2F;线程锁等传参   unix unix&#x2F;win 部分unix   快 慢 —   任意位置创建 main函数开始 main函数开始    注：main函数指: 12&gt;if __name__ == &quot;__main__&quot;:   pass 并非指代函数名为main函数的函数。  案例fork123456789101112import multiprocessingdef task()...</div></div></div></a><a class="pagination-related" href="/2022/08/18/Linux-shell%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" title="shell环境变量"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/shell环境变量/封面.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-18</div><div class="info-item-2">shell环境变量</div></div><div class="info-2"><div class="info-item-1">bash shell用一个叫作环境变量(environment variable)的特性来存储有关shell会话和工作环境的信息(这也是它们被称作环境变量的原因)。这项特性允许你在内存中存储数据，以便程序或shell中运行的脚本能够轻松访问到它们。这也是存储持久数据的一种简便方法。 简单来说环境变量就是在交互环境中预先被设定的变量，能够让程序启动的时候更快的找到他们或者为某些程序预先设置运行条件的变量设置。如电脑中两个Java，指定环境变量能够让Java默认启动第一个或者第二个。  在shell编程中尽量使用大写字符作为变量名称。并且环境变量不能够以数字作为变量名的开头。  环境变量发赋值与输出12变量名称=变量值echo $变量名称  全局变量与局部变量全局变量生效与所有的shell环境中。 export a=1  1234567[root@my server~]# echo $b2[root@myserver~]# b=2[root@myserver~]# export b[root@myserver~]# bash[root@myserver~]# echo $b2  局部...</div></div></div></a><a class="pagination-related" href="/2022/09/07/%E5%B7%A5%E5%85%B7-opencv%E8%AF%86%E5%88%AB%E9%A2%9C%E8%89%B2%E4%B8%8E%E7%BA%BF%E6%AE%B5/" title="opencv识别颜色与线段"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/opencv识别颜色与线段/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-07</div><div class="info-item-2">opencv识别颜色与线段</div></div><div class="info-2"><div class="info-item-1">在使用opencv的过程中，实际情况常常需要对线段、圆形、颜色等条件的判断，但是网上多给出一些图像处理的数据，没有给出我需要的判定结果。在尝试后记录了两端代码供之后使用 对于线段的判断输出结果为线段长度 1234567891011121314151617img = cv2.imread(&quot;data/img/file.jpeg&quot;)img=img[0:int(img.shape[0]*0.9),0:int(img.shape[1]*0.9)]gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)edges = cv2.Canny(gray, 50, 150, apertureSize=3)lines = cv2.HoughLinesP(edges,1,np.pi/360,100,minLineLength=int(img.shape[1]*0.7),maxLineGap=10)def draw_line(img,lines):    # 绘制直线    for line_points in lines:        lenth ...</div></div></div></a><a class="pagination-related" href="/2025/02/15/%E5%B7%A5%E5%85%B7-%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85MongoDB%E6%95%99%E7%A8%8B/" title="离线安装MongoDB教程"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202502/07/WXSzeOOvfQ2J4aY.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-15</div><div class="info-item-2">离线安装MongoDB教程</div></div><div class="info-2"><div class="info-item-1">离线安装MongoDB教程在CentOS 7环境下离线安装MongoDB，您可以按照以下步骤进行操作。本教程涵盖了从安装包下载到服务启动的全过程。 1. 环境准备 操作系统：Linux CentOS 7 安装包：mongodb-linux-x86_64-rhel70-4.0.27.tgz  2. 安装包下载从MongoDB官网下载安装包： 1wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-4.0.27.tgz  3. 软件安装和启动3.1 解压安装包将下载好的安装包上传到Linux服务器某个目录下，并使用以下命令解压： 1tar -zxvf mongodb-linux-x86_64-rhel70-4.0.27.tgz  3.2 移动目录将解压后的目录移动到/usr/local目录下，并改名为mongodb： 1mv mongodb-linux-x86_64-rhel70-4.0.27 /usr/local/mongodb  3.3 创建数据和日志目录进入mongodb目录，创建data目录及其子目...</div></div></div></a><a class="pagination-related" href="/2022/05/08/python%E7%B1%BB%E5%9E%8B%E6%B3%A8%E9%87%8A/" title="python类型注释"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/python类型注释/封面.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-08</div><div class="info-item-2">python类型注释</div></div><div class="info-2"><div class="info-item-1">我找到一些来自于官方的关于python类型注释的资源，我将其复制下来，用于个人收藏。良好的类型注释习惯能让代码的可读性大大增强，同时也能够保证后续加入的人员能够快速理解与使用。 变量Python 3.6 在 PEP 526 中引入了用于注释变量的语法，我们在大多数示例中都使用它。 123456789101112# This is how you declare the type of a variable type in Python 3.6age: int = 1# You don&#x27;t need to initialize a variable to annotate ita: int  # Ok (no value at runtime until assigned)# The latter is useful in conditional brancheschild: boolif age &lt; 18:    child = Trueelse:    child = False  内置类型123456789101112131415161718192021222...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">205</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">55</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="彻底搞懂 Token"/></a><div class="content"><a class="title" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token">彻底搞懂 Token</a><time datetime="2026-05-25T20:00:00.000Z" title="发表于 2026-05-26 04:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析"><img src="https://c-ssl.duitang.com/uploads/blog/202604/16/pGSm4WWdTBDOWWY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Agent 沙箱深度解析"/></a><div class="content"><a class="title" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析">AI Agent 沙箱深度解析</a><time datetime="2026-05-25T19:30:00.000Z" title="发表于 2026-05-26 03:30:00">2026-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const parseViewBox = viewBox => {
+    if (!viewBox) return null
+    const parts = viewBox.trim().split(/[\s,]+/).map(n => Number(n))
+    if (parts.length !== 4 || parts.some(n => Number.isNaN(n))) return null
+    return parts
+  }
+
+  const getSvgViewBox = svg => {
+    const attr = parseViewBox(svg.getAttribute('viewBox'))
+    if (attr) return attr
+
+    // Fallback: use bbox to build a viewBox
+    try {
+      const bbox = svg.getBBox()
+      if (bbox && bbox.width && bbox.height) return [bbox.x, bbox.y, bbox.width, bbox.height]
+    } catch (e) {
+      // getBBox may fail on some edge cases; ignore
+    }
+
+    const w = Number(svg.getAttribute('width')) || 0
+    const h = Number(svg.getAttribute('height')) || 0
+    if (w > 0 && h > 0) return [0, 0, w, h]
+    return [0, 0, 100, 100]
+  }
+
+  const setSvgViewBox = (svg, vb) => {
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`)
+  }
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+
+  const openSvgInNewTab = ({ source, initViewBox }) => {
+    const getClonedSvg = () => {
+      if (typeof source === 'string') {
+        const template = document.createElement('template')
+        template.innerHTML = source.trim()
+        const svg = template.content.querySelector('svg')
+        return svg ? svg.cloneNode(true) : null
+      }
+      if (source && typeof source.cloneNode === 'function') {
+        return source.cloneNode(true)
+      }
+      return null
+    }
+
+    const clone = getClonedSvg()
+    if (!clone) return
+    if (initViewBox && initViewBox.length === 4) {
+      clone.setAttribute('viewBox', initViewBox.join(' '))
+    }
+    if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    if (!clone.getAttribute('xmlns:xlink') && clone.outerHTML.includes('xlink:')) {
+      clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+    }
+    // inject background to match current theme
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+    const bg = getComputedStyle(document.body).backgroundColor || (isDark ? '#1e1e1e' : '#ffffff')
+    if (!clone.style.background) clone.style.background = bg
+
+    const serializer = new XMLSerializer()
+    const svgSource = serializer.serializeToString(clone)
+    const htmlSource = `<!doctype html><html><head><meta charset="utf-8" />
+      <style>
+        html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
+        svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+      </style>
+      </head><body>${svgSource}</body></html>`
+    const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank', 'noopener')
+    setTimeout(() => URL.revokeObjectURL(url), 30000)
+  }
+
+  const attachMermaidViewerButton = wrap => {
+    let btn = wrap.querySelector('.mermaid-open-btn')
+    if (!btn) {
+      btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'mermaid-open-btn'
+      wrap.appendChild(btn)
+    }
+
+    btn.innerHTML = '<i class="fa fa-search fa-fw" aria-hidden="true"></i>'
+
+    if (!btn.__mermaidViewerBound) {
+      btn.addEventListener('click', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        const svg = wrap.__mermaidOriginalSvg || wrap.querySelector('svg')
+        if (!svg) return
+        const initViewBox = wrap.__mermaidInitViewBox
+        if (typeof svg === 'string') {
+          openSvgInNewTab({ source: svg, initViewBox })
+          return
+        }
+        openSvgInNewTab({ source: svg, initViewBox })
+      })
+      btn.__mermaidViewerBound = true
+    }
+  }
+
+  // Zoom around a point (px, py) in the SVG viewport (in viewBox coordinates)
+  const zoomAtPoint = (vb, factor, px, py) => {
+    const w = vb[2] * factor
+    const h = vb[3] * factor
+    const nx = px - (px - vb[0]) * factor
+    const ny = py - (py - vb[1]) * factor
+    return [nx, ny, w, h]
+  }
+
+  const initMermaidGestures = wrap => {
+    const svg = wrap.querySelector('svg')
+    if (!svg) return
+
+    // Ensure viewBox exists so gestures always work
+    const initVb = getSvgViewBox(svg)
+    wrap.__mermaidInitViewBox = initVb
+    wrap.__mermaidCurViewBox = initVb.slice()
+    setSvgViewBox(svg, initVb)
+
+    // Avoid binding multiple times on themeChange/pjax
+    if (wrap.__mermaidGestureBound) return
+    wrap.__mermaidGestureBound = true
+
+    // Helper: map client (viewport) coordinate -> viewBox coordinate
+    const clientToViewBox = (clientX, clientY) => {
+      const rect = svg.getBoundingClientRect()
+      const vb = wrap.__mermaidCurViewBox || getSvgViewBox(svg)
+      const x = vb[0] + (clientX - rect.left) * (vb[2] / rect.width)
+      const y = vb[1] + (clientY - rect.top) * (vb[3] / rect.height)
+      return { x, y, rect, vb }
+    }
+
+    const state = {
+      pointers: new Map(),
+      startVb: null,
+      startDist: 0,
+      startCenter: null
+    }
+
+    const clampVb = vb => {
+      const init = wrap.__mermaidInitViewBox || vb
+      const minW = init[2] * 0.1
+      const maxW = init[2] * 10
+      const minH = init[3] * 0.1
+      const maxH = init[3] * 10
+      vb[2] = clamp(vb[2], minW, maxW)
+      vb[3] = clamp(vb[3], minH, maxH)
+      return vb
+    }
+
+    const setCurVb = vb => {
+      vb = clampVb(vb)
+      wrap.__mermaidCurViewBox = vb
+      setSvgViewBox(svg, vb)
+    }
+
+    const onPointerDown = e => {
+      // Allow only primary button for mouse
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      svg.setPointerCapture(e.pointerId)
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      if (state.pointers.size === 1) {
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      } else if (state.pointers.size === 2) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        state.startDist = Math.hypot(dx, dy)
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        state.startCenter = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 }
+      }
+    }
+
+    const onPointerMove = e => {
+      if (!state.pointers.has(e.pointerId)) return
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      // Pan with 1 pointer
+      if (state.pointers.size === 1 && state.startVb) {
+        const p = [...state.pointers.values()][0]
+        const prev = { x: e.clientX - e.movementX, y: e.clientY - e.movementY }
+        // movementX/Y unreliable on touch, compute from stored last position
+        const last = wrap.__mermaidLastSinglePointer || p
+        const dxClient = p.x - last.x
+        const dyClient = p.y - last.y
+        wrap.__mermaidLastSinglePointer = p
+
+        const { rect } = clientToViewBox(p.x, p.y)
+        const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        const dx = dxClient * (vb[2] / rect.width)
+        const dy = dyClient * (vb[3] / rect.height)
+        setCurVb([vb[0] - dx, vb[1] - dy, vb[2], vb[3]])
+        return
+      }
+
+      // Pinch zoom with 2 pointers
+      if (state.pointers.size === 2 && state.startVb && state.startDist > 0) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        const dist = Math.hypot(dx, dy)
+        if (!dist) return
+        const factor = state.startDist / dist // dist bigger => zoom in (viewBox smaller)
+
+        const cx = (pts[0].x + pts[1].x) / 2
+        const cy = (pts[0].y + pts[1].y) / 2
+        const centerClient = { x: cx, y: cy }
+
+        const pxy = clientToViewBox(centerClient.x, centerClient.y)
+        const cpx = pxy.x
+        const cpy = pxy.y
+
+        const vb = zoomAtPoint(state.startVb, factor, cpx, cpy)
+        setCurVb(vb)
+      }
+    }
+
+    const onPointerUpOrCancel = e => {
+      state.pointers.delete(e.pointerId)
+      if (state.pointers.size === 0) {
+        state.startVb = null
+        state.startDist = 0
+        state.startCenter = null
+        wrap.__mermaidLastSinglePointer = null
+      } else if (state.pointers.size === 1) {
+        // reset single pointer baseline to avoid jump
+        wrap.__mermaidLastSinglePointer = [...state.pointers.values()][0]
+      }
+    }
+
+    // Wheel zoom (mouse/trackpad)
+    const onWheel = e => {
+      // ctrlKey on mac trackpad pinch; we treat both as zoom
+      e.preventDefault()
+      const delta = e.deltaY
+      const zoomFactor = delta > 0 ? 1.1 : 0.9
+      const { x, y } = clientToViewBox(e.clientX, e.clientY)
+      const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      setCurVb(zoomAtPoint(vb, zoomFactor, x, y))
+    }
+
+    const onDblClick = () => {
+      const init = wrap.__mermaidInitViewBox
+      if (!init) return
+      wrap.__mermaidCurViewBox = init.slice()
+      setSvgViewBox(svg, init)
+    }
+
+    svg.addEventListener('pointerdown', onPointerDown)
+    svg.addEventListener('pointermove', onPointerMove)
+    svg.addEventListener('pointerup', onPointerUpOrCancel)
+    svg.addEventListener('pointercancel', onPointerUpOrCancel)
+    svg.addEventListener('wheel', onWheel, { passive: false })
+    svg.addEventListener('dblclick', onDblClick)
+  }
+
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+
+      // Clear old render (themeChange/pjax will rerun)
+      const oldSvg = item.querySelector('svg')
+      if (oldSvg) oldSvg.remove()
+      item.__mermaidGestureBound = false
+
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+        if (true) initMermaidGestures(item)
+        item.__mermaidOriginalSvg = svg
+        if (true) attachMermaidViewerButton(item)
+      }
+
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
   const abcjsInit = () => {
     const abcjsFn = () => {
       setTimeout(() => {

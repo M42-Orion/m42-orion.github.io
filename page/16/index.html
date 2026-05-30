@@ -141,7 +141,7 @@
   isHighlightShrink: false,
   isToc: false,
   pageType: 'home'
-}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(/img/header-bg.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a></span><div id="menus"></div></nav><div id="site-info"><h1 id="site-title">念念不忘，必有回响</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/2022/10/16/python%E7%9A%84%E5%9D%91%E8%AE%B0%E5%BD%95/" title="python的坑记录"><img class="post-bg" src="https://liu__tao.gitee.io/drawing-bed/blog_img/python的坑记录/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python的坑记录"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/10/16/python%E7%9A%84%E5%9D%91%E8%AE%B0%E5%BD%95/" title="python的坑记录">python的坑记录</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-10-16T12:17:04.000Z" title="发表于 2022-10-16 20:17:04">2022-10-16</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="content">在阅读别人博客的时候看到别人记录了一个python的坑，我觉得可能是一个今后会发生的一个错误，因此记录下来。直接上代码： 1234567def f(a, L=[]):    L.append(a)    return Lprint(f(1))print(f(2))print(f(3))  打印出来的结果是: 123[1][1, 2][1, 2, 3]  这是因为, 作为默认参数, python在启动时就会将变量 L 建立, 我们在函数 f 内对 L 处理就会导致后来调用的 L 已经是修改过的 L 了, 我们可以通过打印 L 的内存地址来验证 123456789def f(a, L=[]):    print(id(L))    L.append(a)    print(id(L))    return Lprint(f(1))print(f(2))print(f(3))  结果是 12345678945132896004513289600[1]45132896004513289600[1, 2]45132896004513289600[1, 2, 3]   简单来说，被声明的默认...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/10/16/%E7%AE%97%E6%B3%95-%E5%88%86%E7%B1%BB/" title="分类"><img class="post-bg" src="http://liu__tao.gitee.io/drawing-bed/blog_img/分类/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="分类"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/10/16/%E7%AE%97%E6%B3%95-%E5%88%86%E7%B1%BB/" title="分类">分类</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-10-16T12:02:21.000Z" title="发表于 2022-10-16 20:02:21">2022-10-16</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="content">常见的机器学习分类有，支持向量机、决策树、KNN、朴素贝叶斯，以前在学习机器学习的时候就简单学过，现在需要用在图像分类上了。一时间蒙了，忘记怎么图像转以前的数据了，现在在GitHub上找到一个不错的例子，特此记录一下。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126import osimport cv2import numpy as npfrom sklearn.model_selection import train_test_splitfrom sklearn.metrics import ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2022/10/07/%E6%9C%89%E6%84%9F-%E5%B0%8F%E5%BF%83%E8%9E%83%E8%9F%B9/" title="小心螃蟹"><img class="post-bg" src="https://liu__tao.gitee.io/drawing-bed/blog_img/小心螃蟹/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小心螃蟹"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/10/07/%E6%9C%89%E6%84%9F-%E5%B0%8F%E5%BF%83%E8%9E%83%E8%9F%B9/" title="小心螃蟹">小心螃蟹</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-10-07T15:44:13.000Z" title="发表于 2022-10-07 23:44:13">2022-10-07</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%80%9D%E8%80%83/">思考</a></span></div><div class="content">很多人都有一个常识：当我们往一个不高的容器中放进一只螃蟹时，它总会努力想尽办法逃出来。但如果放进去的是很多只螃蟹时，结果通常就是你拉我，我拽他，叠罗汉，最终谁也出不来。而在螃蟹群体中出现的这个特殊现象，竟然在人类群体中也同样适用。 这种现象我们称之为 Crab Mentality 螃蟹心理，那么螃蟹心理到底是怎么回事呢？把螃蟹放在桶里的时候，他们不会帮助对方逃脱。实际上，螃蟹群会阻止任何想单独逃脱的螃蟹。当一只螃蟹爬到桶的顶部时，其他的螃蟹会把他拽回来。这好像在说：“如果我要死了，那你也要一起死。”尽管螃蟹是否真的会这么做还有待探讨。但这种思维方式被称为“螃蟹心理”。它同时也可以应用到我们在生活中的表现。 比如，有一天，在一群不太关心学习的人中，有一个人决定要拿个好成绩。这个小组的其他成员不仅不会支持她，反而会嘲笑她，或者试图分散她在学习上的注意力。他们并不希望她成功，宁愿让她陷在跟他们一样的处境中。就好像在说，“如果我不能得到这个，那你也不能。”  这些人的心理就叫做“螃蟹心理”。 </div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/10/06/go-Gin%E6%A1%86%E6%9E%B6%E6%95%B0%E6%8D%AE%E6%B8%B2%E6%9F%93/" title="Gin框架数据渲染"><img class="post-bg" src="https://liu__tao.gitee.io/drawing-bed/blog_img/Gin框架数据渲染/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Gin框架数据渲染"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/10/06/go-Gin%E6%A1%86%E6%9E%B6%E6%95%B0%E6%8D%AE%E6%B8%B2%E6%9F%93/" title="Gin框架数据渲染">Gin框架数据渲染</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-10-06T09:01:36.000Z" title="发表于 2022-10-06 17:01:36">2022-10-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="content">json渲染 12345678910111213141516171819202122func main() &#123;	r := gin.Default()	// gin.H 是map[string]interface&#123;&#125;的缩写	r.GET(&quot;/someJSON&quot;, func(c *gin.Context) &#123;		// 方式一：自己拼接JSON		c.JSON(http.StatusOK, gin.H&#123;&quot;message&quot;: &quot;Hello world!&quot;&#125;)	&#125;)	r.GET(&quot;/moreJSON&quot;, func(c *gin.Context) &#123;		// 方法二：使用结构体		var msg struct &#123;			Name    string `json:&quot;user&quot;`			Message string			Age     int		&#125;		msg.Name = &quot;小王子&quot;	...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2022/10/06/go-%E7%AE%80%E5%8D%95web/" title="go语言简单web"><img class="post-bg" src="https://liu__tao.gitee.io/drawing-bed/blog_img/go语言简单web/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="go语言简单web"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/10/06/go-%E7%AE%80%E5%8D%95web/" title="go语言简单web">go语言简单web</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-10-06T08:40:26.000Z" title="发表于 2022-10-06 16:40:26">2022-10-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="content">vscode 插件安装由于我个人使用的是vscode进行的操作，所以需要安装一下相应的插件，在插件安装好之后会自动提示安装依赖，国内源不大行，需要进行以下操作。 12go env -w GO111MODULE=ongo env -w GOPROXY=https://goproxy.cn  不一定即刻生效，如果失败可以考虑重启。 基础go语言与其他语言一样，可以实现原生的web服务，代码如下： 123456789101112131415161718192021package mainimport (	&quot;fmt&quot;	&quot;net/http&quot;)// http.ResponseWriter：代表响应，传递到前端的// *http.Request：表示请求，从前端传递过来的func sayHello(w http.ResponseWriter, r *http.Request) &#123;	_, _ = fmt.Fprintln(w, &quot;hello world!&quot;);&#125;func main() &#123;	http.Hand...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/09/25/python%E8%BF%9E%E6%8E%A5%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="python连接远程服务器"><img class="post-bg" src="http://liu__tao.gitee.io/drawing-bed/blog_img/python连接远程服务器/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python连接远程服务器"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/09/25/python%E8%BF%9E%E6%8E%A5%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="python连接远程服务器">python连接远程服务器</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-25T01:07:29.000Z" title="发表于 2022-09-25 09:07:29">2022-09-25</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/python/">python</a></span></div><div class="content">python连接远程服务器有很多实现方法，但是在我使用的时候却要要求做成服务的形式，连接信息用后端返回的形式。实现方式： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091import paramikoimport timefrom apscheduler.schedulers.background import BackgroundSchedulerclass ssh_tunnel(object):    def survival_detection(self):        interval_time = int(time.time()) - self.start_time        if interval_time &gt; 10800:  # No operation for...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2022/09/07/%E5%B7%A5%E5%85%B7-opencv%E8%AF%86%E5%88%AB%E9%A2%9C%E8%89%B2%E4%B8%8E%E7%BA%BF%E6%AE%B5/" title="opencv识别颜色与线段"><img class="post-bg" src="http://liu__tao.gitee.io/drawing-bed/blog_img/opencv识别颜色与线段/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="opencv识别颜色与线段"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/09/07/%E5%B7%A5%E5%85%B7-opencv%E8%AF%86%E5%88%AB%E9%A2%9C%E8%89%B2%E4%B8%8E%E7%BA%BF%E6%AE%B5/" title="opencv识别颜色与线段">opencv识别颜色与线段</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-06T16:27:43.000Z" title="发表于 2022-09-07 00:27:43">2022-09-07</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/opencv/">opencv</a></span></div><div class="content">在使用opencv的过程中，实际情况常常需要对线段、圆形、颜色等条件的判断，但是网上多给出一些图像处理的数据，没有给出我需要的判定结果。在尝试后记录了两端代码供之后使用 对于线段的判断输出结果为线段长度 1234567891011121314151617img = cv2.imread(&quot;data/img/file.jpeg&quot;)img=img[0:int(img.shape[0]*0.9),0:int(img.shape[1]*0.9)]gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)edges = cv2.Canny(gray, 50, 150, apertureSize=3)lines = cv2.HoughLinesP(edges,1,np.pi/360,100,minLineLength=int(img.shape[1]*0.7),maxLineGap=10)def draw_line(img,lines):    # 绘制直线    for line_points in lines:        lenth ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/09/06/%E8%AF%AD%E6%B3%95-%E4%B8%8D%E5%B8%B8%E8%A7%81%E7%9A%84python%E7%B1%BB%E5%9E%8B%E6%A0%A1%E9%AA%8C/" title="不常见的python类型校验"><img class="post-bg" src="http://liu__tao.gitee.io/drawing-bed/blog_img/不常见的python类型校验/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="不常见的python类型校验"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/09/06/%E8%AF%AD%E6%B3%95-%E4%B8%8D%E5%B8%B8%E8%A7%81%E7%9A%84python%E7%B1%BB%E5%9E%8B%E6%A0%A1%E9%AA%8C/" title="不常见的python类型校验">不常见的python类型校验</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-06T06:57:44.000Z" title="发表于 2022-09-06 14:57:44">2022-09-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/python/">python</a></span></div><div class="content">以前写过关于python类型校验的相关总结，但是不怎么全面，有些不常见的特殊情况并未被记录。 任意类型any若声明某函数时指定函数传入参数的数据类型为any，则调用该函数时该参数的参数类型可以为任意类型。 1234def demo(name: any, age: &#x27;int &gt; 0&#x27; = 20) -&gt; str:  # -&gt;str 表示该函数的返回值是str类型的    print(name, type(name))    print(age, type(age))    return &quot;hello world&quot;  类型别名1234567# 给List[float]类型取个别名为VectorVector = List[float]def scale(scalar: float, vector: Vector) -&gt; Vector:    return [scalar * num for num in vector]new_vector = scale(2.0, [1.0, -4.2, 5.4])  内容与长度限制在需要限...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2022/09/04/go-%E6%93%8D%E4%BD%9Ctxt%E6%96%87%E4%BB%B6/" title="go语言操作txt文件"><img class="post-bg" src="http://liu__tao.gitee.io/drawing-bed/blog_img/go语言操作txt文件/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="go语言操作txt文件"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/09/04/go-%E6%93%8D%E4%BD%9Ctxt%E6%96%87%E4%BB%B6/" title="go语言操作txt文件">go语言操作txt文件</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-04T15:38:51.000Z" title="发表于 2022-09-04 23:38:51">2022-09-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/go/">go</a></span></div><div class="content">打开txt二进制打开： 123456789101112131415161718192021222324package mainimport (	&quot;fmt&quot;	&quot;os&quot;)func main() &#123;	i, v := os.Open(&quot;test.txt&quot;) //打开文件	if v != nil &#123;                                                                      //如果报错了进入if		fmt.Println(&quot;打开文件失败&quot;, v)		return	&#125;	defer i.Close()           //最后关闭文件	var k = make([]byte, 128) //创建一个容量为128字节的切片	for &#123;		h, l := i.Read(k)                //开始读取，把读取的数据放入切片k中，h是读取了多少字节，l是报错信息		fmt.Println(strin...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/09/04/%E5%B7%A5%E5%85%B7-Nginx%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" title="Nginx基础概念"><img class="post-bg" src="http://liu__tao.gitee.io/drawing-bed/blog_img/Nginx基础概念/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Nginx基础概念"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/09/04/%E5%B7%A5%E5%85%B7-Nginx%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" title="Nginx基础概念">Nginx基础概念</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-04T14:57:30.000Z" title="发表于 2022-09-04 22:57:30">2022-09-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%9D%82%E8%B0%88/">杂谈</a></span></div><div class="content">在操作web的时候常常会遇到一个关键词叫做Nginx代理，或者说在提到负载均衡的时候也会提到这个关键词，但是很久都没有去关注这个是啥 什么是NginxNginx是一款轻量级的Web服务器/反向代理服务器及电子邮件（IMAP/POP3）代理服务器。Nginx本身是一个web服务器也可以用来做负载均衡及反向代理使用，目前使用最多的就是负载均衡。其特点是占有内存少，并发能力强。nginx的并发能力在同类型的网页服务器中表现较好，中国大陆使用nginx的网站有：百度、京东、新浪、网易、腾讯、淘宝等。 Nginx是由伊戈尔·赛索耶夫为俄罗斯访问量第二的Rambler.ru站点（俄文：Рамблер）开发的，第一个公开版本0.1.0发布于2004年10月4日。2011年6月1日，nginx 1.0.4发布。在全球活跃的网站中有12.18%的使用比率，大约为2220万个网站。Nginx 是一个安装非常的简单、配置文件非常简洁（还能够支持perl语法）、Bug非常少的服务。Nginx 启动特别容易，并且几乎可以做到7*24不间断运行，即使运行数个月也不需要重新启动。你还能够不间断服务的情况下进行...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/15/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/#content-inner">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/#content-inner">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/#content-inner">21</a><a class="extend next" rel="next" href="/page/17/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">205</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">55</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="彻底搞懂 Token"/></a><div class="content"><a class="title" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token">彻底搞懂 Token</a><time datetime="2026-05-25T20:00:00.000Z" title="发表于 2026-05-26 04:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析"><img src="https://c-ssl.duitang.com/uploads/blog/202604/16/pGSm4WWdTBDOWWY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Agent 沙箱深度解析"/></a><div class="content"><a class="title" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析">AI Agent 沙箱深度解析</a><time datetime="2026-05-25T19:30:00.000Z" title="发表于 2026-05-26 03:30:00">2026-05-26</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+}</script><style>body{background-image:radial-gradient(circle,#c8c8c8 0.8px,transparent 0.8px);background-size:24px 24px}</style><meta name="generator" content="Hexo 8.1.2"></head><body><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(/img/header-bg.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a></span><div id="menus"></div></nav><div id="site-info"><h1 id="site-title">念念不忘，必有回响</h1><div id="site_social_icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/2022/10/16/python%E7%9A%84%E5%9D%91%E8%AE%B0%E5%BD%95/" title="python的坑记录"><img class="post-bg" src="https://liu__tao.gitee.io/drawing-bed/blog_img/python的坑记录/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python的坑记录"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/10/16/python%E7%9A%84%E5%9D%91%E8%AE%B0%E5%BD%95/" title="python的坑记录">python的坑记录</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-10-16T12:17:04.000Z" title="发表于 2022-10-16 20:17:04">2022-10-16</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="content">在阅读别人博客的时候看到别人记录了一个python的坑，我觉得可能是一个今后会发生的一个错误，因此记录下来。直接上代码： 1234567def f(a, L=[]):    L.append(a)    return Lprint(f(1))print(f(2))print(f(3))  打印出来的结果是: 123[1][1, 2][1, 2, 3]  这是因为, 作为默认参数, python在启动时就会将变量 L 建立, 我们在函数 f 内对 L 处理就会导致后来调用的 L 已经是修改过的 L 了, 我们可以通过打印 L 的内存地址来验证 123456789def f(a, L=[]):    print(id(L))    L.append(a)    print(id(L))    return Lprint(f(1))print(f(2))print(f(3))  结果是 12345678945132896004513289600[1]45132896004513289600[1, 2]45132896004513289600[1, 2, 3]   简单来说，被声明的默认...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/10/16/%E7%AE%97%E6%B3%95-%E5%88%86%E7%B1%BB/" title="分类"><img class="post-bg" src="http://liu__tao.gitee.io/drawing-bed/blog_img/分类/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="分类"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/10/16/%E7%AE%97%E6%B3%95-%E5%88%86%E7%B1%BB/" title="分类">分类</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-10-16T12:02:21.000Z" title="发表于 2022-10-16 20:02:21">2022-10-16</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="content">常见的机器学习分类有，支持向量机、决策树、KNN、朴素贝叶斯，以前在学习机器学习的时候就简单学过，现在需要用在图像分类上了。一时间蒙了，忘记怎么图像转以前的数据了，现在在GitHub上找到一个不错的例子，特此记录一下。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126import osimport cv2import numpy as npfrom sklearn.model_selection import train_test_splitfrom sklearn.metrics import ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2022/10/07/%E6%9C%89%E6%84%9F-%E5%B0%8F%E5%BF%83%E8%9E%83%E8%9F%B9/" title="小心螃蟹"><img class="post-bg" src="https://liu__tao.gitee.io/drawing-bed/blog_img/小心螃蟹/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="小心螃蟹"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/10/07/%E6%9C%89%E6%84%9F-%E5%B0%8F%E5%BF%83%E8%9E%83%E8%9F%B9/" title="小心螃蟹">小心螃蟹</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-10-07T15:44:13.000Z" title="发表于 2022-10-07 23:44:13">2022-10-07</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%80%9D%E8%80%83/">思考</a></span></div><div class="content">很多人都有一个常识：当我们往一个不高的容器中放进一只螃蟹时，它总会努力想尽办法逃出来。但如果放进去的是很多只螃蟹时，结果通常就是你拉我，我拽他，叠罗汉，最终谁也出不来。而在螃蟹群体中出现的这个特殊现象，竟然在人类群体中也同样适用。 这种现象我们称之为 Crab Mentality 螃蟹心理，那么螃蟹心理到底是怎么回事呢？把螃蟹放在桶里的时候，他们不会帮助对方逃脱。实际上，螃蟹群会阻止任何想单独逃脱的螃蟹。当一只螃蟹爬到桶的顶部时，其他的螃蟹会把他拽回来。这好像在说：“如果我要死了，那你也要一起死。”尽管螃蟹是否真的会这么做还有待探讨。但这种思维方式被称为“螃蟹心理”。它同时也可以应用到我们在生活中的表现。 比如，有一天，在一群不太关心学习的人中，有一个人决定要拿个好成绩。这个小组的其他成员不仅不会支持她，反而会嘲笑她，或者试图分散她在学习上的注意力。他们并不希望她成功，宁愿让她陷在跟他们一样的处境中。就好像在说，“如果我不能得到这个，那你也不能。”  这些人的心理就叫做“螃蟹心理”。 </div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/10/06/go-Gin%E6%A1%86%E6%9E%B6%E6%95%B0%E6%8D%AE%E6%B8%B2%E6%9F%93/" title="Gin框架数据渲染"><img class="post-bg" src="https://liu__tao.gitee.io/drawing-bed/blog_img/Gin框架数据渲染/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Gin框架数据渲染"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/10/06/go-Gin%E6%A1%86%E6%9E%B6%E6%95%B0%E6%8D%AE%E6%B8%B2%E6%9F%93/" title="Gin框架数据渲染">Gin框架数据渲染</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-10-06T09:01:36.000Z" title="发表于 2022-10-06 17:01:36">2022-10-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="content">json渲染 12345678910111213141516171819202122func main() &#123;	r := gin.Default()	// gin.H 是map[string]interface&#123;&#125;的缩写	r.GET(&quot;/someJSON&quot;, func(c *gin.Context) &#123;		// 方式一：自己拼接JSON		c.JSON(http.StatusOK, gin.H&#123;&quot;message&quot;: &quot;Hello world!&quot;&#125;)	&#125;)	r.GET(&quot;/moreJSON&quot;, func(c *gin.Context) &#123;		// 方法二：使用结构体		var msg struct &#123;			Name    string `json:&quot;user&quot;`			Message string			Age     int		&#125;		msg.Name = &quot;小王子&quot;	...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2022/10/06/go-%E7%AE%80%E5%8D%95web/" title="go语言简单web"><img class="post-bg" src="https://liu__tao.gitee.io/drawing-bed/blog_img/go语言简单web/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="go语言简单web"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/10/06/go-%E7%AE%80%E5%8D%95web/" title="go语言简单web">go语言简单web</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-10-06T08:40:26.000Z" title="发表于 2022-10-06 16:40:26">2022-10-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="content">vscode 插件安装由于我个人使用的是vscode进行的操作，所以需要安装一下相应的插件，在插件安装好之后会自动提示安装依赖，国内源不大行，需要进行以下操作。 12go env -w GO111MODULE=ongo env -w GOPROXY=https://goproxy.cn  不一定即刻生效，如果失败可以考虑重启。 基础go语言与其他语言一样，可以实现原生的web服务，代码如下： 123456789101112131415161718192021package mainimport (	&quot;fmt&quot;	&quot;net/http&quot;)// http.ResponseWriter：代表响应，传递到前端的// *http.Request：表示请求，从前端传递过来的func sayHello(w http.ResponseWriter, r *http.Request) &#123;	_, _ = fmt.Fprintln(w, &quot;hello world!&quot;);&#125;func main() &#123;	http.Hand...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/09/25/python%E8%BF%9E%E6%8E%A5%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="python连接远程服务器"><img class="post-bg" src="http://liu__tao.gitee.io/drawing-bed/blog_img/python连接远程服务器/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="python连接远程服务器"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/09/25/python%E8%BF%9E%E6%8E%A5%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="python连接远程服务器">python连接远程服务器</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-25T01:07:29.000Z" title="发表于 2022-09-25 09:07:29">2022-09-25</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/python/">python</a></span></div><div class="content">python连接远程服务器有很多实现方法，但是在我使用的时候却要要求做成服务的形式，连接信息用后端返回的形式。实现方式： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091import paramikoimport timefrom apscheduler.schedulers.background import BackgroundSchedulerclass ssh_tunnel(object):    def survival_detection(self):        interval_time = int(time.time()) - self.start_time        if interval_time &gt; 10800:  # No operation for...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2022/09/07/%E5%B7%A5%E5%85%B7-opencv%E8%AF%86%E5%88%AB%E9%A2%9C%E8%89%B2%E4%B8%8E%E7%BA%BF%E6%AE%B5/" title="opencv识别颜色与线段"><img class="post-bg" src="http://liu__tao.gitee.io/drawing-bed/blog_img/opencv识别颜色与线段/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="opencv识别颜色与线段"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/09/07/%E5%B7%A5%E5%85%B7-opencv%E8%AF%86%E5%88%AB%E9%A2%9C%E8%89%B2%E4%B8%8E%E7%BA%BF%E6%AE%B5/" title="opencv识别颜色与线段">opencv识别颜色与线段</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-06T16:27:43.000Z" title="发表于 2022-09-07 00:27:43">2022-09-07</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/opencv/">opencv</a></span></div><div class="content">在使用opencv的过程中，实际情况常常需要对线段、圆形、颜色等条件的判断，但是网上多给出一些图像处理的数据，没有给出我需要的判定结果。在尝试后记录了两端代码供之后使用 对于线段的判断输出结果为线段长度 1234567891011121314151617img = cv2.imread(&quot;data/img/file.jpeg&quot;)img=img[0:int(img.shape[0]*0.9),0:int(img.shape[1]*0.9)]gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)edges = cv2.Canny(gray, 50, 150, apertureSize=3)lines = cv2.HoughLinesP(edges,1,np.pi/360,100,minLineLength=int(img.shape[1]*0.7),maxLineGap=10)def draw_line(img,lines):    # 绘制直线    for line_points in lines:        lenth ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/09/06/%E8%AF%AD%E6%B3%95-%E4%B8%8D%E5%B8%B8%E8%A7%81%E7%9A%84python%E7%B1%BB%E5%9E%8B%E6%A0%A1%E9%AA%8C/" title="不常见的python类型校验"><img class="post-bg" src="http://liu__tao.gitee.io/drawing-bed/blog_img/不常见的python类型校验/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="不常见的python类型校验"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/09/06/%E8%AF%AD%E6%B3%95-%E4%B8%8D%E5%B8%B8%E8%A7%81%E7%9A%84python%E7%B1%BB%E5%9E%8B%E6%A0%A1%E9%AA%8C/" title="不常见的python类型校验">不常见的python类型校验</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-06T06:57:44.000Z" title="发表于 2022-09-06 14:57:44">2022-09-06</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/python/">python</a></span></div><div class="content">以前写过关于python类型校验的相关总结，但是不怎么全面，有些不常见的特殊情况并未被记录。 任意类型any若声明某函数时指定函数传入参数的数据类型为any，则调用该函数时该参数的参数类型可以为任意类型。 1234def demo(name: any, age: &#x27;int &gt; 0&#x27; = 20) -&gt; str:  # -&gt;str 表示该函数的返回值是str类型的    print(name, type(name))    print(age, type(age))    return &quot;hello world&quot;  类型别名1234567# 给List[float]类型取个别名为VectorVector = List[float]def scale(scalar: float, vector: Vector) -&gt; Vector:    return [scalar * num for num in vector]new_vector = scale(2.0, [1.0, -4.2, 5.4])  内容与长度限制在需要限...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/2022/09/04/go-%E6%93%8D%E4%BD%9Ctxt%E6%96%87%E4%BB%B6/" title="go语言操作txt文件"><img class="post-bg" src="http://liu__tao.gitee.io/drawing-bed/blog_img/go语言操作txt文件/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="go语言操作txt文件"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/09/04/go-%E6%93%8D%E4%BD%9Ctxt%E6%96%87%E4%BB%B6/" title="go语言操作txt文件">go语言操作txt文件</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-04T15:38:51.000Z" title="发表于 2022-09-04 23:38:51">2022-09-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%AD%A6%E4%B9%A0/go/">go</a></span></div><div class="content">打开txt二进制打开： 123456789101112131415161718192021222324package mainimport (	&quot;fmt&quot;	&quot;os&quot;)func main() &#123;	i, v := os.Open(&quot;test.txt&quot;) //打开文件	if v != nil &#123;                                                                      //如果报错了进入if		fmt.Println(&quot;打开文件失败&quot;, v)		return	&#125;	defer i.Close()           //最后关闭文件	var k = make([]byte, 128) //创建一个容量为128字节的切片	for &#123;		h, l := i.Read(k)                //开始读取，把读取的数据放入切片k中，h是读取了多少字节，l是报错信息		fmt.Println(strin...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/2022/09/04/%E5%B7%A5%E5%85%B7-Nginx%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" title="Nginx基础概念"><img class="post-bg" src="http://liu__tao.gitee.io/drawing-bed/blog_img/Nginx基础概念/封面.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Nginx基础概念"></a></div><div class="recent-post-info"><a class="article-title" href="/2022/09/04/%E5%B7%A5%E5%85%B7-Nginx%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" title="Nginx基础概念">Nginx基础概念</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-09-04T14:57:30.000Z" title="发表于 2022-09-04 22:57:30">2022-09-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%9D%82%E8%B0%88/">杂谈</a></span></div><div class="content">在操作web的时候常常会遇到一个关键词叫做Nginx代理，或者说在提到负载均衡的时候也会提到这个关键词，但是很久都没有去关注这个是啥 什么是NginxNginx是一款轻量级的Web服务器/反向代理服务器及电子邮件（IMAP/POP3）代理服务器。Nginx本身是一个web服务器也可以用来做负载均衡及反向代理使用，目前使用最多的就是负载均衡。其特点是占有内存少，并发能力强。nginx的并发能力在同类型的网页服务器中表现较好，中国大陆使用nginx的网站有：百度、京东、新浪、网易、腾讯、淘宝等。 Nginx是由伊戈尔·赛索耶夫为俄罗斯访问量第二的Rambler.ru站点（俄文：Рамблер）开发的，第一个公开版本0.1.0发布于2004年10月4日。2011年6月1日，nginx 1.0.4发布。在全球活跃的网站中有12.18%的使用比率，大约为2220万个网站。Nginx 是一个安装非常的简单、配置文件非常简洁（还能够支持perl语法）、Bug非常少的服务。Nginx 启动特别容易，并且几乎可以做到7*24不间断运行，即使运行数个月也不需要重新启动。你还能够不间断服务的情况下进行...</div></div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/page/15/#content-inner"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/#content-inner">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/#content-inner">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/#content-inner">21</a><a class="extend next" rel="next" href="/page/17/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">205</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">55</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="彻底搞懂 Token"/></a><div class="content"><a class="title" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token">彻底搞懂 Token</a><time datetime="2026-05-25T20:00:00.000Z" title="发表于 2026-05-26 04:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析"><img src="https://c-ssl.duitang.com/uploads/blog/202604/16/pGSm4WWdTBDOWWY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Agent 沙箱深度解析"/></a><div class="content"><a class="title" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析">AI Agent 沙箱深度解析</a><time datetime="2026-05-25T19:30:00.000Z" title="发表于 2026-05-26 03:30:00">2026-05-26</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
             <a class="card-more-btn" href="/categories/" title="查看更多">
@@ -149,7 +149,7 @@
           </div>
           <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/LLM/"><span class="card-category-list-name">LLM</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Linux/"><span class="card-category-list-name">Linux</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Linux/%E8%BF%90%E7%BB%B4/"><span class="card-category-list-name">运维</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Python/"><span class="card-category-list-name">Python</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Python/%E6%95%B0%E6%8D%AE%E5%BA%93/"><span class="card-category-list-name">数据库</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/RAG/"><span class="card-category-list-name">RAG</span><span class="card-category-list-count">6</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/docker/"><span class="card-category-list-name">docker</span><span class="card-category-list-count">9</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/docker/GPU/"><span class="card-category-list-name">GPU</span><span class="card-category-list-count">1</span></a></li></ul></li>
-          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/AI-Agent/" style="font-size: 1.15em; color: rgb(123, 102, 71);">AI Agent</a><a href="/tags/%E6%B2%99%E7%AE%B1/" style="font-size: 1.15em; color: rgb(50, 167, 78);">沙箱</a><a href="/tags/%E5%AE%89%E5%85%A8/" style="font-size: 1.3em; color: rgb(101, 58, 50);">安全</a><a href="/tags/%E5%AE%B9%E5%99%A8/" style="font-size: 1.22em; color: rgb(50, 83, 182);">容器</a><a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" style="font-size: 1.22em; color: rgb(153, 58, 110);">虚拟化</a><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 1.19em; color: rgb(161, 123, 50);">数据库</a><a href="/tags/Elasticsearch/" style="font-size: 1.15em; color: rgb(141, 109, 94);">Elasticsearch</a><a href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" style="font-size: 1.15em; color: rgb(50, 134, 50);">搜索引擎</a><a href="/tags/VLLM/" style="font-size: 1.15em; color: rgb(193, 179, 144);">VLLM</a><a href="/tags/LLM/" style="font-size: 1.26em; color: rgb(50, 132, 50);">LLM</a><a href="/tags/FastAPI/" style="font-size: 1.15em; color: rgb(181, 50, 81);">FastAPI</a><a href="/tags/JWT/" style="font-size: 1.15em; color: rgb(60, 128, 187);">JWT</a><a href="/tags/%E8%AE%A4%E8%AF%81/" style="font-size: 1.19em; color: rgb(96, 185, 155);">认证</a><a href="/tags/%E9%95%BF%E6%96%87%E6%9C%AC/" style="font-size: 1.15em; color: rgb(144, 150, 50);">长文本</a><a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" style="font-size: 1.34em; color: rgb(61, 168, 108);">大模型</a><a href="/tags/%E8%AE%AD%E7%BB%83/" style="font-size: 1.15em; color: rgb(88, 109, 50);">训练</a><a href="/tags/%E5%BE%AE%E8%B0%83/" style="font-size: 1.15em; color: rgb(82, 69, 126);">微调</a><a href="/tags/Linux/" style="font-size: 1.3em; color: rgb(50, 103, 178);">Linux</a><a href="/tags/%E6%9D%82%E8%B0%88/" style="font-size: 1.41em; color: rgb(172, 154, 193);">杂谈</a><a href="/tags/%E7%BB%88%E7%AB%AF/" style="font-size: 1.15em; color: rgb(177, 156, 50);">终端</a><a href="/tags/vscode/" style="font-size: 1.19em; color: rgb(50, 50, 52);">vscode</a><a href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" style="font-size: 1.15em; color: rgb(138, 174, 55);">防火墙</a><a href="/tags/iptables/" style="font-size: 1.15em; color: rgb(67, 164, 50);">iptables</a><a href="/tags/ufw/" style="font-size: 1.15em; color: rgb(50, 57, 56);">ufw</a><a href="/tags/firewalld/" style="font-size: 1.15em; color: rgb(181, 50, 65);">firewalld</a><a href="/tags/nftables/" style="font-size: 1.15em; color: rgb(167, 161, 120);">nftables</a><a href="/tags/Netfilter/" style="font-size: 1.15em; color: rgb(90, 92, 91);">Netfilter</a><a href="/tags/%E5%8D%8F%E8%AE%AE/" style="font-size: 1.26em; color: rgb(137, 147, 50);">协议</a><a href="/tags/%E6%8E%88%E6%9D%83/" style="font-size: 1.15em; color: rgb(138, 82, 61);">授权</a><a href="/tags/OAuth/" style="font-size: 1.15em; color: rgb(50, 92, 50);">OAuth</a><a href="/tags/python/" style="font-size: 1.45em; color: rgb(198, 191, 50);">python</a><a href="/tags/RAG/" style="font-size: 1.3em; color: rgb(50, 128, 67);">RAG</a><a href="/tags/%E6%96%87%E6%9C%AC%E5%88%86%E5%9D%97/" style="font-size: 1.15em; color: rgb(50, 171, 50);">文本分块</a><a href="/tags/chonkie/" style="font-size: 1.15em; color: rgb(136, 115, 108);">chonkie</a><a href="/tags/MCP/" style="font-size: 1.15em; color: rgb(50, 50, 50);">MCP</a><a href="/tags/Agent/" style="font-size: 1.19em; color: rgb(165, 68, 53);">Agent</a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.19em; color: rgb(61, 189, 79);">架构</a><a href="/tags/%E5%90%91%E9%87%8F%E6%A8%A1%E5%9E%8B/" style="font-size: 1.15em; color: rgb(54, 144, 114);">向量模型</a><a href="/tags/%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA%E7%94%9F%E6%88%90/" style="font-size: 1.15em; color: rgb(79, 154, 50);">检索增强生成</a><a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 1.38em; color: rgb(50, 62, 55);">基础</a></div></div><div class="card-widget card-archives">
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/AI-Agent/" style="font-size: 1.15em; color: rgb(50, 95, 61);">AI Agent</a><a href="/tags/%E6%B2%99%E7%AE%B1/" style="font-size: 1.15em; color: rgb(67, 82, 152);">沙箱</a><a href="/tags/%E5%AE%89%E5%85%A8/" style="font-size: 1.3em; color: rgb(194, 52, 110);">安全</a><a href="/tags/%E5%AE%B9%E5%99%A8/" style="font-size: 1.22em; color: rgb(117, 50, 141);">容器</a><a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" style="font-size: 1.22em; color: rgb(180, 130, 177);">虚拟化</a><a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 1.19em; color: rgb(71, 184, 96);">数据库</a><a href="/tags/Elasticsearch/" style="font-size: 1.15em; color: rgb(104, 126, 54);">Elasticsearch</a><a href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" style="font-size: 1.15em; color: rgb(105, 102, 133);">搜索引擎</a><a href="/tags/VLLM/" style="font-size: 1.15em; color: rgb(91, 127, 50);">VLLM</a><a href="/tags/LLM/" style="font-size: 1.26em; color: rgb(117, 109, 50);">LLM</a><a href="/tags/FastAPI/" style="font-size: 1.15em; color: rgb(106, 186, 122);">FastAPI</a><a href="/tags/JWT/" style="font-size: 1.15em; color: rgb(142, 152, 162);">JWT</a><a href="/tags/%E8%AE%A4%E8%AF%81/" style="font-size: 1.19em; color: rgb(56, 50, 168);">认证</a><a href="/tags/%E9%95%BF%E6%96%87%E6%9C%AC/" style="font-size: 1.15em; color: rgb(92, 62, 144);">长文本</a><a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" style="font-size: 1.34em; color: rgb(66, 132, 62);">大模型</a><a href="/tags/%E8%AE%AD%E7%BB%83/" style="font-size: 1.15em; color: rgb(79, 191, 50);">训练</a><a href="/tags/%E5%BE%AE%E8%B0%83/" style="font-size: 1.15em; color: rgb(53, 50, 171);">微调</a><a href="/tags/Linux/" style="font-size: 1.3em; color: rgb(60, 103, 151);">Linux</a><a href="/tags/%E6%9D%82%E8%B0%88/" style="font-size: 1.41em; color: rgb(172, 110, 134);">杂谈</a><a href="/tags/%E7%BB%88%E7%AB%AF/" style="font-size: 1.15em; color: rgb(127, 101, 106);">终端</a><a href="/tags/vscode/" style="font-size: 1.19em; color: rgb(136, 50, 61);">vscode</a><a href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" style="font-size: 1.15em; color: rgb(108, 168, 195);">防火墙</a><a href="/tags/iptables/" style="font-size: 1.15em; color: rgb(189, 68, 79);">iptables</a><a href="/tags/ufw/" style="font-size: 1.15em; color: rgb(74, 50, 183);">ufw</a><a href="/tags/firewalld/" style="font-size: 1.15em; color: rgb(156, 50, 50);">firewalld</a><a href="/tags/nftables/" style="font-size: 1.15em; color: rgb(50, 50, 93);">nftables</a><a href="/tags/Netfilter/" style="font-size: 1.15em; color: rgb(50, 74, 56);">Netfilter</a><a href="/tags/%E5%8D%8F%E8%AE%AE/" style="font-size: 1.26em; color: rgb(140, 50, 50);">协议</a><a href="/tags/%E6%8E%88%E6%9D%83/" style="font-size: 1.15em; color: rgb(88, 100, 141);">授权</a><a href="/tags/OAuth/" style="font-size: 1.15em; color: rgb(182, 50, 50);">OAuth</a><a href="/tags/python/" style="font-size: 1.45em; color: rgb(88, 52, 81);">python</a><a href="/tags/RAG/" style="font-size: 1.3em; color: rgb(61, 58, 100);">RAG</a><a href="/tags/%E6%96%87%E6%9C%AC%E5%88%86%E5%9D%97/" style="font-size: 1.15em; color: rgb(95, 129, 50);">文本分块</a><a href="/tags/chonkie/" style="font-size: 1.15em; color: rgb(51, 50, 171);">chonkie</a><a href="/tags/MCP/" style="font-size: 1.15em; color: rgb(86, 50, 50);">MCP</a><a href="/tags/Agent/" style="font-size: 1.19em; color: rgb(55, 112, 115);">Agent</a><a href="/tags/%E6%9E%B6%E6%9E%84/" style="font-size: 1.19em; color: rgb(130, 98, 110);">架构</a><a href="/tags/%E5%90%91%E9%87%8F%E6%A8%A1%E5%9E%8B/" style="font-size: 1.15em; color: rgb(58, 50, 124);">向量模型</a><a href="/tags/%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA%E7%94%9F%E6%88%90/" style="font-size: 1.15em; color: rgb(125, 50, 185);">检索增强生成</a><a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 1.38em; color: rgb(141, 50, 200);">基础</a></div></div><div class="card-widget card-archives">
     <div class="item-headline">
       <i class="fas fa-archive"></i>
       <span>归档</span>
@@ -234,4 +234,325 @@
         </li>
       
     </ul>
-  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">205</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-05-30T06:54:41.959Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="null" data-text="I,LOVE,YOU,木一" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">205</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-05-30T13:24:30.228Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const parseViewBox = viewBox => {
+    if (!viewBox) return null
+    const parts = viewBox.trim().split(/[\s,]+/).map(n => Number(n))
+    if (parts.length !== 4 || parts.some(n => Number.isNaN(n))) return null
+    return parts
+  }
+
+  const getSvgViewBox = svg => {
+    const attr = parseViewBox(svg.getAttribute('viewBox'))
+    if (attr) return attr
+
+    // Fallback: use bbox to build a viewBox
+    try {
+      const bbox = svg.getBBox()
+      if (bbox && bbox.width && bbox.height) return [bbox.x, bbox.y, bbox.width, bbox.height]
+    } catch (e) {
+      // getBBox may fail on some edge cases; ignore
+    }
+
+    const w = Number(svg.getAttribute('width')) || 0
+    const h = Number(svg.getAttribute('height')) || 0
+    if (w > 0 && h > 0) return [0, 0, w, h]
+    return [0, 0, 100, 100]
+  }
+
+  const setSvgViewBox = (svg, vb) => {
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`)
+  }
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+
+  const openSvgInNewTab = ({ source, initViewBox }) => {
+    const getClonedSvg = () => {
+      if (typeof source === 'string') {
+        const template = document.createElement('template')
+        template.innerHTML = source.trim()
+        const svg = template.content.querySelector('svg')
+        return svg ? svg.cloneNode(true) : null
+      }
+      if (source && typeof source.cloneNode === 'function') {
+        return source.cloneNode(true)
+      }
+      return null
+    }
+
+    const clone = getClonedSvg()
+    if (!clone) return
+    if (initViewBox && initViewBox.length === 4) {
+      clone.setAttribute('viewBox', initViewBox.join(' '))
+    }
+    if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    if (!clone.getAttribute('xmlns:xlink') && clone.outerHTML.includes('xlink:')) {
+      clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+    }
+    // inject background to match current theme
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+    const bg = getComputedStyle(document.body).backgroundColor || (isDark ? '#1e1e1e' : '#ffffff')
+    if (!clone.style.background) clone.style.background = bg
+
+    const serializer = new XMLSerializer()
+    const svgSource = serializer.serializeToString(clone)
+    const htmlSource = `<!doctype html><html><head><meta charset="utf-8" />
+      <style>
+        html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
+        svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+      </style>
+      </head><body>${svgSource}</body></html>`
+    const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank', 'noopener')
+    setTimeout(() => URL.revokeObjectURL(url), 30000)
+  }
+
+  const attachMermaidViewerButton = wrap => {
+    let btn = wrap.querySelector('.mermaid-open-btn')
+    if (!btn) {
+      btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'mermaid-open-btn'
+      wrap.appendChild(btn)
+    }
+
+    btn.innerHTML = '<i class="fa fa-search fa-fw" aria-hidden="true"></i>'
+
+    if (!btn.__mermaidViewerBound) {
+      btn.addEventListener('click', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        const svg = wrap.__mermaidOriginalSvg || wrap.querySelector('svg')
+        if (!svg) return
+        const initViewBox = wrap.__mermaidInitViewBox
+        if (typeof svg === 'string') {
+          openSvgInNewTab({ source: svg, initViewBox })
+          return
+        }
+        openSvgInNewTab({ source: svg, initViewBox })
+      })
+      btn.__mermaidViewerBound = true
+    }
+  }
+
+  // Zoom around a point (px, py) in the SVG viewport (in viewBox coordinates)
+  const zoomAtPoint = (vb, factor, px, py) => {
+    const w = vb[2] * factor
+    const h = vb[3] * factor
+    const nx = px - (px - vb[0]) * factor
+    const ny = py - (py - vb[1]) * factor
+    return [nx, ny, w, h]
+  }
+
+  const initMermaidGestures = wrap => {
+    const svg = wrap.querySelector('svg')
+    if (!svg) return
+
+    // Ensure viewBox exists so gestures always work
+    const initVb = getSvgViewBox(svg)
+    wrap.__mermaidInitViewBox = initVb
+    wrap.__mermaidCurViewBox = initVb.slice()
+    setSvgViewBox(svg, initVb)
+
+    // Avoid binding multiple times on themeChange/pjax
+    if (wrap.__mermaidGestureBound) return
+    wrap.__mermaidGestureBound = true
+
+    // Helper: map client (viewport) coordinate -> viewBox coordinate
+    const clientToViewBox = (clientX, clientY) => {
+      const rect = svg.getBoundingClientRect()
+      const vb = wrap.__mermaidCurViewBox || getSvgViewBox(svg)
+      const x = vb[0] + (clientX - rect.left) * (vb[2] / rect.width)
+      const y = vb[1] + (clientY - rect.top) * (vb[3] / rect.height)
+      return { x, y, rect, vb }
+    }
+
+    const state = {
+      pointers: new Map(),
+      startVb: null,
+      startDist: 0,
+      startCenter: null
+    }
+
+    const clampVb = vb => {
+      const init = wrap.__mermaidInitViewBox || vb
+      const minW = init[2] * 0.1
+      const maxW = init[2] * 10
+      const minH = init[3] * 0.1
+      const maxH = init[3] * 10
+      vb[2] = clamp(vb[2], minW, maxW)
+      vb[3] = clamp(vb[3], minH, maxH)
+      return vb
+    }
+
+    const setCurVb = vb => {
+      vb = clampVb(vb)
+      wrap.__mermaidCurViewBox = vb
+      setSvgViewBox(svg, vb)
+    }
+
+    const onPointerDown = e => {
+      // Allow only primary button for mouse
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      svg.setPointerCapture(e.pointerId)
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      if (state.pointers.size === 1) {
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      } else if (state.pointers.size === 2) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        state.startDist = Math.hypot(dx, dy)
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        state.startCenter = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 }
+      }
+    }
+
+    const onPointerMove = e => {
+      if (!state.pointers.has(e.pointerId)) return
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      // Pan with 1 pointer
+      if (state.pointers.size === 1 && state.startVb) {
+        const p = [...state.pointers.values()][0]
+        const prev = { x: e.clientX - e.movementX, y: e.clientY - e.movementY }
+        // movementX/Y unreliable on touch, compute from stored last position
+        const last = wrap.__mermaidLastSinglePointer || p
+        const dxClient = p.x - last.x
+        const dyClient = p.y - last.y
+        wrap.__mermaidLastSinglePointer = p
+
+        const { rect } = clientToViewBox(p.x, p.y)
+        const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        const dx = dxClient * (vb[2] / rect.width)
+        const dy = dyClient * (vb[3] / rect.height)
+        setCurVb([vb[0] - dx, vb[1] - dy, vb[2], vb[3]])
+        return
+      }
+
+      // Pinch zoom with 2 pointers
+      if (state.pointers.size === 2 && state.startVb && state.startDist > 0) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        const dist = Math.hypot(dx, dy)
+        if (!dist) return
+        const factor = state.startDist / dist // dist bigger => zoom in (viewBox smaller)
+
+        const cx = (pts[0].x + pts[1].x) / 2
+        const cy = (pts[0].y + pts[1].y) / 2
+        const centerClient = { x: cx, y: cy }
+
+        const pxy = clientToViewBox(centerClient.x, centerClient.y)
+        const cpx = pxy.x
+        const cpy = pxy.y
+
+        const vb = zoomAtPoint(state.startVb, factor, cpx, cpy)
+        setCurVb(vb)
+      }
+    }
+
+    const onPointerUpOrCancel = e => {
+      state.pointers.delete(e.pointerId)
+      if (state.pointers.size === 0) {
+        state.startVb = null
+        state.startDist = 0
+        state.startCenter = null
+        wrap.__mermaidLastSinglePointer = null
+      } else if (state.pointers.size === 1) {
+        // reset single pointer baseline to avoid jump
+        wrap.__mermaidLastSinglePointer = [...state.pointers.values()][0]
+      }
+    }
+
+    // Wheel zoom (mouse/trackpad)
+    const onWheel = e => {
+      // ctrlKey on mac trackpad pinch; we treat both as zoom
+      e.preventDefault()
+      const delta = e.deltaY
+      const zoomFactor = delta > 0 ? 1.1 : 0.9
+      const { x, y } = clientToViewBox(e.clientX, e.clientY)
+      const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      setCurVb(zoomAtPoint(vb, zoomFactor, x, y))
+    }
+
+    const onDblClick = () => {
+      const init = wrap.__mermaidInitViewBox
+      if (!init) return
+      wrap.__mermaidCurViewBox = init.slice()
+      setSvgViewBox(svg, init)
+    }
+
+    svg.addEventListener('pointerdown', onPointerDown)
+    svg.addEventListener('pointermove', onPointerMove)
+    svg.addEventListener('pointerup', onPointerUpOrCancel)
+    svg.addEventListener('pointercancel', onPointerUpOrCancel)
+    svg.addEventListener('wheel', onWheel, { passive: false })
+    svg.addEventListener('dblclick', onDblClick)
+  }
+
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+
+      // Clear old render (themeChange/pjax will rerun)
+      const oldSvg = item.querySelector('svg')
+      if (oldSvg) oldSvg.remove()
+      item.__mermaidGestureBound = false
+
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+        if (true) initMermaidGestures(item)
+        item.__mermaidOriginalSvg = svg
+        if (true) attachMermaidViewerButton(item)
+      }
+
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="null" data-text="I,LOVE,YOU,木一" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -160,7 +160,7 @@
   isHighlightShrink: false,
   isToc: false,
   pageType: 'post'
-}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://liu__tao.gitee.io/drawing-bed/blog_img/windows信息收集之ping/封面.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">信息收集之ping</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">信息收集之ping</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-26T14:07:23.000Z" title="发表于 2022-11-26 22:07:23">2022-11-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-26T14:13:14.586Z" title="更新于 2022-11-26 22:13:14">2022-11-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%B0%E5%BD%95/">记录</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>如果需要知道当前某个IP段内有多少存活的机器，可以使用ping命令查看，虽然不是很准确，但是如果有IP响应了ping那么这个一定是一个存活的主机。</p>
+}</script><style>body{background-image:radial-gradient(circle,#c8c8c8 0.8px,transparent 0.8px);background-size:24px 24px}</style><meta name="generator" content="Hexo 8.1.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://liu__tao.gitee.io/drawing-bed/blog_img/windows信息收集之ping/封面.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">信息收集之ping</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">信息收集之ping</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-26T14:07:23.000Z" title="发表于 2022-11-26 22:07:23">2022-11-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-26T14:13:14.586Z" title="更新于 2022-11-26 22:13:14">2022-11-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%B0%E5%BD%95/">记录</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>如果需要知道当前某个IP段内有多少存活的机器，可以使用ping命令查看，虽然不是很准确，但是如果有IP响应了ping那么这个一定是一个存活的主机。</p>
 <ul>
 <li>当IP数据包在对方计算机处理过程中出现未知的发送错误时，ICMP会向发送者传送错误事实以及错误原因等</li>
 <li>信息查询由一个请求和一个应答构成的。只需要向目标发送一个请求数据包，如果收到了来自目标的回应，就可以判断目标是活跃主机，否则可以判断目标是非活跃主机</li>
@@ -169,7 +169,328 @@
 <blockquote>
 <p>$\color{yellow}{但是该方法也存在一定的缺陷，就是当网络设备，例如路由器、防火墙等对ICMP采取了屏蔽策略时，就会导致扫描结果不准确。} $ </p>
 </blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scapy.layers.inet <span class="keyword">import</span> IP, ICMP, sr1</span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> randint</span><br><span class="line"><span class="keyword">from</span> ipaddress <span class="keyword">import</span> ip_network</span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ping_single</span>(<span class="params">ip</span>):</span><br><span class="line">    ip_id = randint(<span class="number">1</span>, <span class="number">65535</span>)</span><br><span class="line">    icmp_id = randint(<span class="number">1</span>, <span class="number">65535</span>)</span><br><span class="line">    icmp_seq = randint(<span class="number">1</span>, <span class="number">65535</span>)</span><br><span class="line">    packet = IP(dst=ip, ttl=<span class="number">64</span>, <span class="built_in">id</span>=ip_id)/ICMP(<span class="built_in">id</span>=icmp_id, seq=icmp_seq)</span><br><span class="line">    response = sr1(packet, timeout=<span class="number">1</span>, verbose=<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> response:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[+] %s is alive&quot;</span> % <span class="built_in">str</span>(ip))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ping_scan</span>(<span class="params">network</span>):</span><br><span class="line">    ip_list = ip_network(network)</span><br><span class="line">    <span class="keyword">for</span> ip <span class="keyword">in</span> ip_list:</span><br><span class="line">        t = Thread(target=ping_single, args=[<span class="built_in">str</span>(ip)])</span><br><span class="line">        t.start()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    host = <span class="string">&#x27;14.215.177.0/24&#x27;</span></span><br><span class="line">    t1 = time.time()</span><br><span class="line">    ping_scan(host)</span><br><span class="line">    t2 = time.time()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[+] 本次扫描共花费 %s 秒&quot;</span> % (t2 - t1))</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-ping/">https://m42-orion.github.io/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-ping/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a></div><div class="post-share"><div class="social-share" data-image="https://liu__tao.gitee.io/drawing-bed/blog_img/windows信息收集之ping/封面.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E5%AD%90%E5%9F%9F%E5%90%8D%E6%8C%96%E6%8E%98/" title="信息收集之子域名挖掘"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/信息收集之子域名挖掘/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">信息收集之子域名挖掘</div></div><div class="info-2"><div class="info-item-1">域名可以分为顶级域名、一级域名、二级域名等。子域名（subdomain）是顶级域名（一级域名或父域名）的下一级。例如，mail.example.com和calendar.example.com是example.com的两个子域，而example.com则是顶级域.com的子域。在测试过程中，测试目标主站时如果未发现任何相关漏洞，此时通常会考虑挖掘目标系统的子域名。 1234567891011121314151617181920212223242526272829303132333435363738import requestsfrom bs4 import BeautifulSoupfrom urllib.parse import urlparsedef bing_search(site, pages):    Subdomain = []    headers = &#123;&#x27;User-Agent&#x27;: &#x27;Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0&#x2...</div></div></div></a><a class="pagination-related" href="/2022/11/26/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E7%AE%A1%E7%90%86%E5%91%98%E6%9D%83%E9%99%90%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81/" title="管理员权限执行代码"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/管理员权限执行代码/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">管理员权限执行代码</div></div><div class="info-2"><div class="info-item-1">在代码部署的过程当中往往需要使用管理员权限执行代码，这里涉及多种情况： LinuxLinux上使用管理员权限执行代码是最简单的，只需要使用root登录就可以直接使用管理员权限执行代码，代码具有调用系统资源的权限。 windows 编辑器上编辑器获得管理员权限其实情况很少，但是并不是没有。获得管理员权限的编辑器有三个好处：  直接打开管理员才能够打开的文件夹查看内容 打开管理员权限的文件 执行的代码都是管理员权限 快捷键拥有最高权限，不会与其他没有管理员权限的软件产生快捷键冲突 可能有更多功能提供(看编辑器情况)  个人现在最常遇到的问题是，我执行的代码需要管理员权限才能够正常执行，需要调用一些系统文件，但是编辑器不是，这就导致代码没有权限，不能够调试。但是打开也很简单：  右键编辑器-&gt;属性-&gt;兼容性-&gt;以管理员身份运行此程序 右键编辑器-&gt;管理员权限运行  windows 文件文件的执行有两种，第一种是以管理员权限启动cmd执行，第二种就是在代码当中获取管理员权限，保证程序从逻辑上一定是拥有管理员权限的。 代码如下：  12345678910111213...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-Whois%E4%B8%8Eip%E6%9F%A5%E8%AF%A2/" title="信息收集之Whois与ip查询"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/信息收集之Whois与ip查询/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-26</div><div class="info-item-2">信息收集之Whois与ip查询</div></div><div class="info-2"><div class="info-item-1">Whois查询Whois是用来查询域名的IP以及所有者信息的传输协议。简单地说，Whois就是一个数据库，用来查询域名是否已经被注册，以及注册域名的详细信息（如域名所有人、域名注册商等）。 1234from whois import whoisdata = whois(&#x27;www.baidu.com&#x27;)print(data)  ip查询没啥好说的 1234import socketip = socket.gethostbyname(&quot;www.baidu.com&quot;)print(ip)  </div></div></div></a><a class="pagination-related" href="/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E5%AD%90%E5%9F%9F%E5%90%8D%E6%8C%96%E6%8E%98/" title="信息收集之子域名挖掘"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/信息收集之子域名挖掘/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-26</div><div class="info-item-2">信息收集之子域名挖掘</div></div><div class="info-2"><div class="info-item-1">域名可以分为顶级域名、一级域名、二级域名等。子域名（subdomain）是顶级域名（一级域名或父域名）的下一级。例如，mail.example.com和calendar.example.com是example.com的两个子域，而example.com则是顶级域.com的子域。在测试过程中，测试目标主站时如果未发现任何相关漏洞，此时通常会考虑挖掘目标系统的子域名。 1234567891011121314151617181920212223242526272829303132333435363738import requestsfrom bs4 import BeautifulSoupfrom urllib.parse import urlparsedef bing_search(site, pages):    Subdomain = []    headers = &#123;&#x27;User-Agent&#x27;: &#x27;Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0&#x2...</div></div></div></a><a class="pagination-related" href="/2025/10/10/%E8%AF%AD%E6%B3%95-Python%E7%B1%BB%E5%9E%8B%E6%B3%A8%E8%A7%A3-%E8%AE%A9%E5%8A%A8%E6%80%81%E8%AF%AD%E8%A8%80%E6%9B%B4%E7%A8%B3%E5%81%A5/" title="Python类型注解:让动态语言更稳健"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202601/15/jJSdv550tegPX17.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-10-10</div><div class="info-item-2">Python类型注解:让动态语言更稳健</div></div><div class="info-2"><div class="info-item-1">Python类型注解：让动态语言更稳健 动态一时爽，一直动态一直爽？但类型注解能让你的Python代码更清晰、更易维护。  Python作为一门动态类型语言，以其灵活性和易用性深受开发者喜爱。然而这种动态性是一把双刃剑——随着项目规模扩大，代码的复杂度和维护成本也随之增加。类型注解（Type Hints）正是为了解决这些问题而引入的重要特性。 一、为什么需要类型注解1.1 动态类型的代价Python的动态类型特性意味着变量类型在运行时才确定，这带来了极大的灵活性： 1234a = 10print(a)  # 输出：10a = &quot;Python&quot;  print(a)  # 输出：Python  这样的灵活性在小项目中非常方便，但在大型项目或团队协作中却带来了问题：  代码可读性差：很难直接从代码中看出变量或函数的预期类型 维护困难：几个月后回头看自己的代码，甚至作者本人也可能忘记变量的预期类型 调试成本高：类型错误往往在运行时才被发现  1.2 类型注解的解决方案Python 3.5引入了类型注解（PEP 484），它允许开发者明确标注变量、函数参数和返回值的类型...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E8%AF%AD%E6%B3%95-%E4%BC%98%E9%9B%85%E5%9C%B0%E5%BA%9F%E5%BC%83%E4%BB%A3%E7%A0%81/" title="优雅地废弃代码"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/08/q4S8BddjIx5XBjA.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">优雅地废弃代码</div></div><div class="info-2"><div class="info-item-1">Python 中的 @deprecated 装饰器：优雅地废弃代码在软件开发过程中，我们经常会遇到需要废弃旧代码的情况。这可能是因为代码存在安全问题、性能问题，或者是因为有了更好的替代方案。Python 提供了一种优雅的方式来处理这种情况，那就是使用 @deprecated 装饰器。本文将详细介绍 @deprecated 装饰器的使用方法、实现原理以及最佳实践。 什么是 @deprecated 装饰器？@deprecated 装饰器是一个用于标记函数、方法或类为已废弃的工具。当被标记的代码被调用时，它会触发一个 DeprecationWarning 警告，提醒开发者该功能将在未来版本中被移除或更改。 如何使用 @deprecated 装饰器？Python 标准库中的 warnings 模块提供了 warn 函数，可以用来发出警告。结合 functools 模块中的 wraps 装饰器，我们可以创建一个自定义的 @deprecated 装饰器。 12345678910111213import warningsfrom functools import wrapsdef deprec...</div></div></div></a><a class="pagination-related" href="/2024/12/01/conda%E4%B8%8Epip/" title="conda与pip"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/02/V2Soejj0Tmwn4le.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">conda与pip</div></div><div class="info-2"><div class="info-item-1">conda与pip的区别conda install 和 pip install 是两种常用的Python包管理工具,它们都可以用来安装和管理Python库。但是,它们在安装源和安装方式上有一些区别。  安装源  conda install 使用的是Anaconda的官方源,而pip install 可以指定任意源来安装库。因此,conda install 安装的库通常都是官方版本的库,而pip install 安装的库可能是官方版本的库,也可能是其他版本的库。  安装方式  conda install 使用的是Anaconda的包管理器,它会在安装库时自动处理依赖关系,并将其安装到Anaconda的虚拟环境中。因此,使用conda install 安装的库都是独立的,不会影响系统中的其他Python库。而pip install 安装的库则是直接安装到系统Python的site-packages目录中,可能会与其他库发生冲突。  影响或问题  (1) 版本冲突 由于pip install 安装的库是直接安装到系统Python的site-packages目录中,因此可能会与其他库发生...</div></div></div></a><a class="pagination-related" href="/2022/07/17/%E5%B7%A5%E5%85%B7-%E5%85%B3%E4%BA%8Eoffice%E8%A7%A3%E5%AF%86%E7%9A%84%E4%B8%80%E4%B8%AA%E5%BA%93/" title="关于office解密的一个库"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/关于office解密的一个库/封面.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-17</div><div class="info-item-2">关于office解密的一个库</div></div><div class="info-2"><div class="info-item-1">在工作中偶然的机会需要我使用python实现word的解密，已知密码需要解密或者进行爆破行为，但是苦苦没有找到合适的方法，但是偶然间fa msoffcrypto-toolmsoffcrypto-tool（以前称为ms-offcrypto-tool）是Python工具和库，用于使用密码，中间密钥或生成其托管密钥的私钥解密加密的MS Office文件。 安装： pip install msoffcrypto-tool 使用方式： msoffcrypto-tool encrypted.docx decrypted.docx -p 你的密码 测试是否有加密： msoffcrypto-tool document.doc --test -v 代码用法1234567891011import msoffcryptoencrypted = open(&quot;encrypted.docx&quot;, &quot;rb&quot;)file = msoffcrypto.OfficeFile(encrypted)file.load_key(password=&quot;Passw0rd&quot;...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">205</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">55</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="彻底搞懂 Token"/></a><div class="content"><a class="title" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token">彻底搞懂 Token</a><time datetime="2026-05-25T20:00:00.000Z" title="发表于 2026-05-26 04:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析"><img src="https://c-ssl.duitang.com/uploads/blog/202604/16/pGSm4WWdTBDOWWY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Agent 沙箱深度解析"/></a><div class="content"><a class="title" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析">AI Agent 沙箱深度解析</a><time datetime="2026-05-25T19:30:00.000Z" title="发表于 2026-05-26 03:30:00">2026-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scapy.layers.inet <span class="keyword">import</span> IP, ICMP, sr1</span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> randint</span><br><span class="line"><span class="keyword">from</span> ipaddress <span class="keyword">import</span> ip_network</span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ping_single</span>(<span class="params">ip</span>):</span><br><span class="line">    ip_id = randint(<span class="number">1</span>, <span class="number">65535</span>)</span><br><span class="line">    icmp_id = randint(<span class="number">1</span>, <span class="number">65535</span>)</span><br><span class="line">    icmp_seq = randint(<span class="number">1</span>, <span class="number">65535</span>)</span><br><span class="line">    packet = IP(dst=ip, ttl=<span class="number">64</span>, <span class="built_in">id</span>=ip_id)/ICMP(<span class="built_in">id</span>=icmp_id, seq=icmp_seq)</span><br><span class="line">    response = sr1(packet, timeout=<span class="number">1</span>, verbose=<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> response:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[+] %s is alive&quot;</span> % <span class="built_in">str</span>(ip))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ping_scan</span>(<span class="params">network</span>):</span><br><span class="line">    ip_list = ip_network(network)</span><br><span class="line">    <span class="keyword">for</span> ip <span class="keyword">in</span> ip_list:</span><br><span class="line">        t = Thread(target=ping_single, args=[<span class="built_in">str</span>(ip)])</span><br><span class="line">        t.start()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    host = <span class="string">&#x27;14.215.177.0/24&#x27;</span></span><br><span class="line">    t1 = time.time()</span><br><span class="line">    ping_scan(host)</span><br><span class="line">    t2 = time.time()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[+] 本次扫描共花费 %s 秒&quot;</span> % (t2 - t1))</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-ping/">https://m42-orion.github.io/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-ping/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a></div><div class="post-share"><div class="social-share" data-image="https://liu__tao.gitee.io/drawing-bed/blog_img/windows信息收集之ping/封面.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E5%AD%90%E5%9F%9F%E5%90%8D%E6%8C%96%E6%8E%98/" title="信息收集之子域名挖掘"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/信息收集之子域名挖掘/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">信息收集之子域名挖掘</div></div><div class="info-2"><div class="info-item-1">域名可以分为顶级域名、一级域名、二级域名等。子域名（subdomain）是顶级域名（一级域名或父域名）的下一级。例如，mail.example.com和calendar.example.com是example.com的两个子域，而example.com则是顶级域.com的子域。在测试过程中，测试目标主站时如果未发现任何相关漏洞，此时通常会考虑挖掘目标系统的子域名。 1234567891011121314151617181920212223242526272829303132333435363738import requestsfrom bs4 import BeautifulSoupfrom urllib.parse import urlparsedef bing_search(site, pages):    Subdomain = []    headers = &#123;&#x27;User-Agent&#x27;: &#x27;Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0&#x2...</div></div></div></a><a class="pagination-related" href="/2022/11/26/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E7%AE%A1%E7%90%86%E5%91%98%E6%9D%83%E9%99%90%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81/" title="管理员权限执行代码"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/管理员权限执行代码/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">管理员权限执行代码</div></div><div class="info-2"><div class="info-item-1">在代码部署的过程当中往往需要使用管理员权限执行代码，这里涉及多种情况： LinuxLinux上使用管理员权限执行代码是最简单的，只需要使用root登录就可以直接使用管理员权限执行代码，代码具有调用系统资源的权限。 windows 编辑器上编辑器获得管理员权限其实情况很少，但是并不是没有。获得管理员权限的编辑器有三个好处：  直接打开管理员才能够打开的文件夹查看内容 打开管理员权限的文件 执行的代码都是管理员权限 快捷键拥有最高权限，不会与其他没有管理员权限的软件产生快捷键冲突 可能有更多功能提供(看编辑器情况)  个人现在最常遇到的问题是，我执行的代码需要管理员权限才能够正常执行，需要调用一些系统文件，但是编辑器不是，这就导致代码没有权限，不能够调试。但是打开也很简单：  右键编辑器-&gt;属性-&gt;兼容性-&gt;以管理员身份运行此程序 右键编辑器-&gt;管理员权限运行  windows 文件文件的执行有两种，第一种是以管理员权限启动cmd执行，第二种就是在代码当中获取管理员权限，保证程序从逻辑上一定是拥有管理员权限的。 代码如下：  12345678910111213...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E5%AD%90%E5%9F%9F%E5%90%8D%E6%8C%96%E6%8E%98/" title="信息收集之子域名挖掘"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/信息收集之子域名挖掘/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-26</div><div class="info-item-2">信息收集之子域名挖掘</div></div><div class="info-2"><div class="info-item-1">域名可以分为顶级域名、一级域名、二级域名等。子域名（subdomain）是顶级域名（一级域名或父域名）的下一级。例如，mail.example.com和calendar.example.com是example.com的两个子域，而example.com则是顶级域.com的子域。在测试过程中，测试目标主站时如果未发现任何相关漏洞，此时通常会考虑挖掘目标系统的子域名。 1234567891011121314151617181920212223242526272829303132333435363738import requestsfrom bs4 import BeautifulSoupfrom urllib.parse import urlparsedef bing_search(site, pages):    Subdomain = []    headers = &#123;&#x27;User-Agent&#x27;: &#x27;Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0&#x2...</div></div></div></a><a class="pagination-related" href="/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-Whois%E4%B8%8Eip%E6%9F%A5%E8%AF%A2/" title="信息收集之Whois与ip查询"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/信息收集之Whois与ip查询/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-26</div><div class="info-item-2">信息收集之Whois与ip查询</div></div><div class="info-2"><div class="info-item-1">Whois查询Whois是用来查询域名的IP以及所有者信息的传输协议。简单地说，Whois就是一个数据库，用来查询域名是否已经被注册，以及注册域名的详细信息（如域名所有人、域名注册商等）。 1234from whois import whoisdata = whois(&#x27;www.baidu.com&#x27;)print(data)  ip查询没啥好说的 1234import socketip = socket.gethostbyname(&quot;www.baidu.com&quot;)print(ip)  </div></div></div></a><a class="pagination-related" href="/2024/12/01/%E5%8F%96%E8%AF%81-%E6%B3%A8%E5%86%8Cwindows%E6%9C%8D%E5%8A%A1/" title="python注册windows服务"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202410/25/1mSg5LL3fQM89n2.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">python注册windows服务</div></div><div class="info-2"><div class="info-item-1">如何使用Python和instsrv.exe&#x2F;srvany.exe创建Windows服务该博客将探讨如何使用Python脚本结合instsrv.exe和srvany.exe工具将任何程序转换为Windows服务。这不仅有助于程序以SYSTEM账户运行，还能实现随机器启动而自启动，并且可以隐藏不必要的窗口。以下是详细的步骤和代码示例。 概述在Windows系统中，服务是一种特殊类型的程序，它在后台运行，通常没有用户界面。通过将程序转换为服务，我们可以确保程序在系统启动时自动运行，并且可以在后台持续运行，不受用户登录状态的影响。 准备工作在开始之前，你需要确保你的系统中安装了以下工具：  instsrv.exe 和 srvany.exe：这两个工具是Microsoft Windows Resource Kits的一部分，用于安装和卸载服务。 Python：我们将使用Python编写脚本，因此需要确保Python环境已安装。  安装和配置服务首先，我们需要将instsrv.exe和srvany.exe复制到C:\Windows\System32\目录下（对于64位系统，还需要...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E5%8F%96%E8%AF%81-%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/" title="windows软件安装记录"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202410/23/YxSQ2ppATqpbzDB.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">windows软件安装记录</div></div><div class="info-2"><div class="info-item-1">注册表UninstallMicrosoft\Windows\CurrentVersion\Uninstall 是 Windows 注册表中的一个键（key），它包含了用户通过“控制面板”中的“程序和功能”（以前称为“添加或删除程序”）安装的所有应用程序的列表。这个注册表键位于 HKEY_LOCAL_MACHINE 分支下。 当你通过“程序和功能”卸载应用程序时，Windows 会在这个注册表键下为每个应用程序创建一个子键（subkey）。每个子键都包含了与该应用程序相关的卸载信息，包括：  应用程序的显示名称 发行者 卸载字符串（Uninstall String），指向卸载程序的路径 版本号 安装源（安装介质的路径，如果是从网络或CD安装） 估计大小 安装日期 状态（是否已安装、正在安装等） 系统组件（是否是系统必需的应用程序） 其他与卸载相关的信息  代码实现初始化列表和集合： 12key_list = []t = []  # 去重列表 这部分代码初始化了两个列表：key_list 用于存储打开的注册表键，t 用于存储已处理数据的MD5哈希值，用于去重。 尝试打开注册表键： 1...</div></div></div></a><a class="pagination-related" href="/2023/05/30/python%E5%BD%93%E4%B8%AD%E7%9A%84range-map/" title="python当中的range_map"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/python当中的range_map/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-05-30</div><div class="info-item-2">python当中的range_map</div></div><div class="info-2"><div class="info-item-1">在python当中的字典能让使用者快速找到对应的数据值，但是如果想要实现这样的一个字典： 1234_dict = &#123;    [1,5):&quot;a&quot;,    [5,10):&quot;b&quot;&#125;  能让操作者在仅知道一个数值就可以索引到范围对应的那个value，如_dict[3]输出&quot;a&quot;该怎么做呢？ 解决办法可以借助python库bisect对字典进行重写解决该问题，bisect相关信息就不过多阐述了，简单来说就是通过排序算法，定位指定值在范围内的位置，再通过索引找到位置。代码如下： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354from bisect import bisect_left, bisect_rightfrom collections.abc import MutableMappingclass RangeBisection(MutableMapping)...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E5%8F%96%E8%AF%81-windows%E5%8F%AF%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87/" title="查询windows电脑当中的可移动设备"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/28/6zS4oXXwiqVa29Z.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">查询windows电脑当中的可移动设备</div></div><div class="info-2"><div class="info-item-1">Win32_DiskDrive在WMI（Windows Management Instrumentation）中，Win32_DiskDrive 类的 MediaType 属性用于描述磁盘驱动器的媒体类型。根据微软的文档，MediaType 属性可以取以下值：  Unknown：未知的媒体类型 Fixed hard disk media：固定硬盘媒体 Removable media：可移动媒体，如USB闪存驱动器、软盘等 CD-ROM media：CD-ROM媒体 RAM disk：RAM磁盘 Flash memory：闪存 Network disk：网络磁盘 Virtual disk：虚拟磁盘 Optical disk：光盘 Magnetic disk：磁盘 Other：其他类型的媒体  代码逻辑当前代码的主要功能是通过WMI（Windows Management Instrumentation）查询Windows系统中的磁盘驱动器信息，并将结果存储在一个字典中。然后，它遍历这个字典，查找媒体类型为“可移动媒体”或“外部硬盘媒体”的逻辑磁盘设备ID，并打印这些设备ID。 导入w...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">205</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">55</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="彻底搞懂 Token"/></a><div class="content"><a class="title" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token">彻底搞懂 Token</a><time datetime="2026-05-25T20:00:00.000Z" title="发表于 2026-05-26 04:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析"><img src="https://c-ssl.duitang.com/uploads/blog/202604/16/pGSm4WWdTBDOWWY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Agent 沙箱深度解析"/></a><div class="content"><a class="title" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析">AI Agent 沙箱深度解析</a><time datetime="2026-05-25T19:30:00.000Z" title="发表于 2026-05-26 03:30:00">2026-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const parseViewBox = viewBox => {
+    if (!viewBox) return null
+    const parts = viewBox.trim().split(/[\s,]+/).map(n => Number(n))
+    if (parts.length !== 4 || parts.some(n => Number.isNaN(n))) return null
+    return parts
+  }
+
+  const getSvgViewBox = svg => {
+    const attr = parseViewBox(svg.getAttribute('viewBox'))
+    if (attr) return attr
+
+    // Fallback: use bbox to build a viewBox
+    try {
+      const bbox = svg.getBBox()
+      if (bbox && bbox.width && bbox.height) return [bbox.x, bbox.y, bbox.width, bbox.height]
+    } catch (e) {
+      // getBBox may fail on some edge cases; ignore
+    }
+
+    const w = Number(svg.getAttribute('width')) || 0
+    const h = Number(svg.getAttribute('height')) || 0
+    if (w > 0 && h > 0) return [0, 0, w, h]
+    return [0, 0, 100, 100]
+  }
+
+  const setSvgViewBox = (svg, vb) => {
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`)
+  }
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+
+  const openSvgInNewTab = ({ source, initViewBox }) => {
+    const getClonedSvg = () => {
+      if (typeof source === 'string') {
+        const template = document.createElement('template')
+        template.innerHTML = source.trim()
+        const svg = template.content.querySelector('svg')
+        return svg ? svg.cloneNode(true) : null
+      }
+      if (source && typeof source.cloneNode === 'function') {
+        return source.cloneNode(true)
+      }
+      return null
+    }
+
+    const clone = getClonedSvg()
+    if (!clone) return
+    if (initViewBox && initViewBox.length === 4) {
+      clone.setAttribute('viewBox', initViewBox.join(' '))
+    }
+    if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    if (!clone.getAttribute('xmlns:xlink') && clone.outerHTML.includes('xlink:')) {
+      clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+    }
+    // inject background to match current theme
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+    const bg = getComputedStyle(document.body).backgroundColor || (isDark ? '#1e1e1e' : '#ffffff')
+    if (!clone.style.background) clone.style.background = bg
+
+    const serializer = new XMLSerializer()
+    const svgSource = serializer.serializeToString(clone)
+    const htmlSource = `<!doctype html><html><head><meta charset="utf-8" />
+      <style>
+        html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
+        svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+      </style>
+      </head><body>${svgSource}</body></html>`
+    const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank', 'noopener')
+    setTimeout(() => URL.revokeObjectURL(url), 30000)
+  }
+
+  const attachMermaidViewerButton = wrap => {
+    let btn = wrap.querySelector('.mermaid-open-btn')
+    if (!btn) {
+      btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'mermaid-open-btn'
+      wrap.appendChild(btn)
+    }
+
+    btn.innerHTML = '<i class="fa fa-search fa-fw" aria-hidden="true"></i>'
+
+    if (!btn.__mermaidViewerBound) {
+      btn.addEventListener('click', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        const svg = wrap.__mermaidOriginalSvg || wrap.querySelector('svg')
+        if (!svg) return
+        const initViewBox = wrap.__mermaidInitViewBox
+        if (typeof svg === 'string') {
+          openSvgInNewTab({ source: svg, initViewBox })
+          return
+        }
+        openSvgInNewTab({ source: svg, initViewBox })
+      })
+      btn.__mermaidViewerBound = true
+    }
+  }
+
+  // Zoom around a point (px, py) in the SVG viewport (in viewBox coordinates)
+  const zoomAtPoint = (vb, factor, px, py) => {
+    const w = vb[2] * factor
+    const h = vb[3] * factor
+    const nx = px - (px - vb[0]) * factor
+    const ny = py - (py - vb[1]) * factor
+    return [nx, ny, w, h]
+  }
+
+  const initMermaidGestures = wrap => {
+    const svg = wrap.querySelector('svg')
+    if (!svg) return
+
+    // Ensure viewBox exists so gestures always work
+    const initVb = getSvgViewBox(svg)
+    wrap.__mermaidInitViewBox = initVb
+    wrap.__mermaidCurViewBox = initVb.slice()
+    setSvgViewBox(svg, initVb)
+
+    // Avoid binding multiple times on themeChange/pjax
+    if (wrap.__mermaidGestureBound) return
+    wrap.__mermaidGestureBound = true
+
+    // Helper: map client (viewport) coordinate -> viewBox coordinate
+    const clientToViewBox = (clientX, clientY) => {
+      const rect = svg.getBoundingClientRect()
+      const vb = wrap.__mermaidCurViewBox || getSvgViewBox(svg)
+      const x = vb[0] + (clientX - rect.left) * (vb[2] / rect.width)
+      const y = vb[1] + (clientY - rect.top) * (vb[3] / rect.height)
+      return { x, y, rect, vb }
+    }
+
+    const state = {
+      pointers: new Map(),
+      startVb: null,
+      startDist: 0,
+      startCenter: null
+    }
+
+    const clampVb = vb => {
+      const init = wrap.__mermaidInitViewBox || vb
+      const minW = init[2] * 0.1
+      const maxW = init[2] * 10
+      const minH = init[3] * 0.1
+      const maxH = init[3] * 10
+      vb[2] = clamp(vb[2], minW, maxW)
+      vb[3] = clamp(vb[3], minH, maxH)
+      return vb
+    }
+
+    const setCurVb = vb => {
+      vb = clampVb(vb)
+      wrap.__mermaidCurViewBox = vb
+      setSvgViewBox(svg, vb)
+    }
+
+    const onPointerDown = e => {
+      // Allow only primary button for mouse
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      svg.setPointerCapture(e.pointerId)
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      if (state.pointers.size === 1) {
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      } else if (state.pointers.size === 2) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        state.startDist = Math.hypot(dx, dy)
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        state.startCenter = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 }
+      }
+    }
+
+    const onPointerMove = e => {
+      if (!state.pointers.has(e.pointerId)) return
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      // Pan with 1 pointer
+      if (state.pointers.size === 1 && state.startVb) {
+        const p = [...state.pointers.values()][0]
+        const prev = { x: e.clientX - e.movementX, y: e.clientY - e.movementY }
+        // movementX/Y unreliable on touch, compute from stored last position
+        const last = wrap.__mermaidLastSinglePointer || p
+        const dxClient = p.x - last.x
+        const dyClient = p.y - last.y
+        wrap.__mermaidLastSinglePointer = p
+
+        const { rect } = clientToViewBox(p.x, p.y)
+        const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        const dx = dxClient * (vb[2] / rect.width)
+        const dy = dyClient * (vb[3] / rect.height)
+        setCurVb([vb[0] - dx, vb[1] - dy, vb[2], vb[3]])
+        return
+      }
+
+      // Pinch zoom with 2 pointers
+      if (state.pointers.size === 2 && state.startVb && state.startDist > 0) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        const dist = Math.hypot(dx, dy)
+        if (!dist) return
+        const factor = state.startDist / dist // dist bigger => zoom in (viewBox smaller)
+
+        const cx = (pts[0].x + pts[1].x) / 2
+        const cy = (pts[0].y + pts[1].y) / 2
+        const centerClient = { x: cx, y: cy }
+
+        const pxy = clientToViewBox(centerClient.x, centerClient.y)
+        const cpx = pxy.x
+        const cpy = pxy.y
+
+        const vb = zoomAtPoint(state.startVb, factor, cpx, cpy)
+        setCurVb(vb)
+      }
+    }
+
+    const onPointerUpOrCancel = e => {
+      state.pointers.delete(e.pointerId)
+      if (state.pointers.size === 0) {
+        state.startVb = null
+        state.startDist = 0
+        state.startCenter = null
+        wrap.__mermaidLastSinglePointer = null
+      } else if (state.pointers.size === 1) {
+        // reset single pointer baseline to avoid jump
+        wrap.__mermaidLastSinglePointer = [...state.pointers.values()][0]
+      }
+    }
+
+    // Wheel zoom (mouse/trackpad)
+    const onWheel = e => {
+      // ctrlKey on mac trackpad pinch; we treat both as zoom
+      e.preventDefault()
+      const delta = e.deltaY
+      const zoomFactor = delta > 0 ? 1.1 : 0.9
+      const { x, y } = clientToViewBox(e.clientX, e.clientY)
+      const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      setCurVb(zoomAtPoint(vb, zoomFactor, x, y))
+    }
+
+    const onDblClick = () => {
+      const init = wrap.__mermaidInitViewBox
+      if (!init) return
+      wrap.__mermaidCurViewBox = init.slice()
+      setSvgViewBox(svg, init)
+    }
+
+    svg.addEventListener('pointerdown', onPointerDown)
+    svg.addEventListener('pointermove', onPointerMove)
+    svg.addEventListener('pointerup', onPointerUpOrCancel)
+    svg.addEventListener('pointercancel', onPointerUpOrCancel)
+    svg.addEventListener('wheel', onWheel, { passive: false })
+    svg.addEventListener('dblclick', onDblClick)
+  }
+
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+
+      // Clear old render (themeChange/pjax will rerun)
+      const oldSvg = item.querySelector('svg')
+      if (oldSvg) oldSvg.remove()
+      item.__mermaidGestureBound = false
+
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+        if (true) initMermaidGestures(item)
+        item.__mermaidOriginalSvg = svg
+        if (true) attachMermaidViewerButton(item)
+      }
+
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
   const abcjsInit = () => {
     const abcjsFn = () => {
       setTimeout(() => {

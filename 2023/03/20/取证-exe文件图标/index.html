@@ -161,8 +161,329 @@
   isHighlightShrink: false,
   isToc: false,
   pageType: 'post'
-}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://liu__tao.gitee.io/drawing-bed/blog_img/获取exe文件图标/封面.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">获取exe文件图标</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">获取exe文件图标</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-20T09:17:51.000Z" title="发表于 2023-03-20 17:17:51">2023-03-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-20T16:07:09.243Z" title="更新于 2023-03-21 00:07:09">2023-03-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>lnk文件图标需要找到对应的exe文件所在真实路径才能获取图标，不能够直接获取。dll与没有指定图标的exe文件获取图标会报错。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> win32gui</span><br><span class="line"><span class="keyword">import</span> win32ui</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> win32com.client</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pra_lnk</span>(<span class="params">file_path:<span class="built_in">str</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;解析lnk文件&quot;&quot;&quot;</span></span><br><span class="line">    shell = win32com.client.Dispatch(<span class="string">&quot;WScript.Shell&quot;</span>)</span><br><span class="line">    shortcut = shell.CreateShortCut(file_path)</span><br><span class="line">    <span class="keyword">return</span> shortcut.Targetpath</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_ico_from_exe</span>(<span class="params">file_path:<span class="built_in">str</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;获取exe的ico图标&quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># exePath = r&quot;D:\code\test\纷享销客.exe&quot;  # 替换</span></span><br><span class="line">    file_path = pra_lnk(file_path) <span class="keyword">if</span> <span class="string">&quot;.lnk&quot;</span> <span class="keyword">in</span> file_path <span class="keyword">else</span> file_path</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        large, small = win32gui.ExtractIconEx(<span class="string">f&#x27;<span class="subst">&#123;file_path&#125;</span>&#x27;</span>, <span class="number">0</span>)</span><br><span class="line">        useIcon = large[<span class="number">0</span>]</span><br><span class="line">        destroyIcon = small[<span class="number">0</span>]</span><br><span class="line">        win32gui.DestroyIcon(destroyIcon)</span><br><span class="line">        hdc = win32ui.CreateDCFromHandle(win32gui.GetDC(<span class="number">0</span>))</span><br><span class="line">        hbmp = win32ui.CreateBitmap()</span><br><span class="line">        hbmp.CreateCompatibleBitmap(hdc, <span class="number">32</span>, <span class="number">32</span>)</span><br><span class="line">        hdc = hdc.CreateCompatibleDC()</span><br><span class="line">        hdc.SelectObject(hbmp)</span><br><span class="line">        hdc.DrawIcon((<span class="number">0</span>, <span class="number">0</span>), useIcon)</span><br><span class="line">        bmpstr = hbmp.GetBitmapBits(<span class="literal">True</span>)</span><br><span class="line">        img = Image.frombuffer(</span><br><span class="line">            <span class="string">&#x27;RGBA&#x27;</span>,</span><br><span class="line">            (<span class="number">32</span>, <span class="number">32</span>),</span><br><span class="line">            bmpstr, <span class="string">&#x27;raw&#x27;</span>, <span class="string">&#x27;BGRA&#x27;</span>, <span class="number">0</span>, <span class="number">1</span></span><br><span class="line">        )</span><br><span class="line">        img.save(<span class="string">&#x27;icon.png&#x27;</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;获取图标失败！&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># C:\Users\Administrator\Desktop\Synology Chat.lnk</span></span><br><span class="line">get_ico_from_exe(<span class="string">r&quot;C:\Users\Administrator\Desktop\Synology Chat.lnk&quot;</span>)</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2023/03/20/%E5%8F%96%E8%AF%81-exe%E6%96%87%E4%BB%B6%E5%9B%BE%E6%A0%87/">https://m42-orion.github.io/2023/03/20/%E5%8F%96%E8%AF%81-exe%E6%96%87%E4%BB%B6%E5%9B%BE%E6%A0%87/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/%E5%8F%96%E8%AF%81/">取证</a><a class="post-meta__tags" href="/tags/Windows/">Windows</a></div><div class="post-share"><div class="social-share" data-image="https://liu__tao.gitee.io/drawing-bed/blog_img/获取exe文件图标/封面.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2023/03/21/%E5%B7%A5%E5%85%B7-%E6%96%87%E4%BB%B6md5%E6%A0%A1%E9%AA%8C/" title="文件md5校验"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/文件md5校验/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">文件md5校验</div></div><div class="info-2"><div class="info-item-1">从网络上下载大文件时，官网一般都会提供一个MD5、SHA1或SHA256值,这是用来校验文件完整性的。因为从网络上下载大文件具有不确定性，可能会受很多因素影响，比如网络抖动导致文件下载不完成，文件被恶意篡改等，这些问题都会导致最终下载的文件无法正常使用。 针对小文件（＜500MB）直接以二进读模式（rb）加载进来，然后计算。 123456789101112import hashlibdef encrypt(fpath: str, algorithm: str) -&gt; str:    with open(fpath, &#x27;rb&#x27;) as f:        return hashlib.new(algorithm, f.read()).hexdigest()if __name__ == &#x27;__main__&#x27;:    for algorithm in (&#x27;md5&#x27;, &#x27;sha1&#x27;, &#x27;sha256&#x27;):        hexdigest = encrypt(&#x27;test.f...</div></div></div></a><a class="pagination-related" href="/2023/03/06/docker-%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/" title="docker更换国内源"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/docker更换国内源/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">docker更换国内源</div></div><div class="info-2"><div class="info-item-1">由于Docker的官方默认源在海外，导致了国内服务器使用Docker默认源拉取镜像速度不理想，甚至直接失败等问题，造成了不小的困扰。 解决方式很简单，可以使用国内提供的docker镜像源加速: 123456789# 网易163https://hub-mirror.c.163.com# 中国科学技术大学https://docker.mirrors.ustc.edu.cn# 阿里云https://&lt;你的ID&gt;.mirror.aliyuncs.com# 腾讯云内网https://mirror.ccs.tencentyun.com   下面以网易163源为实例 一、适用于基于 Ubuntu 操作系统的实例：1、执行以下命令，打开 /etc/default/docker 配置文件 1vim /etc/default/docker  2、按 i 切换至编辑模式，添加以下内容，并保存 1DOCKER_OPTS=&quot;--registry-mirror=https://hub-mirror.c.163.com&quot;  3、执行以下命令，重启 Docker 即可。 1sud...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2023/03/21/%E5%B7%A5%E5%85%B7-%E6%96%87%E4%BB%B6md5%E6%A0%A1%E9%AA%8C/" title="文件md5校验"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/文件md5校验/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-21</div><div class="info-item-2">文件md5校验</div></div><div class="info-2"><div class="info-item-1">从网络上下载大文件时，官网一般都会提供一个MD5、SHA1或SHA256值,这是用来校验文件完整性的。因为从网络上下载大文件具有不确定性，可能会受很多因素影响，比如网络抖动导致文件下载不完成，文件被恶意篡改等，这些问题都会导致最终下载的文件无法正常使用。 针对小文件（＜500MB）直接以二进读模式（rb）加载进来，然后计算。 123456789101112import hashlibdef encrypt(fpath: str, algorithm: str) -&gt; str:    with open(fpath, &#x27;rb&#x27;) as f:        return hashlib.new(algorithm, f.read()).hexdigest()if __name__ == &#x27;__main__&#x27;:    for algorithm in (&#x27;md5&#x27;, &#x27;sha1&#x27;, &#x27;sha256&#x27;):        hexdigest = encrypt(&#x27;test.f...</div></div></div></a><a class="pagination-related" href="/2022/07/17/%E5%B7%A5%E5%85%B7-%E5%85%B3%E4%BA%8Eoffice%E8%A7%A3%E5%AF%86%E7%9A%84%E4%B8%80%E4%B8%AA%E5%BA%93/" title="关于office解密的一个库"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/关于office解密的一个库/封面.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-17</div><div class="info-item-2">关于office解密的一个库</div></div><div class="info-2"><div class="info-item-1">在工作中偶然的机会需要我使用python实现word的解密，已知密码需要解密或者进行爆破行为，但是苦苦没有找到合适的方法，但是偶然间fa msoffcrypto-toolmsoffcrypto-tool（以前称为ms-offcrypto-tool）是Python工具和库，用于使用密码，中间密钥或生成其托管密钥的私钥解密加密的MS Office文件。 安装： pip install msoffcrypto-tool 使用方式： msoffcrypto-tool encrypted.docx decrypted.docx -p 你的密码 测试是否有加密： msoffcrypto-tool document.doc --test -v 代码用法1234567891011import msoffcryptoencrypted = open(&quot;encrypted.docx&quot;, &quot;rb&quot;)file = msoffcrypto.OfficeFile(encrypted)file.load_key(password=&quot;Passw0rd&quot;...</div></div></div></a><a class="pagination-related" href="/2025/03/23/mysql-%E4%BD%BF%E7%94%A8python%E8%BF%9B%E8%A1%8Cmysql%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB/" title="使用python进行mysql数据迁移"><img class="cover" src="https://c-ssl.duitang.com/uploads/item/202002/18/20200218150945_pgkqj.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-23</div><div class="info-item-2">使用python进行mysql数据迁移</div></div><div class="info-2"><div class="info-item-1">Alembic是一个数据库管理工具，用于管理数据库迁移。它允许你创建、应用和撤销数据库迁移，以便在数据库结构发生变化时保持版本控制。任何有关数据库变动都需要使用这个库来进行操作。这是一个python库，版本已经记录在项目下的requirements.txt文件当中。 新增字段操作如下在使用 Alembic 进行数据库迁移时，你需要通过 Alembic 的迁移脚本来实现对表结构的修改，同时确保原始数据不会被删除。以下是基于你的需求，使用 Alembic 添加一个新字段 usr_id 并设置默认值为 0 的详细步骤： 1. 初始化 Alembic 环境如果你还没有初始化 Alembic，需要先在项目中初始化它： 1alembic init alembic 这会在项目中创建一个 alembic 文件夹，其中包含 Alembic 的配置文件和迁移脚本模板。 2. 配置 Alembic编辑 alembic.ini 文件，确保其中的 sqlalchemy.url 配置正确指向你的数据库： 1sqlalchemy.url = mysql+pymysql://username:password@...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E7%BD%91%E7%BB%9C-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%98%AF443%E7%AB%AF%E5%8F%A3/" title="为什么会是443端口"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/07/4ESbXDD1So1XnNz.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">为什么会是443端口</div></div><div class="info-2"><div class="info-item-1">引言在使用Nginx进行HTTPS服务配置时，我遇到一个问题：只有443端口可以访问HTTPS服务。我很好奇为什么会是443端口。 443端口的历史原因443端口是HTTP Secure（HTTPS）服务的默认端口，这个数字并非随意选择。在互联网的早期，端口号被分配给特定的服务，而443端口被指定为SSL（Secure Sockets Layer）服务的端口，这是HTTPS的前身。随着时间的推移，SSL被TLS（Transport Layer Security）取代，但443端口作为安全通信端口的传统得以保留。 SSL&#x2F;TLS协议SSL&#x2F;TLS协议是用于在互联网上提供安全通信的加密协议。它通过加密数据、验证身份和确保数据完整性来保护通信的安全。在HTTPS中，SSL&#x2F;TLS协议用于加密客户端和服务器之间的数据传输，确保数据在传输过程中不被窃听或篡改。SSL是Secure Sockets Layer的缩写，TLS是Transport Layer Security的缩写，SSL中文含义是“安全套接字层”。TLS是the Transport Layer S...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E5%8F%96%E8%AF%81-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8/" title="开机自启动"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/18/DWSV0OOxhd08Mdq.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">开机自启动</div></div><div class="info-2"><div class="info-item-1">开机自启动自启动程序是指在系统启动时自动运行的程序。这些程序可能会影响系统的启动速度和性能，因此了解如何获取和管理这些程序是非常重要的。本文将介绍一种使用 Python 实现的方法，通过调用系统命令和处理 CSV 文件来获取自启动程序的信息。 windows代码实现确定 autorunsc 程序的名称： 1autorunsc_name = &quot;autorunsc64.exe&quot; if platform.architecture()[0] == &quot;64bit&quot; else &quot;autorunsc32.exe&quot;  这行代码根据当前系统的架构（64 位或 32 位）来确定 autorunsc 程序的文件名。终止正在运行的 autorunsc 进程： 1234567891011for process in psutil.process_iter():    try:        name = process.name()    except:        name = &quot;&quot;    try:        if n...</div></div></div></a><a class="pagination-related" href="/2025/02/15/python%E5%BA%93parse%E7%9A%84%E4%BD%BF%E7%94%A8/" title="python库parse的使用"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202502/12/pGSm4WWdTBx5ZZY.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-15</div><div class="info-item-2">python库parse的使用</div></div><div class="info-2"><div class="info-item-1">深入浅出解析 Python parse 库的使用parse 是 Python 中一个强大的字符串解析库，它能够根据指定的格式从字符串中提取出所需的数据。与 Python 内置的字符串格式化功能（如 str.format()）相反，parse 库的作用是从格式化字符串中反向提取数据。  1. 安装 parse 库在开始使用 parse 库之前，需要先安装它。可以通过以下命令安装： 1pip install parse   2. 基本用法parse 库的核心功能是通过 parse() 函数从字符串中提取数据。其基本语法如下： 123from parse import parseresult = parse(format_string, input_string)   format_string：格式化字符串，用于定义提取数据的模式。 input_string：需要解析的输入字符串。 result：解析结果，返回一个 Result 对象。如果解析失败，返回 None。  示例 1：提取简单数据1234from parse import parseresult = parse(&quot...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">205</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">55</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="彻底搞懂 Token"/></a><div class="content"><a class="title" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token">彻底搞懂 Token</a><time datetime="2026-05-25T20:00:00.000Z" title="发表于 2026-05-26 04:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析"><img src="https://c-ssl.duitang.com/uploads/blog/202604/16/pGSm4WWdTBDOWWY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Agent 沙箱深度解析"/></a><div class="content"><a class="title" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析">AI Agent 沙箱深度解析</a><time datetime="2026-05-25T19:30:00.000Z" title="发表于 2026-05-26 03:30:00">2026-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+}</script><style>body{background-image:radial-gradient(circle,#c8c8c8 0.8px,transparent 0.8px);background-size:24px 24px}</style><meta name="generator" content="Hexo 8.1.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://liu__tao.gitee.io/drawing-bed/blog_img/获取exe文件图标/封面.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">获取exe文件图标</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">获取exe文件图标</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-20T09:17:51.000Z" title="发表于 2023-03-20 17:17:51">2023-03-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-03-20T16:07:09.243Z" title="更新于 2023-03-21 00:07:09">2023-03-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>lnk文件图标需要找到对应的exe文件所在真实路径才能获取图标，不能够直接获取。dll与没有指定图标的exe文件获取图标会报错。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> win32gui</span><br><span class="line"><span class="keyword">import</span> win32ui</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> win32com.client</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pra_lnk</span>(<span class="params">file_path:<span class="built_in">str</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;解析lnk文件&quot;&quot;&quot;</span></span><br><span class="line">    shell = win32com.client.Dispatch(<span class="string">&quot;WScript.Shell&quot;</span>)</span><br><span class="line">    shortcut = shell.CreateShortCut(file_path)</span><br><span class="line">    <span class="keyword">return</span> shortcut.Targetpath</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_ico_from_exe</span>(<span class="params">file_path:<span class="built_in">str</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;获取exe的ico图标&quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># exePath = r&quot;D:\code\test\纷享销客.exe&quot;  # 替换</span></span><br><span class="line">    file_path = pra_lnk(file_path) <span class="keyword">if</span> <span class="string">&quot;.lnk&quot;</span> <span class="keyword">in</span> file_path <span class="keyword">else</span> file_path</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        large, small = win32gui.ExtractIconEx(<span class="string">f&#x27;<span class="subst">&#123;file_path&#125;</span>&#x27;</span>, <span class="number">0</span>)</span><br><span class="line">        useIcon = large[<span class="number">0</span>]</span><br><span class="line">        destroyIcon = small[<span class="number">0</span>]</span><br><span class="line">        win32gui.DestroyIcon(destroyIcon)</span><br><span class="line">        hdc = win32ui.CreateDCFromHandle(win32gui.GetDC(<span class="number">0</span>))</span><br><span class="line">        hbmp = win32ui.CreateBitmap()</span><br><span class="line">        hbmp.CreateCompatibleBitmap(hdc, <span class="number">32</span>, <span class="number">32</span>)</span><br><span class="line">        hdc = hdc.CreateCompatibleDC()</span><br><span class="line">        hdc.SelectObject(hbmp)</span><br><span class="line">        hdc.DrawIcon((<span class="number">0</span>, <span class="number">0</span>), useIcon)</span><br><span class="line">        bmpstr = hbmp.GetBitmapBits(<span class="literal">True</span>)</span><br><span class="line">        img = Image.frombuffer(</span><br><span class="line">            <span class="string">&#x27;RGBA&#x27;</span>,</span><br><span class="line">            (<span class="number">32</span>, <span class="number">32</span>),</span><br><span class="line">            bmpstr, <span class="string">&#x27;raw&#x27;</span>, <span class="string">&#x27;BGRA&#x27;</span>, <span class="number">0</span>, <span class="number">1</span></span><br><span class="line">        )</span><br><span class="line">        img.save(<span class="string">&#x27;icon.png&#x27;</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;获取图标失败！&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># C:\Users\Administrator\Desktop\Synology Chat.lnk</span></span><br><span class="line">get_ico_from_exe(<span class="string">r&quot;C:\Users\Administrator\Desktop\Synology Chat.lnk&quot;</span>)</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2023/03/20/%E5%8F%96%E8%AF%81-exe%E6%96%87%E4%BB%B6%E5%9B%BE%E6%A0%87/">https://m42-orion.github.io/2023/03/20/%E5%8F%96%E8%AF%81-exe%E6%96%87%E4%BB%B6%E5%9B%BE%E6%A0%87/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/%E5%8F%96%E8%AF%81/">取证</a><a class="post-meta__tags" href="/tags/Windows/">Windows</a></div><div class="post-share"><div class="social-share" data-image="https://liu__tao.gitee.io/drawing-bed/blog_img/获取exe文件图标/封面.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2023/03/21/%E5%B7%A5%E5%85%B7-%E6%96%87%E4%BB%B6md5%E6%A0%A1%E9%AA%8C/" title="文件md5校验"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/文件md5校验/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">文件md5校验</div></div><div class="info-2"><div class="info-item-1">从网络上下载大文件时，官网一般都会提供一个MD5、SHA1或SHA256值,这是用来校验文件完整性的。因为从网络上下载大文件具有不确定性，可能会受很多因素影响，比如网络抖动导致文件下载不完成，文件被恶意篡改等，这些问题都会导致最终下载的文件无法正常使用。 针对小文件（＜500MB）直接以二进读模式（rb）加载进来，然后计算。 123456789101112import hashlibdef encrypt(fpath: str, algorithm: str) -&gt; str:    with open(fpath, &#x27;rb&#x27;) as f:        return hashlib.new(algorithm, f.read()).hexdigest()if __name__ == &#x27;__main__&#x27;:    for algorithm in (&#x27;md5&#x27;, &#x27;sha1&#x27;, &#x27;sha256&#x27;):        hexdigest = encrypt(&#x27;test.f...</div></div></div></a><a class="pagination-related" href="/2023/03/06/docker-%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90/" title="docker更换国内源"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/docker更换国内源/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">docker更换国内源</div></div><div class="info-2"><div class="info-item-1">由于Docker的官方默认源在海外，导致了国内服务器使用Docker默认源拉取镜像速度不理想，甚至直接失败等问题，造成了不小的困扰。 解决方式很简单，可以使用国内提供的docker镜像源加速: 123456789# 网易163https://hub-mirror.c.163.com# 中国科学技术大学https://docker.mirrors.ustc.edu.cn# 阿里云https://&lt;你的ID&gt;.mirror.aliyuncs.com# 腾讯云内网https://mirror.ccs.tencentyun.com   下面以网易163源为实例 一、适用于基于 Ubuntu 操作系统的实例：1、执行以下命令，打开 /etc/default/docker 配置文件 1vim /etc/default/docker  2、按 i 切换至编辑模式，添加以下内容，并保存 1DOCKER_OPTS=&quot;--registry-mirror=https://hub-mirror.c.163.com&quot;  3、执行以下命令，重启 Docker 即可。 1sud...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2023/03/21/%E5%B7%A5%E5%85%B7-%E6%96%87%E4%BB%B6md5%E6%A0%A1%E9%AA%8C/" title="文件md5校验"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/文件md5校验/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-21</div><div class="info-item-2">文件md5校验</div></div><div class="info-2"><div class="info-item-1">从网络上下载大文件时，官网一般都会提供一个MD5、SHA1或SHA256值,这是用来校验文件完整性的。因为从网络上下载大文件具有不确定性，可能会受很多因素影响，比如网络抖动导致文件下载不完成，文件被恶意篡改等，这些问题都会导致最终下载的文件无法正常使用。 针对小文件（＜500MB）直接以二进读模式（rb）加载进来，然后计算。 123456789101112import hashlibdef encrypt(fpath: str, algorithm: str) -&gt; str:    with open(fpath, &#x27;rb&#x27;) as f:        return hashlib.new(algorithm, f.read()).hexdigest()if __name__ == &#x27;__main__&#x27;:    for algorithm in (&#x27;md5&#x27;, &#x27;sha1&#x27;, &#x27;sha256&#x27;):        hexdigest = encrypt(&#x27;test.f...</div></div></div></a><a class="pagination-related" href="/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E5%AD%90%E5%9F%9F%E5%90%8D%E6%8C%96%E6%8E%98/" title="信息收集之子域名挖掘"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/信息收集之子域名挖掘/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-26</div><div class="info-item-2">信息收集之子域名挖掘</div></div><div class="info-2"><div class="info-item-1">域名可以分为顶级域名、一级域名、二级域名等。子域名（subdomain）是顶级域名（一级域名或父域名）的下一级。例如，mail.example.com和calendar.example.com是example.com的两个子域，而example.com则是顶级域.com的子域。在测试过程中，测试目标主站时如果未发现任何相关漏洞，此时通常会考虑挖掘目标系统的子域名。 1234567891011121314151617181920212223242526272829303132333435363738import requestsfrom bs4 import BeautifulSoupfrom urllib.parse import urlparsedef bing_search(site, pages):    Subdomain = []    headers = &#123;&#x27;User-Agent&#x27;: &#x27;Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0&#x2...</div></div></div></a><a class="pagination-related" href="/2024/12/01/python%E6%89%93%E5%8C%85%E6%88%90exe%E5%90%8E%E7%9A%84%E8%B7%AF%E5%BE%84%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F/" title="python打包成exe后的路径在哪里？"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202410/31/YxSQ2ppATqpP73j.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">python打包成exe后的路径在哪里？</div></div><div class="info-2"><div class="info-item-1">项目目录路径的获取代码解析这段Python代码的目的是确定项目目录的路径，它通过检查sys模块的frozen属性来判断当前脚本是被直接运行还是被打包成了可执行文件。这个属性在PyInstaller等打包工具中被设置为True。 123456789101112if getattr(sys, &quot;frozen&quot;, False):    PROJ_PATH = os.path.normpath(os.path.join(        sys.executable,        os.pardir,  # 上一级目录(..)    ))else:    PROJ_PATH = os.path.normpath(os.path.join(        os.path.abspath(__file__),  # 当前文件的绝对路径        os.pardir,  # 上一级目录(..)        os.pardir,  # 上一级目录(..)    ))getattr(sys, &quot;frozen&quot;, False)：尝试获取sys模块的fro...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E9%97%AE%E9%A2%98-SQLAlchemy%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98%E5%AF%BC%E8%87%B4%E4%B8%8D%E5%8F%AF%E7%94%A8/" title="SQLAlchemy版本问题导致不可用"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202410/23/3BSD1QQoCzE7QY1.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">SQLAlchemy版本问题导致不可用</div></div><div class="info-2"><div class="info-item-1">问题最近，我遇到了一个关于SQLAlchemy版本的问题。我尝试使用SQLAlchemy与关系型数据库进行交互，但在某些情况下，它似乎与我的当前环境不兼容。经过一番研究，我发现了SQLAlchemy的两个主要版本——SQLAlchemy 1.x和SQLAlchemy 2.x，并了解了它们之间的区别以及如何解决兼容性问题。 原因SQLAlchemy是一个Python库，用于与关系型数据库进行交互。它提供了两个主要版本：SQLAlchemy 1.x和SQLAlchemy 2.x。在这两个版本之间有一些关键区别：  主要功能变化：SQLAlchemy 2.x引入了一些新的主要功能，例如支持关系、更高级的ORM功能和更好的性能。  兼容性问题：虽然SQLAlchemy 2.x在大多数情况下与SQLAlchemy 1.x兼容，但在某些情况下，例如使用特定数据库引擎或特定ORM功能时，可能会遇到兼容性问题。在这种情况下，您可能需要升级或降级您的SQLAlchemy版本以解决兼容性问题。   要了解更多信息，请查看SQLAlchemy的官方文档，特别是SQLAlchemy 2.0的迁移指南：h...</div></div></div></a><a class="pagination-related" href="/2022/12/11/%E7%88%AC%E8%99%AB-%E9%AA%8C%E8%AF%81%E7%A0%81%E6%BB%91%E5%9D%97%E8%AF%86%E5%88%AB/" title="验证码滑块识别"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/验证码滑块识别/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-11</div><div class="info-item-2">验证码滑块识别</div></div><div class="info-2"><div class="info-item-1">滑块验证码是验证码当中的常见类型，虽然现在有很多种验证码，但是滑块验证依然应用广泛。滑块验证需要根据实际情况进行调整，最好是通过机器学习的方法解决，不然效果可能会因为验证码改变数据从而大大折扣。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E5%8F%96%E8%AF%81-LastActivityView%E8%8E%B7%E5%8F%96%E5%8E%86%E5%8F%B2%E8%BF%90%E8%A1%8C%E8%AE%B0%E5%BD%95/" title="工具LastActivityView获取历史运行记录"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/25/LyS3L99QfqWO8mo.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">工具LastActivityView获取历史运行记录</div></div><div class="info-2"><div class="info-item-1">LastActivityView查看电脑操作记录(LastActivityView)是一款简单而有用的软件，可以在列表中清清楚楚的看到你的电脑使用历史记录。该软件直接调用系统日志，能显示安装软件、系统启动、关机、网络连接、执行的程序等几乎所有的电脑使用日志，让你更熟悉电脑的行为。 代码演示终止指定进程： 123456789101112pe_name = &quot;LastActivityView.exe&quot;for process in psutil.process_iter():    try:        name = process.name()    except:        name = &quot;&quot;    try:        if name == pe_name:            process.terminate()    except Exception as e:        setting.log.error(&quot;终止垃圾进程失败,原因: &#123;&#125;&quot;.format(str(e)))    ...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">205</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">55</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="彻底搞懂 Token"/></a><div class="content"><a class="title" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token">彻底搞懂 Token</a><time datetime="2026-05-25T20:00:00.000Z" title="发表于 2026-05-26 04:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析"><img src="https://c-ssl.duitang.com/uploads/blog/202604/16/pGSm4WWdTBDOWWY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Agent 沙箱深度解析"/></a><div class="content"><a class="title" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析">AI Agent 沙箱深度解析</a><time datetime="2026-05-25T19:30:00.000Z" title="发表于 2026-05-26 03:30:00">2026-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const parseViewBox = viewBox => {
+    if (!viewBox) return null
+    const parts = viewBox.trim().split(/[\s,]+/).map(n => Number(n))
+    if (parts.length !== 4 || parts.some(n => Number.isNaN(n))) return null
+    return parts
+  }
+
+  const getSvgViewBox = svg => {
+    const attr = parseViewBox(svg.getAttribute('viewBox'))
+    if (attr) return attr
+
+    // Fallback: use bbox to build a viewBox
+    try {
+      const bbox = svg.getBBox()
+      if (bbox && bbox.width && bbox.height) return [bbox.x, bbox.y, bbox.width, bbox.height]
+    } catch (e) {
+      // getBBox may fail on some edge cases; ignore
+    }
+
+    const w = Number(svg.getAttribute('width')) || 0
+    const h = Number(svg.getAttribute('height')) || 0
+    if (w > 0 && h > 0) return [0, 0, w, h]
+    return [0, 0, 100, 100]
+  }
+
+  const setSvgViewBox = (svg, vb) => {
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`)
+  }
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+
+  const openSvgInNewTab = ({ source, initViewBox }) => {
+    const getClonedSvg = () => {
+      if (typeof source === 'string') {
+        const template = document.createElement('template')
+        template.innerHTML = source.trim()
+        const svg = template.content.querySelector('svg')
+        return svg ? svg.cloneNode(true) : null
+      }
+      if (source && typeof source.cloneNode === 'function') {
+        return source.cloneNode(true)
+      }
+      return null
+    }
+
+    const clone = getClonedSvg()
+    if (!clone) return
+    if (initViewBox && initViewBox.length === 4) {
+      clone.setAttribute('viewBox', initViewBox.join(' '))
+    }
+    if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    if (!clone.getAttribute('xmlns:xlink') && clone.outerHTML.includes('xlink:')) {
+      clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+    }
+    // inject background to match current theme
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+    const bg = getComputedStyle(document.body).backgroundColor || (isDark ? '#1e1e1e' : '#ffffff')
+    if (!clone.style.background) clone.style.background = bg
+
+    const serializer = new XMLSerializer()
+    const svgSource = serializer.serializeToString(clone)
+    const htmlSource = `<!doctype html><html><head><meta charset="utf-8" />
+      <style>
+        html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
+        svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+      </style>
+      </head><body>${svgSource}</body></html>`
+    const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank', 'noopener')
+    setTimeout(() => URL.revokeObjectURL(url), 30000)
+  }
+
+  const attachMermaidViewerButton = wrap => {
+    let btn = wrap.querySelector('.mermaid-open-btn')
+    if (!btn) {
+      btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'mermaid-open-btn'
+      wrap.appendChild(btn)
+    }
+
+    btn.innerHTML = '<i class="fa fa-search fa-fw" aria-hidden="true"></i>'
+
+    if (!btn.__mermaidViewerBound) {
+      btn.addEventListener('click', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        const svg = wrap.__mermaidOriginalSvg || wrap.querySelector('svg')
+        if (!svg) return
+        const initViewBox = wrap.__mermaidInitViewBox
+        if (typeof svg === 'string') {
+          openSvgInNewTab({ source: svg, initViewBox })
+          return
+        }
+        openSvgInNewTab({ source: svg, initViewBox })
+      })
+      btn.__mermaidViewerBound = true
+    }
+  }
+
+  // Zoom around a point (px, py) in the SVG viewport (in viewBox coordinates)
+  const zoomAtPoint = (vb, factor, px, py) => {
+    const w = vb[2] * factor
+    const h = vb[3] * factor
+    const nx = px - (px - vb[0]) * factor
+    const ny = py - (py - vb[1]) * factor
+    return [nx, ny, w, h]
+  }
+
+  const initMermaidGestures = wrap => {
+    const svg = wrap.querySelector('svg')
+    if (!svg) return
+
+    // Ensure viewBox exists so gestures always work
+    const initVb = getSvgViewBox(svg)
+    wrap.__mermaidInitViewBox = initVb
+    wrap.__mermaidCurViewBox = initVb.slice()
+    setSvgViewBox(svg, initVb)
+
+    // Avoid binding multiple times on themeChange/pjax
+    if (wrap.__mermaidGestureBound) return
+    wrap.__mermaidGestureBound = true
+
+    // Helper: map client (viewport) coordinate -> viewBox coordinate
+    const clientToViewBox = (clientX, clientY) => {
+      const rect = svg.getBoundingClientRect()
+      const vb = wrap.__mermaidCurViewBox || getSvgViewBox(svg)
+      const x = vb[0] + (clientX - rect.left) * (vb[2] / rect.width)
+      const y = vb[1] + (clientY - rect.top) * (vb[3] / rect.height)
+      return { x, y, rect, vb }
+    }
+
+    const state = {
+      pointers: new Map(),
+      startVb: null,
+      startDist: 0,
+      startCenter: null
+    }
+
+    const clampVb = vb => {
+      const init = wrap.__mermaidInitViewBox || vb
+      const minW = init[2] * 0.1
+      const maxW = init[2] * 10
+      const minH = init[3] * 0.1
+      const maxH = init[3] * 10
+      vb[2] = clamp(vb[2], minW, maxW)
+      vb[3] = clamp(vb[3], minH, maxH)
+      return vb
+    }
+
+    const setCurVb = vb => {
+      vb = clampVb(vb)
+      wrap.__mermaidCurViewBox = vb
+      setSvgViewBox(svg, vb)
+    }
+
+    const onPointerDown = e => {
+      // Allow only primary button for mouse
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      svg.setPointerCapture(e.pointerId)
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      if (state.pointers.size === 1) {
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      } else if (state.pointers.size === 2) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        state.startDist = Math.hypot(dx, dy)
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        state.startCenter = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 }
+      }
+    }
+
+    const onPointerMove = e => {
+      if (!state.pointers.has(e.pointerId)) return
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      // Pan with 1 pointer
+      if (state.pointers.size === 1 && state.startVb) {
+        const p = [...state.pointers.values()][0]
+        const prev = { x: e.clientX - e.movementX, y: e.clientY - e.movementY }
+        // movementX/Y unreliable on touch, compute from stored last position
+        const last = wrap.__mermaidLastSinglePointer || p
+        const dxClient = p.x - last.x
+        const dyClient = p.y - last.y
+        wrap.__mermaidLastSinglePointer = p
+
+        const { rect } = clientToViewBox(p.x, p.y)
+        const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        const dx = dxClient * (vb[2] / rect.width)
+        const dy = dyClient * (vb[3] / rect.height)
+        setCurVb([vb[0] - dx, vb[1] - dy, vb[2], vb[3]])
+        return
+      }
+
+      // Pinch zoom with 2 pointers
+      if (state.pointers.size === 2 && state.startVb && state.startDist > 0) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        const dist = Math.hypot(dx, dy)
+        if (!dist) return
+        const factor = state.startDist / dist // dist bigger => zoom in (viewBox smaller)
+
+        const cx = (pts[0].x + pts[1].x) / 2
+        const cy = (pts[0].y + pts[1].y) / 2
+        const centerClient = { x: cx, y: cy }
+
+        const pxy = clientToViewBox(centerClient.x, centerClient.y)
+        const cpx = pxy.x
+        const cpy = pxy.y
+
+        const vb = zoomAtPoint(state.startVb, factor, cpx, cpy)
+        setCurVb(vb)
+      }
+    }
+
+    const onPointerUpOrCancel = e => {
+      state.pointers.delete(e.pointerId)
+      if (state.pointers.size === 0) {
+        state.startVb = null
+        state.startDist = 0
+        state.startCenter = null
+        wrap.__mermaidLastSinglePointer = null
+      } else if (state.pointers.size === 1) {
+        // reset single pointer baseline to avoid jump
+        wrap.__mermaidLastSinglePointer = [...state.pointers.values()][0]
+      }
+    }
+
+    // Wheel zoom (mouse/trackpad)
+    const onWheel = e => {
+      // ctrlKey on mac trackpad pinch; we treat both as zoom
+      e.preventDefault()
+      const delta = e.deltaY
+      const zoomFactor = delta > 0 ? 1.1 : 0.9
+      const { x, y } = clientToViewBox(e.clientX, e.clientY)
+      const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      setCurVb(zoomAtPoint(vb, zoomFactor, x, y))
+    }
+
+    const onDblClick = () => {
+      const init = wrap.__mermaidInitViewBox
+      if (!init) return
+      wrap.__mermaidCurViewBox = init.slice()
+      setSvgViewBox(svg, init)
+    }
+
+    svg.addEventListener('pointerdown', onPointerDown)
+    svg.addEventListener('pointermove', onPointerMove)
+    svg.addEventListener('pointerup', onPointerUpOrCancel)
+    svg.addEventListener('pointercancel', onPointerUpOrCancel)
+    svg.addEventListener('wheel', onWheel, { passive: false })
+    svg.addEventListener('dblclick', onDblClick)
+  }
+
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+
+      // Clear old render (themeChange/pjax will rerun)
+      const oldSvg = item.querySelector('svg')
+      if (oldSvg) oldSvg.remove()
+      item.__mermaidGestureBound = false
+
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+        if (true) initMermaidGestures(item)
+        item.__mermaidOriginalSvg = svg
+        if (true) attachMermaidViewerButton(item)
+      }
+
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
   const abcjsInit = () => {
     const abcjsFn = () => {
       setTimeout(() => {

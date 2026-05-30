@@ -160,7 +160,7 @@
   isHighlightShrink: false,
   isToc: false,
   pageType: 'post'
-}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://c-ssl.duitang.com/uploads/blog/202411/08/gVSLNJJ0TQd86Zl.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">始化COM库</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">始化COM库</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-12-01T13:14:33.000Z" title="发表于 2024-12-01 21:14:33">2024-12-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-20T06:33:33.649Z" title="更新于 2025-05-20 14:33:33">2025-05-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>COM 是一种微软的软件组件技术，它允许不同的应用程序之间进行通信和交互。在 Windows 操作系统中，许多应用程序和服务都使用 COM 来实现其功能。</p>
+}</script><style>body{background-image:radial-gradient(circle,#c8c8c8 0.8px,transparent 0.8px);background-size:24px 24px}</style><meta name="generator" content="Hexo 8.1.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://c-ssl.duitang.com/uploads/blog/202411/08/gVSLNJJ0TQd86Zl.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">始化COM库</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">始化COM库</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-12-01T13:14:33.000Z" title="发表于 2024-12-01 21:14:33">2024-12-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-20T06:33:33.649Z" title="更新于 2025-05-20 14:33:33">2025-05-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>COM 是一种微软的软件组件技术，它允许不同的应用程序之间进行通信和交互。在 Windows 操作系统中，许多应用程序和服务都使用 COM 来实现其功能。</p>
 <p>pythoncom.CoInitialize() 在 Python 程序中的作用是初始化 COM（Component Object Model）库。</p>
 <p>当你在 Python 程序中使用 pythoncom.CoInitialize() 时，你是在告诉 Python 解释器需要初始化 COM 库，以便能够使用 COM 相关的功能。这通常在以下情况下需要：</p>
 <ul>
@@ -172,7 +172,328 @@
 </li>
 </ul>
 <p>如果 pythoncom.CoInitialize() 是在一个循环中被调用，这可能是因为程序需要在每个循环迭代中处理 COM 相关的任务，或者是因为程序需要在多个线程中并行处理 COM 任务。然而，频繁地初始化和清理 COM 库可能会影响程序的性能，因此通常建议只在必要时初始化 COM 库，并在不再需要时及时清理。</p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2024/12/01/%E9%97%AE%E9%A2%98-%E5%A7%8B%E5%8C%96COM%E5%BA%93/">https://m42-orion.github.io/2024/12/01/%E9%97%AE%E9%A2%98-%E5%A7%8B%E5%8C%96COM%E5%BA%93/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80/">基础</a></div><div class="post-share"><div class="social-share" data-image="https://c-ssl.duitang.com/uploads/blog/202411/08/gVSLNJJ0TQd86Zl.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/12/01/%E7%BD%91%E7%BB%9C-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%98%AF443%E7%AB%AF%E5%8F%A3/" title="为什么会是443端口"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/07/4ESbXDD1So1XnNz.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">为什么会是443端口</div></div><div class="info-2"><div class="info-item-1">引言在使用Nginx进行HTTPS服务配置时，我遇到一个问题：只有443端口可以访问HTTPS服务。我很好奇为什么会是443端口。 443端口的历史原因443端口是HTTP Secure（HTTPS）服务的默认端口，这个数字并非随意选择。在互联网的早期，端口号被分配给特定的服务，而443端口被指定为SSL（Secure Sockets Layer）服务的端口，这是HTTPS的前身。随着时间的推移，SSL被TLS（Transport Layer Security）取代，但443端口作为安全通信端口的传统得以保留。 SSL&#x2F;TLS协议SSL&#x2F;TLS协议是用于在互联网上提供安全通信的加密协议。它通过加密数据、验证身份和确保数据完整性来保护通信的安全。在HTTPS中，SSL&#x2F;TLS协议用于加密客户端和服务器之间的数据传输，确保数据在传输过程中不被窃听或篡改。SSL是Secure Sockets Layer的缩写，TLS是Transport Layer Security的缩写，SSL中文含义是“安全套接字层”。TLS是the Transport Layer S...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E8%AF%AD%E6%B3%95-%E4%BC%98%E9%9B%85%E5%9C%B0%E5%BA%9F%E5%BC%83%E4%BB%A3%E7%A0%81/" title="优雅地废弃代码"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/08/q4S8BddjIx5XBjA.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">优雅地废弃代码</div></div><div class="info-2"><div class="info-item-1">Python 中的 @deprecated 装饰器：优雅地废弃代码在软件开发过程中，我们经常会遇到需要废弃旧代码的情况。这可能是因为代码存在安全问题、性能问题，或者是因为有了更好的替代方案。Python 提供了一种优雅的方式来处理这种情况，那就是使用 @deprecated 装饰器。本文将详细介绍 @deprecated 装饰器的使用方法、实现原理以及最佳实践。 什么是 @deprecated 装饰器？@deprecated 装饰器是一个用于标记函数、方法或类为已废弃的工具。当被标记的代码被调用时，它会触发一个 DeprecationWarning 警告，提醒开发者该功能将在未来版本中被移除或更改。 如何使用 @deprecated 装饰器？Python 标准库中的 warnings 模块提供了 warn 函数，可以用来发出警告。结合 functools 模块中的 wraps 装饰器，我们可以创建一个自定义的 @deprecated 装饰器。 12345678910111213import warningsfrom functools import wrapsdef deprec...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/12/01/%E5%8F%96%E8%AF%81-%E5%89%AA%E5%88%87%E6%9D%BF/" title="剪切板取证"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/14/B8SLBggGTl5pvOd.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">剪切板取证</div></div><div class="info-2"><div class="info-item-1">代码如下打开剪贴板： 1win32clipboard.OpenClipboard() 这行代码打开剪贴板，以便读取其中的数据。 获取剪贴板中的文本数据： 1text = win32clipboard.GetClipboardData(win32clipboard.CF_UNICODETEXT) 这行代码从剪贴板中获取 Unicode 文本数据。 构建源数据字典： 1234source_data = &#123;    &quot;type&quot;: &quot;txt&quot;,    &quot;content&quot;: text&#125; 这行代码将获取到的文本数据封装成一个字典，其中 type 表示数据类型为文本，content 是文本的具体内容。 处理数据并写入文件： 123clean_data = get_line(self, source_data, self.display)data = json.dumps(clean_data, ensure_ascii=False)write_file(self.file, data) 这行代码调用 get_lin...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-32%E4%BD%8D%E4%B8%8E64%E4%BD%8D%E7%9A%84%E5%8C%BA%E5%88%AB/" title="32位与64位的区别"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/28/pGSm4WWdTBxAJBV.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">32位与64位的区别</div></div><div class="info-2"><div class="info-item-1">32位与64位的区别首先，我们需要了解计算机中的位数的概念。计算机中的位数指的是计算机中用于表示数据的最大二进制数。例如，32位计算机可以处理最大为2^32-1的整数，而64位计算机可以处理最大为2^64-1的整数。 接下来，我们来详细解释32位程序与64位程序的区别。  程序的地址空间不同  32位程序的地址空间为4GB，而64位程序的地址空间为16GB。这意味着32位程序可以访问的内存地址范围比64位程序要小得多。  程序的寻址能力不同  32位程序的寻址能力为4GB，而64位程序的寻址能力为16GB。这意味着32位程序可以访问的内存地址范围比64位程序要小得多。  程序的寄存器不同  32位程序使用32位寄存器，而64位程序使用64位寄存器。这意味着32位程序可以处理的数据范围比64位程序要小得多。  程序的指令集不同  32位程序使用32位指令集，而64位程序使用64位指令集。这意味着32位程序可以执行的指令比64位程序要少得多。  程序的兼容性问题  由于32位程序和64位程序的地址空间和寄存器不同，因此它们之间可能存在兼容性问题。例如，某些32位程序可能无法在64位计...</div></div></div></a><a class="pagination-related" href="/2024/12/01/git-%E6%8E%A8%E9%80%81443%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3/" title="git推送443报错解决"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/02/WXSzeOOvfQDq2PL.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">git推送443报错解决</div></div><div class="info-2"><div class="info-item-1">问题git报错：Failed to connect to github.com port 443: Connection refused 解决1. 检查网络确保网络连接正常，可以访问github.com。 2. 检查git配置使用以下命令检查git配置： 1git config --global --list  如果配置中包含http.proxy或https.proxy，则删除它们： 12git config --global --unset http.proxygit config --global --unset https.proxy  3. 检查防火墙确保防火墙没有阻止git的443端口。 4. 检查代理确保没有设置代理，可以使用以下命令检查代理： 1curl -I https://github.com  如果返回的HTTP/1.1 200 OK，则表示没有设置代理。如果设置了代理，在windows上可以在设置中关闭代理，在linux上可以使用以下命令关闭代理： 12unset http_proxyunset https_proxy  5. 检查git版本确保git版本在...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E9%97%AE%E9%A2%98-SQLAlchemy%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98%E5%AF%BC%E8%87%B4%E4%B8%8D%E5%8F%AF%E7%94%A8/" title="SQLAlchemy版本问题导致不可用"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202410/23/3BSD1QQoCzE7QY1.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">SQLAlchemy版本问题导致不可用</div></div><div class="info-2"><div class="info-item-1">问题最近，我遇到了一个关于SQLAlchemy版本的问题。我尝试使用SQLAlchemy与关系型数据库进行交互，但在某些情况下，它似乎与我的当前环境不兼容。经过一番研究，我发现了SQLAlchemy的两个主要版本——SQLAlchemy 1.x和SQLAlchemy 2.x，并了解了它们之间的区别以及如何解决兼容性问题。 原因SQLAlchemy是一个Python库，用于与关系型数据库进行交互。它提供了两个主要版本：SQLAlchemy 1.x和SQLAlchemy 2.x。在这两个版本之间有一些关键区别：  主要功能变化：SQLAlchemy 2.x引入了一些新的主要功能，例如支持关系、更高级的ORM功能和更好的性能。  兼容性问题：虽然SQLAlchemy 2.x在大多数情况下与SQLAlchemy 1.x兼容，但在某些情况下，例如使用特定数据库引擎或特定ORM功能时，可能会遇到兼容性问题。在这种情况下，您可能需要升级或降级您的SQLAlchemy版本以解决兼容性问题。   要了解更多信息，请查看SQLAlchemy的官方文档，特别是SQLAlchemy 2.0的迁移指南：h...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E5%8F%96%E8%AF%81-%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/" title="windows软件安装记录"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202410/23/YxSQ2ppATqpbzDB.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">windows软件安装记录</div></div><div class="info-2"><div class="info-item-1">注册表UninstallMicrosoft\Windows\CurrentVersion\Uninstall 是 Windows 注册表中的一个键（key），它包含了用户通过“控制面板”中的“程序和功能”（以前称为“添加或删除程序”）安装的所有应用程序的列表。这个注册表键位于 HKEY_LOCAL_MACHINE 分支下。 当你通过“程序和功能”卸载应用程序时，Windows 会在这个注册表键下为每个应用程序创建一个子键（subkey）。每个子键都包含了与该应用程序相关的卸载信息，包括：  应用程序的显示名称 发行者 卸载字符串（Uninstall String），指向卸载程序的路径 版本号 安装源（安装介质的路径，如果是从网络或CD安装） 估计大小 安装日期 状态（是否已安装、正在安装等） 系统组件（是否是系统必需的应用程序） 其他与卸载相关的信息  代码实现初始化列表和集合： 12key_list = []t = []  # 去重列表 这部分代码初始化了两个列表：key_list 用于存储打开的注册表键，t 用于存储已处理数据的MD5哈希值，用于去重。 尝试打开注册表键： 1...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E5%8F%96%E8%AF%81-%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF/" title="在windows中获取硬件信息"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/07/OoSzjwwof6nQEBm.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">在windows中获取硬件信息</div></div><div class="info-2"><div class="info-item-1">遍历系统中的所有逻辑设备： 1for device in wmi.WMI().CIM_LogicalDevice(): 这部分代码使用 wmi 模块遍历系统中的所有逻辑设备。 提取每个逻辑设备的信息： 12345678item = &#123;    &quot;PNPDeviceID&quot;: device.PNPDeviceID if hasattr(device, &quot;PNPDeviceID&quot;) else &quot;&quot;,    &quot;Description&quot;: device.Description if hasattr(device, &quot;Description&quot;) else &quot;&quot;,    &quot;Caption&quot;: device.Caption if hasattr(device, &quot;Caption&quot;) else &quot;&quot;,    &quot;Manufacturer&quot;: device.Manufacturer if hasa...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">205</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">55</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="彻底搞懂 Token"/></a><div class="content"><a class="title" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token">彻底搞懂 Token</a><time datetime="2026-05-25T20:00:00.000Z" title="发表于 2026-05-26 04:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析"><img src="https://c-ssl.duitang.com/uploads/blog/202604/16/pGSm4WWdTBDOWWY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Agent 沙箱深度解析"/></a><div class="content"><a class="title" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析">AI Agent 沙箱深度解析</a><time datetime="2026-05-25T19:30:00.000Z" title="发表于 2026-05-26 03:30:00">2026-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2024/12/01/%E9%97%AE%E9%A2%98-%E5%A7%8B%E5%8C%96COM%E5%BA%93/">https://m42-orion.github.io/2024/12/01/%E9%97%AE%E9%A2%98-%E5%A7%8B%E5%8C%96COM%E5%BA%93/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/%E5%9F%BA%E7%A1%80/">基础</a></div><div class="post-share"><div class="social-share" data-image="https://c-ssl.duitang.com/uploads/blog/202411/08/gVSLNJJ0TQd86Zl.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/12/01/%E7%BD%91%E7%BB%9C-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%98%AF443%E7%AB%AF%E5%8F%A3/" title="为什么会是443端口"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/07/4ESbXDD1So1XnNz.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">为什么会是443端口</div></div><div class="info-2"><div class="info-item-1">引言在使用Nginx进行HTTPS服务配置时，我遇到一个问题：只有443端口可以访问HTTPS服务。我很好奇为什么会是443端口。 443端口的历史原因443端口是HTTP Secure（HTTPS）服务的默认端口，这个数字并非随意选择。在互联网的早期，端口号被分配给特定的服务，而443端口被指定为SSL（Secure Sockets Layer）服务的端口，这是HTTPS的前身。随着时间的推移，SSL被TLS（Transport Layer Security）取代，但443端口作为安全通信端口的传统得以保留。 SSL&#x2F;TLS协议SSL&#x2F;TLS协议是用于在互联网上提供安全通信的加密协议。它通过加密数据、验证身份和确保数据完整性来保护通信的安全。在HTTPS中，SSL&#x2F;TLS协议用于加密客户端和服务器之间的数据传输，确保数据在传输过程中不被窃听或篡改。SSL是Secure Sockets Layer的缩写，TLS是Transport Layer Security的缩写，SSL中文含义是“安全套接字层”。TLS是the Transport Layer S...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E8%AF%AD%E6%B3%95-%E4%BC%98%E9%9B%85%E5%9C%B0%E5%BA%9F%E5%BC%83%E4%BB%A3%E7%A0%81/" title="优雅地废弃代码"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/08/q4S8BddjIx5XBjA.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">优雅地废弃代码</div></div><div class="info-2"><div class="info-item-1">Python 中的 @deprecated 装饰器：优雅地废弃代码在软件开发过程中，我们经常会遇到需要废弃旧代码的情况。这可能是因为代码存在安全问题、性能问题，或者是因为有了更好的替代方案。Python 提供了一种优雅的方式来处理这种情况，那就是使用 @deprecated 装饰器。本文将详细介绍 @deprecated 装饰器的使用方法、实现原理以及最佳实践。 什么是 @deprecated 装饰器？@deprecated 装饰器是一个用于标记函数、方法或类为已废弃的工具。当被标记的代码被调用时，它会触发一个 DeprecationWarning 警告，提醒开发者该功能将在未来版本中被移除或更改。 如何使用 @deprecated 装饰器？Python 标准库中的 warnings 模块提供了 warn 函数，可以用来发出警告。结合 functools 模块中的 wraps 装饰器，我们可以创建一个自定义的 @deprecated 装饰器。 12345678910111213import warningsfrom functools import wrapsdef deprec...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/12/01/%E5%8F%96%E8%AF%81-%E6%B3%A8%E5%86%8Cwindows%E6%9C%8D%E5%8A%A1/" title="python注册windows服务"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202410/25/1mSg5LL3fQM89n2.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">python注册windows服务</div></div><div class="info-2"><div class="info-item-1">如何使用Python和instsrv.exe&#x2F;srvany.exe创建Windows服务该博客将探讨如何使用Python脚本结合instsrv.exe和srvany.exe工具将任何程序转换为Windows服务。这不仅有助于程序以SYSTEM账户运行，还能实现随机器启动而自启动，并且可以隐藏不必要的窗口。以下是详细的步骤和代码示例。 概述在Windows系统中，服务是一种特殊类型的程序，它在后台运行，通常没有用户界面。通过将程序转换为服务，我们可以确保程序在系统启动时自动运行，并且可以在后台持续运行，不受用户登录状态的影响。 准备工作在开始之前，你需要确保你的系统中安装了以下工具：  instsrv.exe 和 srvany.exe：这两个工具是Microsoft Windows Resource Kits的一部分，用于安装和卸载服务。 Python：我们将使用Python编写脚本，因此需要确保Python环境已安装。  安装和配置服务首先，我们需要将instsrv.exe和srvany.exe复制到C:\Windows\System32\目录下（对于64位系统，还需要...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E9%97%AE%E9%A2%98-SQLAlchemy%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98%E5%AF%BC%E8%87%B4%E4%B8%8D%E5%8F%AF%E7%94%A8/" title="SQLAlchemy版本问题导致不可用"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202410/23/3BSD1QQoCzE7QY1.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">SQLAlchemy版本问题导致不可用</div></div><div class="info-2"><div class="info-item-1">问题最近，我遇到了一个关于SQLAlchemy版本的问题。我尝试使用SQLAlchemy与关系型数据库进行交互，但在某些情况下，它似乎与我的当前环境不兼容。经过一番研究，我发现了SQLAlchemy的两个主要版本——SQLAlchemy 1.x和SQLAlchemy 2.x，并了解了它们之间的区别以及如何解决兼容性问题。 原因SQLAlchemy是一个Python库，用于与关系型数据库进行交互。它提供了两个主要版本：SQLAlchemy 1.x和SQLAlchemy 2.x。在这两个版本之间有一些关键区别：  主要功能变化：SQLAlchemy 2.x引入了一些新的主要功能，例如支持关系、更高级的ORM功能和更好的性能。  兼容性问题：虽然SQLAlchemy 2.x在大多数情况下与SQLAlchemy 1.x兼容，但在某些情况下，例如使用特定数据库引擎或特定ORM功能时，可能会遇到兼容性问题。在这种情况下，您可能需要升级或降级您的SQLAlchemy版本以解决兼容性问题。   要了解更多信息，请查看SQLAlchemy的官方文档，特别是SQLAlchemy 2.0的迁移指南：h...</div></div></div></a><a class="pagination-related" href="/2024/12/01/python%E4%BB%A3%E7%A0%81ast%E5%9F%BA%E7%A1%80/" title="python代码ast基础"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202410/29/EWS0pvvdTVXdd9z.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">python代码ast基础</div></div><div class="info-2"><div class="info-item-1">AST（Abstract Syntax Tree）是一种抽象语法树，它将源代码转换为一种树形结构，用于表示程序的语法结构。在Python中，AST库允许你将源代码转换为AST，然后遍历和操作这个树形结构。这使得你能够更好地理解和维护代码。 Python的AST库提供了以下功能：  将源代码转换为AST：使用ast.parse函数将源代码转换为AST。这个函数接受一个字符串参数，即要转换的源代码。  1234567891011import astsource_code = &quot;&quot;&quot;def add(a, b):    return a + bresult = add(1, 2)print(result)&quot;&quot;&quot;tree = ast.parse(source_code)   遍历AST：使用ast.walk函数遍历AST。这个函数接受一个AST节点作为参数，并返回一个包含所有子节点的列表。  123456import asttree = ast.parse(source_code)for node in ast.walk(tree...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E8%AF%AD%E6%B3%95-%E4%BC%98%E9%9B%85%E5%9C%B0%E5%BA%9F%E5%BC%83%E4%BB%A3%E7%A0%81/" title="优雅地废弃代码"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/08/q4S8BddjIx5XBjA.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">优雅地废弃代码</div></div><div class="info-2"><div class="info-item-1">Python 中的 @deprecated 装饰器：优雅地废弃代码在软件开发过程中，我们经常会遇到需要废弃旧代码的情况。这可能是因为代码存在安全问题、性能问题，或者是因为有了更好的替代方案。Python 提供了一种优雅的方式来处理这种情况，那就是使用 @deprecated 装饰器。本文将详细介绍 @deprecated 装饰器的使用方法、实现原理以及最佳实践。 什么是 @deprecated 装饰器？@deprecated 装饰器是一个用于标记函数、方法或类为已废弃的工具。当被标记的代码被调用时，它会触发一个 DeprecationWarning 警告，提醒开发者该功能将在未来版本中被移除或更改。 如何使用 @deprecated 装饰器？Python 标准库中的 warnings 模块提供了 warn 函数，可以用来发出警告。结合 functools 模块中的 wraps 装饰器，我们可以创建一个自定义的 @deprecated 装饰器。 12345678910111213import warningsfrom functools import wrapsdef deprec...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E5%8F%96%E8%AF%81-LastActivityView%E8%8E%B7%E5%8F%96%E5%8E%86%E5%8F%B2%E8%BF%90%E8%A1%8C%E8%AE%B0%E5%BD%95/" title="工具LastActivityView获取历史运行记录"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/25/LyS3L99QfqWO8mo.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">工具LastActivityView获取历史运行记录</div></div><div class="info-2"><div class="info-item-1">LastActivityView查看电脑操作记录(LastActivityView)是一款简单而有用的软件，可以在列表中清清楚楚的看到你的电脑使用历史记录。该软件直接调用系统日志，能显示安装软件、系统启动、关机、网络连接、执行的程序等几乎所有的电脑使用日志，让你更熟悉电脑的行为。 代码演示终止指定进程： 123456789101112pe_name = &quot;LastActivityView.exe&quot;for process in psutil.process_iter():    try:        name = process.name()    except:        name = &quot;&quot;    try:        if name == pe_name:            process.terminate()    except Exception as e:        setting.log.error(&quot;终止垃圾进程失败,原因: &#123;&#125;&quot;.format(str(e)))    ...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E5%8F%96%E8%AF%81-windows%E7%9A%84%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" title="获取windows的环境变量"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/14/EWS0pvvdTVXPL5n.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">获取windows的环境变量</div></div><div class="info-2"><div class="info-item-1">遍历系统环境变量： 1for path in wmi.WMI().Win32_Environment(): 这部分代码使用 wmi 模块遍历系统中的所有环境变量。 提取每个环境变量的信息： 12345678item = &#123;    &quot;Name&quot;: getattr(path, &quot;Name&quot;),    &quot;SystemVariable&quot;: getattr(path, &quot;SystemVariable&quot;),    &quot;UserName&quot;: getattr(path, &quot;UserName&quot;),    &quot;Description&quot;: getattr(path, &quot;Description&quot;),    &quot;Caption&quot;: getattr(path, &quot;Caption&quot;),    &quot;VariableValue&quot;: getattr(path, &quot;VariableValu...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">205</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">55</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="彻底搞懂 Token"/></a><div class="content"><a class="title" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token">彻底搞懂 Token</a><time datetime="2026-05-25T20:00:00.000Z" title="发表于 2026-05-26 04:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析"><img src="https://c-ssl.duitang.com/uploads/blog/202604/16/pGSm4WWdTBDOWWY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Agent 沙箱深度解析"/></a><div class="content"><a class="title" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析">AI Agent 沙箱深度解析</a><time datetime="2026-05-25T19:30:00.000Z" title="发表于 2026-05-26 03:30:00">2026-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const parseViewBox = viewBox => {
+    if (!viewBox) return null
+    const parts = viewBox.trim().split(/[\s,]+/).map(n => Number(n))
+    if (parts.length !== 4 || parts.some(n => Number.isNaN(n))) return null
+    return parts
+  }
+
+  const getSvgViewBox = svg => {
+    const attr = parseViewBox(svg.getAttribute('viewBox'))
+    if (attr) return attr
+
+    // Fallback: use bbox to build a viewBox
+    try {
+      const bbox = svg.getBBox()
+      if (bbox && bbox.width && bbox.height) return [bbox.x, bbox.y, bbox.width, bbox.height]
+    } catch (e) {
+      // getBBox may fail on some edge cases; ignore
+    }
+
+    const w = Number(svg.getAttribute('width')) || 0
+    const h = Number(svg.getAttribute('height')) || 0
+    if (w > 0 && h > 0) return [0, 0, w, h]
+    return [0, 0, 100, 100]
+  }
+
+  const setSvgViewBox = (svg, vb) => {
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`)
+  }
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+
+  const openSvgInNewTab = ({ source, initViewBox }) => {
+    const getClonedSvg = () => {
+      if (typeof source === 'string') {
+        const template = document.createElement('template')
+        template.innerHTML = source.trim()
+        const svg = template.content.querySelector('svg')
+        return svg ? svg.cloneNode(true) : null
+      }
+      if (source && typeof source.cloneNode === 'function') {
+        return source.cloneNode(true)
+      }
+      return null
+    }
+
+    const clone = getClonedSvg()
+    if (!clone) return
+    if (initViewBox && initViewBox.length === 4) {
+      clone.setAttribute('viewBox', initViewBox.join(' '))
+    }
+    if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    if (!clone.getAttribute('xmlns:xlink') && clone.outerHTML.includes('xlink:')) {
+      clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+    }
+    // inject background to match current theme
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+    const bg = getComputedStyle(document.body).backgroundColor || (isDark ? '#1e1e1e' : '#ffffff')
+    if (!clone.style.background) clone.style.background = bg
+
+    const serializer = new XMLSerializer()
+    const svgSource = serializer.serializeToString(clone)
+    const htmlSource = `<!doctype html><html><head><meta charset="utf-8" />
+      <style>
+        html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
+        svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+      </style>
+      </head><body>${svgSource}</body></html>`
+    const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank', 'noopener')
+    setTimeout(() => URL.revokeObjectURL(url), 30000)
+  }
+
+  const attachMermaidViewerButton = wrap => {
+    let btn = wrap.querySelector('.mermaid-open-btn')
+    if (!btn) {
+      btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'mermaid-open-btn'
+      wrap.appendChild(btn)
+    }
+
+    btn.innerHTML = '<i class="fa fa-search fa-fw" aria-hidden="true"></i>'
+
+    if (!btn.__mermaidViewerBound) {
+      btn.addEventListener('click', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        const svg = wrap.__mermaidOriginalSvg || wrap.querySelector('svg')
+        if (!svg) return
+        const initViewBox = wrap.__mermaidInitViewBox
+        if (typeof svg === 'string') {
+          openSvgInNewTab({ source: svg, initViewBox })
+          return
+        }
+        openSvgInNewTab({ source: svg, initViewBox })
+      })
+      btn.__mermaidViewerBound = true
+    }
+  }
+
+  // Zoom around a point (px, py) in the SVG viewport (in viewBox coordinates)
+  const zoomAtPoint = (vb, factor, px, py) => {
+    const w = vb[2] * factor
+    const h = vb[3] * factor
+    const nx = px - (px - vb[0]) * factor
+    const ny = py - (py - vb[1]) * factor
+    return [nx, ny, w, h]
+  }
+
+  const initMermaidGestures = wrap => {
+    const svg = wrap.querySelector('svg')
+    if (!svg) return
+
+    // Ensure viewBox exists so gestures always work
+    const initVb = getSvgViewBox(svg)
+    wrap.__mermaidInitViewBox = initVb
+    wrap.__mermaidCurViewBox = initVb.slice()
+    setSvgViewBox(svg, initVb)
+
+    // Avoid binding multiple times on themeChange/pjax
+    if (wrap.__mermaidGestureBound) return
+    wrap.__mermaidGestureBound = true
+
+    // Helper: map client (viewport) coordinate -> viewBox coordinate
+    const clientToViewBox = (clientX, clientY) => {
+      const rect = svg.getBoundingClientRect()
+      const vb = wrap.__mermaidCurViewBox || getSvgViewBox(svg)
+      const x = vb[0] + (clientX - rect.left) * (vb[2] / rect.width)
+      const y = vb[1] + (clientY - rect.top) * (vb[3] / rect.height)
+      return { x, y, rect, vb }
+    }
+
+    const state = {
+      pointers: new Map(),
+      startVb: null,
+      startDist: 0,
+      startCenter: null
+    }
+
+    const clampVb = vb => {
+      const init = wrap.__mermaidInitViewBox || vb
+      const minW = init[2] * 0.1
+      const maxW = init[2] * 10
+      const minH = init[3] * 0.1
+      const maxH = init[3] * 10
+      vb[2] = clamp(vb[2], minW, maxW)
+      vb[3] = clamp(vb[3], minH, maxH)
+      return vb
+    }
+
+    const setCurVb = vb => {
+      vb = clampVb(vb)
+      wrap.__mermaidCurViewBox = vb
+      setSvgViewBox(svg, vb)
+    }
+
+    const onPointerDown = e => {
+      // Allow only primary button for mouse
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      svg.setPointerCapture(e.pointerId)
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      if (state.pointers.size === 1) {
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      } else if (state.pointers.size === 2) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        state.startDist = Math.hypot(dx, dy)
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        state.startCenter = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 }
+      }
+    }
+
+    const onPointerMove = e => {
+      if (!state.pointers.has(e.pointerId)) return
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      // Pan with 1 pointer
+      if (state.pointers.size === 1 && state.startVb) {
+        const p = [...state.pointers.values()][0]
+        const prev = { x: e.clientX - e.movementX, y: e.clientY - e.movementY }
+        // movementX/Y unreliable on touch, compute from stored last position
+        const last = wrap.__mermaidLastSinglePointer || p
+        const dxClient = p.x - last.x
+        const dyClient = p.y - last.y
+        wrap.__mermaidLastSinglePointer = p
+
+        const { rect } = clientToViewBox(p.x, p.y)
+        const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        const dx = dxClient * (vb[2] / rect.width)
+        const dy = dyClient * (vb[3] / rect.height)
+        setCurVb([vb[0] - dx, vb[1] - dy, vb[2], vb[3]])
+        return
+      }
+
+      // Pinch zoom with 2 pointers
+      if (state.pointers.size === 2 && state.startVb && state.startDist > 0) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        const dist = Math.hypot(dx, dy)
+        if (!dist) return
+        const factor = state.startDist / dist // dist bigger => zoom in (viewBox smaller)
+
+        const cx = (pts[0].x + pts[1].x) / 2
+        const cy = (pts[0].y + pts[1].y) / 2
+        const centerClient = { x: cx, y: cy }
+
+        const pxy = clientToViewBox(centerClient.x, centerClient.y)
+        const cpx = pxy.x
+        const cpy = pxy.y
+
+        const vb = zoomAtPoint(state.startVb, factor, cpx, cpy)
+        setCurVb(vb)
+      }
+    }
+
+    const onPointerUpOrCancel = e => {
+      state.pointers.delete(e.pointerId)
+      if (state.pointers.size === 0) {
+        state.startVb = null
+        state.startDist = 0
+        state.startCenter = null
+        wrap.__mermaidLastSinglePointer = null
+      } else if (state.pointers.size === 1) {
+        // reset single pointer baseline to avoid jump
+        wrap.__mermaidLastSinglePointer = [...state.pointers.values()][0]
+      }
+    }
+
+    // Wheel zoom (mouse/trackpad)
+    const onWheel = e => {
+      // ctrlKey on mac trackpad pinch; we treat both as zoom
+      e.preventDefault()
+      const delta = e.deltaY
+      const zoomFactor = delta > 0 ? 1.1 : 0.9
+      const { x, y } = clientToViewBox(e.clientX, e.clientY)
+      const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      setCurVb(zoomAtPoint(vb, zoomFactor, x, y))
+    }
+
+    const onDblClick = () => {
+      const init = wrap.__mermaidInitViewBox
+      if (!init) return
+      wrap.__mermaidCurViewBox = init.slice()
+      setSvgViewBox(svg, init)
+    }
+
+    svg.addEventListener('pointerdown', onPointerDown)
+    svg.addEventListener('pointermove', onPointerMove)
+    svg.addEventListener('pointerup', onPointerUpOrCancel)
+    svg.addEventListener('pointercancel', onPointerUpOrCancel)
+    svg.addEventListener('wheel', onWheel, { passive: false })
+    svg.addEventListener('dblclick', onDblClick)
+  }
+
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+
+      // Clear old render (themeChange/pjax will rerun)
+      const oldSvg = item.querySelector('svg')
+      if (oldSvg) oldSvg.remove()
+      item.__mermaidGestureBound = false
+
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+        if (true) initMermaidGestures(item)
+        item.__mermaidOriginalSvg = svg
+        if (true) attachMermaidViewerButton(item)
+      }
+
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
   const abcjsInit = () => {
     const abcjsFn = () => {
       setTimeout(() => {

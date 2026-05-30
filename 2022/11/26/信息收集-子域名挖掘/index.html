@@ -160,8 +160,329 @@
   isHighlightShrink: false,
   isToc: false,
   pageType: 'post'
-}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://liu__tao.gitee.io/drawing-bed/blog_img/信息收集之子域名挖掘/封面.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">信息收集之子域名挖掘</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">信息收集之子域名挖掘</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-26T14:13:27.000Z" title="发表于 2022-11-26 22:13:27">2022-11-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-27T14:09:31.516Z" title="更新于 2022-11-27 22:09:31">2022-11-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%B0%E5%BD%95/">记录</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>域名可以分为顶级域名、一级域名、二级域名等。子域名（<code>subdomain</code>）是顶级域名（一级域名或父域名）的下一级。例如，<code>mail.example.com</code>和<code>calendar.example.com</code>是<code>example.com</code>的两个子域，而<code>example.com</code>则是顶级域<code>.com</code>的子域。在测试过程中，测试目标主站时如果未发现任何相关漏洞，此时通常会考虑挖掘目标系统的子域名。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urlparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">bing_search</span>(<span class="params">site, pages</span>):</span><br><span class="line">    Subdomain = []</span><br><span class="line">    headers = &#123;<span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0&#x27;</span>,</span><br><span class="line">               <span class="string">&#x27;Accept&#x27;</span>: <span class="string">&#x27;*/*&#x27;</span>,</span><br><span class="line">               <span class="string">&#x27;Accept-Language&#x27;</span>: <span class="string">&#x27;en-US,en;q=0.5&#x27;</span>,</span><br><span class="line">               <span class="string">&#x27;Accept-Encoding&#x27;</span>: <span class="string">&#x27;gzip,deflate&#x27;</span>,</span><br><span class="line">               <span class="string">&#x27;referer&#x27;</span>: <span class="string">&quot;http://cn.bing.com/search?q=email+site%3abaidu.com&amp;qs=n&amp;sp=-1&amp;pq=emailsite%3abaidu.com&amp;first=2&amp;FORM=PERE1&quot;</span></span><br><span class="line">               &#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="built_in">int</span>(pages)+<span class="number">1</span>):</span><br><span class="line">        url = <span class="string">&quot;https://cn.bing.com/search?q=site%3a&quot;</span>+site+<span class="string">&quot;&amp;go=Search&amp;qs=ds&amp;first=&quot;</span>+ <span class="built_in">str</span>((<span class="built_in">int</span>(i)-<span class="number">1</span>)*<span class="number">10</span>) +<span class="string">&quot;&amp;FORM=PERE&quot;</span></span><br><span class="line">        conn = requests.session()</span><br><span class="line">        conn.get(<span class="string">&#x27;http://cn.bing.com&#x27;</span>, headers=headers)</span><br><span class="line">        html = conn.get(url, stream=<span class="literal">True</span>, headers=headers, timeout=<span class="number">8</span>)</span><br><span class="line">        soup = BeautifulSoup(html.content, <span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">        job_bt = soup.findAll(<span class="string">&#x27;h2&#x27;</span>)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> job_bt:</span><br><span class="line">            link = i.a.get(<span class="string">&#x27;href&#x27;</span>)</span><br><span class="line">            domain = <span class="built_in">str</span>(urlparse(link).scheme + <span class="string">&quot;://&quot;</span> + urlparse(link).netloc)</span><br><span class="line">            <span class="keyword">if</span> domain <span class="keyword">in</span> Subdomain:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                Subdomain.append(domain)</span><br><span class="line">                <span class="built_in">print</span>(domain)</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    site=<span class="string">&#x27;baidu.com&#x27;</span> </span><br><span class="line">    page = <span class="number">15</span></span><br><span class="line">    <span class="comment"># if len(sys.argv) == 3:</span></span><br><span class="line">    <span class="comment">#     site = sys.argv[1]</span></span><br><span class="line">    <span class="comment">#     page = sys.argv[2]</span></span><br><span class="line">    <span class="comment"># else:</span></span><br><span class="line">    <span class="comment">#     print (&quot;usage: %s baidu.com 10&quot; % sys.argv[0])</span></span><br><span class="line">    <span class="comment">#     sys.exit(-1)</span></span><br><span class="line">    Subdomain = bing_search(site, page)</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E5%AD%90%E5%9F%9F%E5%90%8D%E6%8C%96%E6%8E%98/">https://m42-orion.github.io/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E5%AD%90%E5%9F%9F%E5%90%8D%E6%8C%96%E6%8E%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a></div><div class="post-share"><div class="social-share" data-image="https://liu__tao.gitee.io/drawing-bed/blog_img/信息收集之子域名挖掘/封面.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-Whois%E4%B8%8Eip%E6%9F%A5%E8%AF%A2/" title="信息收集之Whois与ip查询"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/信息收集之Whois与ip查询/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">信息收集之Whois与ip查询</div></div><div class="info-2"><div class="info-item-1">Whois查询Whois是用来查询域名的IP以及所有者信息的传输协议。简单地说，Whois就是一个数据库，用来查询域名是否已经被注册，以及注册域名的详细信息（如域名所有人、域名注册商等）。 1234from whois import whoisdata = whois(&#x27;www.baidu.com&#x27;)print(data)  ip查询没啥好说的 1234import socketip = socket.gethostbyname(&quot;www.baidu.com&quot;)print(ip)  </div></div></div></a><a class="pagination-related" href="/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-ping/" title="信息收集之ping"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/windows信息收集之ping/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">信息收集之ping</div></div><div class="info-2"><div class="info-item-1">如果需要知道当前某个IP段内有多少存活的机器，可以使用ping命令查看，虽然不是很准确，但是如果有IP响应了ping那么这个一定是一个存活的主机。  当IP数据包在对方计算机处理过程中出现未知的发送错误时，ICMP会向发送者传送错误事实以及错误原因等 信息查询由一个请求和一个应答构成的。只需要向目标发送一个请求数据包，如果收到了来自目标的回应，就可以判断目标是活跃主机，否则可以判断目标是非活跃主机  Ping命令是ICMP中较为常见的一种应用，经常使用这个命令来测试本地与目标之间的连通性，发送一个ICMP请求消息给目标主机，若源主机收到目标主机的应答响应消息，则表示目标可达，主机存在。  $\color{yellow}{但是该方法也存在一定的缺陷，就是当网络设备，例如路由器、防火墙等对ICMP采取了屏蔽策略时，就会导致扫描结果不准确。} $   12345678910111213141516171819202122232425262728from scapy.layers.inet import IP, ICMP, sr1from random import randintfro...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-Whois%E4%B8%8Eip%E6%9F%A5%E8%AF%A2/" title="信息收集之Whois与ip查询"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/信息收集之Whois与ip查询/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-26</div><div class="info-item-2">信息收集之Whois与ip查询</div></div><div class="info-2"><div class="info-item-1">Whois查询Whois是用来查询域名的IP以及所有者信息的传输协议。简单地说，Whois就是一个数据库，用来查询域名是否已经被注册，以及注册域名的详细信息（如域名所有人、域名注册商等）。 1234from whois import whoisdata = whois(&#x27;www.baidu.com&#x27;)print(data)  ip查询没啥好说的 1234import socketip = socket.gethostbyname(&quot;www.baidu.com&quot;)print(ip)  </div></div></div></a><a class="pagination-related" href="/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-ping/" title="信息收集之ping"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/windows信息收集之ping/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-26</div><div class="info-item-2">信息收集之ping</div></div><div class="info-2"><div class="info-item-1">如果需要知道当前某个IP段内有多少存活的机器，可以使用ping命令查看，虽然不是很准确，但是如果有IP响应了ping那么这个一定是一个存活的主机。  当IP数据包在对方计算机处理过程中出现未知的发送错误时，ICMP会向发送者传送错误事实以及错误原因等 信息查询由一个请求和一个应答构成的。只需要向目标发送一个请求数据包，如果收到了来自目标的回应，就可以判断目标是活跃主机，否则可以判断目标是非活跃主机  Ping命令是ICMP中较为常见的一种应用，经常使用这个命令来测试本地与目标之间的连通性，发送一个ICMP请求消息给目标主机，若源主机收到目标主机的应答响应消息，则表示目标可达，主机存在。  $\color{yellow}{但是该方法也存在一定的缺陷，就是当网络设备，例如路由器、防火墙等对ICMP采取了屏蔽策略时，就会导致扫描结果不准确。} $   12345678910111213141516171819202122232425262728from scapy.layers.inet import IP, ICMP, sr1from random import randintfro...</div></div></div></a><a class="pagination-related" href="/2022/11/28/%E5%8F%96%E8%AF%81-%E5%91%BD%E5%90%8D%E7%AE%A1%E9%81%93%E8%8E%B7%E5%8F%96/" title="windows取证基础之命名管道获取"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/windows取证基础之命名管道获取/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-28</div><div class="info-item-2">windows取证基础之命名管道获取</div></div><div class="info-2"><div class="info-item-1">“命名管道”又名“命名管线”（Named Pipes），是一种简单的进程间通信（IPC）机制，Microsoft Windows大都提供了对它的支持（但不包括Windows CE）。命名管道可在同一台计算机的不同进程之间或在跨越一个网络的不同计算机的不同进程之间，支持可靠的、单向或双向的数据通信。推荐用命名管道作为进程通信方案的一项重要的原因是它们充分利用了Windows内建的安全特性（ACL等）。 12345678910111213141516171819import osimport globdef look_for_files(dir_to_look):    &quot;&quot;&quot;Looks for windows in a given directory. Supports the * wildcard character&quot;&quot;&quot;    found_files = []    if &quot;*&quot; in dir_to_look:        found_files += glob.glob(dir_to_look)...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E5%8F%96%E8%AF%81-%E8%AE%A1%E5%88%92%E4%BB%BB%E5%8A%A1/" title="autorunsc工具获取计划任务"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/04/2YSzqGG4f64eMqZ.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">autorunsc工具获取计划任务</div></div><div class="info-2"><div class="info-item-1">解析autorunsc工具的Python调用流程本文将深入探讨一段Python取证代码，该代码用于调用autorunsc工具，这是一个用于列出当前系统上所有自启动程序。现在将按照代码的执行流程，分块解释每一部分的功能和实现方式。 环境变量检查和文件名选择1autorunsc_name = &quot;autorunsc64.exe&quot; if &quot;PROGRAMFILES(X86)&quot; in os.environ else &quot;autorunsc32.exe&quot; 这一部分代码检查系统环境变量中是否存在PROGRAMFILES(X86)，以确定系统是32位还是64位，并据此选择相应的autorunsc工具版本。 路径拼接12autoruns_path = os.path.join(setting.PROJ_PATH, autorunsc_name)result_temp_path = os.path.join(setting.PROJ_PATH, &#x27;res_h.csv&#x27;) 这里，我们使用os.path.join函数来拼接路径...</div></div></div></a><a class="pagination-related" href="/2022/11/26/%E5%8F%96%E8%AF%81-%E7%B3%BB%E7%BB%9F%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%901/" title="Win10取证基础之系统日志分析1"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/Win10取证基础之系统日志分析1/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-26</div><div class="info-item-2">Win10取证基础之系统日志分析1</div></div><div class="info-2"><div class="info-item-1">这段代码需要在管理员权限下才能运行，不然没有权限访问系统日志文件。其实直接读取也不会有什么问题，只是我个人为了安全起见，拷贝了一份。 12345678910111213141516171819202122232425262728import ctypes, sysimport osfrom evtx import PyEvtxParserimport shutildef main():    shutil.copy(&quot;C:/Windows/System32/winevt/Logs/System.evtx&quot;, &quot;D:/项目/Windows取证/data_file/System.evtx&quot;)    parser = PyEvtxParser(&quot;D:/项目/Windows取证/data_file/System.evtx&quot;)    for record in parser.records():        if record[&quot;event_record_id&quot;] == 6005:            pr...</div></div></div></a><a class="pagination-related" href="/2022/12/11/%E7%88%AC%E8%99%AB-%E9%AA%8C%E8%AF%81%E7%A0%81%E6%BB%91%E5%9D%97%E8%AF%86%E5%88%AB/" title="验证码滑块识别"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/验证码滑块识别/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-11</div><div class="info-item-2">验证码滑块识别</div></div><div class="info-2"><div class="info-item-1">滑块验证码是验证码当中的常见类型，虽然现在有很多种验证码，但是滑块验证依然应用广泛。滑块验证需要根据实际情况进行调整，最好是通过机器学习的方法解决，不然效果可能会因为验证码改变数据从而大大折扣。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">205</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">55</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="彻底搞懂 Token"/></a><div class="content"><a class="title" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token">彻底搞懂 Token</a><time datetime="2026-05-25T20:00:00.000Z" title="发表于 2026-05-26 04:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析"><img src="https://c-ssl.duitang.com/uploads/blog/202604/16/pGSm4WWdTBDOWWY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Agent 沙箱深度解析"/></a><div class="content"><a class="title" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析">AI Agent 沙箱深度解析</a><time datetime="2026-05-25T19:30:00.000Z" title="发表于 2026-05-26 03:30:00">2026-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+}</script><style>body{background-image:radial-gradient(circle,#c8c8c8 0.8px,transparent 0.8px);background-size:24px 24px}</style><meta name="generator" content="Hexo 8.1.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://liu__tao.gitee.io/drawing-bed/blog_img/信息收集之子域名挖掘/封面.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">信息收集之子域名挖掘</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">信息收集之子域名挖掘</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-26T14:13:27.000Z" title="发表于 2022-11-26 22:13:27">2022-11-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-27T14:09:31.516Z" title="更新于 2022-11-27 22:09:31">2022-11-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%B0%E5%BD%95/">记录</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>域名可以分为顶级域名、一级域名、二级域名等。子域名（<code>subdomain</code>）是顶级域名（一级域名或父域名）的下一级。例如，<code>mail.example.com</code>和<code>calendar.example.com</code>是<code>example.com</code>的两个子域，而<code>example.com</code>则是顶级域<code>.com</code>的子域。在测试过程中，测试目标主站时如果未发现任何相关漏洞，此时通常会考虑挖掘目标系统的子域名。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urlparse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">bing_search</span>(<span class="params">site, pages</span>):</span><br><span class="line">    Subdomain = []</span><br><span class="line">    headers = &#123;<span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0&#x27;</span>,</span><br><span class="line">               <span class="string">&#x27;Accept&#x27;</span>: <span class="string">&#x27;*/*&#x27;</span>,</span><br><span class="line">               <span class="string">&#x27;Accept-Language&#x27;</span>: <span class="string">&#x27;en-US,en;q=0.5&#x27;</span>,</span><br><span class="line">               <span class="string">&#x27;Accept-Encoding&#x27;</span>: <span class="string">&#x27;gzip,deflate&#x27;</span>,</span><br><span class="line">               <span class="string">&#x27;referer&#x27;</span>: <span class="string">&quot;http://cn.bing.com/search?q=email+site%3abaidu.com&amp;qs=n&amp;sp=-1&amp;pq=emailsite%3abaidu.com&amp;first=2&amp;FORM=PERE1&quot;</span></span><br><span class="line">               &#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="built_in">int</span>(pages)+<span class="number">1</span>):</span><br><span class="line">        url = <span class="string">&quot;https://cn.bing.com/search?q=site%3a&quot;</span>+site+<span class="string">&quot;&amp;go=Search&amp;qs=ds&amp;first=&quot;</span>+ <span class="built_in">str</span>((<span class="built_in">int</span>(i)-<span class="number">1</span>)*<span class="number">10</span>) +<span class="string">&quot;&amp;FORM=PERE&quot;</span></span><br><span class="line">        conn = requests.session()</span><br><span class="line">        conn.get(<span class="string">&#x27;http://cn.bing.com&#x27;</span>, headers=headers)</span><br><span class="line">        html = conn.get(url, stream=<span class="literal">True</span>, headers=headers, timeout=<span class="number">8</span>)</span><br><span class="line">        soup = BeautifulSoup(html.content, <span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line">        job_bt = soup.findAll(<span class="string">&#x27;h2&#x27;</span>)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> job_bt:</span><br><span class="line">            link = i.a.get(<span class="string">&#x27;href&#x27;</span>)</span><br><span class="line">            domain = <span class="built_in">str</span>(urlparse(link).scheme + <span class="string">&quot;://&quot;</span> + urlparse(link).netloc)</span><br><span class="line">            <span class="keyword">if</span> domain <span class="keyword">in</span> Subdomain:</span><br><span class="line">                <span class="keyword">pass</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                Subdomain.append(domain)</span><br><span class="line">                <span class="built_in">print</span>(domain)</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    site=<span class="string">&#x27;baidu.com&#x27;</span> </span><br><span class="line">    page = <span class="number">15</span></span><br><span class="line">    <span class="comment"># if len(sys.argv) == 3:</span></span><br><span class="line">    <span class="comment">#     site = sys.argv[1]</span></span><br><span class="line">    <span class="comment">#     page = sys.argv[2]</span></span><br><span class="line">    <span class="comment"># else:</span></span><br><span class="line">    <span class="comment">#     print (&quot;usage: %s baidu.com 10&quot; % sys.argv[0])</span></span><br><span class="line">    <span class="comment">#     sys.exit(-1)</span></span><br><span class="line">    Subdomain = bing_search(site, page)</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E5%AD%90%E5%9F%9F%E5%90%8D%E6%8C%96%E6%8E%98/">https://m42-orion.github.io/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-%E5%AD%90%E5%9F%9F%E5%90%8D%E6%8C%96%E6%8E%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/">信息收集</a></div><div class="post-share"><div class="social-share" data-image="https://liu__tao.gitee.io/drawing-bed/blog_img/信息收集之子域名挖掘/封面.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-Whois%E4%B8%8Eip%E6%9F%A5%E8%AF%A2/" title="信息收集之Whois与ip查询"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/信息收集之Whois与ip查询/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">信息收集之Whois与ip查询</div></div><div class="info-2"><div class="info-item-1">Whois查询Whois是用来查询域名的IP以及所有者信息的传输协议。简单地说，Whois就是一个数据库，用来查询域名是否已经被注册，以及注册域名的详细信息（如域名所有人、域名注册商等）。 1234from whois import whoisdata = whois(&#x27;www.baidu.com&#x27;)print(data)  ip查询没啥好说的 1234import socketip = socket.gethostbyname(&quot;www.baidu.com&quot;)print(ip)  </div></div></div></a><a class="pagination-related" href="/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-ping/" title="信息收集之ping"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/windows信息收集之ping/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">信息收集之ping</div></div><div class="info-2"><div class="info-item-1">如果需要知道当前某个IP段内有多少存活的机器，可以使用ping命令查看，虽然不是很准确，但是如果有IP响应了ping那么这个一定是一个存活的主机。  当IP数据包在对方计算机处理过程中出现未知的发送错误时，ICMP会向发送者传送错误事实以及错误原因等 信息查询由一个请求和一个应答构成的。只需要向目标发送一个请求数据包，如果收到了来自目标的回应，就可以判断目标是活跃主机，否则可以判断目标是非活跃主机  Ping命令是ICMP中较为常见的一种应用，经常使用这个命令来测试本地与目标之间的连通性，发送一个ICMP请求消息给目标主机，若源主机收到目标主机的应答响应消息，则表示目标可达，主机存在。  $\color{yellow}{但是该方法也存在一定的缺陷，就是当网络设备，例如路由器、防火墙等对ICMP采取了屏蔽策略时，就会导致扫描结果不准确。} $   12345678910111213141516171819202122232425262728from scapy.layers.inet import IP, ICMP, sr1from random import randintfro...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-Whois%E4%B8%8Eip%E6%9F%A5%E8%AF%A2/" title="信息收集之Whois与ip查询"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/信息收集之Whois与ip查询/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-26</div><div class="info-item-2">信息收集之Whois与ip查询</div></div><div class="info-2"><div class="info-item-1">Whois查询Whois是用来查询域名的IP以及所有者信息的传输协议。简单地说，Whois就是一个数据库，用来查询域名是否已经被注册，以及注册域名的详细信息（如域名所有人、域名注册商等）。 1234from whois import whoisdata = whois(&#x27;www.baidu.com&#x27;)print(data)  ip查询没啥好说的 1234import socketip = socket.gethostbyname(&quot;www.baidu.com&quot;)print(ip)  </div></div></div></a><a class="pagination-related" href="/2022/11/26/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86-ping/" title="信息收集之ping"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/windows信息收集之ping/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-26</div><div class="info-item-2">信息收集之ping</div></div><div class="info-2"><div class="info-item-1">如果需要知道当前某个IP段内有多少存活的机器，可以使用ping命令查看，虽然不是很准确，但是如果有IP响应了ping那么这个一定是一个存活的主机。  当IP数据包在对方计算机处理过程中出现未知的发送错误时，ICMP会向发送者传送错误事实以及错误原因等 信息查询由一个请求和一个应答构成的。只需要向目标发送一个请求数据包，如果收到了来自目标的回应，就可以判断目标是活跃主机，否则可以判断目标是非活跃主机  Ping命令是ICMP中较为常见的一种应用，经常使用这个命令来测试本地与目标之间的连通性，发送一个ICMP请求消息给目标主机，若源主机收到目标主机的应答响应消息，则表示目标可达，主机存在。  $\color{yellow}{但是该方法也存在一定的缺陷，就是当网络设备，例如路由器、防火墙等对ICMP采取了屏蔽策略时，就会导致扫描结果不准确。} $   12345678910111213141516171819202122232425262728from scapy.layers.inet import IP, ICMP, sr1from random import randintfro...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%EF%BC%88fstapi%EF%BC%89%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1/" title="fstapi后台任务"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/04/y9SV6jjOhbogwXy.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">fstapi后台任务</div></div><div class="info-2"><div class="info-item-1">在现代的 Web 开发中，后台任务处理是一个常见的需求。FastAPI 提供了一个非常方便的功能，名为 BackgroundTasks，它允许在处理请求后执行一些后台任务。这些任务对于不需要即时返回结果的操作非常有用，比如发送电子邮件、日志记录、数据缓存等。 BackgroundTasks 的基本使用首先，看看如何在 FastAPI 中使用 BackgroundTasks。  导入 BackgroundTasks：  1from fastapi import FastAPI, BackgroundTasks   定义后台任务函数：  123def some_background_task(arg1, arg2):    # 后台任务的代码    print(f&quot;后台任务执行，参数：&#123;arg1&#125;, &#123;arg2&#125;&quot;)   在路径操作函数中添加后台任务：  123456app = FastAPI()@app.post(&quot;/background_task/&quot;)def background_task(backg...</div></div></div></a><a class="pagination-related" href="/2022/05/08/python%E7%B1%BB%E5%9E%8B%E6%B3%A8%E9%87%8A/" title="python类型注释"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/python类型注释/封面.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-08</div><div class="info-item-2">python类型注释</div></div><div class="info-2"><div class="info-item-1">我找到一些来自于官方的关于python类型注释的资源，我将其复制下来，用于个人收藏。良好的类型注释习惯能让代码的可读性大大增强，同时也能够保证后续加入的人员能够快速理解与使用。 变量Python 3.6 在 PEP 526 中引入了用于注释变量的语法，我们在大多数示例中都使用它。 123456789101112# This is how you declare the type of a variable type in Python 3.6age: int = 1# You don&#x27;t need to initialize a variable to annotate ita: int  # Ok (no value at runtime until assigned)# The latter is useful in conditional brancheschild: boolif age &lt; 18:    child = Trueelse:    child = False  内置类型123456789101112131415161718192021222...</div></div></div></a><a class="pagination-related" href="/2025/05/23/%E8%AF%AD%E6%B3%95-%E5%BE%AA%E7%8E%AF%E3%80%81%E8%BF%AD%E4%BB%A3%E5%99%A8%E3%80%81%E7%94%9F%E6%88%90%E5%99%A8/" title="循环、迭代器、生成器"><img class="cover" src="https://c-ssl.dtstatic.com/uploads/blog/202407/24/xDSnPGGYI2ljmyq.thumb.1000_0.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-23</div><div class="info-item-2">循环、迭代器、生成器</div></div><div class="info-2"><div class="info-item-1">一、循环（Loop）本质循环是一种控制结构，用于重复执行代码块。它本身不是数据结构，而是一种语法机制。 常见形式123456789# 1. for 循环（遍历可迭代对象）for item in [1, 2, 3]:    print(item)# 2. while 循环（基于条件）i = 0while i &lt; 3:    print(i)    i += 1  适用场景 需要重复执行相同或相似的操作 遍历容器中的元素（如列表、字典） 实现需要终止条件的逻辑（如用户登录验证）  优势 简单直观，易于理解和使用 适用于大多数重复操作场景  劣势 当处理大量数据时，可能占用大量内存（如生成全量数据列表） 无法暂停或恢复执行流程  二、迭代器（Iterator）本质迭代器是实现了迭代器协议的对象（即包含 __iter__() 和 __next__() 方法）。它是一种数据访问方式，允许你按需逐个访问元素。 核心方法 __iter__()：返回迭代器自身 __next__()：返回下一个元素，若没有元素则抛出 StopIteration 异常  示例1234567my_list = ...</div></div></div></a><a class="pagination-related" href="/2022/11/30/%E7%88%AC%E8%99%AB-%E6%B5%8F%E8%A7%88%E5%99%A8hook/" title="爬虫hook"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/爬虫hook/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-30</div><div class="info-item-2">爬虫hook</div></div><div class="info-2"><div class="info-item-1">hook本质上就是重写函数，因为js反爬也是通过重写函数来进行加密或者反爬的。记录两个小脚本用于hook，虽然我早已经不从事爬虫工作,唉~！ 12345678910111213141516171819202122232425262728293031323334353637383940414243f = FunctionFunction = function(a)&#123;    if (a!==&#x27;debugger&#x27;)&#123;return f(a)&#125;&#125;Function.prototype.constructor_ = Function.prototype.constructor;Function.prototype.constructor = function(x)&#123;    if (x!==&#x27;debugger&#x27;)&#123;return Function.prototype.constructor_(x)&#125;&#125;eval_ = eval;eval = function(a)&#123;   ...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">205</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">55</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="彻底搞懂 Token"/></a><div class="content"><a class="title" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token">彻底搞懂 Token</a><time datetime="2026-05-25T20:00:00.000Z" title="发表于 2026-05-26 04:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析"><img src="https://c-ssl.duitang.com/uploads/blog/202604/16/pGSm4WWdTBDOWWY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Agent 沙箱深度解析"/></a><div class="content"><a class="title" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析">AI Agent 沙箱深度解析</a><time datetime="2026-05-25T19:30:00.000Z" title="发表于 2026-05-26 03:30:00">2026-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const parseViewBox = viewBox => {
+    if (!viewBox) return null
+    const parts = viewBox.trim().split(/[\s,]+/).map(n => Number(n))
+    if (parts.length !== 4 || parts.some(n => Number.isNaN(n))) return null
+    return parts
+  }
+
+  const getSvgViewBox = svg => {
+    const attr = parseViewBox(svg.getAttribute('viewBox'))
+    if (attr) return attr
+
+    // Fallback: use bbox to build a viewBox
+    try {
+      const bbox = svg.getBBox()
+      if (bbox && bbox.width && bbox.height) return [bbox.x, bbox.y, bbox.width, bbox.height]
+    } catch (e) {
+      // getBBox may fail on some edge cases; ignore
+    }
+
+    const w = Number(svg.getAttribute('width')) || 0
+    const h = Number(svg.getAttribute('height')) || 0
+    if (w > 0 && h > 0) return [0, 0, w, h]
+    return [0, 0, 100, 100]
+  }
+
+  const setSvgViewBox = (svg, vb) => {
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`)
+  }
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+
+  const openSvgInNewTab = ({ source, initViewBox }) => {
+    const getClonedSvg = () => {
+      if (typeof source === 'string') {
+        const template = document.createElement('template')
+        template.innerHTML = source.trim()
+        const svg = template.content.querySelector('svg')
+        return svg ? svg.cloneNode(true) : null
+      }
+      if (source && typeof source.cloneNode === 'function') {
+        return source.cloneNode(true)
+      }
+      return null
+    }
+
+    const clone = getClonedSvg()
+    if (!clone) return
+    if (initViewBox && initViewBox.length === 4) {
+      clone.setAttribute('viewBox', initViewBox.join(' '))
+    }
+    if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    if (!clone.getAttribute('xmlns:xlink') && clone.outerHTML.includes('xlink:')) {
+      clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+    }
+    // inject background to match current theme
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+    const bg = getComputedStyle(document.body).backgroundColor || (isDark ? '#1e1e1e' : '#ffffff')
+    if (!clone.style.background) clone.style.background = bg
+
+    const serializer = new XMLSerializer()
+    const svgSource = serializer.serializeToString(clone)
+    const htmlSource = `<!doctype html><html><head><meta charset="utf-8" />
+      <style>
+        html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
+        svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+      </style>
+      </head><body>${svgSource}</body></html>`
+    const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank', 'noopener')
+    setTimeout(() => URL.revokeObjectURL(url), 30000)
+  }
+
+  const attachMermaidViewerButton = wrap => {
+    let btn = wrap.querySelector('.mermaid-open-btn')
+    if (!btn) {
+      btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'mermaid-open-btn'
+      wrap.appendChild(btn)
+    }
+
+    btn.innerHTML = '<i class="fa fa-search fa-fw" aria-hidden="true"></i>'
+
+    if (!btn.__mermaidViewerBound) {
+      btn.addEventListener('click', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        const svg = wrap.__mermaidOriginalSvg || wrap.querySelector('svg')
+        if (!svg) return
+        const initViewBox = wrap.__mermaidInitViewBox
+        if (typeof svg === 'string') {
+          openSvgInNewTab({ source: svg, initViewBox })
+          return
+        }
+        openSvgInNewTab({ source: svg, initViewBox })
+      })
+      btn.__mermaidViewerBound = true
+    }
+  }
+
+  // Zoom around a point (px, py) in the SVG viewport (in viewBox coordinates)
+  const zoomAtPoint = (vb, factor, px, py) => {
+    const w = vb[2] * factor
+    const h = vb[3] * factor
+    const nx = px - (px - vb[0]) * factor
+    const ny = py - (py - vb[1]) * factor
+    return [nx, ny, w, h]
+  }
+
+  const initMermaidGestures = wrap => {
+    const svg = wrap.querySelector('svg')
+    if (!svg) return
+
+    // Ensure viewBox exists so gestures always work
+    const initVb = getSvgViewBox(svg)
+    wrap.__mermaidInitViewBox = initVb
+    wrap.__mermaidCurViewBox = initVb.slice()
+    setSvgViewBox(svg, initVb)
+
+    // Avoid binding multiple times on themeChange/pjax
+    if (wrap.__mermaidGestureBound) return
+    wrap.__mermaidGestureBound = true
+
+    // Helper: map client (viewport) coordinate -> viewBox coordinate
+    const clientToViewBox = (clientX, clientY) => {
+      const rect = svg.getBoundingClientRect()
+      const vb = wrap.__mermaidCurViewBox || getSvgViewBox(svg)
+      const x = vb[0] + (clientX - rect.left) * (vb[2] / rect.width)
+      const y = vb[1] + (clientY - rect.top) * (vb[3] / rect.height)
+      return { x, y, rect, vb }
+    }
+
+    const state = {
+      pointers: new Map(),
+      startVb: null,
+      startDist: 0,
+      startCenter: null
+    }
+
+    const clampVb = vb => {
+      const init = wrap.__mermaidInitViewBox || vb
+      const minW = init[2] * 0.1
+      const maxW = init[2] * 10
+      const minH = init[3] * 0.1
+      const maxH = init[3] * 10
+      vb[2] = clamp(vb[2], minW, maxW)
+      vb[3] = clamp(vb[3], minH, maxH)
+      return vb
+    }
+
+    const setCurVb = vb => {
+      vb = clampVb(vb)
+      wrap.__mermaidCurViewBox = vb
+      setSvgViewBox(svg, vb)
+    }
+
+    const onPointerDown = e => {
+      // Allow only primary button for mouse
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      svg.setPointerCapture(e.pointerId)
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      if (state.pointers.size === 1) {
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      } else if (state.pointers.size === 2) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        state.startDist = Math.hypot(dx, dy)
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        state.startCenter = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 }
+      }
+    }
+
+    const onPointerMove = e => {
+      if (!state.pointers.has(e.pointerId)) return
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      // Pan with 1 pointer
+      if (state.pointers.size === 1 && state.startVb) {
+        const p = [...state.pointers.values()][0]
+        const prev = { x: e.clientX - e.movementX, y: e.clientY - e.movementY }
+        // movementX/Y unreliable on touch, compute from stored last position
+        const last = wrap.__mermaidLastSinglePointer || p
+        const dxClient = p.x - last.x
+        const dyClient = p.y - last.y
+        wrap.__mermaidLastSinglePointer = p
+
+        const { rect } = clientToViewBox(p.x, p.y)
+        const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        const dx = dxClient * (vb[2] / rect.width)
+        const dy = dyClient * (vb[3] / rect.height)
+        setCurVb([vb[0] - dx, vb[1] - dy, vb[2], vb[3]])
+        return
+      }
+
+      // Pinch zoom with 2 pointers
+      if (state.pointers.size === 2 && state.startVb && state.startDist > 0) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        const dist = Math.hypot(dx, dy)
+        if (!dist) return
+        const factor = state.startDist / dist // dist bigger => zoom in (viewBox smaller)
+
+        const cx = (pts[0].x + pts[1].x) / 2
+        const cy = (pts[0].y + pts[1].y) / 2
+        const centerClient = { x: cx, y: cy }
+
+        const pxy = clientToViewBox(centerClient.x, centerClient.y)
+        const cpx = pxy.x
+        const cpy = pxy.y
+
+        const vb = zoomAtPoint(state.startVb, factor, cpx, cpy)
+        setCurVb(vb)
+      }
+    }
+
+    const onPointerUpOrCancel = e => {
+      state.pointers.delete(e.pointerId)
+      if (state.pointers.size === 0) {
+        state.startVb = null
+        state.startDist = 0
+        state.startCenter = null
+        wrap.__mermaidLastSinglePointer = null
+      } else if (state.pointers.size === 1) {
+        // reset single pointer baseline to avoid jump
+        wrap.__mermaidLastSinglePointer = [...state.pointers.values()][0]
+      }
+    }
+
+    // Wheel zoom (mouse/trackpad)
+    const onWheel = e => {
+      // ctrlKey on mac trackpad pinch; we treat both as zoom
+      e.preventDefault()
+      const delta = e.deltaY
+      const zoomFactor = delta > 0 ? 1.1 : 0.9
+      const { x, y } = clientToViewBox(e.clientX, e.clientY)
+      const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      setCurVb(zoomAtPoint(vb, zoomFactor, x, y))
+    }
+
+    const onDblClick = () => {
+      const init = wrap.__mermaidInitViewBox
+      if (!init) return
+      wrap.__mermaidCurViewBox = init.slice()
+      setSvgViewBox(svg, init)
+    }
+
+    svg.addEventListener('pointerdown', onPointerDown)
+    svg.addEventListener('pointermove', onPointerMove)
+    svg.addEventListener('pointerup', onPointerUpOrCancel)
+    svg.addEventListener('pointercancel', onPointerUpOrCancel)
+    svg.addEventListener('wheel', onWheel, { passive: false })
+    svg.addEventListener('dblclick', onDblClick)
+  }
+
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+
+      // Clear old render (themeChange/pjax will rerun)
+      const oldSvg = item.querySelector('svg')
+      if (oldSvg) oldSvg.remove()
+      item.__mermaidGestureBound = false
+
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+        if (true) initMermaidGestures(item)
+        item.__mermaidOriginalSvg = svg
+        if (true) attachMermaidViewerButton(item)
+      }
+
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
   const abcjsInit = () => {
     const abcjsFn = () => {
       setTimeout(() => {
