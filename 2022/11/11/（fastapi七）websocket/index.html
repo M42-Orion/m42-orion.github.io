@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>（fastapi七）websocket | 念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="referrer" content="no-referrer"><meta name="description" content="记录两段基础代码，分别来自官网与互联网。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051from fastapi import FastAPI, WebSocketfrom fastapi.responses import HTMLResponseapp &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="（fastapi七）websocket">
+<meta property="og:url" content="https://m42-orion.github.io/2022/11/11/%EF%BC%88fastapi%E4%B8%83%EF%BC%89websocket/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="记录两段基础代码，分别来自官网与互联网。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051from fastapi import FastAPI, WebSocketfrom fastapi.responses import HTMLResponseapp &#x3D;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://liu__tao.gitee.io/drawing-bed/blog_img/fastapi%E7%B3%BB%E5%88%97/%EF%BC%88fastapi%E5%85%AD%EF%BC%89websocket/%E5%B0%81%E9%9D%A2.jpg">
+<meta property="article:published_time" content="2022-11-10T16:37:50.000Z">
+<meta property="article:modified_time" content="2025-05-07T03:05:53.134Z">
+<meta property="article:author" content="望">
+<meta property="article:tag" content="fastapi">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="websocket">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://liu__tao.gitee.io/drawing-bed/blog_img/fastapi%E7%B3%BB%E5%88%97/%EF%BC%88fastapi%E5%85%AD%EF%BC%89websocket/%E5%B0%81%E9%9D%A2.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "（fastapi七）websocket",
+  "url": "https://m42-orion.github.io/2022/11/11/%EF%BC%88fastapi%E4%B8%83%EF%BC%89websocket/",
+  "image": "http://liu__tao.gitee.io/drawing-bed/blog_img/fastapi系列/（fastapi六）websocket/封面.jpg",
+  "datePublished": "2022-11-10T16:37:50.000Z",
+  "dateModified": "2025-05-07T03:05:53.134Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "望",
+      "url": "https://m42-orion.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://m42-orion.github.io/2022/11/11/%EF%BC%88fastapi%E4%B8%83%EF%BC%89websocket/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '（fastapi七）websocket',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(http://liu__tao.gitee.io/drawing-bed/blog_img/fastapi系列/（fastapi六）websocket/封面.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">（fastapi七）websocket</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">（fastapi七）websocket</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-10T16:37:50.000Z" title="发表于 2022-11-11 00:37:50">2022-11-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-07T03:05:53.134Z" title="更新于 2025-05-07 11:05:53">2025-05-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>记录两段基础代码，分别来自官网与互联网。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, WebSocket</span><br><span class="line"><span class="keyword">from</span> fastapi.responses <span class="keyword">import</span> HTMLResponse</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line">html = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">    &lt;head&gt;</span></span><br><span class="line"><span class="string">        &lt;title&gt;Chat&lt;/title&gt;</span></span><br><span class="line"><span class="string">    &lt;/head&gt;</span></span><br><span class="line"><span class="string">    &lt;body&gt;</span></span><br><span class="line"><span class="string">        &lt;h1&gt;WebSocket Chat&lt;/h1&gt;</span></span><br><span class="line"><span class="string">        &lt;form action=&quot;&quot; onsubmit=&quot;sendMessage(event)&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;input type=&quot;text&quot; id=&quot;messageText&quot; autocomplete=&quot;off&quot;/&gt;</span></span><br><span class="line"><span class="string">            &lt;button&gt;Send&lt;/button&gt;</span></span><br><span class="line"><span class="string">        &lt;/form&gt;</span></span><br><span class="line"><span class="string">        &lt;ul id=&#x27;messages&#x27;&gt;</span></span><br><span class="line"><span class="string">        &lt;/ul&gt;</span></span><br><span class="line"><span class="string">        &lt;script&gt;</span></span><br><span class="line"><span class="string">            var ws = new WebSocket(&quot;ws://localhost:8000/ws&quot;);</span></span><br><span class="line"><span class="string">            ws.onmessage = function(event) &#123;</span></span><br><span class="line"><span class="string">                var messages = document.getElementById(&#x27;messages&#x27;)</span></span><br><span class="line"><span class="string">                var message = document.createElement(&#x27;li&#x27;)</span></span><br><span class="line"><span class="string">                var content = document.createTextNode(event.data)</span></span><br><span class="line"><span class="string">                message.appendChild(content)</span></span><br><span class="line"><span class="string">                messages.appendChild(message)</span></span><br><span class="line"><span class="string">            &#125;;</span></span><br><span class="line"><span class="string">            function sendMessage(event) &#123;</span></span><br><span class="line"><span class="string">                var input = document.getElementById(&quot;messageText&quot;)</span></span><br><span class="line"><span class="string">                ws.send(input.value)</span></span><br><span class="line"><span class="string">                input.value = &#x27;&#x27;</span></span><br><span class="line"><span class="string">                event.preventDefault()</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">        &lt;/script&gt;</span></span><br><span class="line"><span class="string">    &lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">get</span>():</span><br><span class="line">    <span class="keyword">return</span> HTMLResponse(html)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.websocket(<span class="params"><span class="string">&quot;/ws&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">websocket_endpoint</span>(<span class="params">websocket: WebSocket</span>):</span><br><span class="line">    <span class="keyword">await</span> websocket.accept()</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        data = <span class="keyword">await</span> websocket.receive_text()</span><br><span class="line">        <span class="keyword">await</span> websocket.send_text(<span class="string">f&quot;Message text was: <span class="subst">&#123;data&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, WebSocket, WebSocketDisconnect</span><br><span class="line"></span><br><span class="line">app = FastAPI()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConnectionManager</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 存放激活的ws连接对象</span></span><br><span class="line">        <span class="variable language_">self</span>.active_connections: <span class="type">List</span>[WebSocket] = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">connect</span>(<span class="params">self, ws: WebSocket</span>):</span><br><span class="line">        <span class="comment"># 等待连接</span></span><br><span class="line">        <span class="keyword">await</span> ws.accept()</span><br><span class="line">        <span class="comment"># 存储ws连接对象</span></span><br><span class="line">        <span class="variable language_">self</span>.active_connections.append(ws)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">disconnect</span>(<span class="params">self, ws: WebSocket</span>):</span><br><span class="line">        <span class="comment"># 关闭时 移除ws对象</span></span><br><span class="line">        <span class="variable language_">self</span>.active_connections.remove(ws)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">send_personal_message</span>(<span class="params">message: <span class="built_in">str</span>, ws: WebSocket</span>):</span><br><span class="line">        <span class="comment"># 发送个人消息</span></span><br><span class="line">        <span class="keyword">await</span> ws.send_text(message)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">broadcast</span>(<span class="params">self, message: <span class="built_in">str</span></span>):</span><br><span class="line">        <span class="comment"># 广播消息</span></span><br><span class="line">        <span class="keyword">for</span> connection <span class="keyword">in</span> <span class="variable language_">self</span>.active_connections:</span><br><span class="line">            <span class="keyword">await</span> connection.send_text(message)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">manager = ConnectionManager()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.websocket(<span class="params"><span class="string">&quot;/ws/&#123;user&#125;&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">websocket_endpoint</span>(<span class="params">websocket: WebSocket, user: <span class="built_in">str</span></span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> manager.connect(websocket)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> manager.broadcast(<span class="string">f&quot;用户<span class="subst">&#123;user&#125;</span>进入聊天室&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            data = <span class="keyword">await</span> websocket.receive_text()</span><br><span class="line">            <span class="keyword">await</span> manager.send_personal_message(<span class="string">f&quot;你说了: <span class="subst">&#123;data&#125;</span>&quot;</span>, websocket)</span><br><span class="line">            <span class="keyword">await</span> manager.broadcast(<span class="string">f&quot;用户:<span class="subst">&#123;user&#125;</span> 说: <span class="subst">&#123;data&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> WebSocketDisconnect:</span><br><span class="line">        manager.disconnect(websocket)</span><br><span class="line">        <span class="keyword">await</span> manager.broadcast(<span class="string">f&quot;用户-<span class="subst">&#123;user&#125;</span>-离开&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">import</span> uvicorn</span><br><span class="line">    <span class="comment"># 官方推荐是用命令后启动 uvicorn main:app --host=127.0.0.1 --port=8010 --reload</span></span><br><span class="line">    uvicorn.run(app=<span class="string">&#x27;main:app&#x27;</span>, host=<span class="string">&quot;127.0.0.1&quot;</span>, port=<span class="number">8010</span>, reload=<span class="literal">True</span>, debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2022/11/11/%EF%BC%88fastapi%E4%B8%83%EF%BC%89websocket/">https://m42-orion.github.io/2022/11/11/%EF%BC%88fastapi%E4%B8%83%EF%BC%89websocket/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/python/">python</a><a class="post-meta__tags" href="/tags/fastapi/">fastapi</a><a class="post-meta__tags" href="/tags/websocket/">websocket</a></div><div class="post-share"><div class="social-share" data-image="http://liu__tao.gitee.io/drawing-bed/blog_img/fastapi系列/（fastapi六）websocket/封面.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2022/11/14/%E5%B7%A5%E5%85%B7-minio/" title="minio"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/minio/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">minio</div></div><div class="info-2"><div class="info-item-1">对象存储MinIO入门介绍常见的对象存储方式对比 直接将图片保存到服务的硬盘  优点：开发便捷，成本低 缺点：扩容困难   使用分布式文件系统进行存储  优点：容易实现扩容 缺点：开发复杂度稍大（尤其是开发复杂的功能）   使用nfs做存储  优点：开发较为便捷 缺点：需要有一定的运维知识进行部署和维护   使用第三方的存储服务  优点：开发简单，拥有强大功能，免维护 缺点：付费    对象存储MinIOMinIO是世界上最快的对象存储服务器，在标准硬件上，读写速度分贝为183GB&#x2F;s 和 171GB&#x2F;s，对象存储可以作为主要存储层，用于Spark，Presto，TensorFlow，H20.ai 以及替代产品等各种工作负载用于Hadoop HDFS MinIO是一种高性能的分布式对象存储系统，它是软件定义的，可在行业标准硬件上运行，并且在Apache 2.0许可下，百分百开放源代码。 文档地址：https://docs.min.io/cn/ 下载set_your_key_here使用的是Docker的方式安装MinIO，首先拉取对应的镜像 1docker p...</div></div></div></a><a class="pagination-related" href="/2022/11/11/%E6%9C%89%E6%84%9F-%E7%9F%A5%E8%AF%86%E7%9A%84%E8%AF%85%E5%92%92/" title="知识的诅咒"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/知识的诅咒/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">知识的诅咒</div></div><div class="info-2"><div class="info-item-1">知识的诅咒（Curse of Knowledge）在维基百科中是这样定义的：知识的诅咒，是一种认知偏差，指人在与他人交流的时候，下意识地假设对方拥有理解所需要的背景知识。 换句话说就是人们在沟通的时候，往往会因为自己被所掌握的知识“诅咒”了，潜意识里认为对方也是明白自己话里的背景知识，而没有主动讲出来，最终导致出现误解。  这个概念最初是在1989年发表在政治经济学杂志上的一篇文章提出，文中通过大量的试验数据说明了知识的诅咒对经济活动的影响，但实际上在生活的方方面面都有它的身影。 大部分人在青少年时期或多或少被家长训斥甚至“武力”教训过，当时对此都非常厌恶，但是当自己当上父母后，又会不知不觉甚至有时候无法抗拒的变成当初自己非常厌恶的人，很大的原因就是自己被知识诅咒了。 家长潜意识里是认为孩子和自己拥有一样的知识，所以难免会觉得孩子“笨”，特别是在辅导家庭作业的时候，但是孩子真的非常无辜。  教育行业一直以来都在和知识的诅咒抗争，教师们教学经验的积累很大程度上都在一步步打破自己的知识诅咒，让自己能更好的把知识传递给学生。教育理论和教学方法的研究则是更系统化的与知识的诅咒的战斗。 以...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/02/02/python%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97%E4%B8%8E%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E6%80%9D%E8%80%83/" title="任务队列与单例模式思考"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202601/22/vDS9PWWGfdGa4Y5.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-02</div><div class="info-item-2">任务队列与单例模式思考</div></div><div class="info-2"><div class="info-item-1">Python 单例模式深度解析：从任务队列的多实例问题谈起1. 问题的起源在开发 AssociationRuleTaskQueue（关联规则任务队列）时，我们遇到了一个关于“实例唯一性”的疑问：  “我在运行 from core.task_queue import rule_task_queue 的时候，其实就会运行一次 rule_task_queue = AssociationRuleTaskQueue() 对吗？所以每一次导入都会实例化一次对吗？”  这个疑问触及了 Python 两个核心机制：模块导入机制 和 类实例化机制。本文将以此为切入点，深入解析 Python 的 __new__ 方法与单例模式（Singleton Pattern）。 2. Python 模块导入机制：天然的“单例”首先回答你的疑问：每一次导入并不会都实例化一次。 Python 的模块（Module）对象在整个解释器进程中是全局唯一的。当你执行 import core.task_queue 或 from core.task_queue import rule_task_queue 时，Python 内...</div></div></div></a><a class="pagination-related" href="/2022/05/22/python%E6%B5%B7%E8%B1%A1%E8%AF%AD%E6%B3%95/" title="python海象语法"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/python海象语法/封面.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-05-22</div><div class="info-item-2">python海象语法</div></div><div class="info-2"><div class="info-item-1">在我的工作当中，无意间接触到了一个别人写的一段代码,像这样：if (n := len(a)) &gt; 10:，凭借我的直觉，我能够轻易的读懂这段代码，但是我却从来没见过，于是我搜了一下，才知道这是python3.8的新语法，叫做海象语法，因为冒号像眼睛，等号像牙齿，所以被成为海象语法。 海象语法官方给出了几个案例： 12345678910111213141516# 赋值表达式有助于避免调用 len（） 两次if (n := len(a)) &gt; 10:    print(f&quot;List is too long (&#123;n&#125; elements, expected &lt;= 10)&quot;)# 一次用于测试是否发生了匹配，另一次用于提取子组discount = 0.0if (mo := re.search(r&#x27;(\d+)% discount&#x27;, advertisement)):    discount = float(mo.group(1)) / 100.0# Loop over fixed length blockswhile...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E5%8F%96%E8%AF%81-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8/" title="开机自启动"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/18/DWSV0OOxhd08Mdq.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">开机自启动</div></div><div class="info-2"><div class="info-item-1">开机自启动自启动程序是指在系统启动时自动运行的程序。这些程序可能会影响系统的启动速度和性能，因此了解如何获取和管理这些程序是非常重要的。本文将介绍一种使用 Python 实现的方法，通过调用系统命令和处理 CSV 文件来获取自启动程序的信息。 windows代码实现确定 autorunsc 程序的名称： 1autorunsc_name = &quot;autorunsc64.exe&quot; if platform.architecture()[0] == &quot;64bit&quot; else &quot;autorunsc32.exe&quot;  这行代码根据当前系统的架构（64 位或 32 位）来确定 autorunsc 程序的文件名。终止正在运行的 autorunsc 进程： 1234567891011for process in psutil.process_iter():    try:        name = process.name()    except:        name = &quot;&quot;    try:        if n...</div></div></div></a><a class="pagination-related" href="/2022/10/16/python%E7%9A%84%E5%9D%91%E8%AE%B0%E5%BD%95/" title="python的坑记录"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/python的坑记录/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-16</div><div class="info-item-2">python的坑记录</div></div><div class="info-2"><div class="info-item-1">在阅读别人博客的时候看到别人记录了一个python的坑，我觉得可能是一个今后会发生的一个错误，因此记录下来。直接上代码： 1234567def f(a, L=[]):    L.append(a)    return Lprint(f(1))print(f(2))print(f(3))  打印出来的结果是: 123[1][1, 2][1, 2, 3]  这是因为, 作为默认参数, python在启动时就会将变量 L 建立, 我们在函数 f 内对 L 处理就会导致后来调用的 L 已经是修改过的 L 了, 我们可以通过打印 L 的内存地址来验证 123456789def f(a, L=[]):    print(id(L))    L.append(a)    print(id(L))    return Lprint(f(1))print(f(2))print(f(3))  结果是 12345678945132896004513289600[1]45132896004513289600[1, 2]45132896004513289600[1, 2, 3]   简单来说，被声明的默认...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E5%8F%96%E8%AF%81-%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF/" title="在windows中获取硬件信息"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/07/OoSzjwwof6nQEBm.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">在windows中获取硬件信息</div></div><div class="info-2"><div class="info-item-1">遍历系统中的所有逻辑设备： 1for device in wmi.WMI().CIM_LogicalDevice(): 这部分代码使用 wmi 模块遍历系统中的所有逻辑设备。 提取每个逻辑设备的信息： 12345678item = &#123;    &quot;PNPDeviceID&quot;: device.PNPDeviceID if hasattr(device, &quot;PNPDeviceID&quot;) else &quot;&quot;,    &quot;Description&quot;: device.Description if hasattr(device, &quot;Description&quot;) else &quot;&quot;,    &quot;Caption&quot;: device.Caption if hasattr(device, &quot;Caption&quot;) else &quot;&quot;,    &quot;Manufacturer&quot;: device.Manufacturer if hasa...</div></div></div></a><a class="pagination-related" href="/2022/11/28/%E5%8F%96%E8%AF%81-%E5%91%BD%E5%90%8D%E7%AE%A1%E9%81%93%E8%8E%B7%E5%8F%96/" title="windows取证基础之命名管道获取"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/windows取证基础之命名管道获取/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-28</div><div class="info-item-2">windows取证基础之命名管道获取</div></div><div class="info-2"><div class="info-item-1">“命名管道”又名“命名管线”（Named Pipes），是一种简单的进程间通信（IPC）机制，Microsoft Windows大都提供了对它的支持（但不包括Windows CE）。命名管道可在同一台计算机的不同进程之间或在跨越一个网络的不同计算机的不同进程之间，支持可靠的、单向或双向的数据通信。推荐用命名管道作为进程通信方案的一项重要的原因是它们充分利用了Windows内建的安全特性（ACL等）。 12345678910111213141516171819import osimport globdef look_for_files(dir_to_look):    &quot;&quot;&quot;Looks for windows in a given directory. Supports the * wildcard character&quot;&quot;&quot;    found_files = []    if &quot;*&quot; in dir_to_look:        found_files += glob.glob(dir_to_look)...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">205</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">55</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="彻底搞懂 Token"/></a><div class="content"><a class="title" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token">彻底搞懂 Token</a><time datetime="2026-05-25T20:00:00.000Z" title="发表于 2026-05-26 04:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析"><img src="https://c-ssl.duitang.com/uploads/blog/202604/16/pGSm4WWdTBDOWWY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Agent 沙箱深度解析"/></a><div class="content"><a class="title" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析">AI Agent 沙箱深度解析</a><time datetime="2026-05-25T19:30:00.000Z" title="发表于 2026-05-26 03:30:00">2026-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const abcjsInit = () => {
+    const abcjsFn = () => {
+      setTimeout(() => {
+        const sheets = document.querySelectorAll(".abc-music-sheet")
+        for (let i = 0; i < sheets.length; i++) {
+          const ele = sheets[i]
+          if (ele.children.length > 0) continue
+
+          // Parse parameters from data-params attribute
+          let params = {}
+          const dp = ele.getAttribute("data-params")
+          if (dp) {
+            try {
+              params = JSON.parse(dp)
+            } catch (e) {
+              console.error("Failed to parse data-params:", e)
+            }
+          }
+
+          // Merge parsed parameters with the responsive option
+          // Ensures params content appears before responsive
+          const options = { ...params, responsive: "resize" }
+
+          // Render the music score using ABCJS.renderAbc
+          ABCJS.renderAbc(ele, ele.textContent, options)
+        }
+      }, 100)
+    }
+
+    if (typeof ABCJS === "object") {
+      abcjsFn()
+    } else {
+      btf.getScript("https://cdn.jsdelivr.net/npm/abcjs/dist/abcjs-basic-min.min.js").then(abcjsFn)
+    }
+  }
+
+  if (window.pjax) {
+    abcjsInit()
+  } else {
+    window.addEventListener("load", abcjsInit)
+  }
+
+  btf.addGlobalFn("encrypt", abcjsInit, "abcjs")
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="null" data-text="I,LOVE,YOU,木一" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>LLM-长文本问题 | 念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="referrer" content="no-referrer"><meta name="description" content="引言随着大语言模型(LLM)的广泛应用，处理超长文本输入已成为开发者面临的常见问题。当文本长度超过模型的上下文窗口限制（如GPT-4的32k token或Claude的100k token），或者即使长度未超限但内容过于复杂时，都需要特殊的处理策略。本文将分析现有解决方案，评估其适用场景，并介绍前沿的处理技术。(部分内容由大模型总结，请谨慎辨别) 一、长文本处理的核心挑战1. 技术限制 上下文窗口">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLM-长文本问题">
+<meta property="og:url" content="https://m42-orion.github.io/2025/05/21/LLM-%E9%95%BF%E6%96%87%E6%9C%AC%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="引言随着大语言模型(LLM)的广泛应用，处理超长文本输入已成为开发者面临的常见问题。当文本长度超过模型的上下文窗口限制（如GPT-4的32k token或Claude的100k token），或者即使长度未超限但内容过于复杂时，都需要特殊的处理策略。本文将分析现有解决方案，评估其适用场景，并介绍前沿的处理技术。(部分内容由大模型总结，请谨慎辨别) 一、长文本处理的核心挑战1. 技术限制 上下文窗口">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c-ssl.duitang.com/uploads/blog/202507/24/d3SJ4eevUqLQN0x.png">
+<meta property="article:published_time" content="2025-05-21T02:07:56.000Z">
+<meta property="article:modified_time" content="2025-08-11T02:06:40.818Z">
+<meta property="article:author" content="望">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="大模型">
+<meta property="article:tag" content="长文本">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c-ssl.duitang.com/uploads/blog/202507/24/d3SJ4eevUqLQN0x.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "LLM-长文本问题",
+  "url": "https://m42-orion.github.io/2025/05/21/LLM-%E9%95%BF%E6%96%87%E6%9C%AC%E9%97%AE%E9%A2%98/",
+  "image": "https://c-ssl.duitang.com/uploads/blog/202507/24/d3SJ4eevUqLQN0x.png",
+  "datePublished": "2025-05-21T02:07:56.000Z",
+  "dateModified": "2025-08-11T02:06:40.818Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "望",
+      "url": "https://m42-orion.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://m42-orion.github.io/2025/05/21/LLM-%E9%95%BF%E6%96%87%E6%9C%AC%E9%97%AE%E9%A2%98/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'LLM-长文本问题',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://c-ssl.duitang.com/uploads/blog/202507/24/d3SJ4eevUqLQN0x.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">LLM-长文本问题</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">LLM-长文本问题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-05-21T02:07:56.000Z" title="发表于 2025-05-21 10:07:56">2025-05-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-11T02:06:40.818Z" title="更新于 2025-08-11 10:06:40">2025-08-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/LLM/">LLM</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>随着大语言模型(LLM)的广泛应用，处理超长文本输入已成为开发者面临的常见问题。当文本长度超过模型的上下文窗口限制（如GPT-4的32k token或Claude的100k token），或者即使长度未超限但内容过于复杂时，都需要特殊的处理策略。本文将分析现有解决方案，评估其适用场景，并介绍前沿的处理技术。(部分内容由大模型总结，请谨慎辨别)</p>
+<h2 id="一、长文本处理的核心挑战"><a href="#一、长文本处理的核心挑战" class="headerlink" title="一、长文本处理的核心挑战"></a>一、长文本处理的核心挑战</h2><h3 id="1-技术限制"><a href="#1-技术限制" class="headerlink" title="1. 技术限制"></a>1. 技术限制</h3><ul>
+<li><strong>上下文窗口限制</strong>：主流模型的token上限<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">  A[模型类型] --&gt; B[GPT-4-32k]</span><br><span class="line">  A --&gt; C[Claude-100k]</span><br><span class="line">  A --&gt; D[LLaMA2-4k]</span><br></pre></td></tr></table></figure></li>
+<li><strong>注意力机制开销</strong>：Transformer的O(n²)复杂度</li>
+<li><strong>信息衰减现象</strong>：模型对中间位置内容理解较弱</li>
+</ul>
+<h3 id="2-业务影响"><a href="#2-业务影响" class="headerlink" title="2. 业务影响"></a>2. 业务影响</h3><ul>
+<li><strong>关键信息丢失</strong>：超出窗口部分被截断</li>
+<li><strong>语义连贯性破坏</strong>：拆分导致上下文断裂</li>
+<li><strong>推理质量下降</strong>：复杂论证难以维持</li>
+</ul>
+<h2 id="二、现有解决方案深度评估"><a href="#二、现有解决方案深度评估" class="headerlink" title="二、现有解决方案深度评估"></a>二、现有解决方案深度评估</h2><h3 id="1-检索增强生成-RAG"><a href="#1-检索增强生成-RAG" class="headerlink" title="1. 检索增强生成(RAG)"></a>1. 检索增强生成(RAG)</h3><p><strong>技术实现</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langchain.embeddings <span class="keyword">import</span> OpenAIEmbeddings</span><br><span class="line"><span class="keyword">from</span> langchain.vectorstores <span class="keyword">import</span> Chroma</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rag_pipeline</span>(<span class="params">long_text, query</span>):</span><br><span class="line">    <span class="comment"># 文本分块</span></span><br><span class="line">    text_splitter = RecursiveCharacterTextSplitter(chunk_size=<span class="number">1000</span>)</span><br><span class="line">    chunks = text_splitter.split_text(long_text)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 创建向量库</span></span><br><span class="line">    embeddings = OpenAIEmbeddings()</span><br><span class="line">    vectorstore = Chroma.from_texts(chunks, embeddings)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 相关性检索</span></span><br><span class="line">    relevant_docs = vectorstore.similarity_search(query, k=<span class="number">3</span>)</span><br><span class="line">    <span class="keyword">return</span> generate_answer(query, relevant_docs)</span><br></pre></td></tr></table></figure>
+
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>文档问答系统</li>
+<li>知识库查询</li>
+<li>需要精确引用源材料的场景</li>
+</ul>
+<p><strong>优势</strong>：</p>
+<ul>
+<li>突破上下文长度限制</li>
+<li>可追溯信息来源</li>
+<li>支持动态知识更新</li>
+</ul>
+<p><strong>局限</strong>：</p>
+<ul>
+<li>依赖检索质量</li>
+<li>不适用于需要全局理解的复杂推理</li>
+</ul>
+<h3 id="2-历史对话分块处理"><a href="#2-历史对话分块处理" class="headerlink" title="2. 历史对话分块处理"></a>2. 历史对话分块处理</h3><p><strong>技术实现</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ConversationManager</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, window_size=<span class="number">4000</span></span>):</span><br><span class="line">        <span class="variable language_">self</span>.memory = []</span><br><span class="line">        <span class="variable language_">self</span>.window = window_size</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">add_message</span>(<span class="params">self, text</span>):</span><br><span class="line">        <span class="variable language_">self</span>.memory.append(text)</span><br><span class="line">        <span class="keyword">while</span> <span class="built_in">len</span>(<span class="variable language_">self</span>.tokenize(<span class="string">&#x27;\n&#x27;</span>.join(<span class="variable language_">self</span>.memory))) &gt; <span class="variable language_">self</span>.window:</span><br><span class="line">            <span class="variable language_">self</span>.memory.pop(<span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_context</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;\n&#x27;</span>.join(<span class="variable language_">self</span>.memory[-<span class="number">5</span>:])  <span class="comment"># 保留最近5轮对话</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>多轮对话系统</li>
+<li>渐进式信息收集</li>
+<li>需要维持对话连贯性的场景</li>
+</ul>
+<p><strong>优势</strong>：</p>
+<ul>
+<li>保持对话状态</li>
+<li>自然的信息分段</li>
+<li>低实现复杂度</li>
+</ul>
+<p><strong>局限</strong>：</p>
+<ul>
+<li>早期信息可能丢失</li>
+<li>不适用于单次长文本处理</li>
+</ul>
+<h3 id="3-多模型协同处理"><a href="#3-多模型协同处理" class="headerlink" title="3. 多模型协同处理"></a>3. 多模型协同处理</h3><p><strong>架构设计</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">graph TB</span><br><span class="line">  Input[长文本输入] --&gt; Splitter[文本分割]</span><br><span class="line">  Splitter --&gt; Model1[模型1处理段1]</span><br><span class="line">  Splitter --&gt; Model2[模型2处理段2]</span><br><span class="line">  Splitter --&gt; Model3[模型3处理段3]</span><br><span class="line">  Model1 --&gt; Aggregator[结果聚合]</span><br><span class="line">  Model2 --&gt; Aggregator</span><br><span class="line">  Model3 --&gt; Aggregator</span><br><span class="line">  Aggregator --&gt; Output[最终输出]</span><br></pre></td></tr></table></figure>
+
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>可并行处理的独立子任务</li>
+<li>时效性要求高的批量处理</li>
+<li>需要冗余验证的关键决策</li>
+</ul>
+<p><strong>优势</strong>：</p>
+<ul>
+<li>处理速度更快</li>
+<li>可利用不同模型优势</li>
+<li>结果可交叉验证</li>
+</ul>
+<p><strong>局限</strong>：</p>
+<ul>
+<li>协调成本高</li>
+<li>聚合算法复杂</li>
+<li>资源消耗大</li>
+</ul>
+<h3 id="4-迭代式文本压缩"><a href="#4-迭代式文本压缩" class="headerlink" title="4. 迭代式文本压缩"></a>4. 迭代式文本压缩</h3><p><strong>压缩算法示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">iterative_compress</span>(<span class="params">text, target_length, model</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="built_in">len</span>(tokenizer.encode(text)) &gt; target_length:</span><br><span class="line">        chunks = split_text(text)</span><br><span class="line">        compressed = []</span><br><span class="line">        <span class="keyword">for</span> chunk <span class="keyword">in</span> chunks:</span><br><span class="line">            prompt = <span class="string">f&quot;用30%的篇幅总结下文，保留关键数据和结论：\n<span class="subst">&#123;chunk&#125;</span>&quot;</span></span><br><span class="line">            compressed.append(model.generate(prompt))</span><br><span class="line">        text = <span class="string">&#x27;\n&#x27;</span>.join(compressed)</span><br><span class="line">    <span class="keyword">return</span> text</span><br></pre></td></tr></table></figure>
+
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>学术论文分析</li>
+<li>长篇报告处理</li>
+<li>需要保持原文结构的场景</li>
+</ul>
+<p><strong>优势</strong>：</p>
+<ul>
+<li>保留核心内容</li>
+<li>可控制信息密度</li>
+<li>适用于单文档分析</li>
+</ul>
+<p><strong>局限</strong>：</p>
+<ul>
+<li>多次调用成本高</li>
+<li>存在信息损失风险</li>
+<li>压缩比难以精确控制</li>
+</ul>
+<h2 id="三、其他看到的解决方案与技术前沿"><a href="#三、其他看到的解决方案与技术前沿" class="headerlink" title="三、其他看到的解决方案与技术前沿"></a>三、其他看到的解决方案与技术前沿</h2><h3 id="1-层次化注意力机制"><a href="#1-层次化注意力机制" class="headerlink" title="1. 层次化注意力机制"></a>1. 层次化注意力机制</h3><p><strong>架构原理</strong>：</p>
+<ol>
+<li>第一层：将文档分为若干段，生成段级表示</li>
+<li>第二层：基于段表示构建文档级注意力</li>
+<li>第三层：在关键段落内部进行token级注意力</li>
+</ol>
+<p><strong>实现框架</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">HierarchicalAttention</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, encoder</span>):</span><br><span class="line">        <span class="variable language_">self</span>.segment_encoder = encoder</span><br><span class="line">        <span class="variable language_">self</span>.document_attn = nn.MultiheadAttention()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, document</span>):</span><br><span class="line">        segments = split_document(document)</span><br><span class="line">        seg_embeddings = [<span class="variable language_">self</span>.segment_encoder(seg) <span class="keyword">for</span> seg <span class="keyword">in</span> segments]</span><br><span class="line">        doc_embedding = <span class="variable language_">self</span>.document_attn(seg_embeddings)</span><br><span class="line">        <span class="keyword">return</span> doc_embedding</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-记忆增强架构"><a href="#2-记忆增强架构" class="headerlink" title="2. 记忆增强架构"></a>2. 记忆增强架构</h3><p><strong>关键技术</strong>：</p>
+<ul>
+<li><strong>外部记忆库</strong>：存储历史信息的关键向量</li>
+<li><strong>动态记忆更新</strong>：基于相关性分数更新记忆</li>
+<li><strong>记忆检索</strong>：使用当前查询检索相关记忆</li>
+</ul>
+<p><strong>工作流程</strong>：</p>
+<ol>
+<li>将长文本处理为记忆片段</li>
+<li>建立可持久化的记忆存储</li>
+<li>查询时检索相关记忆片段</li>
+<li>将记忆与当前输入组合</li>
+</ol>
+<h3 id="3-递归式处理"><a href="#3-递归式处理" class="headerlink" title="3. 递归式处理"></a>3. 递归式处理</h3><p><strong>算法伪代码</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function process_long_text(text, model, max_length):</span><br><span class="line">    if length(text) &lt;= max_length:</span><br><span class="line">        return model.process(text)</span><br><span class="line">    else:</span><br><span class="line">        first_half, second_half = split_text(text)</span><br><span class="line">        summary1 = process_long_text(first_half, model, max_length)</span><br><span class="line">        summary2 = process_long_text(second_half, model, max_length)</span><br><span class="line">        return model.process(summary1 + summary2)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-稀疏注意力优化"><a href="#4-稀疏注意力优化" class="headerlink" title="4. 稀疏注意力优化"></a>4. 稀疏注意力优化</h3><p><strong>创新方法</strong>：</p>
+<ul>
+<li><strong>块稀疏注意力</strong>：将注意力计算限制在局部窗口</li>
+<li><strong>随机注意力</strong>：随机选择部分位置计算注意力</li>
+<li><strong>LSH注意力</strong>：使用局部敏感哈希分组相似token</li>
+</ul>
+<h2 id="四、解决方案选择矩阵"><a href="#四、解决方案选择矩阵" class="headerlink" title="四、解决方案选择矩阵"></a>四、解决方案选择矩阵</h2><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>适用文本长度</th>
+<th>处理速度</th>
+<th>信息保留</th>
+<th>实现难度</th>
+<th>成本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RAG</td>
+<td>任意</td>
+<td>中</td>
+<td>高★</td>
+<td>中</td>
+<td>中</td>
+</tr>
+<tr>
+<td>历史分块</td>
+<td>&lt;10倍窗口</td>
+<td>快</td>
+<td>低</td>
+<td>低</td>
+<td>低</td>
+</tr>
+<tr>
+<td>多模型协同</td>
+<td>任意</td>
+<td>慢</td>
+<td>高</td>
+<td>高</td>
+<td>高</td>
+</tr>
+<tr>
+<td>迭代压缩</td>
+<td>2-5倍窗口</td>
+<td>慢</td>
+<td>中</td>
+<td>中</td>
+<td>高</td>
+</tr>
+<tr>
+<td>层次化注意力</td>
+<td>5-20倍窗口</td>
+<td>中</td>
+<td>高★</td>
+<td>高</td>
+<td>中</td>
+</tr>
+<tr>
+<td>记忆增强</td>
+<td>任意</td>
+<td>中</td>
+<td>高</td>
+<td>高</td>
+<td>中</td>
+</tr>
+</tbody></table>
+<p>（★表示可通过精确检索保留原文信息）</p>
+<h2 id="五、场景化建议"><a href="#五、场景化建议" class="headerlink" title="五、场景化建议"></a>五、场景化建议</h2><h3 id="1-法律合同分析"><a href="#1-法律合同分析" class="headerlink" title="1. 法律合同分析"></a>1. 法律合同分析</h3><ul>
+<li><strong>推荐方案</strong>：RAG + 层次化注意力</li>
+<li><strong>原因</strong>：需要精确引用条款，同时保持整体理解</li>
+<li><strong>实现提示</strong>：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 法律条款的特殊分块策略</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LegalTextSplitter</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">split</span>(<span class="params">self, text</span>):</span><br><span class="line">        <span class="comment"># 按条款编号分割</span></span><br><span class="line">        <span class="keyword">return</span> re.split(<span class="string">r&#x27;\nArticle [IVXLCDM]+&#x27;</span>, text)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-学术论文阅读"><a href="#2-学术论文阅读" class="headerlink" title="2. 学术论文阅读"></a>2. 学术论文阅读</h3><ul>
+<li><strong>推荐方案</strong>：迭代式压缩 + 结构化提示</li>
+<li><strong>模板示例</strong>：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">请按照以下结构总结：</span><br><span class="line">[研究问题]:...</span><br><span class="line">[方法创新]:...</span><br><span class="line">[关键发现]:...</span><br><span class="line">[局限]:...</span><br><span class="line">原文内容：&#123;chunk&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="3-客户服务对话"><a href="#3-客户服务对话" class="headerlink" title="3. 客户服务对话"></a>3. 客户服务对话</h3><ul>
+<li><strong>推荐方案</strong>：历史对话管理 + 关键信息提取</li>
+<li><strong>优化技巧</strong>：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">extract_entities</span>(<span class="params">dialog</span>):</span><br><span class="line">    <span class="comment"># 提取时间、产品型号等关键信息单独存储</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="string">&#x27;products&#x27;</span>: detect_products(dialog),</span><br><span class="line">        <span class="string">&#x27;issues&#x27;</span>: classify_issues(dialog)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>处理长文本输入没有放之四海而皆准的解决方案，需要根据具体场景选择合适策略。建议的决策流程：</p>
+<ol>
+<li><strong>评估文本特性</strong>：是单一文档还是对话？需要全局理解还是局部检索？</li>
+<li><strong>明确需求优先级</strong>：准确性、响应速度、成本哪个最关键？</li>
+<li><strong>原型测试</strong>：对候选方案进行小规模验证</li>
+<li><strong>监控优化</strong>：在生产环境中持续跟踪效果</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2025/05/21/LLM-%E9%95%BF%E6%96%87%E6%9C%AC%E9%97%AE%E9%A2%98/">https://m42-orion.github.io/2025/05/21/LLM-%E9%95%BF%E6%96%87%E6%9C%AC%E9%97%AE%E9%A2%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/LLM/">LLM</a><a class="post-meta__tags" href="/tags/%E9%95%BF%E6%96%87%E6%9C%AC/">长文本</a><a class="post-meta__tags" href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></div><div class="post-share"><div class="social-share" data-image="https://c-ssl.duitang.com/uploads/blog/202507/24/d3SJ4eevUqLQN0x.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/05/21/RAG-%E5%90%91%E9%87%8F%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9/" title="RAG-向量模型选择"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202507/24/XxS5eqqaTQqgxQL.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">RAG-向量模型选择</div></div><div class="info-2"><div class="info-item-1">引言在检索增强生成(Retrieval-Augmented Generation, RAG)系统中，向量模型的质量直接决定了系统的检索效果，进而影响最终生成内容的相关性和准确性。本文将深入探讨如何评估和选择适合RAG系统的向量模型,如有不足请指正。 一、向量模型的核心作用向量模型(嵌入模型)在RAG系统中承担着将文本转化为数值向量(嵌入)的关键任务，其质量影响以下核心环节：  语义表示能力：决定模型是否能准确捕捉文本的深层含义 检索相关性：影响系统找到与查询最相关文档的能力 计算效率：直接影响系统的响应速度和资源消耗 领域适应性：决定模型在特定领域的表现效果  二、主流向量模型类型1. 通用预训练模型 示例：OpenAI的text-embedding-ada-002、Cohere的embed-english-v3.0 特点：在大规模通用语料上预训练，适合大多数通用场景 优势：开箱即用，无需额外训练  2. 领域专用模型 示例：BioBERT(生物医学)、Legal-BERT(法律) 特点：在特定领域数据上训练或微调 优势：在专业领域表现更优  3. 多语言模型 示例：paraph...</div></div></div></a><a class="pagination-related" href="/2025/05/21/LLM-%E8%AE%AD%E7%BB%83%E4%B8%8E%E5%BE%AE%E8%B0%83/" title="LLN-训练与微调"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202507/20/OoSzjwwof6wNA0p.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">LLN-训练与微调</div></div><div class="info-2"><div class="info-item-1">为什么需要多种微调方法？在大模型应用落地的过程中，预训练后的微调(Fine-tuning)是使模型适应特定任务的关键环节。随着技术的发展，研究者们提出了从传统的监督微调(SFT)到基于人类反馈的强化学习(RHLF)，再到最新的直接偏好优化(DPO)等一系列方法。本文将系统解析6种主流微调技术的工作原理、适用场景及实践要点，根据具体需求选择最佳方案。 一、基础方法：监督微调(SFT)1.1 技术原理**监督微调(Supervised Fine-Tuning)**是最基础的微调方法，使用标注数据集通过标准交叉熵损失进行训练： 1L_SFT = -Σ log P(y|x;θ) 其中(x,y)是输入-输出对，θ是模型参数。 1.2 典型流程 准备高质量标注数据 在预训练模型上继续训练 使用学习率衰减策略（如cosine衰减）  1.3 优缺点分析优势：  实现简单，计算成本低 对小规模数据适应良好 可复用传统NLP训练流程  局限：  依赖大量标注数据 容易过拟合 无法学习复杂偏好  适用场景：任务明确、有充足标注数据的领域适应 二、高效微调技术：参数高效微调(ReFT)2.1 核心思想...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/05/26/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BC%80%E5%8F%91%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E8%A7%A3%E6%9E%90-Harness-Prompt-LLM-Agent-Context/" title="大模型开发核心概念解析"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202604/20/gVSLNJJ0TQJLb7E.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-26</div><div class="info-item-2">大模型开发核心概念解析</div></div><div class="info-2"><div class="info-item-1">大模型开发核心概念解析 —— Harness、Prompt、LLM、Agent、Context 到底是什么？前言刚开始接触大模型开发时，各种术语扑面而来：LLM、Prompt、Agent、RAG、Fine-tuning、Context、Harness…… 这些概念分别是什么意思？它们各自解决什么问题？它们之间的关系是什么？从零搭建一个大模型应用时，哪些是必须的？ 这篇文章帮你一次性理清楚。  目录 大模型应用的整体架构 LLM —— 大脑 Prompt —— 指挥棒 Context —— 短期记忆 Agent —— 自主行动的躯干 Harness —— 缰绳与缰绳架 其他重要概念 它们如何协同工作 总结与脑图   1. 大模型应用的整体架构在深入每个概念前，先用一张图建立整体认识： 123456789101112131415161718192021222324252627282930313233┌─────────────────────────────────────────────────────┐│                   用户输入               ...</div></div></div></a><a class="pagination-related" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-26</div><div class="info-item-2">彻底搞懂 Token</div></div><div class="info-2"><div class="info-item-1">彻底搞懂 Token —— 大模型世界的”字数”到底怎么算？中文一定比英文费钱吗？前言 “中文一个 token 对应一个字？那文言文那么简短，岂不是能省很多 token？”  这是我给外行同事解释 Token 时最常听到的问题。 这个想法看起来很有道理：文言文用几个字就能表达一大段白话文的意思，如果每个字&#x3D;一个 token，那文言文应该能省 50% 以上的 token 对吧？ 答案是：不对。完全不对。 不仅不对，有时候文言文反而更费 token。 这篇文章会把 Token 这个概念从里到外掰开揉碎讲清楚，看完你就知道为什么了。  1. Token 到底是什么？1.1 最直白的定义Token 是 LLM（大语言模型）处理文本时的最小基本单位。 它不是字母，也不是完整的单词，而是一个”词块”（subword）。  类比：句子是一面墙，Token 就是砌墙的砖。一块砖可能大、可能小，但它是不可再分的基本单元。  1.2 为什么需要 Token？大模型本质上是数学机器，它不认识文字，只认识数字。 所以需要一个步骤把文本转换成数字： 123原始文本 → Token（分词）→ ID...</div></div></div></a><a class="pagination-related" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-26</div><div class="info-item-2">从 Tokenizer 到 Embedding 再到 RAG</div></div><div class="info-2"><div class="info-item-1">从 Tokenizer 到 Embedding 再到 RAG —— 大模型是怎么”理解”并”查找”信息的？前言你有没有想过这些问题：  大模型明明只认识数字，为什么它能理解”猫”和”狗”是相似的？ RAG 说”从知识库检索相关内容”，它是怎么知道哪些内容跟我的问题相似的？ Tokenizer 把文本切成 Token，Embedding 把 Token 变成向量——这两步到底有什么关系？  这篇文章会从最底层开始，把编码 → 向量化 → 相似搜索 → RAG 检索这条完整的链路讲清楚。 看完你会明白：为什么 Tokenizer 的分词质量直接影响 RAG 的检索准确性。  目录 编码的三层境界 第一层：Tokenizer —— 把文本切成块 第二层：Embedding —— 把 Token 变成向量 第三层：语义空间 —— 向量为什么能表示”相似” RAG 的完整检索流程 Tokenizer 如何影响 RAG 的检索准确性 实践：一个 RAG 系统的编码链路 总结   1. 编码的三层境界整个编码过程可以理解为三个层层递进的阶段： 12345678910自然语言          ...</div></div></div></a><a class="pagination-related" href="/2025/02/15/RAG-python%E5%BA%93Chonkie%E7%9A%84%E4%BD%BF%E7%94%A8/" title="RAG-python库Chonkie的使用"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202502/13/pGSm4WWdTBx3vE3.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-15</div><div class="info-item-2">RAG-python库Chonkie的使用</div></div><div class="info-2"><div class="info-item-1">使用 Python 库 Chonkie 快速上手在自然语言处理（NLP）领域，文本分块（chunking）是一种常见的任务，它将长文本分割成更小的块，以便于后续处理和分析。无论是构建 RAG（Retrieve-Augment-Generate）模型，还是进行大规模文本处理，分块都是一项基础且关键的步骤。然而，现有的许多分块工具要么功能过于复杂，要么过于简陋，难以满足开发者的实际需求。幸运的是，现在有了 Chonkie —— 一个简单易用的 Python 库，它专注于提供高效且灵活的文本分块解决方案。本文将详细介绍如何使用 Chonkie 快速上手文本分块，并通过几个实际示例展示其强大的功能。 什么是 Chonkie？Chonkie 是一个轻量级的 Python 库，旨在简化文本分块的过程。它提供了多种分块策略，包括基于句子的分块、递归分块、语义分块和双通道合并分块等，能够满足不同场景下的需求。Chonkie 的设计目标是简单、高效且易于扩展，让开发者能够专注于核心业务逻辑，而不是被复杂的分块逻辑所困扰。安装 Chonkie在开始之前，您需要先安装 Chonkie。可以通过以下命令...</div></div></div></a><a class="pagination-related" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-05-26</div><div class="info-item-2">MCP vs Agent 全面对比与最佳实践</div></div><div class="info-2"><div class="info-item-1">MCP vs Agent —— 它们到底是什么？有什么区别？什么时候该用哪个？前言最近 AI 开发领域有两个词频繁出现：MCP 和 Agent。 很多人刚接触时会混淆：它们不都是让 AI 能”做事”的吗？区别在哪？有了 Agent 为什么还要 MCP？MCP 会替代 Agent 吗？ 这篇文章从最底层逻辑开始，帮你彻底理清这两个概念。  目录 一个类比：先建立直觉 什么是 MCP？ 什么是 Agent？ MCP vs Agent —— 全面对比 相同点：它们解决什么问题 不同点：核心思维差异 应用场景 MCP + Agent &#x3D; 黄金组合 总结   1. 一个类比：先建立直觉在深入技术细节之前，先用一个外卖系统的类比建立直觉。 1234567891011121314151617181920你饿了，想吃饭。选择 A —— 你直接打电话给饭店：  &quot;喂，我要一份鱼香肉丝盖饭&quot;  饭店做好，送到你家选择 B —— 你打开美团/饿了么：  打开 App → 浏览菜单 → 下单 → 骑手取餐 → 送到你家MCP 就像是&quot;美团/饿了么&quot;这个平...</div></div></div></a><a class="pagination-related" href="/2025/03/23/RAG-%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%AF%BB%E5%8F%96%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6/" title="RAG-更好的读取文本文件"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202211/10/20221110104951_3d152.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-23</div><div class="info-item-2">RAG-更好的读取文本文件</div></div><div class="info-2"><div class="info-item-1">以下实现综合考虑了文件检测、内存管理、编码处理、并发控制等关键因素，支持智能选择读取策略： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798991001011021031041051061071081091101111121131141151161171181191201211221231241251261271281291301311321331341351361371381391401411421431441451461471481491501511521531541551561571581591601611621631641651661671681691701711721731741751761771781791801811821831841851861...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">205</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">55</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%95%BF%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86%E7%9A%84%E6%A0%B8%E5%BF%83%E6%8C%91%E6%88%98"><span class="toc-number">2.</span> <span class="toc-text">一、长文本处理的核心挑战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%8A%80%E6%9C%AF%E9%99%90%E5%88%B6"><span class="toc-number">2.1.</span> <span class="toc-text">1. 技术限制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%B8%9A%E5%8A%A1%E5%BD%B1%E5%93%8D"><span class="toc-number">2.2.</span> <span class="toc-text">2. 业务影响</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%8E%B0%E6%9C%89%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E6%B7%B1%E5%BA%A6%E8%AF%84%E4%BC%B0"><span class="toc-number">3.</span> <span class="toc-text">二、现有解决方案深度评估</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA%E7%94%9F%E6%88%90-RAG"><span class="toc-number">3.1.</span> <span class="toc-text">1. 检索增强生成(RAG)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8E%86%E5%8F%B2%E5%AF%B9%E8%AF%9D%E5%88%86%E5%9D%97%E5%A4%84%E7%90%86"><span class="toc-number">3.2.</span> <span class="toc-text">2. 历史对话分块处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%A4%9A%E6%A8%A1%E5%9E%8B%E5%8D%8F%E5%90%8C%E5%A4%84%E7%90%86"><span class="toc-number">3.3.</span> <span class="toc-text">3. 多模型协同处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%BF%AD%E4%BB%A3%E5%BC%8F%E6%96%87%E6%9C%AC%E5%8E%8B%E7%BC%A9"><span class="toc-number">3.4.</span> <span class="toc-text">4. 迭代式文本压缩</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%85%B6%E4%BB%96%E7%9C%8B%E5%88%B0%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E4%B8%8E%E6%8A%80%E6%9C%AF%E5%89%8D%E6%B2%BF"><span class="toc-number">4.</span> <span class="toc-text">三、其他看到的解决方案与技术前沿</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%B1%82%E6%AC%A1%E5%8C%96%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6"><span class="toc-number">4.1.</span> <span class="toc-text">1. 层次化注意力机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%AE%B0%E5%BF%86%E5%A2%9E%E5%BC%BA%E6%9E%B6%E6%9E%84"><span class="toc-number">4.2.</span> <span class="toc-text">2. 记忆增强架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%80%92%E5%BD%92%E5%BC%8F%E5%A4%84%E7%90%86"><span class="toc-number">4.3.</span> <span class="toc-text">3. 递归式处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%A8%80%E7%96%8F%E6%B3%A8%E6%84%8F%E5%8A%9B%E4%BC%98%E5%8C%96"><span class="toc-number">4.4.</span> <span class="toc-text">4. 稀疏注意力优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E9%80%89%E6%8B%A9%E7%9F%A9%E9%98%B5"><span class="toc-number">5.</span> <span class="toc-text">四、解决方案选择矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%9C%BA%E6%99%AF%E5%8C%96%E5%BB%BA%E8%AE%AE"><span class="toc-number">6.</span> <span class="toc-text">五、场景化建议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%B3%95%E5%BE%8B%E5%90%88%E5%90%8C%E5%88%86%E6%9E%90"><span class="toc-number">6.1.</span> <span class="toc-text">1. 法律合同分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AD%A6%E6%9C%AF%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB"><span class="toc-number">6.2.</span> <span class="toc-text">2. 学术论文阅读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AE%A2%E6%88%B7%E6%9C%8D%E5%8A%A1%E5%AF%B9%E8%AF%9D"><span class="toc-number">6.3.</span> <span class="toc-text">3. 客户服务对话</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">7.</span> <span class="toc-text">结论</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="彻底搞懂 Token"/></a><div class="content"><a class="title" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token">彻底搞懂 Token</a><time datetime="2026-05-25T20:00:00.000Z" title="发表于 2026-05-26 04:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析"><img src="https://c-ssl.duitang.com/uploads/blog/202604/16/pGSm4WWdTBDOWWY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Agent 沙箱深度解析"/></a><div class="content"><a class="title" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析">AI Agent 沙箱深度解析</a><time datetime="2026-05-25T19:30:00.000Z" title="发表于 2026-05-26 03:30:00">2026-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const abcjsInit = () => {
+    const abcjsFn = () => {
+      setTimeout(() => {
+        const sheets = document.querySelectorAll(".abc-music-sheet")
+        for (let i = 0; i < sheets.length; i++) {
+          const ele = sheets[i]
+          if (ele.children.length > 0) continue
+
+          // Parse parameters from data-params attribute
+          let params = {}
+          const dp = ele.getAttribute("data-params")
+          if (dp) {
+            try {
+              params = JSON.parse(dp)
+            } catch (e) {
+              console.error("Failed to parse data-params:", e)
+            }
+          }
+
+          // Merge parsed parameters with the responsive option
+          // Ensures params content appears before responsive
+          const options = { ...params, responsive: "resize" }
+
+          // Render the music score using ABCJS.renderAbc
+          ABCJS.renderAbc(ele, ele.textContent, options)
+        }
+      }, 100)
+    }
+
+    if (typeof ABCJS === "object") {
+      abcjsFn()
+    } else {
+      btf.getScript("https://cdn.jsdelivr.net/npm/abcjs/dist/abcjs-basic-min.min.js").then(abcjsFn)
+    }
+  }
+
+  if (window.pjax) {
+    abcjsInit()
+  } else {
+    window.addEventListener("load", abcjsInit)
+  }
+
+  btf.addGlobalFn("encrypt", abcjsInit, "abcjs")
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="null" data-text="I,LOVE,YOU,木一" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>无联网下载谷歌浏览器 | 念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="referrer" content="no-referrer"><meta name="description" content="最近因为swagger的更新，需要在内网更新谷歌浏览器，但是真到下载的时候发现官网下载的安装包都是需要联网安装的，一下子拔我搞蒙了。翻了一下，也没有翻到下载完整安装包的地址，又不想去一些奇怪的网站下载，因此通过自己搜索找到了一个地址：https:&#x2F;&#x2F;www.google.cn&#x2F;chrome&#x2F;index.html?standalone&#x3D;1  Standalone这个单词，它本身的意思就是脱机的，单独">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无联网下载谷歌浏览器">
+<meta property="og:url" content="https://m42-orion.github.io/2024/04/07/%E9%97%AE%E9%A2%98-%E6%97%A0%E8%81%94%E7%BD%91%E4%B8%8B%E8%BD%BD%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="最近因为swagger的更新，需要在内网更新谷歌浏览器，但是真到下载的时候发现官网下载的安装包都是需要联网安装的，一下子拔我搞蒙了。翻了一下，也没有翻到下载完整安装包的地址，又不想去一些奇怪的网站下载，因此通过自己搜索找到了一个地址：https:&#x2F;&#x2F;www.google.cn&#x2F;chrome&#x2F;index.html?standalone&#x3D;1  Standalone这个单词，它本身的意思就是脱机的，单独">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://liu__tao.gitee.io/drawing-bed/blog_img/%E6%97%A0%E8%81%94%E7%BD%91%E4%B8%8B%E8%BD%BD%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%B0%81%E9%9D%A2.png">
+<meta property="article:published_time" content="2024-04-07T06:57:21.000Z">
+<meta property="article:modified_time" content="2024-04-07T07:02:20.537Z">
+<meta property="article:author" content="望">
+<meta property="article:tag" content="杂谈">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://liu__tao.gitee.io/drawing-bed/blog_img/%E6%97%A0%E8%81%94%E7%BD%91%E4%B8%8B%E8%BD%BD%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8/%E5%B0%81%E9%9D%A2.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "无联网下载谷歌浏览器",
+  "url": "https://m42-orion.github.io/2024/04/07/%E9%97%AE%E9%A2%98-%E6%97%A0%E8%81%94%E7%BD%91%E4%B8%8B%E8%BD%BD%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8/",
+  "image": "http://liu__tao.gitee.io/drawing-bed/blog_img/无联网下载谷歌浏览器/封面.png",
+  "datePublished": "2024-04-07T06:57:21.000Z",
+  "dateModified": "2024-04-07T07:02:20.537Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "望",
+      "url": "https://m42-orion.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://m42-orion.github.io/2024/04/07/%E9%97%AE%E9%A2%98-%E6%97%A0%E8%81%94%E7%BD%91%E4%B8%8B%E8%BD%BD%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '无联网下载谷歌浏览器',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(http://liu__tao.gitee.io/drawing-bed/blog_img/无联网下载谷歌浏览器/封面.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">无联网下载谷歌浏览器</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">无联网下载谷歌浏览器</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-07T06:57:21.000Z" title="发表于 2024-04-07 14:57:21">2024-04-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-07T07:02:20.537Z" title="更新于 2024-04-07 15:02:20">2024-04-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%90%90%E4%BA%8B/">琐事</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>最近因为swagger的更新，需要在内网更新谷歌浏览器，但是真到下载的时候发现官网下载的安装包都是需要联网安装的，一下子拔我搞蒙了。翻了一下，也没有翻到下载完整安装包的地址，又不想去一些奇怪的网站下载，因此通过自己搜索找到了一个地址：<a target="_blank" rel="noopener" href="https://www.google.cn/chrome/index.html?standalone=1">https://www.google.cn/chrome/index.html?standalone=1</a></p>
+<hr>
+<p>Standalone这个单词，它本身的意思就是脱机的，单独的意思，即不依赖网络而存在的本地安装版本。不仅是在IE 8浏览器中，在其他浏览器中我们想要下载本地安装包时也都可以采用这个方法。这个真的是一个很小的问题，但是耽误了我十多分钟，因此记录一下，避免以后更新的时候又要来找一遍。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2024/04/07/%E9%97%AE%E9%A2%98-%E6%97%A0%E8%81%94%E7%BD%91%E4%B8%8B%E8%BD%BD%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8/">https://m42-orion.github.io/2024/04/07/%E9%97%AE%E9%A2%98-%E6%97%A0%E8%81%94%E7%BD%91%E4%B8%8B%E8%BD%BD%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9D%82%E8%B0%88/">杂谈</a></div><div class="post-share"><div class="social-share" data-image="http://liu__tao.gitee.io/drawing-bed/blog_img/无联网下载谷歌浏览器/封面.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2024/04/07/%E9%97%AE%E9%A2%98-sqlalchemy%E5%BA%93%E7%9A%842-0%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98/" title="sqlalchemy库的2.0版本问题"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/sqlalchemy库的2.0版本问题/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">sqlalchemy库的2.0版本问题</div></div><div class="info-2"><div class="info-item-1">在更新项目的python库的时候，更新完毕后使用sqlalchemy执行engine.execute语句的时候报错，然后发现新的sqlalchemy中根本没有这个方法。 1AttributeError: &#x27;Engine&#x27; object has no attribute &#x27;execute&#x27;  找了半天原因发现sqlalchemy2.0后取消了engine.execute方法。需要通过Connection中的execute方法去执行sql语句，而且需要通过sqlalchemy.text对象去传递sql语句。好消息是1.0其实并没有放弃更新，这个实际上已经是两个库了，不能算一个东西，就像是python2跟python3的差距一样大。 2.0版本写法如下： 1234567from sqlalchemy import create_engine, textengine = create_engine(&quot;配置信息&quot;)sqltext = text(&quot;select * from ...;&quot;)conn = engine...</div></div></div></a><a class="pagination-related" href="/2024/03/25/vscode-lunch-josn%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/" title="vscode的lunch.josn文件解析"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/vscode的lunch.josn文件解析/封面.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">vscode的lunch.josn文件解析</div></div><div class="info-2"><div class="info-item-1">基础配置12345678910111213141516171819202122232425262728293031323334&#123;    &quot;version&quot;: &quot;0.2.0&quot;,    &quot;configurations&quot;: [        &#123;               &quot;name&quot;: &quot;Python: run_classifier.py&quot;,            &quot;type&quot;: &quot;python&quot;,            &quot;request&quot;: &quot;launch&quot;,            // &quot;program&quot;: &quot;$&#123;workspaceFolder&#125;/test.py&quot;,            // &quot;program&quot;: &quot;$&#123;workspaceFolder&#125;/train.py&q...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2024/05/13/%E5%BC%80%E6%BA%90-Vanna/" title="自动生成SQL语句Vanna学习"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202407/26/gVSLNJJ0TQBzngy.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-13</div><div class="info-item-2">自动生成SQL语句Vanna学习</div></div><div class="info-2"><div class="info-item-1">为何要生成SQL语句在实际业务开发过程中，面对越来越多的用户在使用一些工具的时候，他们认为界面上展示出来的数据太过于单一了，无论是数据维度还是数据过滤方式，都被限制在了几个功能按钮上。数据聚合跟嵌套查询的想法是大多数人都有的，但是奈何操作者可能并不是编程行业的人，并且就算是也根本不了解当前自己使用的产品有什么数据表可以提供怎样的查询方式，这就限制了一个产品在数据展示维度上的欠缺。因此需要一款程序用于优化这个痛点。根据自然语言文本生成SQL语句的想法应运而生。 方案选择知识库生成SQL语句的时候需要大模型理解当前产品的各种特性与表设计，知识库无疑是最好的解决方案，将当前产品的文档灌入到知识库当中，根据用户的问题查询对应的知识库，再将知识库的结果作为参考，结合问题一起让大模型返回结果。但是这里有很多问题，知识库作为参考只能提高模型对当前产品的理解能力，虽然生成sql语句在产品的大致逻辑方向上是正确的，但是却不能够明显提升SQL语句的生成能力，这导致SQL语句出现了大量的隐藏错误，使用体验非常糟糕。 提示词提示词在GLM提示词当中有做简单讲解，这里就不再赘述了，提示词可以引导大模型按照...</div></div></div></a><a class="pagination-related" href="/2024/12/01/%E6%9C%89%E6%84%9F-%E5%9B%9E%E5%BF%86%E6%98%AF%E6%9C%AC%E4%B9%B1%E7%A0%81%E7%9A%84%E4%B9%A6/" title="回忆是本乱码的书"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202411/29/N5SoV99yTP8xmJv.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-01</div><div class="info-item-2">回忆是本乱码的书</div></div><div class="info-2"><div class="info-item-1">回忆是本乱码的书，你会时不时拼凑出一句完整的话，然后后知后觉 等你懂了，但也晚了 虽然晚了，但总算懂了，祝大家珍惜身边每一个人，每一段关系 我们无法判断此刻的价值，直到成为回忆 但我们可以让此刻的价值加倍 这样在回忆中见到当时那个错过同频的人，我们也可以笑着说：哦！～我懂你意思了 </div></div></div></a><a class="pagination-related" href="/2022/09/25/python%E8%BF%9E%E6%8E%A5%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="python连接远程服务器"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/python连接远程服务器/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-25</div><div class="info-item-2">python连接远程服务器</div></div><div class="info-2"><div class="info-item-1">python连接远程服务器有很多实现方法，但是在我使用的时候却要要求做成服务的形式，连接信息用后端返回的形式。实现方式： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091import paramikoimport timefrom apscheduler.schedulers.background import BackgroundSchedulerclass ssh_tunnel(object):    def survival_detection(self):        interval_time = int(time.time()) - self.start_time        if interval_time &gt; 10800:  # No operation for...</div></div></div></a><a class="pagination-related" href="/2022/04/29/%E8%AF%AD%E6%B3%95-%E8%A3%85%E9%A5%B0%E5%99%A8/" title="装饰器"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/装饰器/封面.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-29</div><div class="info-item-2">装饰器</div></div><div class="info-2"><div class="info-item-1">12from IPython.core.interactiveshell import InteractiveShellInteractiveShell.ast_node_interactivity = &#x27;all&#x27;  装饰器(Decorators)装饰器(Decorators)是 Python 的一个重要部分。简单地说：他们是修改其他函数的功能的函数。他们有助于让我们的代码更简短，也更Pythonic（Python范儿）。 1234567891011121314def hi(name=&quot; world&quot;):    return &quot;hello&quot; + namehi() # 我们甚至可以将一个函数赋值给一个变量，比如greet = hi# 我们这里没有在使用小括号，因为并不是在调用hi函数# 而是在将它放在greet变量里头。尝试运行下这个greet()# 如果删掉旧的hi函数del hi# hi() # 报错 greet()  12345&#x27;hello world&#x27;&#x27;hello world&#x27...</div></div></div></a><a class="pagination-related" href="/2025/02/15/vscode-Monokai%E8%89%B2%E5%BD%A9%E6%96%B9%E6%A1%88/" title="Monokai色彩方案"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202502/12/6zS4oXXwiqVZel6.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-02-15</div><div class="info-item-2">Monokai色彩方案</div></div><div class="info-2"><div class="info-item-1">Monokai色彩方案在编程的早期，开发者一直在寻找一个能够使工作更轻松、更吸引人的环境。Monokai，以其鲜艳的色彩方案，成为了编辑器、IDE和终端中的热门选择。这篇文章深入探讨了这一标志性色彩方案的起源、发展和持久的吸引力。 Monokai的诞生Monokai的旅程始于2006年，由荷兰设计师兼开发者Wimer Hazenberg发起。Wimer对现有的缺乏灵感、过于饱和的编辑器主题感到沮丧，决定创造一些新鲜且实用的东西——一个优先考虑可读性和美学的色彩方案。他的工具选择是macOS上的TextMate，在那里他尝试了一个深色背景和明亮、精心挑选的颜色：用于关键字的粉色，用于字符串的香草黄色，以及微妙的对比来突出代码结构，同时降低不太重要的元素（如注释）的亮度。 1234567891011const fibonacci = (n: number) =&gt; &#123;	console.log(`Called fibonacci($&#123;n&#125;)`);	// Base case: return n if 0 or 1	if (n &lt;= 1) &#123...</div></div></div></a><a class="pagination-related" href="/2022/09/04/go-%E6%93%8D%E4%BD%9Ctxt%E6%96%87%E4%BB%B6/" title="go语言操作txt文件"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/go语言操作txt文件/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-04</div><div class="info-item-2">go语言操作txt文件</div></div><div class="info-2"><div class="info-item-1">打开txt二进制打开： 123456789101112131415161718192021222324package mainimport (	&quot;fmt&quot;	&quot;os&quot;)func main() &#123;	i, v := os.Open(&quot;test.txt&quot;) //打开文件	if v != nil &#123;                                                                      //如果报错了进入if		fmt.Println(&quot;打开文件失败&quot;, v)		return	&#125;	defer i.Close()           //最后关闭文件	var k = make([]byte, 128) //创建一个容量为128字节的切片	for &#123;		h, l := i.Read(k)                //开始读取，把读取的数据放入切片k中，h是读取了多少字节，l是报错信息		fmt.Println(strin...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">205</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">55</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="彻底搞懂 Token"/></a><div class="content"><a class="title" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token">彻底搞懂 Token</a><time datetime="2026-05-25T20:00:00.000Z" title="发表于 2026-05-26 04:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析"><img src="https://c-ssl.duitang.com/uploads/blog/202604/16/pGSm4WWdTBDOWWY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Agent 沙箱深度解析"/></a><div class="content"><a class="title" href="/2026/05/26/AI-Agent%E6%B2%99%E7%AE%B1%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90-%E6%B2%99%E7%AE%B1vs%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="AI Agent 沙箱深度解析">AI Agent 沙箱深度解析</a><time datetime="2026-05-25T19:30:00.000Z" title="发表于 2026-05-26 03:30:00">2026-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const abcjsInit = () => {
+    const abcjsFn = () => {
+      setTimeout(() => {
+        const sheets = document.querySelectorAll(".abc-music-sheet")
+        for (let i = 0; i < sheets.length; i++) {
+          const ele = sheets[i]
+          if (ele.children.length > 0) continue
+
+          // Parse parameters from data-params attribute
+          let params = {}
+          const dp = ele.getAttribute("data-params")
+          if (dp) {
+            try {
+              params = JSON.parse(dp)
+            } catch (e) {
+              console.error("Failed to parse data-params:", e)
+            }
+          }
+
+          // Merge parsed parameters with the responsive option
+          // Ensures params content appears before responsive
+          const options = { ...params, responsive: "resize" }
+
+          // Render the music score using ABCJS.renderAbc
+          ABCJS.renderAbc(ele, ele.textContent, options)
+        }
+      }, 100)
+    }
+
+    if (typeof ABCJS === "object") {
+      abcjsFn()
+    } else {
+      btf.getScript("https://cdn.jsdelivr.net/npm/abcjs/dist/abcjs-basic-min.min.js").then(abcjsFn)
+    }
+  }
+
+  if (window.pjax) {
+    abcjsInit()
+  } else {
+    window.addEventListener("load", abcjsInit)
+  }
+
+  btf.addGlobalFn("encrypt", abcjsInit, "abcjs")
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="null" data-text="I,LOVE,YOU,木一" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
