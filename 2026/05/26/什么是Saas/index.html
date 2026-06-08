@@ -1,0 +1,1026 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂&quot;软件即服务&quot; | 念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="referrer" content="no-referrer"><meta name="description" content="什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂”软件即服务”前言最近听到”所见即服务”（SaaS）这个词，感觉好像是那么回事，又好像不是。 你一定也有过这些困惑：  “微博也是网页登录用，飞书也是网页登录用——为什么飞书是 SaaS，微博不是？”   “我手机上装了个美图秀秀 App，和我用网页版 Canva 修图，有什么区别？”   “在线 PS（Photopea）可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂&quot;软件即服务&quot;">
+<meta property="og:url" content="https://m42-orion.github.io/2026/05/26/%E4%BB%80%E4%B9%88%E6%98%AFSaas/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂”软件即服务”前言最近听到”所见即服务”（SaaS）这个词，感觉好像是那么回事，又好像不是。 你一定也有过这些困惑：  “微博也是网页登录用，飞书也是网页登录用——为什么飞书是 SaaS，微博不是？”   “我手机上装了个美图秀秀 App，和我用网页版 Canva 修图，有什么区别？”   “在线 PS（Photopea）可以">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c-ssl.duitang.com/uploads/blog/202606/07/n6SPLYYwi9pmV0X.jpeg">
+<meta property="article:published_time" content="2026-05-25T23:00:00.000Z">
+<meta property="article:modified_time" content="2026-06-08T00:52:33.819Z">
+<meta property="article:author" content="望">
+<meta property="article:tag" content="SaaS">
+<meta property="article:tag" content="云计算">
+<meta property="article:tag" content="软件架构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c-ssl.duitang.com/uploads/blog/202606/07/n6SPLYYwi9pmV0X.jpeg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂\"软件即服务\"",
+  "url": "https://m42-orion.github.io/2026/05/26/%E4%BB%80%E4%B9%88%E6%98%AFSaas/",
+  "image": "https://c-ssl.duitang.com/uploads/blog/202606/07/n6SPLYYwi9pmV0X.jpeg",
+  "datePublished": "2026-05-25T23:00:00.000Z",
+  "dateModified": "2026-06-08T00:52:33.819Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "望",
+      "url": "https://m42-orion.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://m42-orion.github.io/2026/05/26/%E4%BB%80%E4%B9%88%E6%98%AFSaas/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂"软件即服务"',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><style>body{background-image:radial-gradient(circle,#c8c8c8 0.8px,transparent 0.8px);background-size:24px 24px}</style><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">206</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">166</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">57</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://c-ssl.duitang.com/uploads/blog/202606/07/n6SPLYYwi9pmV0X.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂&quot;软件即服务&quot;</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂&quot;软件即服务&quot;</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-05-25T23:00:00.000Z" title="发表于 2026-05-26 07:00:00">2026-05-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-06-08T00:52:33.819Z" title="更新于 2026-06-08 08:52:33">2026-06-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/">技术架构</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/">商业模式</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="什么是-SaaS？——-为什么微博不是-SaaS，但飞书是？帮你彻底搞懂”软件即服务”"><a href="#什么是-SaaS？——-为什么微博不是-SaaS，但飞书是？帮你彻底搞懂”软件即服务”" class="headerlink" title="什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂”软件即服务”"></a>什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂”软件即服务”</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近听到”所见即服务”（SaaS）这个词，感觉好像是那么回事，又好像不是。</p>
+<p>你一定也有过这些困惑：</p>
+<blockquote>
+<p><strong>“微博也是网页登录用，飞书也是网页登录用——为什么飞书是 SaaS，微博不是？”</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>“我手机上装了个美图秀秀 App，和我用网页版 Canva 修图，有什么区别？”</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>“在线 PS（Photopea）可以在浏览器里编辑图片，这是 SaaS 吗？”</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>“如果我买了一套 CRM 软件部署在自己的服务器上，跟直接用 Salesforce（在线 CRM）有什么区别？”</strong></p>
+</blockquote>
+<p>这些问题的答案，<strong>不在”用没用网页”上，而在”软件归谁管、钱怎么付、能不能定制”上。</strong></p>
+<p>这篇文章帮你彻底搞清楚。</p>
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#1-%E5%85%88%E5%BB%BA%E7%AB%8B%E4%B8%80%E4%B8%AA%E7%9B%B4%E8%A7%89%E7%A7%9F%E6%88%BF%E5%AD%90-vs-%E4%B9%B0%E6%88%BF%E5%AD%90">先建立一个直觉：租房子 vs 买房子</a></li>
+<li><a href="#2-saas-%E7%9A%84%E5%AE%98%E6%96%B9%E5%AE%9A%E4%B9%89">SaaS 的官方定义</a></li>
+<li><a href="#3-saas-%E7%9A%84%E4%BA%94%E5%A4%A7%E6%A0%B8%E5%BF%83%E7%89%B9%E5%BE%81">SaaS 的五大核心特征</a></li>
+<li><a href="#4-%E7%94%A8%E4%BA%94%E6%8A%8A%E5%B0%BA%E5%AD%90%E5%88%A4%E6%96%AD%E6%98%AF-saas-%E8%BF%98%E6%98%AF%E4%BC%A0%E7%BB%9F%E8%BD%AF%E4%BB%B6">用五把尺子判断：是 SaaS 还是传统软件？</a></li>
+<li><a href="#5-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BE%AE%E5%8D%9A%E4%B8%8D%E6%98%AF-saas%E4%B8%BA%E4%BB%80%E4%B9%88%E7%99%BE%E5%BA%A6%E4%BA%91%E7%9B%98%E4%B9%9F%E4%B8%8D%E6%98%AF">为什么微博不是 SaaS？为什么百度云盘也不是？</a></li>
+<li><a href="#6-%E4%BB%80%E4%B9%88%E6%98%AF-saas%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF--%E5%A4%A7%E9%87%8F%E6%A1%88%E4%BE%8B%E9%80%90%E4%B8%80%E5%88%86%E6%9E%90">什么是 SaaS？什么不是？—— 大量案例逐一分析</a></li>
+<li><a href="#7-saas-%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9">SaaS 的优缺点</a></li>
+<li><a href="#8-%E4%BB%80%E4%B9%88%E4%B8%9A%E5%8A%A1%E9%80%82%E5%90%88%E5%81%9A-saas%E4%BB%80%E4%B9%88%E4%B8%8D%E9%80%82%E5%90%88">什么业务适合做 SaaS？什么不适合？</a></li>
+<li><a href="#9-saas-%E7%9A%84%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA">SaaS 的常见误区</a></li>
+<li><a href="#10-%E6%80%BB%E7%BB%93">总结</a></li>
+</ol>
+<hr>
+<h2 id="1-先建立一个直觉：租房子-vs-买房子"><a href="#1-先建立一个直觉：租房子-vs-买房子" class="headerlink" title="1. 先建立一个直觉：租房子 vs 买房子"></a>1. 先建立一个直觉：租房子 vs 买房子</h2><p>在进入技术定义之前，先建立一个核心直觉。</p>
+<blockquote>
+<p><strong>SaaS 是租房，传统软件是买房。</strong></p>
+</blockquote>
+<h3 id="买房模式（传统软件-私有部署）"><a href="#买房模式（传统软件-私有部署）" class="headerlink" title="买房模式（传统软件&#x2F;私有部署）"></a>买房模式（传统软件&#x2F;私有部署）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    A[&quot;💵 一次性付一大笔钱&lt;br/&gt;买软件许可证&quot;]</span><br><span class="line">    A --&gt; B[&quot;🏠 房子是你的&lt;br/&gt;想怎么改就怎么改&quot;]</span><br><span class="line">    A --&gt; C[&quot;🔧 水电坏了自己修&lt;br/&gt;自己运维服务器&quot;]</span><br><span class="line">    A --&gt; D[&quot;🏗️ 想扩建找施工队&lt;br/&gt;二次开发自己来&quot;]</span><br><span class="line">    A --&gt; E[&quot;🏚️ 不住也得交物业费&lt;br/&gt;买了不用也浪费&quot;]</span><br><span class="line"></span><br><span class="line">    style A fill:#E74C3C,color:#fff,stroke:#C0392B</span><br><span class="line">    style B fill:#F5CBA7,color:#333</span><br><span class="line">    style C fill:#F5CBA7,color:#333</span><br><span class="line">    style D fill:#F5CBA7,color:#333</span><br><span class="line">    style E fill:#F5CBA7,color:#333</span><br></pre></td></tr></table></figure>
+
+<p><strong>例子</strong>：买一套 Office 2019 装在自己电脑上 → 一次性付钱，以后不管了，永远用这个版本</p>
+<h3 id="租房模式（SaaS）"><a href="#租房模式（SaaS）" class="headerlink" title="租房模式（SaaS）"></a>租房模式（SaaS）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    A[&quot;📅 按月付房租&lt;br/&gt;订阅付费&quot;]</span><br><span class="line">    A --&gt; B[&quot;🏠 房子是房东的&lt;br/&gt;你不能拆墙&quot;]</span><br><span class="line">    A --&gt; C[&quot;🔧 水管坏了房东修&lt;br/&gt;厂商负责运维升级&quot;]</span><br><span class="line">    A --&gt; D[&quot;🔄 房东定期翻新装修&lt;br/&gt;自动更新到最新版&quot;]</span><br><span class="line">    A --&gt; E[&quot;🚪 不想住了下月退&lt;br/&gt;随时退订&quot;]</span><br><span class="line"></span><br><span class="line">    style A fill:#2ECC71,color:#fff,stroke:#27AE60</span><br><span class="line">    style B fill:#D5F5E3,color:#333</span><br><span class="line">    style C fill:#D5F5E3,color:#333</span><br><span class="line">    style D fill:#D5F5E3,color:#333</span><br><span class="line">    style E fill:#D5F5E3,color:#333</span><br></pre></td></tr></table></figure>
+
+<p><strong>例子</strong>：用 Google Docs &#x2F; 飞书 &#x2F; Notion → 按月付费，自动更新，哪里都能用</p>
+<h3 id="核心区别"><a href="#核心区别" class="headerlink" title="核心区别"></a>核心区别</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>买房（传统软件）</th>
+<th>租房（SaaS）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>所有权</strong></td>
+<td>你拥有软件</td>
+<td>你使用软件</td>
+</tr>
+<tr>
+<td><strong>付费</strong></td>
+<td>一次性买断</td>
+<td>订阅（月&#x2F;年付）</td>
+</tr>
+<tr>
+<td><strong>运维</strong></td>
+<td>你自己负责</td>
+<td>厂商负责</td>
+</tr>
+<tr>
+<td><strong>升级</strong></td>
+<td>手动升级（或不管）</td>
+<td>自动升级</td>
+</tr>
+<tr>
+<td><strong>定制</strong></td>
+<td>自由</td>
+<td>有限</td>
+</tr>
+<tr>
+<td><strong>退出成本</strong></td>
+<td>高（买了就得用）</td>
+<td>低（不续费就行）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="2-SaaS-的官方定义"><a href="#2-SaaS-的官方定义" class="headerlink" title="2. SaaS 的官方定义"></a>2. SaaS 的官方定义</h2><p><strong>SaaS</strong> &#x3D; <strong>Software as a Service</strong>，软件即服务。</p>
+<p>美国国家标准与技术研究院（NIST）对 SaaS 有经典定义（SP 800-145）：</p>
+<blockquote>
+<p>SaaS 是一种云计算服务模式，用户可以使用<strong>运行在云基础设施上的应用程序</strong>，这些应用程序可以通过<strong>各种客户端设备</strong>（如浏览器、移动 App）访问。</p>
+<p>用户<strong>不管理也不控制</strong>底层的云基础设施（包括网络、服务器、操作系统、存储），唯一可能的例外是有限的用户专属配置设置。</p>
+</blockquote>
+<p>翻译成人话：</p>
+<blockquote>
+<p><strong>你通过互联网使用一个软件，这个软件运行在别人的服务器上，你只管用，不用管它在哪里跑、谁在维护、怎么升级。</strong></p>
+</blockquote>
+<hr>
+<h2 id="3-SaaS-的五大核心特征"><a href="#3-SaaS-的五大核心特征" class="headerlink" title="3. SaaS 的五大核心特征"></a>3. SaaS 的五大核心特征</h2><p>光有定义不够，我们要有<strong>判断标准</strong>。以下是判断一个东西是不是 SaaS 的五把尺子：</p>
+<h3 id="特征一：通过网络交付，不是通过安装"><a href="#特征一：通过网络交付，不是通过安装" class="headerlink" title="特征一：通过网络交付，不是通过安装"></a>特征一：通过网络交付，不是通过安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph SaaS[&quot;✅ SaaS 模式&quot;]</span><br><span class="line">        S1[&quot;🌐 打开浏览器&quot;] --&gt; S2[&quot;🔗 输入网址&quot;] --&gt; S3[&quot;🚀 直接用&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph Traditional[&quot;❌ 传统软件&quot;]</span><br><span class="line">        T1[&quot;💿 买光盘/下载&quot;] --&gt; T2[&quot;⚙️ 安装程序&quot;] --&gt; T3[&quot;🔧 配置环境&quot;] --&gt; T4[&quot;✅ 才能用&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    style SaaS fill:#D5F5E3,color:#333</span><br><span class="line">    style Traditional fill:#FADBD8,color:#333</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>飞书网页版 → ✅ 浏览器即用</li>
+<li>Office 365 在线版 → ✅ 浏览器即用</li>
+<li>Office 2019 买断版 → ❌ 需要安装</li>
+<li>Photoshop 桌面版 → ❌ 需要安装</li>
+<li>Photopea（在线 PS） → ✅ 浏览器即用（但只有这一条还不够，接着看）</li>
+</ul>
+<h3 id="特征二：订阅制付费，不是一次性买断"><a href="#特征二：订阅制付费，不是一次性买断" class="headerlink" title="特征二：订阅制付费，不是一次性买断"></a>特征二：订阅制付费，不是一次性买断</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph SaaS[&quot;✅ SaaS 订阅制&quot;]</span><br><span class="line">        S1[&quot;📅 按月付&quot;] --&gt; S2[&quot;↔️ 随时增/减&quot;] --&gt; S3[&quot;🚪 随时退订&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph Traditional[&quot;❌ 一次性买断&quot;]</span><br><span class="line">        T1[&quot;💵 一次性付清&quot;] --&gt; T2[&quot;🗄️ 拿一个版本&quot;] --&gt; T3[&quot;🔒 以后不管了&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    style SaaS fill:#D5F5E3,color:#333</span><br><span class="line">    style Traditional fill:#FADBD8,color:#333</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Salesforce → ✅ 按月&#x2F;年付费</li>
+<li>飞书 → ✅ 按人&#x2F;月付费</li>
+<li>Microsoft 365 → ✅ 订阅制</li>
+<li>Office 2019 → ❌ 一次性买断（买完就不管了）</li>
+<li>Adobe Creative Cloud → ✅ 现在是订阅制了（曾经是一次性买断的 ❌）</li>
+</ul>
+<p><strong>注意：这是”卖软件”和”卖服务”的思维转变。你不卖”一个版本”，你卖”持续的服务”。</strong></p>
+<h3 id="特征三：多租户架构（Multi-Tenant），一个代码服务于所有客户"><a href="#特征三：多租户架构（Multi-Tenant），一个代码服务于所有客户" class="headerlink" title="特征三：多租户架构（Multi-Tenant），一个代码服务于所有客户"></a>特征三：多租户架构（Multi-Tenant），一个代码服务于所有客户</h3><p>这是最技术性、也最关键的区别。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">flowchart TB</span><br><span class="line">    subgraph SaaS[&quot;✅ SaaS 多租户：一套代码服务所有客户&quot;]</span><br><span class="line">        direction LR</span><br><span class="line">        Code[&quot;📦 一套代码&lt;br/&gt;一个版本&quot;]</span><br><span class="line">        Code --&gt; T1[&quot;👤 客户 A&lt;br/&gt;(租户 1)&quot;]</span><br><span class="line">        Code --&gt; T2[&quot;👤 客户 B&lt;br/&gt;(租户 2)&quot;]</span><br><span class="line">        Code --&gt; T3[&quot;👤 客户 C&lt;br/&gt;(租户 3)&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph Traditional[&quot;❌ 传统软件：每个客户独立部署&quot;]</span><br><span class="line">        direction LR</span><br><span class="line">        I1[&quot;🏗️ 客户 A&lt;br/&gt;独立部署&lt;br/&gt;版本 1.0&quot;]</span><br><span class="line">        I2[&quot;🏗️ 客户 B&lt;br/&gt;独立部署&lt;br/&gt;版本 2.0&quot;]</span><br><span class="line">        I3[&quot;🏗️ 客户 C&lt;br/&gt;独立部署&lt;br/&gt;版本 1.5&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    Note1[&quot;📌 升级 → 所有人同时升&quot;]</span><br><span class="line">    Note2[&quot;📌 修 Bug → 所有人同时修&quot;]</span><br><span class="line">    Note3[&quot;📌 每个客户版本可能不同&quot;]</span><br><span class="line">    Note4[&quot;📌 升级修 Bug 各自为政&quot;]</span><br><span class="line"></span><br><span class="line">    SaaS --&gt; Note1</span><br><span class="line">    SaaS --&gt; Note2</span><br><span class="line">    Traditional --&gt; Note3</span><br><span class="line">    Traditional --&gt; Note4</span><br><span class="line"></span><br><span class="line">    style SaaS fill:#D5F5E3,color:#333</span><br><span class="line">    style Traditional fill:#FADBD8,color:#333</span><br><span class="line">    style Code fill:#2ECC71,color:#fff</span><br><span class="line">    style Note1 fill:#E8F8F5,color:#333</span><br><span class="line">    style Note2 fill:#E8F8F5,color:#333</span><br><span class="line">    style Note3 fill:#FDEDEC,color:#333</span><br><span class="line">    style Note4 fill:#FDEDEC,color:#333</span><br></pre></td></tr></table></figure>
+
+<h3 id="特征四：运维责任在厂商，不在客户"><a href="#特征四：运维责任在厂商，不在客户" class="headerlink" title="特征四：运维责任在厂商，不在客户"></a>特征四：运维责任在厂商，不在客户</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph SaaS[&quot;✅ SaaS：厂商运维&quot;]</span><br><span class="line">        direction LR</span><br><span class="line">        S1[&quot;客户只管用&quot;] --&gt; S2[&quot;厂商负责：&lt;br/&gt;🖥️ 服务器维护&lt;br/&gt;🔒 安全更新&lt;br/&gt;🐛 Bug 修复&lt;br/&gt;📊 性能优化&lt;br/&gt;💾 数据备份&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph Traditional[&quot;❌ 传统软件：自己运维&quot;]</span><br><span class="line">        direction LR</span><br><span class="line">        T1[&quot;你买回去&quot;] --&gt; T2[&quot;你得自己管：&lt;br/&gt;🖥️ 操作系统更新&lt;br/&gt;🗄️ 数据库维护&lt;br/&gt;🔧 安全补丁&lt;br/&gt;💿 磁盘扩容&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    style SaaS fill:#D5F5E3,color:#333</span><br><span class="line">    style Traditional fill:#FADBD8,color:#333</span><br></pre></td></tr></table></figure>
+
+<h3 id="特征五：天然弹性伸缩"><a href="#特征五：天然弹性伸缩" class="headerlink" title="特征五：天然弹性伸缩"></a>特征五：天然弹性伸缩</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph SaaS[&quot;✅ SaaS：自动弹性&quot;]</span><br><span class="line">        direction LR</span><br><span class="line">        S1[&quot;📈 今天 10 人&quot;] --&gt; S2[&quot;📈 明天 10000 人&quot;] --&gt; S3[&quot;📉 后天 10 人&quot;]</span><br><span class="line">        S4[&quot;厂商架构自动扩缩容&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph Traditional[&quot;❌ 传统软件：固定容量&quot;]</span><br><span class="line">        direction LR</span><br><span class="line">        T1[&quot;买了 100 人许可&quot;] --&gt; T2[&quot;突然要 1000 人&quot;] --&gt; T3[&quot;💸 重新买许可&lt;br/&gt;+ 扩容服务器&lt;br/&gt;+ 重新部署&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    style SaaS fill:#D5F5E3,color:#333</span><br><span class="line">    style Traditional fill:#FADBD8,color:#333</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-用五把尺子判断：是-SaaS-还是传统软件？"><a href="#4-用五把尺子判断：是-SaaS-还是传统软件？" class="headerlink" title="4. 用五把尺子判断：是 SaaS 还是传统软件？"></a>4. 用五把尺子判断：是 SaaS 还是传统软件？</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    Start[&quot;🤔 想判断一个产品是不是 SaaS？&quot;]</span><br><span class="line">    Start --&gt; R1&#123;&quot;尺子一&lt;br/&gt;🌐 网络交付？&lt;br/&gt;打开浏览器就能用？&quot;&#125;</span><br><span class="line"></span><br><span class="line">    R1 --&gt;|&quot;❌ 需要安装&quot;| NotSaaS1[&quot;❌ 不是 SaaS&lt;br/&gt;传统软件&quot;]</span><br><span class="line">    R1 --&gt;|&quot;✅ 浏览器即用&quot;| R2</span><br><span class="line"></span><br><span class="line">    R2&#123;&quot;尺子二&lt;br/&gt;💳 订阅付费？&lt;br/&gt;按月/年付钱？&quot;&#125;</span><br><span class="line">    R2 --&gt;|&quot;❌ 免费 / 广告 / 买断&quot;| NotSaaS2[&quot;❌ 不是 SaaS&lt;br/&gt;平台 / 工具&quot;]</span><br><span class="line">    R2 --&gt;|&quot;✅ 订阅付费&quot;| R3</span><br><span class="line"></span><br><span class="line">    R3&#123;&quot;尺子三&lt;br/&gt;🏭 多租户？&lt;br/&gt;所有客户共用一套系统？&quot;&#125;</span><br><span class="line">    R3 --&gt;|&quot;❌ 每个客户独立部署&quot;| NotSaaS3[&quot;❌ 不是纯 SaaS&lt;br/&gt;可能是托管服务&quot;]</span><br><span class="line">    R3 --&gt;|&quot;✅ 共用一套&quot;| R4</span><br><span class="line"></span><br><span class="line">    R4&#123;&quot;尺子四&lt;br/&gt;🔧 厂商运维？&lt;br/&gt;不用自己管服务器？&quot;&#125;</span><br><span class="line">    R4 --&gt;|&quot;❌ 自己架设维护&quot;| NotSaaS4[&quot;❌ 不是 SaaS&lt;br/&gt;私有部署&quot;]</span><br><span class="line">    R4 --&gt;|&quot;✅ 厂商负责&quot;| R5</span><br><span class="line"></span><br><span class="line">    R5&#123;&quot;尺子五&lt;br/&gt;📈 弹性伸缩？&lt;br/&gt;按需扩缩容？&quot;&#125;</span><br><span class="line">    R5 --&gt;|&quot;❌ 固定容量&quot;| NotSaaS5[&quot;❌ 不是 SaaS&quot;]</span><br><span class="line">    R5 --&gt;|&quot;✅ 自动弹性&quot;| Final[&quot;✅ 这就是 SaaS！&quot;]</span><br><span class="line"></span><br><span class="line">    style Start fill:#9B59B6,color:#fff</span><br><span class="line">    style R1 fill:#3498DB,color:#fff</span><br><span class="line">    style R2 fill:#3498DB,color:#fff</span><br><span class="line">    style R3 fill:#3498DB,color:#fff</span><br><span class="line">    style R4 fill:#3498DB,color:#fff</span><br><span class="line">    style R5 fill:#3498DB,color:#fff</span><br><span class="line">    style Final fill:#2ECC71,color:#fff,stroke:#27AE60</span><br><span class="line">    style NotSaaS1 fill:#E74C3C,color:#fff</span><br><span class="line">    style NotSaaS2 fill:#E74C3C,color:#fff</span><br><span class="line">    style NotSaaS3 fill:#E74C3C,color:#fff</span><br><span class="line">    style NotSaaS4 fill:#E74C3C,color:#fff</span><br><span class="line">    style NotSaaS5 fill:#E74C3C,color:#fff</span><br></pre></td></tr></table></figure>
+
+<p><strong>常见产品检验</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>产品</th>
+<th>网络交付</th>
+<th>订阅付费</th>
+<th>多租户</th>
+<th>厂商运维</th>
+<th>弹性伸缩</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>飞书 &#x2F; 钉钉</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ <strong>SaaS</strong></td>
+</tr>
+<tr>
+<td>Salesforce</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ <strong>SaaS</strong></td>
+</tr>
+<tr>
+<td>Notion &#x2F; Figma</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ <strong>SaaS</strong></td>
+</tr>
+<tr>
+<td>Office 2019 买断版</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌ 传统软件</td>
+</tr>
+<tr>
+<td>微博 &#x2F; 抖音</td>
+<td>✅</td>
+<td>❌(免费)</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌ <strong>社交平台</strong></td>
+</tr>
+<tr>
+<td>百度网盘个人版</td>
+<td>✅</td>
+<td>❌(存储付费)</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌ <strong>云存储</strong></td>
+</tr>
+<tr>
+<td>AWS EC2</td>
+<td>✅</td>
+<td>✅(按量)</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌ <strong>IaaS</strong></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="5-为什么微博不是-SaaS？为什么百度云盘也不是？"><a href="#5-为什么微博不是-SaaS？为什么百度云盘也不是？" class="headerlink" title="5. 为什么微博不是 SaaS？为什么百度云盘也不是？"></a>5. 为什么微博不是 SaaS？为什么百度云盘也不是？</h2><p>这是很多人最困惑的地方。微博也是用浏览器打开，也是厂商运维，也是免费的，为什么不是 SaaS？</p>
+<p>因为 <strong>SaaS 不是为了”消费内容”的，而是为了”完成工作”的。</strong></p>
+<h3 id="5-1-微博的商业模式-vs-SaaS-模式"><a href="#5-1-微博的商业模式-vs-SaaS-模式" class="headerlink" title="5.1 微博的商业模式 vs SaaS 模式"></a>5.1 微博的商业模式 vs SaaS 模式</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">flowchart TB</span><br><span class="line">    subgraph Weibo[&quot;📱 微博：内容平台&quot;]</span><br><span class="line">        direction TB</span><br><span class="line">        W1[&quot;👤 你来干什么？&lt;br/&gt;刷信息、看新闻、消磨时间&quot;]</span><br><span class="line">        W2[&quot;👤 你是什么角色？&lt;br/&gt;内容消费者&quot;]</span><br><span class="line">        W3[&quot;💰 谁在付钱？&lt;br/&gt;广告主（不是你！）&quot;]</span><br><span class="line">        W4[&quot;📦 产品是什么？&lt;br/&gt;内容和信息流&quot;]</span><br><span class="line">        W5[&quot;🚪 退出后？&lt;br/&gt;换一个平台继续刷&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph SaaSModel[&quot;💼 SaaS：工具服务&quot;]</span><br><span class="line">        direction TB</span><br><span class="line">        S1[&quot;👤 你来干什么？&lt;br/&gt;写文档、管客户、做设计&quot;]</span><br><span class="line">        S2[&quot;👤 你是什么角色？&lt;br/&gt;工作者&quot;]</span><br><span class="line">        S3[&quot;💰 谁在付钱？&lt;br/&gt;你 / 你的公司&quot;]</span><br><span class="line">        S4[&quot;📦 产品是什么？&lt;br/&gt;功能和能力&quot;]</span><br><span class="line">        S5[&quot;🚪 退出后？&lt;br/&gt;数据要迁移，影响业务流程&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    style Weibo fill:#FFF3E0,color:#333,stroke:#F5A623</span><br><span class="line">    style SaaSModel fill:#E8F8F5,color:#333,stroke:#2ECC71</span><br><span class="line">    style W3 fill:#FFD54F,color:#333</span><br><span class="line">    style S3 fill:#81C784,color:#333</span><br></pre></td></tr></table></figure>
+
+<p><strong>判断一个东西是不是 SaaS，关键不是”用不用网页”，而是”你是否在用它工作，并且为这个工作工具付费”。</strong></p>
+<table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>微博 &#x2F; 抖音 &#x2F; 小红书</th>
+<th>飞书 &#x2F; Notion &#x2F; Salesforce</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>本质</strong></td>
+<td>内容平台</td>
+<td>效率工具</td>
+</tr>
+<tr>
+<td><strong>你是什么角色</strong></td>
+<td>内容消费者</td>
+<td>工作者</td>
+</tr>
+<tr>
+<td><strong>谁付钱</strong></td>
+<td>广告主</td>
+<td>你 &#x2F; 你公司</td>
+</tr>
+<tr>
+<td><strong>产品是什么</strong></td>
+<td>内容和信息流</td>
+<td>功能和能力</td>
+</tr>
+<tr>
+<td><strong>退出后</strong></td>
+<td>换一个平台刷</td>
+<td>数据要迁移，影响业务流程</td>
+</tr>
+</tbody></table>
+<h3 id="5-2-百度网盘呢？"><a href="#5-2-百度网盘呢？" class="headerlink" title="5.2 百度网盘呢？"></a>5.2 百度网盘呢？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph Personal[&quot;百度网盘个人版 ❌ 不是 SaaS&quot;]</span><br><span class="line">        direction TB</span><br><span class="line">        P1[&quot;✅ 浏览器可用&quot;]</span><br><span class="line">        P2[&quot;❌ 核心是存储空间&lt;br/&gt;不是软件能力&quot;]</span><br><span class="line">        P3[&quot;❌ 每人独立文件&lt;br/&gt;不是多租户共享业务逻辑&quot;]</span><br><span class="line">        P4[&quot;📦 你买的是：5TB 存储空间&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph Enterprise[&quot;企业云盘（Box / Dropbox Business）✅ SaaS&quot;]</span><br><span class="line">        direction TB</span><br><span class="line">        E1[&quot;✅ 浏览器可用&quot;]</span><br><span class="line">        E2[&quot;✅ 文件管理/协同编辑/权限控制&lt;br/&gt;这是软件能力&quot;]</span><br><span class="line">        E3[&quot;✅ 多租户共享业务逻辑&quot;]</span><br><span class="line">        E4[&quot;📦 你买的是：文件协同管理能力&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    Personal --&gt;|&quot;对比&quot;| Enterprise</span><br><span class="line"></span><br><span class="line">    style Personal fill:#FADBD8,color:#333,stroke:#E74C3C</span><br><span class="line">    style Enterprise fill:#D5F5E3,color:#333,stroke:#2ECC71</span><br></pre></td></tr></table></figure>
+
+<p><strong>关键区别：你是买”空间”还是买”能力”？</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>百度网盘个人版</th>
+<th>Dropbox Business</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>买的是什么</strong></td>
+<td>5TB 存储空间（基础设施）</td>
+<td>文件协同管理能力（软件服务）</td>
+</tr>
+<tr>
+<td><strong>分类</strong></td>
+<td>IaaS &#x2F; PaaS 层</td>
+<td>SaaS</td>
+</tr>
+</tbody></table>
+<h3 id="5-3-在线充值编辑网站为什么也不是-SaaS？"><a href="#5-3-在线充值编辑网站为什么也不是-SaaS？" class="headerlink" title="5.3 在线充值编辑网站为什么也不是 SaaS？"></a>5.3 在线充值编辑网站为什么也不是 SaaS？</h3><p>你说的是那种”在网页上编辑图片&#x2F;视频，导出时让你付费充值”的网站吧？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph Tool[&quot;在线加水印工具类网站 ❌&quot;]</span><br><span class="line">        T1[&quot;✅ 浏览器可用&quot;]</span><br><span class="line">        T2[&quot;❌ 一次性充值&lt;br/&gt;不是订阅&quot;]</span><br><span class="line">        T3[&quot;❌ 卖单次操作&lt;br/&gt;不是持续服务&quot;]</span><br><span class="line">        T4[&quot;→ 在线工具，不是 SaaS&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph Canva[&quot;Canva ✅&quot;]</span><br><span class="line">        C1[&quot;✅ 浏览器可用&quot;]</span><br><span class="line">        C2[&quot;✅ 订阅制（月/年）&quot;]</span><br><span class="line">        C3[&quot;✅ 持续使用、持续更新&quot;]</span><br><span class="line">        C4[&quot;→ 这才是 SaaS&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    style Tool fill:#FADBD8,color:#333,stroke:#E74C3C</span><br><span class="line">    style Canva fill:#D5F5E3,color:#333,stroke:#2ECC71</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-判断的本质：产品-vs-平台-vs-服务"><a href="#5-4-判断的本质：产品-vs-平台-vs-服务" class="headerlink" title="5.4 判断的本质：产品 vs 平台 vs 服务"></a>5.4 判断的本质：产品 vs 平台 vs 服务</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    All[&quot;🤔 一个在线能用的东西&quot;] --&gt; Product</span><br><span class="line">    All --&gt; Platform</span><br><span class="line">    All --&gt; Service</span><br><span class="line"></span><br><span class="line">    subgraph Product[&quot;📦 产品型（传统软件）&quot;]</span><br><span class="line">        P1[&quot;你买一个东西&lt;br/&gt;拿到了就结束了&quot;]</span><br><span class="line">        P2[&quot;例：买 Office 2019&lt;br/&gt;→ 装完就完了&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph Platform[&quot;🌐 平台型（社交媒体/电商）&quot;]</span><br><span class="line">        PL1[&quot;你消费内容或交易&lt;br/&gt;平台靠广告/抽成赚钱&quot;]</span><br><span class="line">        PL2[&quot;例：微博（内容消费）&lt;br/&gt;淘宝（交易抽成）&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph Service[&quot;💼 服务型（SaaS）&quot;]</span><br><span class="line">        S1[&quot;你持续为工具能力付费&lt;br/&gt;厂商持续提供服务&quot;]</span><br><span class="line">        S2[&quot;例：飞书（每月付钱）&lt;br/&gt;Salesforce（按席订阅）&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    style Product fill:#FADBD8,color:#333,stroke:#E74C3C</span><br><span class="line">    style Platform fill:#FFF3E0,color:#333,stroke:#F5A623</span><br><span class="line">    style Service fill:#D5F5E3,color:#333,stroke:#2ECC71</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-案例逐一分析"><a href="#6-案例逐一分析" class="headerlink" title="6. 案例逐一分析"></a>6. 案例逐一分析</h2><p>用五把尺子逐一检验常见产品：</p>
+<h3 id="飞书-钉钉-企业微信"><a href="#飞书-钉钉-企业微信" class="headerlink" title="飞书 &#x2F; 钉钉 &#x2F; 企业微信"></a>飞书 &#x2F; 钉钉 &#x2F; 企业微信</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph Checks[&quot;五把尺子&quot;]</span><br><span class="line">        direction TB</span><br><span class="line">        C1[&quot;① 🌐 网络交付 ✅ 浏览器 + App&quot;]</span><br><span class="line">        C2[&quot;② 💳 订阅付费 ✅ 按人/月&quot;]</span><br><span class="line">        C3[&quot;③ 🏭 多租户 ✅ 一套系统服务所有企业&quot;]</span><br><span class="line">        C4[&quot;④ 🔧 厂商运维 ✅ 字节/阿里/腾讯负责&quot;]</span><br><span class="line">        C5[&quot;⑤ 📈 弹性伸缩 ✅ 按需购买席位&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    Result[&quot;✅ 结论：纯 SaaS&quot;]</span><br><span class="line"></span><br><span class="line">    Checks --&gt; Result</span><br><span class="line">    style Result fill:#2ECC71,color:#fff</span><br></pre></td></tr></table></figure>
+
+<h3 id="Google-Docs-Microsoft-365-在线版"><a href="#Google-Docs-Microsoft-365-在线版" class="headerlink" title="Google Docs &#x2F; Microsoft 365 在线版"></a>Google Docs &#x2F; Microsoft 365 在线版</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph Checks[&quot;五把尺子&quot;]</span><br><span class="line">        direction TB</span><br><span class="line">        C1[&quot;① 🌐 网络交付 ✅ 浏览器&quot;]</span><br><span class="line">        C2[&quot;② 💳 订阅付费 ✅ 订阅制&quot;]</span><br><span class="line">        C3[&quot;③ 🏭 多租户 ✅ 共用系统&quot;]</span><br><span class="line">        C4[&quot;④ 🔧 厂商运维 ✅&quot;]</span><br><span class="line">        C5[&quot;⑤ 📈 弹性伸缩 ✅&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    Result[&quot;✅ 结论：纯 SaaS&quot;]</span><br><span class="line"></span><br><span class="line">    Checks --&gt; Result</span><br><span class="line"></span><br><span class="line">    Note[&quot;⚠️ Microsoft 365 也有买断版 Office 2021&lt;br/&gt;那个不是 SaaS&quot;]</span><br><span class="line"></span><br><span class="line">    Result --&gt; Note</span><br><span class="line"></span><br><span class="line">    style Result fill:#2ECC71,color:#fff</span><br><span class="line">    style Note fill:#FFF3E0,color:#333</span><br></pre></td></tr></table></figure>
+
+<h3 id="Figma-Canva"><a href="#Figma-Canva" class="headerlink" title="Figma &#x2F; Canva"></a>Figma &#x2F; Canva</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph Checks[&quot;五把尺子&quot;]</span><br><span class="line">        direction TB</span><br><span class="line">        C1[&quot;① 🌐 网络交付 ✅ 浏览器&quot;]</span><br><span class="line">        C2[&quot;② 💳 订阅付费 ✅ 月/年付&quot;]</span><br><span class="line">        C3[&quot;③ 🏭 多租户 ✅ 一个系统服务所有设计团队&quot;]</span><br><span class="line">        C4[&quot;④ 🔧 厂商运维 ✅&quot;]</span><br><span class="line">        C5[&quot;⑤ 📈 弹性伸缩 ✅&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    Result[&quot;✅ 结论：纯 SaaS&lt;br/&gt;设计领域 SaaS 的标杆&quot;]</span><br><span class="line"></span><br><span class="line">    Checks --&gt; Result</span><br><span class="line">    style Result fill:#2ECC71,color:#fff</span><br></pre></td></tr></table></figure>
+
+<h3 id="GitHub"><a href="#GitHub" class="headerlink" title="GitHub"></a>GitHub</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph Checks[&quot;五把尺子&quot;]</span><br><span class="line">        direction TB</span><br><span class="line">        C1[&quot;① 🌐 网络交付 ✅ 浏览器&quot;]</span><br><span class="line">        C2[&quot;② 💳 订阅付费 ✅ 免费版 + 付费版&quot;]</span><br><span class="line">        C3[&quot;③ 🏭 多租户 ✅ 所有仓库共用平台&quot;]</span><br><span class="line">        C4[&quot;④ 🔧 厂商运维 ✅&quot;]</span><br><span class="line">        C5[&quot;⑤ 📈 弹性伸缩 ✅&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    Result[&quot;⚠️ 可归类为 SaaS&lt;br/&gt;(也有人认为属于 PaaS，行业有争议)&quot;]</span><br><span class="line">    Note[&quot;💡 GitHub 也有『内容平台』属性（开源社区）&lt;br/&gt;但其核心是『代码托管 + 协作工具』&quot;]</span><br><span class="line"></span><br><span class="line">    Checks --&gt; Result</span><br><span class="line">    Result --&gt; Note</span><br><span class="line"></span><br><span class="line">    style Result fill:#F39C12,color:#fff</span><br><span class="line">    style Note fill:#FFF3E0,color:#333</span><br></pre></td></tr></table></figure>
+
+<h3 id="Zoom-腾讯会议"><a href="#Zoom-腾讯会议" class="headerlink" title="Zoom &#x2F; 腾讯会议"></a>Zoom &#x2F; 腾讯会议</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph Checks[&quot;五把尺子&quot;]</span><br><span class="line">        direction TB</span><br><span class="line">        C1[&quot;① 🌐 网络交付 ✅ 浏览器/App&quot;]</span><br><span class="line">        C2[&quot;② 💳 订阅付费 ✅ 按席位/时长&quot;]</span><br><span class="line">        C3[&quot;③ 🏭 多租户 ✅&quot;]</span><br><span class="line">        C4[&quot;④ 🔧 厂商运维 ✅&quot;]</span><br><span class="line">        C5[&quot;⑤ 📈 弹性伸缩 ✅&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    Result[&quot;✅ 结论：纯 SaaS&lt;br/&gt;通讯即服务&quot;]</span><br><span class="line"></span><br><span class="line">    Checks --&gt; Result</span><br><span class="line">    style Result fill:#2ECC71,color:#fff</span><br></pre></td></tr></table></figure>
+
+<h3 id="AWS-EC2-阿里云-ECS"><a href="#AWS-EC2-阿里云-ECS" class="headerlink" title="AWS EC2 &#x2F; 阿里云 ECS"></a>AWS EC2 &#x2F; 阿里云 ECS</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph Checks[&quot;五把尺子&quot;]</span><br><span class="line">        direction TB</span><br><span class="line">        C1[&quot;① 🌐 网络交付 ✅ 控制台开机器&quot;]</span><br><span class="line">        C2[&quot;② 💳 订阅付费 ✅ 按时/按量&quot;]</span><br><span class="line">        C3[&quot;③ 🏭 多租户 ❌ 给你一台独立虚拟机&quot;]</span><br><span class="line">        C4[&quot;④ 🔧 厂商运维 ❌ 机器给了你，系统自己管&quot;]</span><br><span class="line">        C5[&quot;⑤ 📈 弹性伸缩 ✅&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    Result[&quot;❌ 这是 IaaS，不是 SaaS&quot;]</span><br><span class="line">    Note[&quot;📌 IaaS vs PaaS vs SaaS 的区别见第 9 节&quot;]</span><br><span class="line"></span><br><span class="line">    Checks --&gt; Result</span><br><span class="line">    Result --&gt; Note</span><br><span class="line"></span><br><span class="line">    style Result fill:#E74C3C,color:#fff</span><br><span class="line">    style Note fill:#FADBD8,color:#333</span><br></pre></td></tr></table></figure>
+
+<h3 id="个人版百度云盘"><a href="#个人版百度云盘" class="headerlink" title="个人版百度云盘"></a>个人版百度云盘</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph Checks[&quot;五把尺子&quot;]</span><br><span class="line">        direction TB</span><br><span class="line">        C1[&quot;① 🌐 网络交付 ✅&quot;]</span><br><span class="line">        C2[&quot;② 💳 订阅付费 ❌ 按存储容量（不是按功能）&quot;]</span><br><span class="line">        C3[&quot;③ 🏭 多租户 ❌ 每人独立文件系统&quot;]</span><br><span class="line">        C4[&quot;④ 🔧 厂商运维 ✅&quot;]</span><br><span class="line">        C5[&quot;⑤ 📈 弹性伸缩 ✅&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    Result[&quot;❌ 云存储服务&lt;br/&gt;不是 SaaS&quot;]</span><br><span class="line"></span><br><span class="line">    Checks --&gt; Result</span><br><span class="line">    style Result fill:#E74C3C,color:#fff</span><br></pre></td></tr></table></figure>
+
+<h3 id="微博-抖音-B站"><a href="#微博-抖音-B站" class="headerlink" title="微博 &#x2F; 抖音 &#x2F; B站"></a>微博 &#x2F; 抖音 &#x2F; B站</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph Checks[&quot;五把尺子&quot;]</span><br><span class="line">        direction TB</span><br><span class="line">        C1[&quot;① 🌐 网络交付 ✅&quot;]</span><br><span class="line">        C2[&quot;② 💳 订阅付费 ❌ 免费（广告模式）&quot;]</span><br><span class="line">        C3[&quot;③ 🏭 多租户 ✅&quot;]</span><br><span class="line">        C4[&quot;④ 🔧 厂商运维 ✅&quot;]</span><br><span class="line">        C5[&quot;⑤ 📈 弹性伸缩 ✅&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    Result[&quot;❌ 内容平台，不是 SaaS&quot;]</span><br><span class="line">    Note[&quot;💡 但如果 B 站推出『企业视频培训平台』（按席订阅）&lt;br/&gt;→ 那就算是 SaaS 了&quot;]</span><br><span class="line"></span><br><span class="line">    Checks --&gt; Result</span><br><span class="line">    Result --&gt; Note</span><br><span class="line"></span><br><span class="line">    style Result fill:#E74C3C,color:#fff</span><br><span class="line">    style Note fill:#FFF3E0,color:#333</span><br></pre></td></tr></table></figure>
+
+<h3 id="淘宝-京东-美团"><a href="#淘宝-京东-美团" class="headerlink" title="淘宝 &#x2F; 京东 &#x2F; 美团"></a>淘宝 &#x2F; 京东 &#x2F; 美团</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph Platform[&quot;电商平台本身 ❌&quot;]</span><br><span class="line">        T1[&quot;淘宝提供的是『交易平台 + 流量』&quot;]</span><br><span class="line">        T2[&quot;你付的是佣金/广告费&lt;br/&gt;不是软件订阅费&quot;]</span><br><span class="line">        T3[&quot;→ 不是 SaaS&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph Tool[&quot;店铺管理后台（千牛/商家后台） ✅&quot;]</span><br><span class="line">        S1[&quot;软件即服务&lt;br/&gt;按需提供管理能力&quot;]</span><br><span class="line">        S2[&quot;→ 是 SaaS&quot;]</span><br><span class="line">        S3[&quot;但这个 SaaS 是淘宝平台的一部分&lt;br/&gt;不是你单独买的&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    style Platform fill:#FADBD8,color:#333,stroke:#E74C3C</span><br><span class="line">    style Tool fill:#D5F5E3,color:#333,stroke:#2ECC71</span><br></pre></td></tr></table></figure>
+
+<h3 id="在线-PS（Photopea）"><a href="#在线-PS（Photopea）" class="headerlink" title="在线 PS（Photopea）"></a>在线 PS（Photopea）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph Current[&quot;Photopea 当前 ❌&quot;]</span><br><span class="line">        C1[&quot;✅ 浏览器可用&quot;]</span><br><span class="line">        C2[&quot;❌ 免费（广告支撑）/ 一次性捐赠&quot;]</span><br><span class="line">        C3[&quot;❌ 单租户（每个用户开自己实例）&quot;]</span><br><span class="line">        C4[&quot;❌ 不是订阅关系&quot;]</span><br><span class="line">        C5[&quot;→ 在线工具，不是 SaaS&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph Future[&quot;Adobe 网页版 PS ✅&quot;]</span><br><span class="line">        F1[&quot;✅ 浏览器可用&quot;]</span><br><span class="line">        F2[&quot;✅ 按月付费&quot;]</span><br><span class="line">        F3[&quot;✅ 账号同步&quot;]</span><br><span class="line">        F4[&quot;→ 那就是 SaaS&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    Current -.-&gt;|&quot;Adobe 正在这样做&quot;| Future</span><br><span class="line"></span><br><span class="line">    style Current fill:#FADBD8,color:#333,stroke:#E74C3C</span><br><span class="line">    style Future fill:#D5F5E3,color:#333,stroke:#2ECC71</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="7-SaaS-的优缺点"><a href="#7-SaaS-的优缺点" class="headerlink" title="7. SaaS 的优缺点"></a>7. SaaS 的优缺点</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><table>
+<thead>
+<tr>
+<th>优点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>无需自己运维</strong></td>
+<td>服务器、数据库、安全、备份全是厂商的事</td>
+</tr>
+<tr>
+<td><strong>永远最新版</strong></td>
+<td>厂商自动升级，不用手动安装补丁</td>
+</tr>
+<tr>
+<td><strong>随时随地</strong></td>
+<td>有网就能用，电脑&#x2F;手机&#x2F;平板都能上</td>
+</tr>
+<tr>
+<td><strong>按需付费</strong></td>
+<td>10 个人付 10 个人的钱，1000 个人付 1000 个人的钱</td>
+</tr>
+<tr>
+<td><strong>低风险试错</strong></td>
+<td>想试试？按月付就行，不行就退订</td>
+</tr>
+<tr>
+<td><strong>天然弹性</strong></td>
+<td>公司从 50 人扩张到 500 人，SaaS 跟着扩容</td>
+</tr>
+<tr>
+<td><strong>生态集成</strong></td>
+<td>SaaS 之间通常有现成的 API 和数据打通</td>
+</tr>
+</tbody></table>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><table>
+<thead>
+<tr>
+<th>缺点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>长期成本更高</strong></td>
+<td>订阅付 3~5 年的钱可能超过一次买断的费用</td>
+</tr>
+<tr>
+<td><strong>数据不在自己手里</strong></td>
+<td>数据存在厂商服务器上，合规&#x2F;安全有顾虑</td>
+</tr>
+<tr>
+<td><strong>无法深度定制</strong></td>
+<td>你不能改底层代码，厂商不支持的功能就是没有</td>
+</tr>
+<tr>
+<td><strong>受制于厂商</strong></td>
+<td>厂商涨价、倒闭、变更政策，你只能接受</td>
+</tr>
+<tr>
+<td><strong>依赖网络</strong></td>
+<td>没网&#x3D;不能用（部分 SaaS 支持离线模式，但有限）</td>
+</tr>
+<tr>
+<td><strong>性能不可控</strong></td>
+<td>厂商的服务器出问题，你也跟着受影响</td>
+</tr>
+<tr>
+<td><strong>数据迁移难</strong></td>
+<td>想换一个 SaaS？数据导出格式可能不兼容</td>
+</tr>
+</tbody></table>
+<h3 id="什么情况下-SaaS-更划算？"><a href="#什么情况下-SaaS-更划算？" class="headerlink" title="什么情况下 SaaS 更划算？"></a>什么情况下 SaaS 更划算？</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    Start[&quot;🤔 你的团队多少人？&quot;] --&gt; Small[&quot;📦 &lt; 100 人&quot;]</span><br><span class="line">    Start --&gt; Medium[&quot;📦 100~500 人&quot;]</span><br><span class="line">    Start --&gt; Large[&quot;📦 &gt; 500 人&quot;]</span><br><span class="line"></span><br><span class="line">    Small --&gt; SaaS1[&quot;✅ SaaS 几乎总是更划算&lt;br/&gt;自己部署一套的固定成本太高&quot;]</span><br><span class="line"></span><br><span class="line">    Medium --&gt; Custom[&quot;🧩 业务定制需求多吗？&quot;]</span><br><span class="line">    Custom --&gt; LowCust[&quot;少 → ✅ SaaS&quot;]</span><br><span class="line">    Custom --&gt; HighCust[&quot;多 → 混合/自建可能更合适&quot;]</span><br><span class="line"></span><br><span class="line">    Large --&gt; Sensitive[&quot;🔒 数据安全/合规要求高吗？&quot;]</span><br><span class="line">    Sensitive --&gt; HighSens[&quot;高 → 自建/私有部署&lt;br/&gt;金融/医疗/政务行业&quot;]</span><br><span class="line">    Sensitive --&gt; LowSens[&quot;低 → ✅ SaaS&lt;br/&gt;互联网/科技公司&quot;]</span><br><span class="line"></span><br><span class="line">    style Small fill:#2ECC71,color:#fff</span><br><span class="line">    style Medium fill:#F39C12,color:#fff</span><br><span class="line">    style Large fill:#E74C3C,color:#fff</span><br><span class="line">    style SaaS1 fill:#27AE60,color:#fff</span><br><span class="line">    style HighSens fill:#E74C3C,color:#fff</span><br><span class="line">    style LowSens fill:#27AE60,color:#fff</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="8-什么业务适合做-SaaS？什么不适合？"><a href="#8-什么业务适合做-SaaS？什么不适合？" class="headerlink" title="8. 什么业务适合做 SaaS？什么不适合？"></a>8. 什么业务适合做 SaaS？什么不适合？</h2><h3 id="适合做-SaaS-的业务特征"><a href="#适合做-SaaS-的业务特征" class="headerlink" title="适合做 SaaS 的业务特征"></a>适合做 SaaS 的业务特征</h3><table>
+<thead>
+<tr>
+<th>特征</th>
+<th>说明</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>通用需求</strong></td>
+<td>很多公司&#x2F;个人都有同样的需求</td>
+<td>文档、CRM、财务、HR</td>
+</tr>
+<tr>
+<td><strong>网络效应</strong></td>
+<td>用的人越多，产品越好用</td>
+<td>协作工具（飞书&#x2F;Notion）</td>
+</tr>
+<tr>
+<td><strong>持续使用</strong></td>
+<td>用户需要天天用，不是一次性</td>
+<td>项目管理（Jira）、设计（Figma）</td>
+</tr>
+<tr>
+<td><strong>低定制需求</strong></td>
+<td>标准化功能就能满足大多数用户</td>
+<td>邮箱、日历、视频会议</td>
+</tr>
+<tr>
+<td><strong>数据敏感度低</strong></td>
+<td>数据放在厂商那里问题不大</td>
+<td>营销工具（HubSpot）</td>
+</tr>
+</tbody></table>
+<p><strong>成功案例</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>领域</th>
+<th>代表产品</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CRM</td>
+<td>Salesforce（SaaS 的代名词）</td>
+</tr>
+<tr>
+<td>文档协作</td>
+<td>Google Docs、Notion、飞书</td>
+</tr>
+<tr>
+<td>设计工具</td>
+<td>Figma、Canva</td>
+</tr>
+<tr>
+<td>开发工具</td>
+<td>GitHub、GitLab</td>
+</tr>
+<tr>
+<td>通讯工具</td>
+<td>Slack、Zoom</td>
+</tr>
+<tr>
+<td>财务&#x2F;HR</td>
+<td>Workday、金蝶云、用友</td>
+</tr>
+<tr>
+<td>客服系统</td>
+<td>Zendesk、Intercom</td>
+</tr>
+</tbody></table>
+<h3 id="不适合做-SaaS-的业务特征"><a href="#不适合做-SaaS-的业务特征" class="headerlink" title="不适合做 SaaS 的业务特征"></a>不适合做 SaaS 的业务特征</h3><table>
+<thead>
+<tr>
+<th>特征</th>
+<th>说明</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>超高定制需求</strong></td>
+<td>每个客户要一套完全不同的逻辑</td>
+<td>大型企业的核心业务系统</td>
+</tr>
+<tr>
+<td><strong>极高性能要求</strong></td>
+<td>延迟敏感、需要本地计算</td>
+<td>工业控制系统、高频交易</td>
+</tr>
+<tr>
+<td><strong>严格合规要求</strong></td>
+<td>数据不能出境、需要完全物理隔离</td>
+<td>军工、政府机密系统</td>
+</tr>
+<tr>
+<td><strong>一次交付型</strong></td>
+<td>用户用一次就结束了</td>
+<td>在线转换工具、计算器</td>
+</tr>
+<tr>
+<td><strong>硬件绑定</strong></td>
+<td>需要特定硬件配合</td>
+<td>医疗影像设备配套软件</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    Start[&quot;🤔 你的业务适合做 SaaS 吗？&quot;]</span><br><span class="line">    Start --&gt; Q1[&quot;需求是通用的，&lt;br/&gt;还是每个客户都不一样？&quot;]</span><br><span class="line">    Q1 --&gt;|&quot;通用&quot;| Q2</span><br><span class="line">    Q1 --&gt;|&quot;每个客户都不一样&quot;| No1[&quot;❌ 不适合 SaaS&lt;br/&gt;超高定制成本太高&quot;]</span><br><span class="line"></span><br><span class="line">    Q2[&quot;用户天天用，&lt;br/&gt;还是一次性？&quot;]</span><br><span class="line">    Q2 --&gt;|&quot;天天用&quot;| Q3</span><br><span class="line">    Q2 --&gt;|&quot;用一次就完了&quot;| No2[&quot;❌ 不适合 SaaS&lt;br/&gt;订阅模式不成立&quot;]</span><br><span class="line"></span><br><span class="line">    Q3[&quot;数据放在厂商那里&lt;br/&gt;合规/安全允许吗？&quot;]</span><br><span class="line">    Q3 --&gt;|&quot;允许&quot;| Q4</span><br><span class="line">    Q3 --&gt;|&quot;不允许&quot;| No3[&quot;❌ 不适合 SaaS&lt;br/&gt;必须私有部署&quot;]</span><br><span class="line"></span><br><span class="line">    Q4[&quot;需要高延迟/本地计算吗？&quot;]</span><br><span class="line">    Q4 --&gt;|&quot;不需要&quot;| Yes[&quot;✅ 适合做 SaaS！&quot;]</span><br><span class="line">    Q4 --&gt;|&quot;需要&quot;| No4[&quot;❌ 不适合 SaaS&lt;br/&gt;需要本地/边缘计算&quot;]</span><br><span class="line"></span><br><span class="line">    style Yes fill:#2ECC71,color:#fff,stroke:#27AE60</span><br><span class="line">    style No1 fill:#E74C3C,color:#fff</span><br><span class="line">    style No2 fill:#E74C3C,color:#fff</span><br><span class="line">    style No3 fill:#E74C3C,color:#fff</span><br><span class="line">    style No4 fill:#E74C3C,color:#fff</span><br><span class="line">    style Start fill:#9B59B6,color:#fff</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="9-SaaS-的常见误区"><a href="#9-SaaS-的常见误区" class="headerlink" title="9. SaaS 的常见误区"></a>9. SaaS 的常见误区</h2><h3 id="误区-1：”只要是网页版就是-SaaS”"><a href="#误区-1：”只要是网页版就是-SaaS”" class="headerlink" title="误区 1：”只要是网页版就是 SaaS”"></a>误区 1：”只要是网页版就是 SaaS”</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph Wrong[&quot;❌ 错误推理&quot;]</span><br><span class="line">        W1[&quot;网页版&quot;] --&gt; W2[&quot;不需要安装&quot;] --&gt; W3[&quot;在线使用&quot;] --&gt; W4[&quot;= SaaS&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph Correct[&quot;✅ 正确理解&quot;]</span><br><span class="line">        C1[&quot;网页只是交付方式&quot;]</span><br><span class="line">        C2[&quot;SaaS 的本质是：&lt;br/&gt;订阅制 + 多租户 + 厂商运维 + 持续服务 + 弹性伸缩&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    Wrong --&gt; Correct</span><br><span class="line"></span><br><span class="line">    style Wrong fill:#FADBD8,color:#333,stroke:#E74C3C</span><br><span class="line">    style Correct fill:#D5F5E3,color:#333,stroke:#2ECC71</span><br></pre></td></tr></table></figure>
+
+<h3 id="误区-2：”SaaS-就是云服务”"><a href="#误区-2：”SaaS-就是云服务”" class="headerlink" title="误区 2：”SaaS 就是云服务”"></a>误区 2：”SaaS 就是云服务”</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    Cloud[&quot;☁️ 云计算&quot;]</span><br><span class="line">    Cloud --&gt; IaaS[&quot;IaaS 基础设施即服务&lt;br/&gt;给你一台云上的『空房子』&lt;br/&gt;你要自己装修&quot;]</span><br><span class="line">    Cloud --&gt; PaaS[&quot;PaaS 平台即服务&lt;br/&gt;给你一套『毛坯房+水电』&lt;br/&gt;你直接往上盖应用&quot;]</span><br><span class="line">    Cloud --&gt; SaaS[&quot;SaaS 软件即服务&lt;br/&gt;给你一套『精装房，拎包入住』&lt;br/&gt;你什么都不用管&quot;]</span><br><span class="line"></span><br><span class="line">    IaaS --&gt; IaaSEx[&quot;例：AWS EC2 / 阿里云 ECS&quot;]</span><br><span class="line">    PaaS --&gt; PaaSEx[&quot;例：AWS RDS / Heroku / Vercel&quot;]</span><br><span class="line">    SaaS --&gt; SaaSEx[&quot;例：飞书 / Salesforce / Figma&quot;]</span><br><span class="line"></span><br><span class="line">    style Cloud fill:#3498DB,color:#fff</span><br><span class="line">    style IaaS fill:#E67E22,color:#fff</span><br><span class="line">    style PaaS fill:#9B59B6,color:#fff</span><br><span class="line">    style SaaS fill:#2ECC71,color:#fff</span><br></pre></td></tr></table></figure>
+
+<h3 id="误区-3：”SaaS-一定比传统软件便宜”"><a href="#误区-3：”SaaS-一定比传统软件便宜”" class="headerlink" title="误区 3：”SaaS 一定比传统软件便宜”"></a>误区 3：”SaaS 一定比传统软件便宜”</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph ShortTerm[&quot;短期看&quot;]</span><br><span class="line">        S1[&quot;SaaS：按月付 $2000&lt;br/&gt;不用一次性掏几十万&quot;]</span><br><span class="line">        S2[&quot;→ ✅ SaaS 看起来便宜&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph LongTerm[&quot;长期看（5 年）&quot;]</span><br><span class="line">        L1[&quot;传统软件：&lt;br/&gt;一次性 50 万 + 每年 5 万运维&lt;br/&gt;= 75 万 / 5 年&quot;]</span><br><span class="line">        L2[&quot;SaaS：&lt;br/&gt;每月 2 万 × 12 × 5 年&lt;br/&gt;= 120 万 / 5 年&quot;]</span><br><span class="line">        L3[&quot;→ ⚠️ SaaS 长期可能更贵&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    ShortTerm --&gt; LongTerm</span><br><span class="line">    LongTerm --&gt; Note[&quot;但你买到的是：&lt;br/&gt;✅ 不用自己管服务器&lt;br/&gt;✅ 自动升级到最新版&lt;br/&gt;✅ 随时可退订&quot;]</span><br><span class="line"></span><br><span class="line">    style ShortTerm fill:#D5F5E3,color:#333</span><br><span class="line">    style LongTerm fill:#FFF3E0,color:#333</span><br><span class="line">    style Note fill:#E8F8F5,color:#333</span><br></pre></td></tr></table></figure>
+
+<h3 id="误区-4：”SaaS-只适用于大企业”"><a href="#误区-4：”SaaS-只适用于大企业”" class="headerlink" title="误区 4：”SaaS 只适用于大企业”"></a>误区 4：”SaaS 只适用于大企业”</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    Wrong[&quot;❌ 『SaaS 是企业级的东西』&quot;]</span><br><span class="line">    Wrong --&gt; Reality</span><br><span class="line"></span><br><span class="line">    subgraph Reality[&quot;✅ 实际情况&quot;]</span><br><span class="line">        R1[&quot;Figma → 个人设计师在用&quot;]</span><br><span class="line">        R2[&quot;Notion → 个人笔记在用&quot;]</span><br><span class="line">        R3[&quot;Canva → 个人做海报在用&quot;]</span><br><span class="line">        R4[&quot;Grammarly → 个人写文章在用&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    Reality --&gt; Conclusion[&quot;今天的 SaaS 从个人到中小企业到大企业，全覆盖&quot;]</span><br><span class="line"></span><br><span class="line">    style Wrong fill:#FADBD8,color:#333,stroke:#E74C3C</span><br><span class="line">    style Conclusion fill:#2ECC71,color:#fff</span><br></pre></td></tr></table></figure>
+
+<h3 id="误区-5：”SaaS-不需要安装-不需要技术人员”"><a href="#误区-5：”SaaS-不需要安装-不需要技术人员”" class="headerlink" title="误区 5：”SaaS 不需要安装 &#x3D; 不需要技术人员”"></a>误区 5：”SaaS 不需要安装 &#x3D; 不需要技术人员”</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph Easy[&quot;使用门槛很低&quot;]</span><br><span class="line">        E1[&quot;浏览器打开就能用&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph Hard[&quot;但引入 SaaS 通常需要&quot;]</span><br><span class="line">        H1[&quot;📦 数据迁移&lt;br/&gt;从旧系统搬到新系统&quot;]</span><br><span class="line">        H2[&quot;🔐 权限配置&lt;br/&gt;谁可以看什么&quot;]</span><br><span class="line">        H3[&quot;🔗 业务集成&lt;br/&gt;跟现有系统打通 API&quot;]</span><br><span class="line">        H4[&quot;👥 变更管理&lt;br/&gt;全员培训使用新工具&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    Easy --&gt; Hard</span><br><span class="line"></span><br><span class="line">    style Easy fill:#D5F5E3,color:#333</span><br><span class="line">    style Hard fill:#FFF3E0,color:#333</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="10-总结"><a href="#10-总结" class="headerlink" title="10. 总结"></a>10. 总结</h2><h3 id="10-1-SaaS-的本质就三句话"><a href="#10-1-SaaS-的本质就三句话" class="headerlink" title="10.1 SaaS 的本质就三句话"></a>10.1 SaaS 的本质就三句话</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    A[&quot;1️⃣ 软件不用买，用租的&lt;br/&gt;订阅制&quot;] --&gt; B[&quot;2️⃣ 软件不用管，厂商管&lt;br/&gt;免运维&quot;] --&gt; C[&quot;3️⃣ 软件不用装，上网用&lt;br/&gt;云端交付&quot;]</span><br><span class="line"></span><br><span class="line">    style A fill:#3498DB,color:#fff</span><br><span class="line">    style B fill:#9B59B6,color:#fff</span><br><span class="line">    style C fill:#2ECC71,color:#fff</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-2-判断流程图"><a href="#10-2-判断流程图" class="headerlink" title="10.2 判断流程图"></a>10.2 判断流程图</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    Start[&quot;🤔 这是 SaaS 吗？&quot;]</span><br><span class="line">    Start --&gt; Q1[&quot;🌐 打开浏览器就能用？&quot;]</span><br><span class="line"></span><br><span class="line">    Q1 --&gt;|&quot;❌ 需要安装&quot;| Not1[&quot;❌ 不是 SaaS&lt;br/&gt;传统软件&quot;]</span><br><span class="line">    Q1 --&gt;|&quot;✅ 浏览器即用&quot;| Q2</span><br><span class="line"></span><br><span class="line">    Q2[&quot;💳 按月/按年付钱？&quot;]</span><br><span class="line">    Q2 --&gt;|&quot;❌ 免费/广告/一次性买断&quot;| Not2[&quot;❌ 不是 SaaS&lt;br/&gt;平台 / 工具&quot;]</span><br><span class="line">    Q2 --&gt;|&quot;✅ 订阅付费&quot;| Q3</span><br><span class="line"></span><br><span class="line">    Q3[&quot;🔧 厂商负责运维？&quot;]</span><br><span class="line">    Q3 --&gt;|&quot;❌ 我自己架设维护&quot;| Not3[&quot;❌ 不是 SaaS&lt;br/&gt;私有部署&quot;]</span><br><span class="line">    Q3 --&gt;|&quot;✅ 厂商运维&quot;| Q4</span><br><span class="line"></span><br><span class="line">    Q4[&quot;🏭 所有客户共用一套系统？&quot;]</span><br><span class="line">    Q4 --&gt;|&quot;❌ 每人独立部署&quot;| Not4[&quot;❌ 不是纯 SaaS&lt;br/&gt;可能是托管服务&quot;]</span><br><span class="line">    Q4 --&gt;|&quot;✅ 多租户&quot;| Final[&quot;✅ 这就是 SaaS！&quot;]</span><br><span class="line"></span><br><span class="line">    style Start fill:#9B59B6,color:#fff</span><br><span class="line">    style Final fill:#2ECC71,color:#fff,stroke:#27AE60</span><br><span class="line">    style Not1 fill:#E74C3C,color:#fff</span><br><span class="line">    style Not2 fill:#E74C3C,color:#fff</span><br><span class="line">    style Not3 fill:#E74C3C,color:#fff</span><br><span class="line">    style Not4 fill:#E74C3C,color:#fff</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-3-最终区分图"><a href="#10-3-最终区分图" class="headerlink" title="10.3 最终区分图"></a>10.3 最终区分图</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    All[&quot;🌐 打开浏览器就能用&quot;] --&gt; PaidBy[&quot;💰 谁在付钱？&quot;]</span><br><span class="line"></span><br><span class="line">    PaidBy --&gt; Advertiser[&quot;📢 广告主付钱&quot;]</span><br><span class="line">    PaidBy --&gt; YouOrCompany[&quot;💼 你 / 公司付钱&quot;]</span><br><span class="line">    PaidBy --&gt; Free[&quot;🆓 免费（无付费模式）&quot;]</span><br><span class="line"></span><br><span class="line">    Advertiser --&gt; PlatformContent[&quot;📱 内容平台&lt;br/&gt;微博 / 抖音 / 小红书&quot;]</span><br><span class="line">    YouOrCompany --&gt; ToolOrService[&quot;🧰 是工具服务吗？&quot;]</span><br><span class="line">    Free --&gt; AdOrDonation[&quot;广告支撑 / 捐赠&lt;br/&gt;Photopea / 在线工具&quot;]</span><br><span class="line"></span><br><span class="line">    ToolOrService --&gt;|&quot;✅ 是工作效率工具&quot;| IsSaaS[&quot;✅ SaaS&lt;br/&gt;飞书 / Salesforce / Figma&quot;]</span><br><span class="line">    ToolOrService --&gt;|&quot;❌ 是基础设施能力&quot;| IsIaaS[&quot;☁️ IaaS / PaaS&lt;br/&gt;百度网盘 / AWS EC2&quot;]</span><br><span class="line"></span><br><span class="line">    style IsSaaS fill:#2ECC71,color:#fff,stroke:#27AE60</span><br><span class="line">    style PlatformContent fill:#F5A623,color:#fff</span><br><span class="line">    style IsIaaS fill:#9B59B6,color:#fff</span><br><span class="line">    style AdOrDonation fill:#FADBD8,color:#333</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-4-一句话回答”微博为什么不是-SaaS”"><a href="#10-4-一句话回答”微博为什么不是-SaaS”" class="headerlink" title="10.4 一句话回答”微博为什么不是 SaaS”"></a>10.4 一句话回答”微博为什么不是 SaaS”</h3><blockquote>
+<p><strong>微博不是 SaaS，因为它不向你收钱、不为你提供工作工具、你也不是为了完成工作而用它的——它是广告主付钱的内容平台，不是用户付钱的软件服务。</strong></p>
+</blockquote>
+<h3 id="10-5-最后一张图：SaaS-的”房子”类比"><a href="#10-5-最后一张图：SaaS-的”房子”类比" class="headerlink" title="10.5 最后一张图：SaaS 的”房子”类比"></a>10.5 最后一张图：SaaS 的”房子”类比</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    subgraph OnPremise[&quot;🏠 私有部署&quot;]</span><br><span class="line">        O1[&quot;你自己的地&lt;br/&gt;自己盖、自己修&lt;br/&gt;完全自己管&lt;br/&gt;Windows Server + 自己装&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph IaaS[&quot;🏗️ IaaS 基础设施&quot;]</span><br><span class="line">        I1[&quot;一块空地&lt;br/&gt;EC2 / ECS&lt;br/&gt;给你一台空机器&lt;br/&gt;你自己装系统配环境&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph PaaS[&quot;🏘️ PaaS 平台&quot;]</span><br><span class="line">        P1[&quot;毛坯房+水电到位&lt;br/&gt;RDS / Heroku&lt;br/&gt;你直接往上盖应用&lt;br/&gt;不用管底层&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph SaaS[&quot;🏨 SaaS 软件服务&quot;]</span><br><span class="line">        S1[&quot;酒店/公寓&lt;br/&gt;飞书 / Figma&lt;br/&gt;拎包入住&lt;br/&gt;什么都不用管&quot;]</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    OnPremise -.-&gt;|&quot;嫌麻烦 → 搬到云上&quot;| IaaS</span><br><span class="line">    IaaS --&gt;|&quot;嫌自己配太累 → 用平台&quot;| PaaS</span><br><span class="line">    PaaS --&gt;|&quot;连装修都不想管 → 直接住&quot;| SaaS</span><br><span class="line"></span><br><span class="line">    style OnPremise fill:#E74C3C,color:#fff</span><br><span class="line">    style IaaS fill:#E67E22,color:#fff</span><br><span class="line">    style PaaS fill:#9B59B6,color:#fff</span><br><span class="line">    style SaaS fill:#2ECC71,color:#fff</span><br></pre></td></tr></table></figure>
+
+<hr>
+<blockquote>
+<p><strong>写在最后</strong>：SaaS 不仅是技术概念，更是一个<strong>商业模式的变革</strong>——从”卖产品”到”卖服务”，从”一次性交易”到”持续的关系”，从”客户自己管”到”厂商帮你管”。理解了这一点，你就真正理解了 SaaS。</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2026/05/26/%E4%BB%80%E4%B9%88%E6%98%AFSaas/">https://m42-orion.github.io/2026/05/26/%E4%BB%80%E4%B9%88%E6%98%AFSaas/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SaaS/">SaaS</a><a class="post-meta__tags" href="/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/">云计算</a><a class="post-meta__tags" href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84/">软件架构</a></div><div class="post-share"><div class="social-share" data-image="https://c-ssl.duitang.com/uploads/blog/202606/07/n6SPLYYwi9pmV0X.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">跨域、CORS、CSRF、SameSite 彻底讲清楚</div></div><div class="info-2"><div class="info-item-1">跨域、CORS、CSRF、SameSite —— 前端开发中最容易混淆的一套概念，彻底讲清楚前言 “后端开发出身的人，第一次碰前端跨域问题，十有八九会被搞晕。”  我就是这样。 我在后端写接口写得好好的，前端一连就说”跨域报错”。我心想：“我接口都写对了，你浏览器凭什么拦我？” 然后浏览器说：“这是为你好，防止 CSRF 攻击。” 我又心想：“CSRF 又是什么东西？跨域跟 CSRF 什么关系？” 然后我去搜解决方案，有人跟我说加 CORS 头，有人跟我说用 SameSite cookie，有人跟我说 CSRF token……我彻底懵了。 这篇文章就是为了当时的我写的。从最底层开始，一层一层讲清楚：  为什么浏览器要限制跨域？ CORS 是在解决什么问题？ CSRF 又是什么？跟跨域什么关系？ SameSite Cookie 又是干什么的？ 代码里 trustedOrigins 到底该配置什么？  最终你会发现：这些概念并不复杂，只是没人把它们串起来讲。  目录 三个核心问题 先搞清楚：什么是”跨域”？ 为什么浏览器要限制跨域？ CORS —— 跨域资源共享 CSRF —— 跨站...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">206</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">166</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">57</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-SaaS%EF%BC%9F%E2%80%94%E2%80%94-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BE%AE%E5%8D%9A%E4%B8%8D%E6%98%AF-SaaS%EF%BC%8C%E4%BD%86%E9%A3%9E%E4%B9%A6%E6%98%AF%EF%BC%9F%E5%B8%AE%E4%BD%A0%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%E2%80%9D%E8%BD%AF%E4%BB%B6%E5%8D%B3%E6%9C%8D%E5%8A%A1%E2%80%9D"><span class="toc-number">1.</span> <span class="toc-text">什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂”软件即服务”</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.2.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%85%88%E5%BB%BA%E7%AB%8B%E4%B8%80%E4%B8%AA%E7%9B%B4%E8%A7%89%EF%BC%9A%E7%A7%9F%E6%88%BF%E5%AD%90-vs-%E4%B9%B0%E6%88%BF%E5%AD%90"><span class="toc-number">1.3.</span> <span class="toc-text">1. 先建立一个直觉：租房子 vs 买房子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%B0%E6%88%BF%E6%A8%A1%E5%BC%8F%EF%BC%88%E4%BC%A0%E7%BB%9F%E8%BD%AF%E4%BB%B6-%E7%A7%81%E6%9C%89%E9%83%A8%E7%BD%B2%EF%BC%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">买房模式（传统软件&#x2F;私有部署）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%9F%E6%88%BF%E6%A8%A1%E5%BC%8F%EF%BC%88SaaS%EF%BC%89"><span class="toc-number">1.3.2.</span> <span class="toc-text">租房模式（SaaS）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%8C%BA%E5%88%AB"><span class="toc-number">1.3.3.</span> <span class="toc-text">核心区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-SaaS-%E7%9A%84%E5%AE%98%E6%96%B9%E5%AE%9A%E4%B9%89"><span class="toc-number">1.4.</span> <span class="toc-text">2. SaaS 的官方定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-SaaS-%E7%9A%84%E4%BA%94%E5%A4%A7%E6%A0%B8%E5%BF%83%E7%89%B9%E5%BE%81"><span class="toc-number">1.5.</span> <span class="toc-text">3. SaaS 的五大核心特征</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E4%B8%80%EF%BC%9A%E9%80%9A%E8%BF%87%E7%BD%91%E7%BB%9C%E4%BA%A4%E4%BB%98%EF%BC%8C%E4%B8%8D%E6%98%AF%E9%80%9A%E8%BF%87%E5%AE%89%E8%A3%85"><span class="toc-number">1.5.1.</span> <span class="toc-text">特征一：通过网络交付，不是通过安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E4%BA%8C%EF%BC%9A%E8%AE%A2%E9%98%85%E5%88%B6%E4%BB%98%E8%B4%B9%EF%BC%8C%E4%B8%8D%E6%98%AF%E4%B8%80%E6%AC%A1%E6%80%A7%E4%B9%B0%E6%96%AD"><span class="toc-number">1.5.2.</span> <span class="toc-text">特征二：订阅制付费，不是一次性买断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E4%B8%89%EF%BC%9A%E5%A4%9A%E7%A7%9F%E6%88%B7%E6%9E%B6%E6%9E%84%EF%BC%88Multi-Tenant%EF%BC%89%EF%BC%8C%E4%B8%80%E4%B8%AA%E4%BB%A3%E7%A0%81%E6%9C%8D%E5%8A%A1%E4%BA%8E%E6%89%80%E6%9C%89%E5%AE%A2%E6%88%B7"><span class="toc-number">1.5.3.</span> <span class="toc-text">特征三：多租户架构（Multi-Tenant），一个代码服务于所有客户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E5%9B%9B%EF%BC%9A%E8%BF%90%E7%BB%B4%E8%B4%A3%E4%BB%BB%E5%9C%A8%E5%8E%82%E5%95%86%EF%BC%8C%E4%B8%8D%E5%9C%A8%E5%AE%A2%E6%88%B7"><span class="toc-number">1.5.4.</span> <span class="toc-text">特征四：运维责任在厂商，不在客户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E4%BA%94%EF%BC%9A%E5%A4%A9%E7%84%B6%E5%BC%B9%E6%80%A7%E4%BC%B8%E7%BC%A9"><span class="toc-number">1.5.5.</span> <span class="toc-text">特征五：天然弹性伸缩</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%94%A8%E4%BA%94%E6%8A%8A%E5%B0%BA%E5%AD%90%E5%88%A4%E6%96%AD%EF%BC%9A%E6%98%AF-SaaS-%E8%BF%98%E6%98%AF%E4%BC%A0%E7%BB%9F%E8%BD%AF%E4%BB%B6%EF%BC%9F"><span class="toc-number">1.6.</span> <span class="toc-text">4. 用五把尺子判断：是 SaaS 还是传统软件？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BE%AE%E5%8D%9A%E4%B8%8D%E6%98%AF-SaaS%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%E7%99%BE%E5%BA%A6%E4%BA%91%E7%9B%98%E4%B9%9F%E4%B8%8D%E6%98%AF%EF%BC%9F"><span class="toc-number">1.7.</span> <span class="toc-text">5. 为什么微博不是 SaaS？为什么百度云盘也不是？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%BE%AE%E5%8D%9A%E7%9A%84%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F-vs-SaaS-%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.7.1.</span> <span class="toc-text">5.1 微博的商业模式 vs SaaS 模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E5%91%A2%EF%BC%9F"><span class="toc-number">1.7.2.</span> <span class="toc-text">5.2 百度网盘呢？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E5%9C%A8%E7%BA%BF%E5%85%85%E5%80%BC%E7%BC%96%E8%BE%91%E7%BD%91%E7%AB%99%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B9%9F%E4%B8%8D%E6%98%AF-SaaS%EF%BC%9F"><span class="toc-number">1.7.3.</span> <span class="toc-text">5.3 在线充值编辑网站为什么也不是 SaaS？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E5%88%A4%E6%96%AD%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%9A%E4%BA%A7%E5%93%81-vs-%E5%B9%B3%E5%8F%B0-vs-%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.7.4.</span> <span class="toc-text">5.4 判断的本质：产品 vs 平台 vs 服务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%A1%88%E4%BE%8B%E9%80%90%E4%B8%80%E5%88%86%E6%9E%90"><span class="toc-number">1.8.</span> <span class="toc-text">6. 案例逐一分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A3%9E%E4%B9%A6-%E9%92%89%E9%92%89-%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1"><span class="toc-number">1.8.1.</span> <span class="toc-text">飞书 &#x2F; 钉钉 &#x2F; 企业微信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Google-Docs-Microsoft-365-%E5%9C%A8%E7%BA%BF%E7%89%88"><span class="toc-number">1.8.2.</span> <span class="toc-text">Google Docs &#x2F; Microsoft 365 在线版</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Figma-Canva"><span class="toc-number">1.8.3.</span> <span class="toc-text">Figma &#x2F; Canva</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GitHub"><span class="toc-number">1.8.4.</span> <span class="toc-text">GitHub</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Zoom-%E8%85%BE%E8%AE%AF%E4%BC%9A%E8%AE%AE"><span class="toc-number">1.8.5.</span> <span class="toc-text">Zoom &#x2F; 腾讯会议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AWS-EC2-%E9%98%BF%E9%87%8C%E4%BA%91-ECS"><span class="toc-number">1.8.6.</span> <span class="toc-text">AWS EC2 &#x2F; 阿里云 ECS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AA%E4%BA%BA%E7%89%88%E7%99%BE%E5%BA%A6%E4%BA%91%E7%9B%98"><span class="toc-number">1.8.7.</span> <span class="toc-text">个人版百度云盘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AE%E5%8D%9A-%E6%8A%96%E9%9F%B3-B%E7%AB%99"><span class="toc-number">1.8.8.</span> <span class="toc-text">微博 &#x2F; 抖音 &#x2F; B站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%98%E5%AE%9D-%E4%BA%AC%E4%B8%9C-%E7%BE%8E%E5%9B%A2"><span class="toc-number">1.8.9.</span> <span class="toc-text">淘宝 &#x2F; 京东 &#x2F; 美团</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E7%BA%BF-PS%EF%BC%88Photopea%EF%BC%89"><span class="toc-number">1.8.10.</span> <span class="toc-text">在线 PS（Photopea）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-SaaS-%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.9.</span> <span class="toc-text">7. SaaS 的优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">1.9.1.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9"><span class="toc-number">1.9.2.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B-SaaS-%E6%9B%B4%E5%88%92%E7%AE%97%EF%BC%9F"><span class="toc-number">1.9.3.</span> <span class="toc-text">什么情况下 SaaS 更划算？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E4%BB%80%E4%B9%88%E4%B8%9A%E5%8A%A1%E9%80%82%E5%90%88%E5%81%9A-SaaS%EF%BC%9F%E4%BB%80%E4%B9%88%E4%B8%8D%E9%80%82%E5%90%88%EF%BC%9F"><span class="toc-number">1.10.</span> <span class="toc-text">8. 什么业务适合做 SaaS？什么不适合？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E5%90%88%E5%81%9A-SaaS-%E7%9A%84%E4%B8%9A%E5%8A%A1%E7%89%B9%E5%BE%81"><span class="toc-number">1.10.1.</span> <span class="toc-text">适合做 SaaS 的业务特征</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E9%80%82%E5%90%88%E5%81%9A-SaaS-%E7%9A%84%E4%B8%9A%E5%8A%A1%E7%89%B9%E5%BE%81"><span class="toc-number">1.10.2.</span> <span class="toc-text">不适合做 SaaS 的业务特征</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-SaaS-%E7%9A%84%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA"><span class="toc-number">1.11.</span> <span class="toc-text">9. SaaS 的常见误区</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E5%8C%BA-1%EF%BC%9A%E2%80%9D%E5%8F%AA%E8%A6%81%E6%98%AF%E7%BD%91%E9%A1%B5%E7%89%88%E5%B0%B1%E6%98%AF-SaaS%E2%80%9D"><span class="toc-number">1.11.1.</span> <span class="toc-text">误区 1：”只要是网页版就是 SaaS”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E5%8C%BA-2%EF%BC%9A%E2%80%9DSaaS-%E5%B0%B1%E6%98%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E2%80%9D"><span class="toc-number">1.11.2.</span> <span class="toc-text">误区 2：”SaaS 就是云服务”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E5%8C%BA-3%EF%BC%9A%E2%80%9DSaaS-%E4%B8%80%E5%AE%9A%E6%AF%94%E4%BC%A0%E7%BB%9F%E8%BD%AF%E4%BB%B6%E4%BE%BF%E5%AE%9C%E2%80%9D"><span class="toc-number">1.11.3.</span> <span class="toc-text">误区 3：”SaaS 一定比传统软件便宜”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E5%8C%BA-4%EF%BC%9A%E2%80%9DSaaS-%E5%8F%AA%E9%80%82%E7%94%A8%E4%BA%8E%E5%A4%A7%E4%BC%81%E4%B8%9A%E2%80%9D"><span class="toc-number">1.11.4.</span> <span class="toc-text">误区 4：”SaaS 只适用于大企业”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AF%E5%8C%BA-5%EF%BC%9A%E2%80%9DSaaS-%E4%B8%8D%E9%9C%80%E8%A6%81%E5%AE%89%E8%A3%85-%E4%B8%8D%E9%9C%80%E8%A6%81%E6%8A%80%E6%9C%AF%E4%BA%BA%E5%91%98%E2%80%9D"><span class="toc-number">1.11.5.</span> <span class="toc-text">误区 5：”SaaS 不需要安装 &#x3D; 不需要技术人员”</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E6%80%BB%E7%BB%93"><span class="toc-number">1.12.</span> <span class="toc-text">10. 总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-SaaS-%E7%9A%84%E6%9C%AC%E8%B4%A8%E5%B0%B1%E4%B8%89%E5%8F%A5%E8%AF%9D"><span class="toc-number">1.12.1.</span> <span class="toc-text">10.1 SaaS 的本质就三句话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-%E5%88%A4%E6%96%AD%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">1.12.2.</span> <span class="toc-text">10.2 判断流程图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-%E6%9C%80%E7%BB%88%E5%8C%BA%E5%88%86%E5%9B%BE"><span class="toc-number">1.12.3.</span> <span class="toc-text">10.3 最终区分图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-4-%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%9B%9E%E7%AD%94%E2%80%9D%E5%BE%AE%E5%8D%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF-SaaS%E2%80%9D"><span class="toc-number">1.12.4.</span> <span class="toc-text">10.4 一句话回答”微博为什么不是 SaaS”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-5-%E6%9C%80%E5%90%8E%E4%B8%80%E5%BC%A0%E5%9B%BE%EF%BC%9ASaaS-%E7%9A%84%E2%80%9D%E6%88%BF%E5%AD%90%E2%80%9D%E7%B1%BB%E6%AF%94"><span class="toc-number">1.12.5.</span> <span class="toc-text">10.5 最后一张图：SaaS 的”房子”类比</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%80%E4%B9%88%E6%98%AFSaas/" title="什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂&quot;软件即服务&quot;"><img src="https://c-ssl.duitang.com/uploads/blog/202606/07/n6SPLYYwi9pmV0X.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂&quot;软件即服务&quot;"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%80%E4%B9%88%E6%98%AFSaas/" title="什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂&quot;软件即服务&quot;">什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂&quot;软件即服务&quot;</a><time datetime="2026-05-25T23:00:00.000Z" title="发表于 2026-05-26 07:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token"><img src="https://c-ssl.duitang.com/uploads/blog/202604/14/z2S9gvvAfxlJNb9.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="彻底搞懂 Token"/></a><div class="content"><a class="title" href="/2026/05/26/%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82Token-%E5%A4%A7%E6%A8%A1%E5%9E%8B%E4%B8%96%E7%95%8C%E7%9A%84%E5%AD%97%E6%95%B0%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E7%AE%97/" title="彻底搞懂 Token">彻底搞懂 Token</a><time datetime="2026-05-25T20:00:00.000Z" title="发表于 2026-05-26 04:00:00">2026-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const parseViewBox = viewBox => {
+    if (!viewBox) return null
+    const parts = viewBox.trim().split(/[\s,]+/).map(n => Number(n))
+    if (parts.length !== 4 || parts.some(n => Number.isNaN(n))) return null
+    return parts
+  }
+
+  const getSvgViewBox = svg => {
+    const attr = parseViewBox(svg.getAttribute('viewBox'))
+    if (attr) return attr
+
+    // Fallback: use bbox to build a viewBox
+    try {
+      const bbox = svg.getBBox()
+      if (bbox && bbox.width && bbox.height) return [bbox.x, bbox.y, bbox.width, bbox.height]
+    } catch (e) {
+      // getBBox may fail on some edge cases; ignore
+    }
+
+    const w = Number(svg.getAttribute('width')) || 0
+    const h = Number(svg.getAttribute('height')) || 0
+    if (w > 0 && h > 0) return [0, 0, w, h]
+    return [0, 0, 100, 100]
+  }
+
+  const setSvgViewBox = (svg, vb) => {
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`)
+  }
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+
+  const openSvgInNewTab = ({ source, initViewBox }) => {
+    const getClonedSvg = () => {
+      if (typeof source === 'string') {
+        const template = document.createElement('template')
+        template.innerHTML = source.trim()
+        const svg = template.content.querySelector('svg')
+        return svg ? svg.cloneNode(true) : null
+      }
+      if (source && typeof source.cloneNode === 'function') {
+        return source.cloneNode(true)
+      }
+      return null
+    }
+
+    const clone = getClonedSvg()
+    if (!clone) return
+    if (initViewBox && initViewBox.length === 4) {
+      clone.setAttribute('viewBox', initViewBox.join(' '))
+    }
+    if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    if (!clone.getAttribute('xmlns:xlink') && clone.outerHTML.includes('xlink:')) {
+      clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+    }
+    // inject background to match current theme
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+    const bg = getComputedStyle(document.body).backgroundColor || (isDark ? '#1e1e1e' : '#ffffff')
+    if (!clone.style.background) clone.style.background = bg
+
+    const serializer = new XMLSerializer()
+    const svgSource = serializer.serializeToString(clone)
+    const htmlSource = `<!doctype html><html><head><meta charset="utf-8" />
+      <style>
+        html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
+        svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+      </style>
+      </head><body>${svgSource}</body></html>`
+    const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank', 'noopener')
+    setTimeout(() => URL.revokeObjectURL(url), 30000)
+  }
+
+  const attachMermaidViewerButton = wrap => {
+    let btn = wrap.querySelector('.mermaid-open-btn')
+    if (!btn) {
+      btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'mermaid-open-btn'
+      wrap.appendChild(btn)
+    }
+
+    btn.innerHTML = '<i class="fa fa-search fa-fw" aria-hidden="true"></i>'
+
+    if (!btn.__mermaidViewerBound) {
+      btn.addEventListener('click', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        const svg = wrap.__mermaidOriginalSvg || wrap.querySelector('svg')
+        if (!svg) return
+        const initViewBox = wrap.__mermaidInitViewBox
+        if (typeof svg === 'string') {
+          openSvgInNewTab({ source: svg, initViewBox })
+          return
+        }
+        openSvgInNewTab({ source: svg, initViewBox })
+      })
+      btn.__mermaidViewerBound = true
+    }
+  }
+
+  // Zoom around a point (px, py) in the SVG viewport (in viewBox coordinates)
+  const zoomAtPoint = (vb, factor, px, py) => {
+    const w = vb[2] * factor
+    const h = vb[3] * factor
+    const nx = px - (px - vb[0]) * factor
+    const ny = py - (py - vb[1]) * factor
+    return [nx, ny, w, h]
+  }
+
+  const initMermaidGestures = wrap => {
+    const svg = wrap.querySelector('svg')
+    if (!svg) return
+
+    // Ensure viewBox exists so gestures always work
+    const initVb = getSvgViewBox(svg)
+    wrap.__mermaidInitViewBox = initVb
+    wrap.__mermaidCurViewBox = initVb.slice()
+    setSvgViewBox(svg, initVb)
+
+    // Avoid binding multiple times on themeChange/pjax
+    if (wrap.__mermaidGestureBound) return
+    wrap.__mermaidGestureBound = true
+
+    // Helper: map client (viewport) coordinate -> viewBox coordinate
+    const clientToViewBox = (clientX, clientY) => {
+      const rect = svg.getBoundingClientRect()
+      const vb = wrap.__mermaidCurViewBox || getSvgViewBox(svg)
+      const x = vb[0] + (clientX - rect.left) * (vb[2] / rect.width)
+      const y = vb[1] + (clientY - rect.top) * (vb[3] / rect.height)
+      return { x, y, rect, vb }
+    }
+
+    const state = {
+      pointers: new Map(),
+      startVb: null,
+      startDist: 0,
+      startCenter: null
+    }
+
+    const clampVb = vb => {
+      const init = wrap.__mermaidInitViewBox || vb
+      const minW = init[2] * 0.1
+      const maxW = init[2] * 10
+      const minH = init[3] * 0.1
+      const maxH = init[3] * 10
+      vb[2] = clamp(vb[2], minW, maxW)
+      vb[3] = clamp(vb[3], minH, maxH)
+      return vb
+    }
+
+    const setCurVb = vb => {
+      vb = clampVb(vb)
+      wrap.__mermaidCurViewBox = vb
+      setSvgViewBox(svg, vb)
+    }
+
+    const onPointerDown = e => {
+      // Allow only primary button for mouse
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      svg.setPointerCapture(e.pointerId)
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      if (state.pointers.size === 1) {
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      } else if (state.pointers.size === 2) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        state.startDist = Math.hypot(dx, dy)
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        state.startCenter = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 }
+      }
+    }
+
+    const onPointerMove = e => {
+      if (!state.pointers.has(e.pointerId)) return
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      // Pan with 1 pointer
+      if (state.pointers.size === 1 && state.startVb) {
+        const p = [...state.pointers.values()][0]
+        const prev = { x: e.clientX - e.movementX, y: e.clientY - e.movementY }
+        // movementX/Y unreliable on touch, compute from stored last position
+        const last = wrap.__mermaidLastSinglePointer || p
+        const dxClient = p.x - last.x
+        const dyClient = p.y - last.y
+        wrap.__mermaidLastSinglePointer = p
+
+        const { rect } = clientToViewBox(p.x, p.y)
+        const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        const dx = dxClient * (vb[2] / rect.width)
+        const dy = dyClient * (vb[3] / rect.height)
+        setCurVb([vb[0] - dx, vb[1] - dy, vb[2], vb[3]])
+        return
+      }
+
+      // Pinch zoom with 2 pointers
+      if (state.pointers.size === 2 && state.startVb && state.startDist > 0) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        const dist = Math.hypot(dx, dy)
+        if (!dist) return
+        const factor = state.startDist / dist // dist bigger => zoom in (viewBox smaller)
+
+        const cx = (pts[0].x + pts[1].x) / 2
+        const cy = (pts[0].y + pts[1].y) / 2
+        const centerClient = { x: cx, y: cy }
+
+        const pxy = clientToViewBox(centerClient.x, centerClient.y)
+        const cpx = pxy.x
+        const cpy = pxy.y
+
+        const vb = zoomAtPoint(state.startVb, factor, cpx, cpy)
+        setCurVb(vb)
+      }
+    }
+
+    const onPointerUpOrCancel = e => {
+      state.pointers.delete(e.pointerId)
+      if (state.pointers.size === 0) {
+        state.startVb = null
+        state.startDist = 0
+        state.startCenter = null
+        wrap.__mermaidLastSinglePointer = null
+      } else if (state.pointers.size === 1) {
+        // reset single pointer baseline to avoid jump
+        wrap.__mermaidLastSinglePointer = [...state.pointers.values()][0]
+      }
+    }
+
+    // Wheel zoom (mouse/trackpad)
+    const onWheel = e => {
+      // ctrlKey on mac trackpad pinch; we treat both as zoom
+      e.preventDefault()
+      const delta = e.deltaY
+      const zoomFactor = delta > 0 ? 1.1 : 0.9
+      const { x, y } = clientToViewBox(e.clientX, e.clientY)
+      const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      setCurVb(zoomAtPoint(vb, zoomFactor, x, y))
+    }
+
+    const onDblClick = () => {
+      const init = wrap.__mermaidInitViewBox
+      if (!init) return
+      wrap.__mermaidCurViewBox = init.slice()
+      setSvgViewBox(svg, init)
+    }
+
+    svg.addEventListener('pointerdown', onPointerDown)
+    svg.addEventListener('pointermove', onPointerMove)
+    svg.addEventListener('pointerup', onPointerUpOrCancel)
+    svg.addEventListener('pointercancel', onPointerUpOrCancel)
+    svg.addEventListener('wheel', onWheel, { passive: false })
+    svg.addEventListener('dblclick', onDblClick)
+  }
+
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+
+      // Clear old render (themeChange/pjax will rerun)
+      const oldSvg = item.querySelector('svg')
+      if (oldSvg) oldSvg.remove()
+      item.__mermaidGestureBound = false
+
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+        if (true) initMermaidGestures(item)
+        item.__mermaidOriginalSvg = svg
+        if (true) attachMermaidViewerButton(item)
+      }
+
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const abcjsInit = () => {
+    const abcjsFn = () => {
+      setTimeout(() => {
+        const sheets = document.querySelectorAll(".abc-music-sheet")
+        for (let i = 0; i < sheets.length; i++) {
+          const ele = sheets[i]
+          if (ele.children.length > 0) continue
+
+          // Parse parameters from data-params attribute
+          let params = {}
+          const dp = ele.getAttribute("data-params")
+          if (dp) {
+            try {
+              params = JSON.parse(dp)
+            } catch (e) {
+              console.error("Failed to parse data-params:", e)
+            }
+          }
+
+          // Merge parsed parameters with the responsive option
+          // Ensures params content appears before responsive
+          const options = { ...params, responsive: "resize" }
+
+          // Render the music score using ABCJS.renderAbc
+          ABCJS.renderAbc(ele, ele.textContent, options)
+        }
+      }, 100)
+    }
+
+    if (typeof ABCJS === "object") {
+      abcjsFn()
+    } else {
+      btf.getScript("https://cdn.jsdelivr.net/npm/abcjs/dist/abcjs-basic-min.min.js").then(abcjsFn)
+    }
+  }
+
+  if (window.pjax) {
+    abcjsInit()
+  } else {
+    window.addEventListener("load", abcjsInit)
+  }
+
+  btf.addGlobalFn("encrypt", abcjsInit, "abcjs")
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="null" data-text="I,LOVE,YOU,木一" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
