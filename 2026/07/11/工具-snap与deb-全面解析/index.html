@@ -1,0 +1,902 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Snap 与 Deb：Ubuntu 下到底该选哪个软件安装方式？ | 念念不忘，必有回响</title><meta name="author" content="望"><meta name="copyright" content="望"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="referrer" content="no-referrer"><meta name="description" content="Snap 与 Deb：Ubuntu 下到底该选哪个软件安装方式？问题是怎么来的最近我频繁地在 Ubuntu 上装软件，每次都会遇到同一个选择： 12sudo apt install xxx        # debsudo snap install xxx       # snap  有些软件两个渠道都有。比如 Firefox，apt 里有一个版本，snap 里也有一个版本。这时候我就懵了：到底该">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Snap 与 Deb：Ubuntu 下到底该选哪个软件安装方式？">
+<meta property="og:url" content="https://m42-orion.github.io/2026/07/11/%E5%B7%A5%E5%85%B7-snap%E4%B8%8Edeb-%E5%85%A8%E9%9D%A2%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:site_name" content="念念不忘，必有回响">
+<meta property="og:description" content="Snap 与 Deb：Ubuntu 下到底该选哪个软件安装方式？问题是怎么来的最近我频繁地在 Ubuntu 上装软件，每次都会遇到同一个选择： 12sudo apt install xxx        # debsudo snap install xxx       # snap  有些软件两个渠道都有。比如 Firefox，apt 里有一个版本，snap 里也有一个版本。这时候我就懵了：到底该">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c-ssl.duitang.com/uploads/blog/202606/28/4ESbXDD1SonJXJ3.png">
+<meta property="article:published_time" content="2026-07-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-07-11T15:13:00.083Z">
+<meta property="article:author" content="望">
+<meta property="article:tag" content="Deb">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Snap">
+<meta property="article:tag" content="Ubuntu">
+<meta property="article:tag" content="包管理">
+<meta property="article:tag" content="软件安装">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c-ssl.duitang.com/uploads/blog/202606/28/4ESbXDD1SonJXJ3.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Snap 与 Deb：Ubuntu 下到底该选哪个软件安装方式？",
+  "url": "https://m42-orion.github.io/2026/07/11/%E5%B7%A5%E5%85%B7-snap%E4%B8%8Edeb-%E5%85%A8%E9%9D%A2%E8%A7%A3%E6%9E%90/",
+  "image": "https://c-ssl.duitang.com/uploads/blog/202606/28/4ESbXDD1SonJXJ3.png",
+  "datePublished": "2026-07-10T16:00:00.000Z",
+  "dateModified": "2026-07-11T15:13:00.083Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "望",
+      "url": "https://m42-orion.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://m42-orion.github.io/2026/07/11/%E5%B7%A5%E5%85%B7-snap%E4%B8%8Edeb-%E5%85%A8%E9%9D%A2%E8%A7%A3%E6%9E%90/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Snap 与 Deb：Ubuntu 下到底该选哪个软件安装方式？',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><style>body{background-image:radial-gradient(circle,#c8c8c8 0.8px,transparent 0.8px);background-size:24px 24px}</style><meta name="generator" content="Hexo 8.1.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">208</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">175</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">57</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://c-ssl.duitang.com/uploads/blog/202606/28/4ESbXDD1SonJXJ3.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">念念不忘，必有回响</span></a><a class="nav-page-title" href="/"><span class="site-name">Snap 与 Deb：Ubuntu 下到底该选哪个软件安装方式？</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Snap 与 Deb：Ubuntu 下到底该选哪个软件安装方式？</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-07-10T16:00:00.000Z" title="发表于 2026-07-11 00:00:00">2026-07-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-07-11T15:13:00.083Z" title="更新于 2026-07-11 23:13:00">2026-07-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="Snap-与-Deb：Ubuntu-下到底该选哪个软件安装方式？"><a href="#Snap-与-Deb：Ubuntu-下到底该选哪个软件安装方式？" class="headerlink" title="Snap 与 Deb：Ubuntu 下到底该选哪个软件安装方式？"></a>Snap 与 Deb：Ubuntu 下到底该选哪个软件安装方式？</h1><h2 id="问题是怎么来的"><a href="#问题是怎么来的" class="headerlink" title="问题是怎么来的"></a>问题是怎么来的</h2><p>最近我频繁地在 Ubuntu 上装软件，每次都会遇到同一个选择：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install xxx        <span class="comment"># deb</span></span><br><span class="line"><span class="built_in">sudo</span> snap install xxx       <span class="comment"># snap</span></span><br></pre></td></tr></table></figure>
+
+<p>有些软件两个渠道都有。比如 Firefox，<code>apt</code> 里有一个版本，<code>snap</code> 里也有一个版本。这时候我就懵了：到底该装哪个？两个都装会不会冲突？如果我想同时开两个 Firefox 怎么办？</p>
+<p>这些问题不是”查一下命令”就能解决的。它们背后藏着 Linux 包管理的整个演进历史。这篇文章就是我当时想找但没找到的那篇——把 deb 和 snap 的来龙去脉、使用场景、以及你真正关心的那些问题，一次讲清楚。</p>
+<hr>
+<h2 id="一、先理解一个概念：Linux-软件安装的三层困境"><a href="#一、先理解一个概念：Linux-软件安装的三层困境" class="headerlink" title="一、先理解一个概念：Linux 软件安装的三层困境"></a>一、先理解一个概念：Linux 软件安装的三层困境</h2><p>在讲 deb 和 snap 之前，你得先理解<strong>为什么 Linux 会有这么多种安装方式</strong>。这不是因为开发者闲得慌，而是因为传统 Linux 软件分发有一个从娘胎里带来的问题。</p>
+<h3 id="问题-1：依赖地狱"><a href="#问题-1：依赖地狱" class="headerlink" title="问题 1：依赖地狱"></a>问题 1：依赖地狱</h3><p>你在 Windows 上装软件，一般是下载一个 <code>.exe</code>，双击，下一步下一步就装好了。每个软件自带它需要的所有库文件（DLL），互不干扰。</p>
+<p>Linux 不一样。Linux 的设计哲学是”共享库”：你系统里只有一份 <code>libssl.so</code>，所有需要 SSL 的软件都共用它。这样做的好处是节省磁盘空间、统一安全更新，但代价是：</p>
+<blockquote>
+<p>软件 A 要求 <code>libssl.so.1.1</code>，软件 B 要求 <code>libssl.so.3</code>，它们不能同时存在。</p>
+</blockquote>
+<p>这就是著名的<strong>依赖地狱</strong>。deb 的设计初衷就是为了解决这个问题。</p>
+<h3 id="问题-2：发行版分裂"><a href="#问题-2：发行版分裂" class="headerlink" title="问题 2：发行版分裂"></a>问题 2：发行版分裂</h3><p>Ubuntu 22.04 里 Python 是 3.10，Ubuntu 24.04 里是 3.12。一个软件如果在 22.04 上编译好，拿到 24.04 上很可能跑不起来，因为底层系统库版本变了。</p>
+<p>对软件开发者来说，这意味着：<strong>要想支持 5 个发行版，就要打 5 个不同的包</strong>。</p>
+<h3 id="问题-3：安全边界"><a href="#问题-3：安全边界" class="headerlink" title="问题 3：安全边界"></a>问题 3：安全边界</h3><p>传统 deb 安装的软件和系统是”深度绑定”的：软件能访问你的 <code>/home</code>、<code>/etc</code>、<code>/tmp</code>，几乎不受限制。如果一个聊天软件有漏洞，攻击者理论上可以通过它访问你整个系统的文件。</p>
+<p>这三个问题，催生了三种解决方案：deb 解决了问题 1，snap 试图同时解决三个问题。</p>
+<hr>
+<h2 id="二、deb：系统包管理的基石"><a href="#二、deb：系统包管理的基石" class="headerlink" title="二、deb：系统包管理的基石"></a>二、deb：系统包管理的基石</h2><h3 id="它是什么"><a href="#它是什么" class="headerlink" title="它是什么"></a>它是什么</h3><p>deb 是 Debian&#x2F;Ubuntu 体系的软件包格式，本质上是一个 <strong>压缩归档文件</strong>，里面包含了：</p>
+<ul>
+<li>编译好的二进制文件</li>
+<li>配置文件的默认版本</li>
+<li>元信息（软件名、版本、依赖关系、描述）</li>
+<li>安装&#x2F;卸载时执行的脚本（preinst、postinst、prerm、postrm）</li>
+</ul>
+<p>当你执行 <code>sudo apt install nginx</code> 时，背后发生的事是：</p>
+<ol>
+<li><code>apt</code> 从软件源下载 <code>nginx_1.24.0_amd64.deb</code></li>
+<li>解析这个包的依赖列表（比如要求 <code>libpcre3 &gt;= 2:8.35</code>）</li>
+<li>检查系统里是否已安装这些依赖，没有就自动下载安装</li>
+<li>调用 <code>dpkg</code> 把文件解压到系统标准路径（<code>/usr/bin/nginx</code>、<code>/etc/nginx/</code> 等）</li>
+<li>执行安装后脚本，完成初始化</li>
+</ol>
+<p>整个过程叫做<strong>依赖解析 + 文件部署</strong>。</p>
+<h3 id="deb-的设计哲学"><a href="#deb-的设计哲学" class="headerlink" title="deb 的设计哲学"></a>deb 的设计哲学</h3><p>deb 的核心思想是：”软件是操作系统的一部分”。它假设：</p>
+<ol>
+<li>依赖应该尽量共享，避免重复</li>
+<li>软件版本由发行版仓库统一管理，保证兼容性</li>
+<li>用户通过统一的更新机制（<code>apt upgrade</code>）管理所有软件</li>
+</ol>
+<p>这个思路在服务器场景下非常完美。你的服务器装的都是”系统级”软件——nginx、MySQL、Docker、编译工具链。它们需要和系统紧密配合，共享同一个 <code>openssl</code>、同一个 <code>glibc</code>。</p>
+<h3 id="deb-真正的缺点"><a href="#deb-真正的缺点" class="headerlink" title="deb 真正的缺点"></a>deb 真正的缺点</h3><p>不是”依赖处理不好”——apt 的依赖解析已经非常成熟了。真正的痛点是：</p>
+<p><strong>版本滞后</strong>。Ubuntu 的仓库遵循”稳定优先”策略。你装 <code>python3</code>，拿到的是仓库里的稳定版本，不是最新版。这是因为新版本可能引入不兼容的变更，Ubuntu 需要时间测试和集成。</p>
+<p><strong>跨发行版困难</strong>。你给 Ubuntu 打的 deb 包，拿到 Fedora 上完全不能用，因为 Fedora 用的是 RPM 体系。</p>
+<p><strong>多版本共存麻烦</strong>。如果你需要两个版本的 Python（比如 3.8 和 3.12），deb 的方案是给它们不同包名（<code>python3.8</code>、<code>python3.12</code>），但这需要包维护者手动处理，不是所有软件都支持。</p>
+<hr>
+<h2 id="三、snap：从”系统的一部分”到”独立的应用容器”"><a href="#三、snap：从”系统的一部分”到”独立的应用容器”" class="headerlink" title="三、snap：从”系统的一部分”到”独立的应用容器”"></a>三、snap：从”系统的一部分”到”独立的应用容器”</h2><h3 id="它是什么-1"><a href="#它是什么-1" class="headerlink" title="它是什么"></a>它是什么</h3><p>snap 是 Canonical 推出的<strong>通用 Linux 软件包格式</strong>。它的设计思路和 deb 完全相反：</p>
+<blockquote>
+<p>不要把软件当作系统的一部分，而是当作一个独立的、自包含的”应用容器”。</p>
+</blockquote>
+<p>一个 snap 包（<code>.snap</code> 文件）是一个<strong>压缩的 SquashFS 文件系统镜像</strong>。它里面包含了：</p>
+<ul>
+<li>软件本身</li>
+<li>所有依赖库（自包含）</li>
+<li>运行时环境</li>
+<li>沙箱配置文件（定义了这个应用能访问系统的哪些部分）</li>
+</ul>
+<p>安装时，这个镜像被挂载到一个只读的文件系统上，应用在其中运行。它看不到宿主系统的 <code>/usr/lib</code>，用的是自己打包的那份依赖。</p>
+<h3 id="挂载机制"><a href="#挂载机制" class="headerlink" title="挂载机制"></a>挂载机制</h3><p><code>snap install</code> 后，你会看到这样的目录结构：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/snap/firefox/</span><br><span class="line">├── current -&gt; 4178          <span class="comment"># 符号链接指向当前版本</span></span><br><span class="line">├── 4178/                    <span class="comment"># 版本 4178 的完整文件系统</span></span><br><span class="line">├── 3624/                    <span class="comment"># 上一个版本（可用于回滚）</span></span><br></pre></td></tr></table></figure>
+
+<p>每次更新，新版本作为一个新目录被创建，<code>current</code> 符号链接切换到新目录。旧版本保留，随时可以回滚。</p>
+<h3 id="沙箱怎么做"><a href="#沙箱怎么做" class="headerlink" title="沙箱怎么做"></a>沙箱怎么做</h3><p>snap 使用 AppArmor 和 seccomp 来限制应用的权限：</p>
+<ul>
+<li>默认情况下，snap 应用不能访问 <code>/home</code>（除非显式授权）</li>
+<li>不能访问系统配置文件</li>
+<li>网络访问、摄像头、麦克风都是需要申请权限的</li>
+</ul>
+<p>你可以用 <code>snap connections</code> 查看一个应用被授予了哪些权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ snap connections firefox</span><br><span class="line">Interface        Plug                     Slot</span><br><span class="line">network          firefox:network          :network</span><br><span class="line">network-bind     firefox:network-bind     :network-bind</span><br><span class="line">home             firefox:home             :home</span><br></pre></td></tr></table></figure>
+
+<p>这就是为什么 snap 说它”更安全”——不是因为代码更安全，而是因为<strong>即使代码有漏洞，攻击面也被沙箱限制住了</strong>。</p>
+<hr>
+<h2 id="四、deb-vs-snap：深层次对比"><a href="#四、deb-vs-snap：深层次对比" class="headerlink" title="四、deb vs snap：深层次对比"></a>四、deb vs snap：深层次对比</h2><p>表面上你看到的是”安装方式不同”，但底层是<strong>两套完全不同的软件哲学</strong>。理解了这一点，以后遇到任何新的包格式都能快速判断。</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>deb</th>
+<th>snap</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>核心思想</td>
+<td>软件是系统的一部分</td>
+<td>软件是独立的应用容器</td>
+</tr>
+<tr>
+<td>依赖策略</td>
+<td>依赖共享，由系统管理</td>
+<td>依赖自包含，打包在应用内</td>
+</tr>
+<tr>
+<td>隔离性</td>
+<td>无隔离，软件可以访问系统</td>
+<td>沙箱隔离，受 AppArmor 限制</td>
+</tr>
+<tr>
+<td>更新方式</td>
+<td>手动或系统统一更新</td>
+<td>自动后台更新，无需用户操作</td>
+</tr>
+<tr>
+<td>安装位置</td>
+<td><code>/usr/bin</code>、<code>/etc</code>、<code>/usr/lib</code></td>
+<td><code>/snap/&lt;name&gt;/&lt;version&gt;</code></td>
+</tr>
+<tr>
+<td>启动速度</td>
+<td>原生速度，直接执行 ELF</td>
+<td>通过 snapd 启动，有轻微 Cold Start 开销</td>
+</tr>
+<tr>
+<td>磁盘占用</td>
+<td>小，共享系统库</td>
+<td>大，每个应用自带依赖</td>
+</tr>
+<tr>
+<td>系统集成</td>
+<td>深度集成，可以改系统配置</td>
+<td>隔离运行，默认不触碰系统文件</td>
+</tr>
+<tr>
+<td>跨发行版</td>
+<td>限于 Debian 系</td>
+<td>任何支持 snapd 的发行版</td>
+</tr>
+</tbody></table>
+<h3 id="启动速度差异的真相"><a href="#启动速度差异的真相" class="headerlink" title="启动速度差异的真相"></a>启动速度差异的真相</h3><p>很多人吐槽 snap 的启动速度慢。这主要是因为首次冷启动时：</p>
+<ol>
+<li>snapd 需要挂载 squashfs 镜像</li>
+<li>沙箱初始化（AppArmor profile 加载）</li>
+<li>应用自身的初始化</li>
+</ol>
+<p>以 Firefox 为例，snap 版首次启动可能比 deb 版慢 2-5 秒。但这个差异在<strong>热启动</strong>（应用刚关闭再打开）时基本消失，因为 squashfs 已被缓存。</p>
+<p>如果你主要用桌面应用，snap 的启动延迟通常可以接受。如果是高频调用的命令行工具（比如 <code>git</code>、<code>curl</code>），每次多等 1-2 秒就很烦人了——这种情况优先 deb。</p>
+<hr>
+<h2 id="五、回答你最关心的问题：多开和冲突"><a href="#五、回答你最关心的问题：多开和冲突" class="headerlink" title="五、回答你最关心的问题：多开和冲突"></a>五、回答你最关心的问题：多开和冲突</h2><h3 id="问题-1：同一个软件装了-deb-又装-snap，会冲突吗？"><a href="#问题-1：同一个软件装了-deb-又装-snap，会冲突吗？" class="headerlink" title="问题 1：同一个软件装了 deb 又装 snap，会冲突吗？"></a>问题 1：同一个软件装了 deb 又装 snap，会冲突吗？</h3><p><strong>不会直接冲突</strong>，但因为它们的配置文件路径和可执行文件路径不同，你可能遇到一些困惑。</p>
+<p>以 Firefox 为例：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>deb 版</th>
+<th>snap 版</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>可执行文件</td>
+<td><code>/usr/bin/firefox</code></td>
+<td><code>/snap/bin/firefox</code></td>
+</tr>
+<tr>
+<td>配置目录</td>
+<td><code>~/.mozilla/</code></td>
+<td><code>~/snap/firefox/current/.mozilla/</code></td>
+</tr>
+<tr>
+<td>命令</td>
+<td>直接 <code>firefox</code></td>
+<td>直接 <code>firefox</code>（snap 的 PATH 优先级更高）</td>
+</tr>
+</tbody></table>
+<p><strong>两个版本可以同时存在</strong>，它们的安装目录、配置目录都是完全独立的，不会互相覆盖。</p>
+<p>但有个坑：如果在终端输入 <code>firefox</code>，Ubuntu 会调用 PATH 中先找到的那个。通常在 Ubuntu 24.04 上，snap 的 <code>/snap/bin</code> 在 PATH 中的优先级更高，所以输入 <code>firefox</code> 启动的是 snap 版。如果想启动 deb 版，需要写完整路径 <code>/usr/bin/firefox</code>。</p>
+<h3 id="问题-2：能不能多开（同时运行两个实例）？"><a href="#问题-2：能不能多开（同时运行两个实例）？" class="headerlink" title="问题 2：能不能多开（同时运行两个实例）？"></a>问题 2：能不能多开（同时运行两个实例）？</h3><p>理解这个问题需要先分清楚”多开”是什么意思：</p>
+<p><strong>情况 A：同一个应用，开两个窗口或多标签页</strong></p>
+<p>比如你同时打开两个 Firefox 窗口。这跟包的格式没有任何关系，是应用本身的功能。Firefox 支持多窗口，无论你装的是 deb 还是 snap，都能开多个窗口。需要多开标签的话，直接 <code>Ctrl+T</code> 就行。</p>
+<p><strong>情况 B：同时运行两个不同版本的应用</strong></p>
+<p>比如你装了 snap 版的 Firefox 120 和 deb 版的 Firefox ESR 115。它们可以<strong>同时运行</strong>。因为它们是完全独立的两个安装，有不同的配置目录、不同的进程。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动两个不同的 Firefox</span></span><br><span class="line">firefox                           <span class="comment"># snap 版（最新版）</span></span><br><span class="line">/usr/bin/firefox                  <span class="comment"># deb 版（ESR 版）</span></span><br></pre></td></tr></table></figure>
+
+<p>两个窗口会同时出现在桌面，互不影响。而且它们可以登录同一个 Firefox 账号，各自同步。</p>
+<p><strong>情况 C：同一个包，运行两个完全隔离的实例（不同配置&#x2F;不同账号）</strong></p>
+<p>这才是真正有挑战的场景。比如你想用两个不同的 Firefox 配置文件登录两个不同的网站账号。</p>
+<p><strong>deb 的方案</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firefox -P <span class="string">&quot;profile1&quot;</span> --no-remote &amp;</span><br><span class="line">firefox -P <span class="string">&quot;profile2&quot;</span> --no-remote &amp;</span><br></pre></td></tr></table></figure>
+
+<p>Firefox 自带的 Profile Manager 可以创建多个独立的配置文件。两个实例可以是同一个二进制文件，但读写不同的 <code>~/.mozilla/firefox/</code> 子目录。这和包格式无关——<strong>deb 能做到的事，snap 版 Firefox 也能做到，因为 Firefox 的 Profile 机制是应用自身的功能</strong>。</p>
+<p><strong>snap 的方案</strong>：</p>
+<p>Snap 还有一个独特优势——如果某个应用需要用<strong>同一个 snap 包的独立实例</strong>，而且这个应用本身<strong>不支持多 Profile</strong>，你可以用 snap 的 <code>--parallel-instances</code> 功能：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">snap <span class="built_in">set</span> system experimental.parallel-instances=<span class="literal">true</span></span><br><span class="line">snap install firefox_fresh       <span class="comment"># 实例 1</span></span><br><span class="line">snap install firefox_work        <span class="comment"># 实例 2</span></span><br></pre></td></tr></table></figure>
+
+<p>两个 snap 实例有完全独立的配置目录、独立的沙箱、独立的更新通道。但这个功能目前还是实验性的，不是所有应用都能正常使用。</p>
+<h3 id="总结一下”多开”这件事"><a href="#总结一下”多开”这件事" class="headerlink" title="总结一下”多开”这件事"></a>总结一下”多开”这件事</h3><table>
+<thead>
+<tr>
+<th>需求</th>
+<th>方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>同一个应用，多窗口&#x2F;多标签</td>
+<td>应用自身功能，和包格式无关</td>
+</tr>
+<tr>
+<td>两个不同版本的同一个应用同时运行</td>
+<td>deb + snap 各装一个，或 snap 两个不同版本</td>
+</tr>
+<tr>
+<td>同一个应用，两个完全隔离的配置环境</td>
+<td>应用自身的 Profile 机制（如 Firefox）或 snap 的 parallel-instances</td>
+</tr>
+<tr>
+<td>需要完全独立的环境（不同用户&#x2F;网络&#x2F;文件系统）</td>
+<td>不是包管理的问题，需要容器（Docker&#x2F;LXC）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="六、什么时候该用-deb？"><a href="#六、什么时候该用-deb？" class="headerlink" title="六、什么时候该用 deb？"></a>六、什么时候该用 deb？</h2><h3 id="场景-1：服务器软件"><a href="#场景-1：服务器软件" class="headerlink" title="场景 1：服务器软件"></a>场景 1：服务器软件</h3><p>服务器上没有桌面环境，不需要沙箱。你装 nginx、MySQL、Redis、Docker，它们本来就应该和系统深度集成。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install nginx</span><br></pre></td></tr></table></figure>
+
+<p>你不需要”隔离每个服务”，因为服务之间的隔离应该由 systemd 的 service 单元、用户权限、cgroup 来做，而不是包管理来做。deb + systemd + Docker 才是服务器上的正统方案。</p>
+<h3 id="场景-2：命令行的核心工具"><a href="#场景-2：命令行的核心工具" class="headerlink" title="场景 2：命令行的核心工具"></a>场景 2：命令行的核心工具</h3><p><code>git</code>、<code>curl</code>、<code>vim</code>、<code>htop</code>、<code>ssh</code>——这些是你天天用的东西。它们需要：</p>
+<ul>
+<li>零延迟启动</li>
+<li>和系统无缝集成</li>
+<li>通过 shell 直接调用</li>
+</ul>
+<p>这些工具用 deb 没有任何悬念。snap 版本的反而是”能用但没必要”。</p>
+<h3 id="场景-3：库和开发工具链"><a href="#场景-3：库和开发工具链" class="headerlink" title="场景 3：库和开发工具链"></a>场景 3：库和开发工具链</h3><p><code>python3-dev</code>、<code>build-essential</code>、<code>libssl-dev</code>——这些是编程环境的基础，必须用 deb。它们提供的是头文件和静态库，snap 不适合干这个。</p>
+<h3 id="场景-4：需要定制和深度系统集成"><a href="#场景-4：需要定制和深度系统集成" class="headerlink" title="场景 4：需要定制和深度系统集成"></a>场景 4：需要定制和深度系统集成</h3><p>如果你的 nginx 需要加载自定义模块、修改配置文件、读写系统证书，deb 是唯一合理的选择。snap 的沙箱会阻止这些操作。</p>
+<hr>
+<h2 id="七、什么时候该用-snap？"><a href="#七、什么时候该用-snap？" class="headerlink" title="七、什么时候该用 snap？"></a>七、什么时候该用 snap？</h2><h3 id="场景-1：桌面应用"><a href="#场景-1：桌面应用" class="headerlink" title="场景 1：桌面应用"></a>场景 1：桌面应用</h3><p>这是 snap 的主场。Firefox、VS Code、Slack、Spotify、Discord——这些桌面应用：</p>
+<ul>
+<li>需要频繁更新</li>
+<li>不需要深度系统集成</li>
+<li>用户更关心”能用就行”而不是”怎么装的”</li>
+<li>能从沙箱中受益（聊天软件不会访问你的 ssh 密钥）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> snap install code --classic</span><br><span class="line"><span class="built_in">sudo</span> snap install spotify</span><br></pre></td></tr></table></figure>
+
+<p><code>--classic</code> 标志是给那些需要更多系统访问权限的应用（比如 IDE 需要访问终端、调试器等），禁用了严格的沙箱限制。一般来说，<strong>除非你明确知道需要 <code>--classic</code>，否则用默认的沙箱模式</strong>。</p>
+<h3 id="场景-2：追求最新版本"><a href="#场景-2：追求最新版本" class="headerlink" title="场景 2：追求最新版本"></a>场景 2：追求最新版本</h3><p>有些软件在 Ubuntu 官方仓库里更新很慢。比如 <code>neovim</code>：</p>
+<ul>
+<li>Ubuntu 24.04 仓库：v0.9.5</li>
+<li>snap：v0.10.x（基本上跟上游最新版同步）</li>
+</ul>
+<p>如果你需要新版本的新功能，snap 省去了自己编译或加 PPA 的麻烦。</p>
+<h3 id="场景-3：跨发行版统一部署"><a href="#场景-3：跨发行版统一部署" class="headerlink" title="场景 3：跨发行版统一部署"></a>场景 3：跨发行版统一部署</h3><p>如果你的团队用 Ubuntu、Fedora、Arch Linux，想要所有人用同一个版本的同一个软件（比如一个内部工具），打 deb 包需要在每个发行版上测试和维护。snap 一次打包，到处都能用。</p>
+<hr>
+<h2 id="八、snap-的真正劣势：你必须知道的坑"><a href="#八、snap-的真正劣势：你必须知道的坑" class="headerlink" title="八、snap 的真正劣势：你必须知道的坑"></a>八、snap 的真正劣势：你必须知道的坑</h2><p>我不是来给 snap 说好话的。有一些问题你必须知道：</p>
+<h3 id="1-磁盘占用"><a href="#1-磁盘占用" class="headerlink" title="1. 磁盘占用"></a>1. 磁盘占用</h3><p>每个 snap 自带依赖，导致磁盘占用显著增大：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">du</span> -sh /var/lib/snapd/snaps/</span><br><span class="line">1.8G</span><br></pre></td></tr></table></figure>
+
+<p>如果你有 10 个 snap 应用，可能吃掉几个 GB。这在服务器上不可接受，在桌面 256GB+ 的机器上通常还行。</p>
+<h3 id="2-启动速度"><a href="#2-启动速度" class="headerlink" title="2. 启动速度"></a>2. 启动速度</h3><p>冷启动延迟不可忽视。以 Firefox 为例，snap 版冷启动可能在 3-6 秒，deb 版通常 1-2 秒。如果你每天打开浏览器一次，这不是问题。如果你经常开关，累计起来会有点烦。</p>
+<h3 id="3-主题不兼容"><a href="#3-主题不兼容" class="headerlink" title="3. 主题不兼容"></a>3. 主题不兼容</h3><p>snap 应用默认看不到你系统安装的 GTK&#x2F;Qt 主题。你可能装了漂亮的主题，但 snap 应用还用着默认的灰白界面。虽然 Canonical 在不断改善这个问题（通过 <code>gtk-common-themes</code> snap），但目前仍然不是无缝的。</p>
+<h3 id="4-只能安装在默认路径"><a href="#4-只能安装在默认路径" class="headerlink" title="4. 只能安装在默认路径"></a>4. 只能安装在默认路径</h3><p>snap 应用不能选择安装位置。所有 snap 都装在 <code>/snap/</code> 下，无法更改。如果你习惯把软件装到 <code>/opt/</code> 或自定义分区，snap 不给你这个自由。</p>
+<h3 id="5-后台服务"><a href="#5-后台服务" class="headerlink" title="5. 后台服务"></a>5. 后台服务</h3><p>snap 依赖 <code>snapd</code> 守护进程来管理安装、更新和沙箱。<code>snapd</code> 是一个常驻后台的服务，大约占用几十 MB 内存。如果你追求极致轻量，这算一个额外开销。</p>
+<hr>
+<h2 id="九、Flatpak-和-AppImage：顺便提一下"><a href="#九、Flatpak-和-AppImage：顺便提一下" class="headerlink" title="九、Flatpak 和 AppImage：顺便提一下"></a>九、Flatpak 和 AppImage：顺便提一下</h2><p>既然讲到通用包格式，不能不提另外两个玩家：</p>
+<h3 id="Flatpak"><a href="#Flatpak" class="headerlink" title="Flatpak"></a>Flatpak</h3><p>Flatpak 和 snap 的思路非常相似（自包含、沙箱、跨发行版），主要区别是：</p>
+<table>
+<thead>
+<tr>
+<th>区别</th>
+<th>Flatpak</th>
+<th>snap</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主导方</td>
+<td>GNOME&#x2F;Freedesktop.org 社区</td>
+<td>Canonical（Ubuntu 母公司）</td>
+</tr>
+<tr>
+<td>服务中心</td>
+<td>Flathub</td>
+<td>Snap Store（由 Canonical 运营）</td>
+</tr>
+<tr>
+<td>服务器端</td>
+<td>完全开源，可自行搭建</td>
+<td>服务端闭源（这是争议点）</td>
+</tr>
+<tr>
+<td>发行版支持</td>
+<td>Fedora 原生支持，多数发行版可用</td>
+<td>Ubuntu 原生支持</td>
+</tr>
+</tbody></table>
+<p>如果你在意开源和去中心化，Flatpak 更符合价值观。不过在日常使用中，哪个有你要的软件就用哪个。</p>
+<h3 id="AppImage"><a href="#AppImage" class="headerlink" title="AppImage"></a>AppImage</h3><p>AppImage 更像 Windows 的 <code>.exe</code>：下载一个文件，给执行权限，双击运行。没有沙箱、没有自动更新、没有依赖管理。优点是”零安装”，缺点是功能最弱。</p>
+<p>对比总结：</p>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>一句话</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>deb</td>
+<td>系统原生，稳定可靠</td>
+<td>服务器、系统工具</td>
+</tr>
+<tr>
+<td>snap</td>
+<td>自带依赖，沙箱隔离，自动更新</td>
+<td>桌面应用</td>
+</tr>
+<tr>
+<td>Flatpak</td>
+<td>开源的 snap 替代品</td>
+<td>桌面应用，注重开源</td>
+</tr>
+<tr>
+<td>AppImage</td>
+<td>便携式，无需安装</td>
+<td>临时使用、测试新版</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="十、未来的趋势"><a href="#十、未来的趋势" class="headerlink" title="十、未来的趋势"></a>十、未来的趋势</h2><p>我可以明确地说：<strong>deb 不会消失，snap 也不会替代 deb</strong>。它们解决的是不同层面的问题。</p>
+<p>未来大概率是这样：</p>
+<ol>
+<li><p><strong>系统层</strong>（内核、init 系统、系统库、核心工具）——继续由 deb&#x2F;RPM 等传统格式管理。这些组件需要和发行版深度耦合，不能也不应该被通用格式取代。</p>
+</li>
+<li><p><strong>服务层</strong>（数据库、Web 服务器、消息队列）——deb 负责安装基础软件，Docker&#x2F;containerd 负责运行时隔离。snap 不适合这个场景，太重且不适合编排。</p>
+</li>
+<li><p><strong>桌面应用层</strong>（浏览器、IDE、通讯工具、多媒体）——snap&#x2F;Flatpak 会越来越主流。对桌面用户来说，”一个命令安装、自动更新、不会搞坏系统”比”轻量 20MB”重要得多。</p>
+</li>
+<li><p><strong>开发工具层</strong>（语言运行时、编译器、linter）——可能走向混合方案。<code>rustup</code>、<code>nvm</code>、<code>pyenv</code> 这些版本管理器已经是事实标准，包管理器（无论是 apt 还是 snap）都难以满足开发者对”同时管理多个版本”的需求。</p>
+</li>
+</ol>
+<p>所以不要把”deb vs snap”当成零和博弈。真正重要的是：<strong>你当前要装的这个软件，属于哪一层？然后选对应的工具</strong>。</p>
+<hr>
+<h2 id="十一、决策指南：一句话判断"><a href="#十一、决策指南：一句话判断" class="headerlink" title="十一、决策指南：一句话判断"></a>十一、决策指南：一句话判断</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    Start[&quot;🤔 我要装个软件，用 deb 还是 snap？&quot;]</span><br><span class="line">    </span><br><span class="line">    Start --&gt; Q1&#123;&quot;是系统核心工具吗？&lt;br/&gt;(git/curl/ssh/nginx/mysql)&quot;&#125;</span><br><span class="line">    Q1 --&gt;|是| A1[&quot;用 deb 👍&quot;]</span><br><span class="line">    Q1 --&gt;|否| Q2&#123;&quot;是桌面应用吗？&lt;br/&gt;(浏览器/IDE/聊天/音乐)&quot;&#125;</span><br><span class="line">    Q2 --&gt;|是| Q3&#123;&quot;仓库里有最新版吗？&quot;&#125;</span><br><span class="line">    Q3 --&gt;|有| A2[&quot;deb 就够了 👍&quot;]</span><br><span class="line">    Q3 --&gt;|没有| Q4&#123;&quot;需要长期稳定吗？&quot;&#125;</span><br><span class="line">    Q4 --&gt;|是| A3[&quot;加 PPA 或手动装 deb 👍&quot;]</span><br><span class="line">    Q4 --&gt;|否| Q5&#123;&quot;在意磁盘空间吗？&quot;&#125;</span><br><span class="line">    Q5 --&gt;|在意| A4[&quot;手动装 deb 或 Flatpak&quot;]</span><br><span class="line">    Q5 --&gt;|不在意| A5[&quot;用 snap 👍 省心&quot;]</span><br><span class="line">    Q2 --&gt;|否| Q6&#123;&quot;是开发工具/库吗？&quot;&#125;</span><br><span class="line">    Q6 --&gt;|是| A6[&quot;用版本管理器 &lt;br/&gt;(nvm/pyenv/rustup) 或用 deb&quot;]</span><br><span class="line">    Q6 --&gt;|否| Q7&#123;&quot;需要完全隔离环境？&quot;&#125;</span><br><span class="line">    Q7 --&gt;|是| A7[&quot;用 Docker/LXC 🐳&quot;]</span><br><span class="line">    Q7 --&gt;|否| A8[&quot;直接 deb 👍&quot;]</span><br><span class="line">    </span><br><span class="line">    style A1 fill:#A8E6CF,color:#333</span><br><span class="line">    style A5 fill:#A8E6CF,color:#333</span><br><span class="line">    style A8 fill:#A8E6CF,color:#333</span><br><span class="line">    style A7 fill:#FFD3B6,color:#333</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="十二、总结"><a href="#十二、总结" class="headerlink" title="十二、总结"></a>十二、总结</h2><p>这篇文章想传达的核心观点就这几条：</p>
+<ol>
+<li><p><strong>deb 和 snap 不是竞争对手</strong>，它们是 Linux 包管理演化的不同阶段和不同层次的方案。deb 负责”系统基础”，snap 负责”桌面应用”。</p>
+</li>
+<li><p><strong>多开和冲突不是包格式的问题</strong>。同一个软件的不同版本可以共存，但真正的”多开”靠的是应用自身的 Profile 机制或者容器，而不是包格式。</p>
+</li>
+<li><p><strong>在服务器上只用 deb</strong>。服务器不需要沙箱，需要的是轻量、可控、和系统集成。</p>
+</li>
+<li><p><strong>在桌面上，哪个方便用哪个</strong>。如果 deb 仓库里版本够新，用 deb。如果仓库里的版本太旧，snap 是最省心的选择。</p>
+</li>
+<li><p><strong>未来不会只有一种包格式</strong>。Linux 生态的多样性是它的优点。理解每种方案的边界，比争论”哪个更好”有用得多。</p>
+</li>
+</ol>
+<p>下次装软件的时候，不用再纠结了。打开终端前，想想你要装的是什么类型的软件，答案就很明显了。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io">望</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://m42-orion.github.io/2026/07/11/%E5%B7%A5%E5%85%B7-snap%E4%B8%8Edeb-%E5%85%A8%E9%9D%A2%E8%A7%A3%E6%9E%90/">https://m42-orion.github.io/2026/07/11/%E5%B7%A5%E5%85%B7-snap%E4%B8%8Edeb-%E5%85%A8%E9%9D%A2%E8%A7%A3%E6%9E%90/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://m42-orion.github.io" target="_blank">念念不忘，必有回响</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/%E5%8C%85%E7%AE%A1%E7%90%86/">包管理</a><a class="post-meta__tags" href="/tags/Ubuntu/">Ubuntu</a><a class="post-meta__tags" href="/tags/Snap/">Snap</a><a class="post-meta__tags" href="/tags/Deb/">Deb</a><a class="post-meta__tags" href="/tags/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/">软件安装</a></div><div class="post-share"><div class="social-share" data-image="https://c-ssl.duitang.com/uploads/blog/202606/28/4ESbXDD1SonJXJ3.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/05/26/%E4%BB%80%E4%B9%88%E6%98%AFSaas/" title="什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂&quot;软件即服务&quot;"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202606/07/n6SPLYYwi9pmV0X.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂"软件即服务"</div></div><div class="info-2"><div class="info-item-1">什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂”软件即服务”前言最近听到”所见即服务”（SaaS）这个词，感觉好像是那么回事，又好像不是。 你一定也有过这些困惑：  “微博也是网页登录用，飞书也是网页登录用——为什么飞书是 SaaS，微博不是？”   “我手机上装了个美图秀秀 App，和我用网页版 Canva 修图，有什么区别？”   “在线 PS（Photopea）可以在浏览器里编辑图片，这是 SaaS 吗？”   “如果我买了一套 CRM 软件部署在自己的服务器上，跟直接用 Salesforce（在线 CRM）有什么区别？”  这些问题的答案，不在”用没用网页”上，而在”软件归谁管、钱怎么付、能不能定制”上。 这篇文章帮你彻底搞清楚。  目录 先建立一个直觉：租房子 vs 买房子 SaaS 的官方定义 SaaS 的五大核心特征 用五把尺子判断：是 SaaS 还是传统软件？ 为什么微博不是 SaaS？为什么百度云盘也不是？ 什么是 SaaS？什么不是？—— 大量案例逐一分析 SaaS 的优缺点 什么业务适合做 SaaS？什么不适合？ SaaS 的常见误...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2025/07/11/%E5%B7%A5%E5%85%B7-sunshine-remote-desktop/" title="Wayland 无人值守远程桌面 — Sunshine 方案完整指南"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202606/28/0GSPADDgi04ZwZn.jpeg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-07-11</div><div class="info-item-2">Wayland 无人值守远程桌面 — Sunshine 方案完整指南</div></div><div class="info-2"><div class="info-item-1">Wayland 无人值守远程桌面 — Sunshine 方案完整指南环境   节点 系统 桌面 GPU 角色    家里电脑 Ubuntu 26.04 GNOME (Wayland) NVIDIA RTX 4060 Ti 被控端   雨云服务器 Ubuntu Server 无 GUI — SSH 中转   公司电脑 Ubuntu GNOME — 控制端   为什么选 Sunshine 而不是 GNOME RDP    GNOME RDP Sunshine    编码 CPU 软件编码，延迟高 GPU 硬编码 (NVENC&#x2F;VA-API)，延迟低   凭据 依赖 gnome-keyring，自动登录后丢失，每次重启需手动重设 独立存储，通过 --creds 命令行注入   锁屏 锁屏后 PipeWire 截屏管道切断，远程黑屏 PipeWire 管道不受锁屏影响   画质 软件编码，高分辨率吃力 HEVC&#x2F;AV1 硬编码，2560×1440 流畅   重启表现 keyring 锁定 → 凭据失效 → 连不上 systemd + ExecStartPre 注入凭据...</div></div></div></a><a class="pagination-related" href="/2023/02/21/Linux-%E6%96%87%E4%BB%B6%E6%89%93%E5%BC%80%E8%BF%87%E5%A4%9A%E9%97%AE%E9%A2%98/" title="Too many open files 解决办法"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/文件打开过多/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-21</div><div class="info-item-2">Too many open files 解决办法</div></div><div class="info-2"><div class="info-item-1">近期使用Linux操作系统的时候用到了多进程，导致同一时间内文件打开数量超过限制，从而导致进程卡死问题，在网上找到了以下解决方法 单个进程打开文件句柄数过多ulimit中的nofile表示单进程可以打开的最大文件句柄数，可以通过ulimit -a查看，子进程默认继承父进程的限制（注意，是继承，不是共享，子进程和父进程打开的文件句柄数是单独算的）。网上还有一种解读是nofile表示单用户可以打开的文件句柄数，因为他们在limit.conf中看到类似于openstack soft nofile 65536，便认为是openstack用户最多可以打开的文件句柄数。该解读是错误的，openstack soft nofile 65536表示的含义是当你执行su - openstack切换到openstack用户后，你创建的所有进程最大可以打开的文件句柄数是65536。要查看一个进程可以打开的文件句柄数，可以通过cat /proc/&lt;pid&gt;/limits查看。 要修改ulimit中的nofile，可以通过修改/etc/security/limits.conf文件，在其中加入类似...</div></div></div></a><a class="pagination-related" href="/2025/08/12/Linux-htop%E5%91%BD%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8/" title="Linux-htop命令的使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-08-12</div><div class="info-item-2">Linux-htop命令的使用</div></div><div class="info-2"><div class="info-item-1">深入掌握htop：从入门到精通的Linux系统监控指南htop作为Linux系统中最受欢迎的进程监控工具之一，比传统的top命令提供了更丰富的功能和更友好的用户界面。本文将从htop的基础使用开始，逐步深入到高级技巧和实战应用，帮助全面掌握这个强大的系统监控工具。 一、htop简介与安装1.1 什么是htop？htop是一个Linux系统下的交互式进程查看器，它是传统top命令的现代化替代品。与top相比，htop提供了彩色界面、鼠标支持、进程树视图等增强功能，使系统监控变得更加直观和高效。 htop的主要优势包括：  彩色显示：不同类型进程和系统状态用不同颜色区分 可视化布局：直观展示CPU、内存和交换空间使用情况 鼠标支持：可以直接用鼠标点击操作界面元素 进程树视图：可以查看进程间的层级关系 自定义排序：可按各种指标对进程排序 进程操作：可直接终止、调整优先级等  1.2 安装htophtop不像top那样是Linux系统默认安装的工具，需要手动安装。以下是不同Linux发行版的安装方法： 在基于Debian&#x2F;Ubuntu的系统上： 12sudo apt updat...</div></div></div></a><a class="pagination-related" href="/2026/01/18/%E5%B7%A5%E5%85%B7-Python%E5%8C%85%E7%AE%A1%E7%90%86%E6%96%B0%E6%98%9Fuv/" title="再见 Conda？Python 极速包管理器 uv 上手指南"><img class="cover" src="https://c-ssl.duitang.com/uploads/blog/202512/21/AvSLJQQaTwWWLPN.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-18</div><div class="info-item-2">再见 Conda？Python 极速包管理器 uv 上手指南</div></div><div class="info-2"><div class="info-item-1">Python 的环境管理一直是个让开发者头秃的问题。 从最早的 pip + venv，到科学计算必备的 conda，再到后来追求项目隔离的 poetry 和 pdm，我们手里的工具越来越多，但困惑也越来越多：  “Conda 解析依赖太慢了，一直在转圈圈。”“听说 Anaconda 公司改了协议，公司用要收费了？”“Poetry 很好用，但是安装依赖有时候卡很久。”  就在大家在这个泥潭里挣扎时，uv 横空出世。它号称是“Python 的 Cargo（Rust 的包管理器）”，主打一个字：快。 今天我们就来聊聊这个用 Rust 编写的 Python 包管理新星，看看它是否有资格终结这场“环境管理之战”。  一、 为什么要换掉 Conda？很多 Python 初学者（尤其是搞数据科学的）入行安装的第一个软件就是 Anaconda。但随着时间推移，Conda 的问题逐渐暴露：  慢：这是最大的槽点。当你安装一个复杂的库（比如 PyTorch）时，Conda 的依赖解析（Solving environment）能让你等到怀疑人生。 臃肿：Anaconda 预装了太多你根本用不到的库，占...</div></div></div></a><a class="pagination-related" href="/2023/10/25/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E9%AB%98%E5%B9%B6%E5%8F%91%E4%B8%8B%E8%AE%BE%E7%BD%AELinux%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E6%95%B0/" title="高并发下设置Linux打开文件数"><img class="cover" src="http://liu__tao.gitee.io/drawing-bed/blog_img/高并发下设置Linux打开文件数/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-25</div><div class="info-item-2">高并发下设置Linux打开文件数</div></div><div class="info-2"><div class="info-item-1">在linux中，一切皆文件，所以连接数本身也会表现为文件打开数。默认情况下，linux单进程打开文件数的限制是1024 ， 非常低，在密集io型服务里很容易超过。 代码如下： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546# vi /etc/sysctl.conf ,末尾添加fs.file-max = 655350000sssfs.nr_open = 655350000# 执行命令生效sysctl -p# 查看 max-file：cat /proc/sys/fs/file-max# 查看当前系统总打开文件数cat /proc/sys/fs/file-nr# 输出: 9344 0 592026，# 分别为：1.已经分配的文件句柄数，2.已经分配但没有使用的文件句柄数，3.最大文件句柄数。# 修改系统对单个进程打开的文件数限制ulimit -n 655350000echo &quot;* soft nofile 655350000&quot; &gt;&gt; /e...</div></div></div></a><a class="pagination-related" href="/2024/03/25/Linux-df%E5%91%BD%E4%BB%A4%E6%A6%82%E8%BF%B0/" title="Linux的df命令概述"><img class="cover" src="https://liu__tao.gitee.io/drawing-bed/blog_img/Linux的df命令概述/封面.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-25</div><div class="info-item-2">Linux的df命令概述</div></div><div class="info-2"><div class="info-item-1">命令概述df命令的英文全称即“Disk Free”，用于显示系统上可使用的磁盘空间。默认显示单位为KB，建议使用“df -h”的参数组合，根据磁盘容量自动变换合适的单位，更利于阅读，日常普遍用该命令可以查看磁盘被占用了多少空间、还剩多少空间等信息。 命令语法df【选项】 【参数】  命令选项 -a或--all:显示所有的文件系统，包括虚拟文件系统 -B:--block-size=&lt;区块大小&gt; 以指定的区块大小来显示区块数目； -h或--human-readable:以可读性较高的方式来显示信息； -H或--si:与-h参数相同，但在计算时是以1000 Bytes为换算单位而非1024 Bytes； -i或--inodes:显示inode的信息； -l或--local:仅显示本地端的文件系统； -k或--kilobytes:指定区块大小为1024字节，相当于--block-size=1k -m或--megabytes:指定区块大小为1048576字节，相当于--block-size=1M --sync:在取得磁盘使用信息前，先执行sync指令； --no-sync:在取...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">望</div><div class="author-info-description">望的个人博客</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">208</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">175</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">57</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/M42-Orion"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/M42-Orion" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎访问我的博客，祝你有个好心情！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Snap-%E4%B8%8E-Deb%EF%BC%9AUbuntu-%E4%B8%8B%E5%88%B0%E5%BA%95%E8%AF%A5%E9%80%89%E5%93%AA%E4%B8%AA%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">Snap 与 Deb：Ubuntu 下到底该选哪个软件安装方式？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84"><span class="toc-number">1.1.</span> <span class="toc-text">问题是怎么来的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E7%90%86%E8%A7%A3%E4%B8%80%E4%B8%AA%E6%A6%82%E5%BF%B5%EF%BC%9ALinux-%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E7%9A%84%E4%B8%89%E5%B1%82%E5%9B%B0%E5%A2%83"><span class="toc-number">1.2.</span> <span class="toc-text">一、先理解一个概念：Linux 软件安装的三层困境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-1%EF%BC%9A%E4%BE%9D%E8%B5%96%E5%9C%B0%E7%8B%B1"><span class="toc-number">1.2.1.</span> <span class="toc-text">问题 1：依赖地狱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-2%EF%BC%9A%E5%8F%91%E8%A1%8C%E7%89%88%E5%88%86%E8%A3%82"><span class="toc-number">1.2.2.</span> <span class="toc-text">问题 2：发行版分裂</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-3%EF%BC%9A%E5%AE%89%E5%85%A8%E8%BE%B9%E7%95%8C"><span class="toc-number">1.2.3.</span> <span class="toc-text">问题 3：安全边界</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81deb%EF%BC%9A%E7%B3%BB%E7%BB%9F%E5%8C%85%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E7%9F%B3"><span class="toc-number">1.3.</span> <span class="toc-text">二、deb：系统包管理的基石</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%83%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.3.1.</span> <span class="toc-text">它是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#deb-%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%93%B2%E5%AD%A6"><span class="toc-number">1.3.2.</span> <span class="toc-text">deb 的设计哲学</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#deb-%E7%9C%9F%E6%AD%A3%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">1.3.3.</span> <span class="toc-text">deb 真正的缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81snap%EF%BC%9A%E4%BB%8E%E2%80%9D%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86%E2%80%9D%E5%88%B0%E2%80%9D%E7%8B%AC%E7%AB%8B%E7%9A%84%E5%BA%94%E7%94%A8%E5%AE%B9%E5%99%A8%E2%80%9D"><span class="toc-number">1.4.</span> <span class="toc-text">三、snap：从”系统的一部分”到”独立的应用容器”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%83%E6%98%AF%E4%BB%80%E4%B9%88-1"><span class="toc-number">1.4.1.</span> <span class="toc-text">它是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%82%E8%BD%BD%E6%9C%BA%E5%88%B6"><span class="toc-number">1.4.2.</span> <span class="toc-text">挂载机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B2%99%E7%AE%B1%E6%80%8E%E4%B9%88%E5%81%9A"><span class="toc-number">1.4.3.</span> <span class="toc-text">沙箱怎么做</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81deb-vs-snap%EF%BC%9A%E6%B7%B1%E5%B1%82%E6%AC%A1%E5%AF%B9%E6%AF%94"><span class="toc-number">1.5.</span> <span class="toc-text">四、deb vs snap：深层次对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E9%80%9F%E5%BA%A6%E5%B7%AE%E5%BC%82%E7%9A%84%E7%9C%9F%E7%9B%B8"><span class="toc-number">1.5.1.</span> <span class="toc-text">启动速度差异的真相</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%9B%9E%E7%AD%94%E4%BD%A0%E6%9C%80%E5%85%B3%E5%BF%83%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9A%E5%A4%9A%E5%BC%80%E5%92%8C%E5%86%B2%E7%AA%81"><span class="toc-number">1.6.</span> <span class="toc-text">五、回答你最关心的问题：多开和冲突</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-1%EF%BC%9A%E5%90%8C%E4%B8%80%E4%B8%AA%E8%BD%AF%E4%BB%B6%E8%A3%85%E4%BA%86-deb-%E5%8F%88%E8%A3%85-snap%EF%BC%8C%E4%BC%9A%E5%86%B2%E7%AA%81%E5%90%97%EF%BC%9F"><span class="toc-number">1.6.1.</span> <span class="toc-text">问题 1：同一个软件装了 deb 又装 snap，会冲突吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-2%EF%BC%9A%E8%83%BD%E4%B8%8D%E8%83%BD%E5%A4%9A%E5%BC%80%EF%BC%88%E5%90%8C%E6%97%B6%E8%BF%90%E8%A1%8C%E4%B8%A4%E4%B8%AA%E5%AE%9E%E4%BE%8B%EF%BC%89%EF%BC%9F"><span class="toc-number">1.6.2.</span> <span class="toc-text">问题 2：能不能多开（同时运行两个实例）？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E2%80%9D%E5%A4%9A%E5%BC%80%E2%80%9D%E8%BF%99%E4%BB%B6%E4%BA%8B"><span class="toc-number">1.6.3.</span> <span class="toc-text">总结一下”多开”这件事</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%AF%A5%E7%94%A8-deb%EF%BC%9F"><span class="toc-number">1.7.</span> <span class="toc-text">六、什么时候该用 deb？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF-1%EF%BC%9A%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BD%AF%E4%BB%B6"><span class="toc-number">1.7.1.</span> <span class="toc-text">场景 1：服务器软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF-2%EF%BC%9A%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E6%A0%B8%E5%BF%83%E5%B7%A5%E5%85%B7"><span class="toc-number">1.7.2.</span> <span class="toc-text">场景 2：命令行的核心工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF-3%EF%BC%9A%E5%BA%93%E5%92%8C%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E9%93%BE"><span class="toc-number">1.7.3.</span> <span class="toc-text">场景 3：库和开发工具链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF-4%EF%BC%9A%E9%9C%80%E8%A6%81%E5%AE%9A%E5%88%B6%E5%92%8C%E6%B7%B1%E5%BA%A6%E7%B3%BB%E7%BB%9F%E9%9B%86%E6%88%90"><span class="toc-number">1.7.4.</span> <span class="toc-text">场景 4：需要定制和深度系统集成</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%AF%A5%E7%94%A8-snap%EF%BC%9F"><span class="toc-number">1.8.</span> <span class="toc-text">七、什么时候该用 snap？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF-1%EF%BC%9A%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8"><span class="toc-number">1.8.1.</span> <span class="toc-text">场景 1：桌面应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF-2%EF%BC%9A%E8%BF%BD%E6%B1%82%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC"><span class="toc-number">1.8.2.</span> <span class="toc-text">场景 2：追求最新版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF-3%EF%BC%9A%E8%B7%A8%E5%8F%91%E8%A1%8C%E7%89%88%E7%BB%9F%E4%B8%80%E9%83%A8%E7%BD%B2"><span class="toc-number">1.8.3.</span> <span class="toc-text">场景 3：跨发行版统一部署</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81snap-%E7%9A%84%E7%9C%9F%E6%AD%A3%E5%8A%A3%E5%8A%BF%EF%BC%9A%E4%BD%A0%E5%BF%85%E9%A1%BB%E7%9F%A5%E9%81%93%E7%9A%84%E5%9D%91"><span class="toc-number">1.9.</span> <span class="toc-text">八、snap 的真正劣势：你必须知道的坑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%A3%81%E7%9B%98%E5%8D%A0%E7%94%A8"><span class="toc-number">1.9.1.</span> <span class="toc-text">1. 磁盘占用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%90%AF%E5%8A%A8%E9%80%9F%E5%BA%A6"><span class="toc-number">1.9.2.</span> <span class="toc-text">2. 启动速度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%BB%E9%A2%98%E4%B8%8D%E5%85%BC%E5%AE%B9"><span class="toc-number">1.9.3.</span> <span class="toc-text">3. 主题不兼容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%8F%AA%E8%83%BD%E5%AE%89%E8%A3%85%E5%9C%A8%E9%BB%98%E8%AE%A4%E8%B7%AF%E5%BE%84"><span class="toc-number">1.9.4.</span> <span class="toc-text">4. 只能安装在默认路径</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%90%8E%E5%8F%B0%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.9.5.</span> <span class="toc-text">5. 后台服务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81Flatpak-%E5%92%8C-AppImage%EF%BC%9A%E9%A1%BA%E4%BE%BF%E6%8F%90%E4%B8%80%E4%B8%8B"><span class="toc-number">1.10.</span> <span class="toc-text">九、Flatpak 和 AppImage：顺便提一下</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Flatpak"><span class="toc-number">1.10.1.</span> <span class="toc-text">Flatpak</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AppImage"><span class="toc-number">1.10.2.</span> <span class="toc-text">AppImage</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%9C%AA%E6%9D%A5%E7%9A%84%E8%B6%8B%E5%8A%BF"><span class="toc-number">1.11.</span> <span class="toc-text">十、未来的趋势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E5%86%B3%E7%AD%96%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%88%A4%E6%96%AD"><span class="toc-number">1.12.</span> <span class="toc-text">十一、决策指南：一句话判断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-number">1.13.</span> <span class="toc-text">十二、总结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/07/11/%E5%B7%A5%E5%85%B7-snap%E4%B8%8Edeb-%E5%85%A8%E9%9D%A2%E8%A7%A3%E6%9E%90/" title="Snap 与 Deb：Ubuntu 下到底该选哪个软件安装方式？"><img src="https://c-ssl.duitang.com/uploads/blog/202606/28/4ESbXDD1SonJXJ3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Snap 与 Deb：Ubuntu 下到底该选哪个软件安装方式？"/></a><div class="content"><a class="title" href="/2026/07/11/%E5%B7%A5%E5%85%B7-snap%E4%B8%8Edeb-%E5%85%A8%E9%9D%A2%E8%A7%A3%E6%9E%90/" title="Snap 与 Deb：Ubuntu 下到底该选哪个软件安装方式？">Snap 与 Deb：Ubuntu 下到底该选哪个软件安装方式？</a><time datetime="2026-07-10T16:00:00.000Z" title="发表于 2026-07-11 00:00:00">2026-07-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%80%E4%B9%88%E6%98%AFSaas/" title="什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂&quot;软件即服务&quot;"><img src="https://c-ssl.duitang.com/uploads/blog/202606/07/n6SPLYYwi9pmV0X.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂&quot;软件即服务&quot;"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%80%E4%B9%88%E6%98%AFSaas/" title="什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂&quot;软件即服务&quot;">什么是 SaaS？—— 为什么微博不是 SaaS，但飞书是？帮你彻底搞懂&quot;软件即服务&quot;</a><time datetime="2026-05-25T23:00:00.000Z" title="发表于 2026-05-26 07:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚"><img src="https://c-ssl.duitang.com/uploads/blog/202604/08/m7SDLvvACNyQbEY.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="跨域、CORS、CSRF、SameSite 彻底讲清楚"/></a><div class="content"><a class="title" href="/2026/05/26/%E8%B7%A8%E5%9F%9F-CORS-CSRF-SameSite-%E5%BD%BB%E5%BA%95%E8%AE%B2%E6%B8%85%E6%A5%9A/" title="跨域、CORS、CSRF、SameSite 彻底讲清楚">跨域、CORS、CSRF、SameSite 彻底讲清楚</a><time datetime="2026-05-25T21:30:00.000Z" title="发表于 2026-05-26 05:30:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践"><img src="https://c-ssl.duitang.com/uploads/blog/202604/09/AvSLJQQaTwX56PW.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MCP vs Agent 全面对比与最佳实践"/></a><div class="content"><a class="title" href="/2026/05/26/MCP-vs-Agent-%E5%85%A8%E9%9D%A2%E5%AF%B9%E6%AF%94%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" title="MCP vs Agent 全面对比与最佳实践">MCP vs Agent 全面对比与最佳实践</a><time datetime="2026-05-25T21:00:00.000Z" title="发表于 2026-05-26 05:00:00">2026-05-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG"><img src="https://c-ssl.duitang.com/uploads/blog/202604/13/jJSdv550texmw6p.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从 Tokenizer 到 Embedding 再到 RAG"/></a><div class="content"><a class="title" href="/2026/05/26/%E4%BB%8ETokenizer%E5%88%B0Embedding%E5%86%8D%E5%88%B0RAG-%E7%BC%96%E7%A0%81%E4%B8%8E%E7%9B%B8%E4%BC%BC%E6%A3%80%E7%B4%A2%E7%9A%84%E5%AE%8C%E6%95%B4%E9%93%BE%E8%B7%AF/" title="从 Tokenizer 到 Embedding 再到 RAG">从 Tokenizer 到 Embedding 再到 RAG</a><time datetime="2026-05-25T20:30:00.000Z" title="发表于 2026-05-26 04:30:00">2026-05-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2026 By 望</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>(() => {
+  const parseViewBox = viewBox => {
+    if (!viewBox) return null
+    const parts = viewBox.trim().split(/[\s,]+/).map(n => Number(n))
+    if (parts.length !== 4 || parts.some(n => Number.isNaN(n))) return null
+    return parts
+  }
+
+  const getSvgViewBox = svg => {
+    const attr = parseViewBox(svg.getAttribute('viewBox'))
+    if (attr) return attr
+
+    // Fallback: use bbox to build a viewBox
+    try {
+      const bbox = svg.getBBox()
+      if (bbox && bbox.width && bbox.height) return [bbox.x, bbox.y, bbox.width, bbox.height]
+    } catch (e) {
+      // getBBox may fail on some edge cases; ignore
+    }
+
+    const w = Number(svg.getAttribute('width')) || 0
+    const h = Number(svg.getAttribute('height')) || 0
+    if (w > 0 && h > 0) return [0, 0, w, h]
+    return [0, 0, 100, 100]
+  }
+
+  const setSvgViewBox = (svg, vb) => {
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`)
+  }
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+
+  const openSvgInNewTab = ({ source, initViewBox }) => {
+    const getClonedSvg = () => {
+      if (typeof source === 'string') {
+        const template = document.createElement('template')
+        template.innerHTML = source.trim()
+        const svg = template.content.querySelector('svg')
+        return svg ? svg.cloneNode(true) : null
+      }
+      if (source && typeof source.cloneNode === 'function') {
+        return source.cloneNode(true)
+      }
+      return null
+    }
+
+    const clone = getClonedSvg()
+    if (!clone) return
+    if (initViewBox && initViewBox.length === 4) {
+      clone.setAttribute('viewBox', initViewBox.join(' '))
+    }
+    if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    if (!clone.getAttribute('xmlns:xlink') && clone.outerHTML.includes('xlink:')) {
+      clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+    }
+    // inject background to match current theme
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+    const bg = getComputedStyle(document.body).backgroundColor || (isDark ? '#1e1e1e' : '#ffffff')
+    if (!clone.style.background) clone.style.background = bg
+
+    const serializer = new XMLSerializer()
+    const svgSource = serializer.serializeToString(clone)
+    const htmlSource = `<!doctype html><html><head><meta charset="utf-8" />
+      <style>
+        html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
+        svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+      </style>
+      </head><body>${svgSource}</body></html>`
+    const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank', 'noopener')
+    setTimeout(() => URL.revokeObjectURL(url), 30000)
+  }
+
+  const attachMermaidViewerButton = wrap => {
+    let btn = wrap.querySelector('.mermaid-open-btn')
+    if (!btn) {
+      btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'mermaid-open-btn'
+      wrap.appendChild(btn)
+    }
+
+    btn.innerHTML = '<i class="fa fa-search fa-fw" aria-hidden="true"></i>'
+
+    if (!btn.__mermaidViewerBound) {
+      btn.addEventListener('click', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        const svg = wrap.__mermaidOriginalSvg || wrap.querySelector('svg')
+        if (!svg) return
+        const initViewBox = wrap.__mermaidInitViewBox
+        if (typeof svg === 'string') {
+          openSvgInNewTab({ source: svg, initViewBox })
+          return
+        }
+        openSvgInNewTab({ source: svg, initViewBox })
+      })
+      btn.__mermaidViewerBound = true
+    }
+  }
+
+  // Zoom around a point (px, py) in the SVG viewport (in viewBox coordinates)
+  const zoomAtPoint = (vb, factor, px, py) => {
+    const w = vb[2] * factor
+    const h = vb[3] * factor
+    const nx = px - (px - vb[0]) * factor
+    const ny = py - (py - vb[1]) * factor
+    return [nx, ny, w, h]
+  }
+
+  const initMermaidGestures = wrap => {
+    const svg = wrap.querySelector('svg')
+    if (!svg) return
+
+    // Ensure viewBox exists so gestures always work
+    const initVb = getSvgViewBox(svg)
+    wrap.__mermaidInitViewBox = initVb
+    wrap.__mermaidCurViewBox = initVb.slice()
+    setSvgViewBox(svg, initVb)
+
+    // Avoid binding multiple times on themeChange/pjax
+    if (wrap.__mermaidGestureBound) return
+    wrap.__mermaidGestureBound = true
+
+    // Helper: map client (viewport) coordinate -> viewBox coordinate
+    const clientToViewBox = (clientX, clientY) => {
+      const rect = svg.getBoundingClientRect()
+      const vb = wrap.__mermaidCurViewBox || getSvgViewBox(svg)
+      const x = vb[0] + (clientX - rect.left) * (vb[2] / rect.width)
+      const y = vb[1] + (clientY - rect.top) * (vb[3] / rect.height)
+      return { x, y, rect, vb }
+    }
+
+    const state = {
+      pointers: new Map(),
+      startVb: null,
+      startDist: 0,
+      startCenter: null
+    }
+
+    const clampVb = vb => {
+      const init = wrap.__mermaidInitViewBox || vb
+      const minW = init[2] * 0.1
+      const maxW = init[2] * 10
+      const minH = init[3] * 0.1
+      const maxH = init[3] * 10
+      vb[2] = clamp(vb[2], minW, maxW)
+      vb[3] = clamp(vb[3], minH, maxH)
+      return vb
+    }
+
+    const setCurVb = vb => {
+      vb = clampVb(vb)
+      wrap.__mermaidCurViewBox = vb
+      setSvgViewBox(svg, vb)
+    }
+
+    const onPointerDown = e => {
+      // Allow only primary button for mouse
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      svg.setPointerCapture(e.pointerId)
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      if (state.pointers.size === 1) {
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      } else if (state.pointers.size === 2) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        state.startDist = Math.hypot(dx, dy)
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        state.startCenter = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 }
+      }
+    }
+
+    const onPointerMove = e => {
+      if (!state.pointers.has(e.pointerId)) return
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      // Pan with 1 pointer
+      if (state.pointers.size === 1 && state.startVb) {
+        const p = [...state.pointers.values()][0]
+        const prev = { x: e.clientX - e.movementX, y: e.clientY - e.movementY }
+        // movementX/Y unreliable on touch, compute from stored last position
+        const last = wrap.__mermaidLastSinglePointer || p
+        const dxClient = p.x - last.x
+        const dyClient = p.y - last.y
+        wrap.__mermaidLastSinglePointer = p
+
+        const { rect } = clientToViewBox(p.x, p.y)
+        const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        const dx = dxClient * (vb[2] / rect.width)
+        const dy = dyClient * (vb[3] / rect.height)
+        setCurVb([vb[0] - dx, vb[1] - dy, vb[2], vb[3]])
+        return
+      }
+
+      // Pinch zoom with 2 pointers
+      if (state.pointers.size === 2 && state.startVb && state.startDist > 0) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        const dist = Math.hypot(dx, dy)
+        if (!dist) return
+        const factor = state.startDist / dist // dist bigger => zoom in (viewBox smaller)
+
+        const cx = (pts[0].x + pts[1].x) / 2
+        const cy = (pts[0].y + pts[1].y) / 2
+        const centerClient = { x: cx, y: cy }
+
+        const pxy = clientToViewBox(centerClient.x, centerClient.y)
+        const cpx = pxy.x
+        const cpy = pxy.y
+
+        const vb = zoomAtPoint(state.startVb, factor, cpx, cpy)
+        setCurVb(vb)
+      }
+    }
+
+    const onPointerUpOrCancel = e => {
+      state.pointers.delete(e.pointerId)
+      if (state.pointers.size === 0) {
+        state.startVb = null
+        state.startDist = 0
+        state.startCenter = null
+        wrap.__mermaidLastSinglePointer = null
+      } else if (state.pointers.size === 1) {
+        // reset single pointer baseline to avoid jump
+        wrap.__mermaidLastSinglePointer = [...state.pointers.values()][0]
+      }
+    }
+
+    // Wheel zoom (mouse/trackpad)
+    const onWheel = e => {
+      // ctrlKey on mac trackpad pinch; we treat both as zoom
+      e.preventDefault()
+      const delta = e.deltaY
+      const zoomFactor = delta > 0 ? 1.1 : 0.9
+      const { x, y } = clientToViewBox(e.clientX, e.clientY)
+      const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      setCurVb(zoomAtPoint(vb, zoomFactor, x, y))
+    }
+
+    const onDblClick = () => {
+      const init = wrap.__mermaidInitViewBox
+      if (!init) return
+      wrap.__mermaidCurViewBox = init.slice()
+      setSvgViewBox(svg, init)
+    }
+
+    svg.addEventListener('pointerdown', onPointerDown)
+    svg.addEventListener('pointermove', onPointerMove)
+    svg.addEventListener('pointerup', onPointerUpOrCancel)
+    svg.addEventListener('pointercancel', onPointerUpOrCancel)
+    svg.addEventListener('wheel', onWheel, { passive: false })
+    svg.addEventListener('dblclick', onDblClick)
+  }
+
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+
+      // Clear old render (themeChange/pjax will rerun)
+      const oldSvg = item.querySelector('svg')
+      if (oldSvg) oldSvg.remove()
+      item.__mermaidGestureBound = false
+
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+        if (true) initMermaidGestures(item)
+        item.__mermaidOriginalSvg = svg
+        if (true) attachMermaidViewerButton(item)
+      }
+
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    // Pattern 1: pre > code.mermaid (when the language class survives highlight.js)
+    let els = document.querySelectorAll('pre > code.mermaid')
+    if (els.length === 0) {
+      // Pattern 2: figure.highlight.plaintext (highlight.js fallback for unknown language)
+      const figs = document.querySelectorAll('#article-container figure.highlight.plaintext')
+      const mermaidFigs = Array.from(figs).filter(fig => {
+        const code = fig.querySelector('.code pre, pre > code, pre')
+        if (!code) return false
+        const text = code.textContent.trim()
+        return /^(graph|flowchart|sequenceDiagram|classDiagram|stateDiagram|erDiagram|gantt|pie|journey|gitGraph)\b/.test(text)
+      })
+      if (mermaidFigs.length === 0) return
+      els = mermaidFigs.map(fig => {
+        const src = fig.querySelector('.code pre, pre > code, pre')
+        const pre = document.createElement('pre')
+        pre.className = 'mermaid-src'
+        pre.hidden = true
+        pre.textContent = src ? src.textContent : ''
+        const wrap = document.createElement('div')
+        wrap.className = 'mermaid-wrap'
+        wrap.appendChild(pre)
+        fig.replaceWith(wrap)
+        return pre
+      })
+      return
+    }
+
+    els.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const abcjsInit = () => {
+    const abcjsFn = () => {
+      setTimeout(() => {
+        const sheets = document.querySelectorAll(".abc-music-sheet")
+        for (let i = 0; i < sheets.length; i++) {
+          const ele = sheets[i]
+          if (ele.children.length > 0) continue
+
+          // Parse parameters from data-params attribute
+          let params = {}
+          const dp = ele.getAttribute("data-params")
+          if (dp) {
+            try {
+              params = JSON.parse(dp)
+            } catch (e) {
+              console.error("Failed to parse data-params:", e)
+            }
+          }
+
+          // Merge parsed parameters with the responsive option
+          // Ensures params content appears before responsive
+          const options = { ...params, responsive: "resize" }
+
+          // Render the music score using ABCJS.renderAbc
+          ABCJS.renderAbc(ele, ele.textContent, options)
+        }
+      }, 100)
+    }
+
+    if (typeof ABCJS === "object") {
+      abcjsFn()
+    } else {
+      btf.getScript("https://cdn.jsdelivr.net/npm/abcjs/dist/abcjs-basic-min.min.js").then(abcjsFn)
+    }
+  }
+
+  if (window.pjax) {
+    abcjsInit()
+  } else {
+    window.addEventListener("load", abcjsInit)
+  }
+
+  btf.addGlobalFn("encrypt", abcjsInit, "abcjs")
+})()</script></div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="null" data-text="I,LOVE,YOU,木一" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
